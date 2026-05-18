@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>DUAL: Echo Fragments</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════
+   DUAL: Echo Fragments — All-in-one
+   ═══════════════════════════════════════ */
+:root{
+  --c:#00e5ff; --c2:#007a8a;
+  --earth:#c8872a; --earth2:#7a4010;
+  --smoke:#9b59b6; --tech:#00bcd4;
+  --wind:#7aabb8; --speed:#ff6a00;
+  --psychic:#8b1a3a; --metal:#4a4a5a;
+  --red:#e74c3c; --bg:#030810;
+  --panel:rgba(3,8,18,0.88);
+  --ff1:'Cinzel Decorative',serif;
+  --ff2:'Rajdhani',sans-serif;
+  --ff3:'Share Tech Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde8ee;font-family:var(--ff2);touch-action:none;user-select:none}
+.hidden{display:none!important}
+#app{width:100vw;height:100vh;position:relative}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:0}
+
+/* ══ SCREENS ══ */
+.screen{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:10}
+.screen.active{display:flex}
+
+/* ══════════════════════════════
+   MENU
+══════════════════════════════ */
+#sMenu{
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(0,229,255,.15) 0%,transparent 55%),
+    radial-gradient(ellipse at 20% 90%,rgba(200,135,42,.12) 0%,transparent 45%),
+    radial-gradient(ellipse at 80% 80%,rgba(122,171,184,.08) 0%,transparent 40%),
+    linear-gradient(180deg,#050d18 0%,#020508 100%);
+}
+#sMenu::before{
+  content:'';position:absolute;inset:0;
+  background:url('dual_bg.png') center/cover no-repeat;
+  opacity:.12;filter:saturate(1.4) brightness(.6);
+}
+
+.menu-card{
+  position:relative;z-index:2;
+  width:min(540px,93vw);
+  padding:2.5rem 2rem 2rem;
+  border-radius:12px;
+  background:linear-gradient(160deg,rgba(0,20,35,.8),rgba(0,5,12,.92));
+  border:1px solid rgba(0,229,255,.18);
+  box-shadow:0 0 80px rgba(0,229,255,.1),0 0 160px rgba(0,229,255,.05),inset 0 1px 0 rgba(0,229,255,.15);
+  backdrop-filter:blur(12px);
+  display:flex;flex-direction:column;align-items:center;gap:1.6rem;
+}
+.mc-rule-top{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.5),transparent)}
+.mc-rule-bot{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,135,42,.4),transparent)}
+
+.logo-dual{
+  font-family:var(--ff1);
+  font-size:clamp(3.8rem,14vw,6.5rem);
+  font-weight:900;color:#fff;
+  letter-spacing:.12em;line-height:1;
+  text-shadow:0 0 25px var(--c),0 0 60px rgba(0,229,255,.35),0 3px 0 rgba(0,0,0,.9);
+}
+.logo-sub{
+  font-family:var(--ff3);
+  font-size:clamp(.58rem,2.2vw,.82rem);
+  color:var(--c);letter-spacing:.32em;
+  margin-top:.3rem;text-align:center;
+}
+.logo-tag{
+  font-size:.6rem;color:#3a5a6a;
+  letter-spacing:.12em;margin-top:.2rem;text-align:center;
+}
+
+.menu-vs{
+  display:flex;align-items:center;justify-content:center;
+  gap:1.5rem;width:100%;
+}
+.mv-char{display:flex;flex-direction:column;align-items:center;gap:.4rem}
+.mv-orb{
+  width:58px;height:58px;border-radius:50%;
+  border:2px solid;position:relative;overflow:hidden;
+  animation:orbBreath 2.8s ease-in-out infinite;
+}
+.mv-orb.earth{
+  border-color:var(--earth);
+  background:radial-gradient(circle at 35% 30%,rgba(200,135,42,.6),rgba(80,35,5,.4));
+  box-shadow:0 0 22px rgba(200,135,42,.55);
+}
+.mv-orb.wind{
+  border-color:var(--wind);
+  background:radial-gradient(circle at 35% 30%,rgba(122,171,184,.5),rgba(20,50,65,.4));
+  box-shadow:0 0 22px rgba(122,171,184,.5);
+  animation-delay:.9s;
+}
+/* Lin silhouette inside orb */
+.mv-orb.earth::after{
+  content:'';position:absolute;
+  left:50%;top:30%;transform:translateX(-50%);
+  width:22px;height:28px;
+  background:rgba(200,135,42,.8);
+  clip-path:polygon(30% 0,70% 0,85% 30%,70% 100%,30% 100%,15% 30%);
+  filter:blur(.5px);
+}
+/* Aeronyx silhouette inside orb */
+.mv-orb.wind::after{
+  content:'';position:absolute;
+  left:50%;top:25%;transform:translateX(-50%);
+  width:20px;height:20px;
+  border-radius:50%;
+  border:3px solid rgba(0,229,255,.7);
+  box-shadow:0 0 10px var(--c);
+}
+@keyframes orbBreath{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.mv-name{font-family:var(--ff1);font-size:.72rem;letter-spacing:.1em}
+.mv-power{font-size:.55rem;color:#3a5a6a;letter-spacing:.15em}
+.mv-vs{font-family:var(--ff3);font-size:.7rem;color:#1a2a35;letter-spacing:.15em}
+
+.btn-start{
+  position:relative;width:100%;max-width:320px;
+  padding:1rem 2rem;
+  border:1px solid var(--c);border-radius:6px;
+  background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(0,150,180,.06));
+  color:var(--c);font-family:var(--ff1);
+  font-size:clamp(.82rem,3vw,1.05rem);
+  letter-spacing:.2em;cursor:pointer;
+  overflow:hidden;transition:all .2s;
+  box-shadow:0 0 25px rgba(0,229,255,.18),inset 0 0 25px rgba(0,229,255,.04);
+}
+.btn-start:hover{background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(0,180,220,.12));box-shadow:0 0 40px rgba(0,229,255,.35);transform:translateY(-1px)}
+.btn-start:active{transform:translateY(0)}
+.btn-shimmer{position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(0,229,255,.18),transparent);animation:shimmer 2.5s linear infinite}
+@keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+.btn-txt{position:relative;z-index:1}
+
+.menu-hints{
+  display:flex;align-items:center;gap:.5rem;
+  flex-wrap:wrap;justify-content:center;
+}
+.mh-item{font-family:var(--ff3);font-size:.52rem;color:#2a4050}
+.mh-sep{color:#141e25;font-size:.5rem}
+
+/* ══════════════════════════════
+   GAME SCREEN
+══════════════════════════════ */
+#sGame{flex-direction:column;background:var(--bg)}
+
+/* Atmospheric bg */
+.g-bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.25) 55%,rgba(0,0,0,.7) 100%),
+    url('dual_bg.png') center/cover no-repeat;
+  filter:brightness(.48) saturate(1.1);
+}
+.g-storm{
+  position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 78% 28%,rgba(122,171,184,.2) 0%,transparent 32%),
+    radial-gradient(ellipse at 18% 65%,rgba(200,135,42,.14) 0%,transparent 28%);
+}
+.g-rain{
+  position:absolute;inset:-8%;pointer-events:none;
+  background-image:linear-gradient(108deg,rgba(180,220,255,.2) 1px,transparent 1px);
+  background-size:36px 54px;opacity:.16;
+  animation:rainFall .36s linear infinite;
+}
+@keyframes rainFall{to{transform:translate(-36px,54px)}}
+.g-vignette{position:absolute;inset:0;box-shadow:inset 0 0 200px rgba(0,0,0,.85);pointer-events:none;z-index:1}
+
+/* ══ HUD TOP ══ */
+#hud{
+  position:relative;z-index:20;
+  display:flex;align-items:stretch;
+  height:88px;padding:7px 10px;gap:8px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.9),rgba(0,0,0,.55));
+  border-bottom:1px solid rgba(0,229,255,.1);
+  flex-shrink:0;
+}
+
+/* Fighter card */
+.fcard{
+  flex:1;display:flex;align-items:center;gap:9px;
+  background:var(--panel);
+  border-radius:9px;padding:7px 9px;
+  border:1px solid rgba(0,229,255,.1);
+  backdrop-filter:blur(8px);min-width:0;
+}
+.fcard.lin{border-color:rgba(200,135,42,.3)}
+.fcard.boss{flex-direction:row-reverse;border-color:rgba(122,171,184,.25)}
+
+/* Portrait */
+.portrait{
+  flex-shrink:0;width:54px;height:54px;
+  border-radius:8px;position:relative;overflow:hidden;border:1px solid;
+}
+.portrait.lin-p{
+  border-color:var(--earth);
+  background:radial-gradient(circle at 40% 30%,#2a1408,#080402);
+  box-shadow:0 0 14px rgba(200,135,42,.45);
+}
+.portrait.boss-p{
+  border-color:var(--wind);
+  background:radial-gradient(circle at 40% 30%,#071420,#020508);
+  box-shadow:0 0 14px rgba(0,229,255,.4);
+}
+/* Lin portrait art */
+.lin-art{position:absolute;inset:0}
+.la-cap{position:absolute;left:7px;top:7px;width:40px;height:9px;background:#040506;border-radius:7px}
+.la-head{position:absolute;left:16px;top:13px;width:22px;height:24px;background:#201410;border-radius:50%}
+.la-body{position:absolute;left:11px;top:36px;width:32px;height:14px;background:linear-gradient(#1c252c,#050607);border-radius:5px}
+.la-rock{position:absolute;width:7px;height:7px;background:linear-gradient(135deg,#c8872a,#7a3d12);clip-path:polygon(50% 0,100% 38%,78% 100%,22% 100%,0 38%);box-shadow:0 0 6px rgba(200,135,42,.8);animation:floatRk 2s ease-in-out infinite}
+.la-r1{left:5px;top:28px}.la-r2{right:5px;top:20px;animation-delay:.5s}
+@keyframes floatRk{50%{transform:translateY(-5px) rotate(8deg)}}
+/* Boss portrait art */
+.boss-art{position:absolute;inset:0}
+.ba-ring{position:absolute;border-radius:50%;border:2px solid rgba(0,229,255,.4);animation:spinRing 3.5s linear infinite}
+.ba-r1{inset:7px}.ba-r2{inset:15px;animation-direction:reverse;border-color:rgba(0,229,255,.2)}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+.ba-eye{position:absolute;width:7px;height:4px;background:var(--c);border-radius:50%;box-shadow:0 0 8px var(--c);top:24px;animation:eyeP 1.8s ease-in-out infinite}
+.ba-e1{left:13px}.ba-e2{right:13px;animation-delay:.5s}
+@keyframes eyeP{50%{opacity:.2}}
+
+/* Fighter info */
+.finfo{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.finfo.r{align-items:flex-end}
+.fname{font-family:var(--ff1);font-size:clamp(.55rem,1.8vw,.78rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ftitle{font-family:var(--ff2);font-size:.45rem;color:#3a5a6a;font-weight:400;display:block;letter-spacing:.04em}
+.brow{display:flex;align-items:center;gap:5px;width:100%}
+.brow.r{flex-direction:row-reverse}
+.bar{flex:1;height:9px;background:rgba(255,255,255,.06);border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
+.bar i{display:block;height:100%;border-radius:20px;transition:width .45s ease}
+.bar.hp i{background:linear-gradient(90deg,#b02020,#e74c3c,#ff6b6b);box-shadow:0 0 7px rgba(231,76,60,.6)}
+.bar.bp i{background:linear-gradient(90deg,#7a3a08,#c8872a);box-shadow:0 0 7px rgba(200,135,42,.5)}
+.bar.eco i{background:linear-gradient(90deg,var(--smoke),#d7aaff);height:6px;box-shadow:0 0 5px rgba(155,89,182,.6)}
+.bar.eco{height:6px}
+.bval{font-family:var(--ff3);font-size:.52rem;color:#3a5a6a;white-space:nowrap}
+.ftag{font-family:var(--ff3);font-size:.44rem;letter-spacing:.05em;margin-top:1px}
+.ftag.e{color:var(--earth)}.ftag.w{color:var(--wind)}
+
+/* Chapter center */
+.chap{
+  flex-shrink:0;min-width:105px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+  background:var(--panel);border-radius:9px;border:1px solid rgba(0,229,255,.12);
+  padding:5px 10px;backdrop-filter:blur(8px);
+}
+.ch-label{font-family:var(--ff3);font-size:.44rem;color:var(--c);letter-spacing:.15em}
+.ch-name{font-family:var(--ff1);font-size:clamp(.44rem,1.4vw,.6rem);text-align:center}
+.ch-moves-l{font-family:var(--ff3);font-size:.4rem;color:#2a4050;letter-spacing:.12em;display:block;margin-top:3px}
+.ch-moves-n{font-family:var(--ff3);font-size:1.6rem;line-height:1;color:#fff;text-shadow:0 0 10px rgba(0,229,255,.5)}
+
+/* ══ BATTLE AREA ══ */
+#battle{
+  position:relative;z-index:5;
+  flex:1;display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;overflow:hidden;
+}
+
+/* ── LIN SIDE ── */
+.hero-side,.boss-side{
+  height:100%;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:.5rem;gap:.6rem;
+}
+
+/* Lin big figure — CSS art */
+.lin-fig{
+  position:relative;
+  width:min(160px,18vw);height:min(280px,36vh);
+  filter:drop-shadow(0 0 28px rgba(200,135,42,.3));
+  flex:1;
+}
+.lin-aura{
+  position:absolute;inset:-25px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,135,42,.1) 0%,transparent 65%);
+  animation:auraP 3s ease-in-out infinite;
+}
+@keyframes auraP{50%{transform:scale(1.12);opacity:.5}}
+.lf-cap{position:absolute;left:52px;top:26px;width:70px;height:15px;background:#030405;border-radius:10px;z-index:2}
+.lf-head{position:absolute;left:60px;top:36px;width:44px;height:48px;background:#201410;border-radius:50%}
+.lf-body{position:absolute;left:46px;top:86px;width:66px;height:106px;background:linear-gradient(175deg,#1c252c,#050607);border-radius:20px 20px 9px 9px}
+.lf-bag{position:absolute;left:22px;top:98px;width:34px;height:68px;background:#030405;border-radius:14px}
+.lf-rock{position:absolute;width:24px;height:24px;background:linear-gradient(135deg,#c8872a,#7a3d12,#3d1600);clip-path:polygon(50% 0,100% 36%,80% 100%,20% 100%,0 36%);box-shadow:0 0 12px rgba(200,135,42,.7);animation:floatBig 2.4s ease-in-out infinite}
+.lf-r1{left:20px;top:48px;animation-delay:0s}
+.lf-r2{right:26px;top:128px;animation-delay:.5s}
+.lf-r3{left:16px;bottom:54px;animation-delay:1s}
+@keyframes floatBig{50%{transform:translateY(-14px) rotate(9deg)}}
+
+/* side panel */
+.spanel{
+  width:min(165px,19vw);padding:9px 11px;
+  background:rgba(0,0,0,.68);border:1px solid rgba(255,255,255,.09);
+  border-radius:9px;backdrop-filter:blur(6px);
+  font-size:.65rem;color:#7a9aaa;line-height:1.4;
+}
+.sp-lbl{font-family:var(--ff3);font-size:.5rem;letter-spacing:.1em;margin-bottom:3px}
+.sp-lbl.e{color:var(--earth)}.sp-lbl.w{color:var(--wind)}
+
+/* ── BOARD ── */
+#bwrap{
+  padding:10px;border-radius:16px;
+  background:rgba(0,0,0,.58);
+  border:1px solid rgba(0,229,255,.15);
+  box-shadow:0 0 60px rgba(0,229,255,.09),inset 0 0 40px rgba(0,0,0,.6);
+  position:relative;
+}
+/* Corner accents */
+#bwrap::before,#bwrap::after{
+  content:'';position:absolute;
+  width:14px;height:14px;border-color:var(--c);border-style:solid;
+}
+#bwrap::before{top:-1px;left:-1px;border-width:2px 0 0 2px;border-radius:3px 0 0 0}
+#bwrap::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0;border-radius:0 0 3px 0}
+.bwrap-corner2{position:absolute;top:-1px;right:-1px;width:14px;height:14px;border:2px solid var(--c);border-left:none;border-bottom:none;border-radius:0 3px 0 0}
+.bwrap-corner3{position:absolute;bottom:-1px;left:-1px;width:14px;height:14px;border:2px solid var(--c);border-right:none;border-top:none;border-radius:0 0 0 3px}
+
+#board{
+  display:grid;
+  grid-template-columns:repeat(8,50px);
+  grid-template-rows:repeat(8,50px);
+  gap:4px;
+}
+
+/* ── GEMS ── */
+.gem{
+  width:50px;height:50px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);
+  transition:transform .12s,box-shadow .12s;
+}
+/* Crystal facet */
+.gem::before{
+  content:'';position:absolute;
+  top:7%;left:13%;width:28%;height:42%;
+  background:linear-gradient(135deg,rgba(255,255,255,.3) 0%,transparent 100%);
+  clip-path:polygon(50% 0,100% 38%,72% 100%,28% 100%,0 38%);
+  pointer-events:none;
+}
+/* Second highlight */
+.gem::after{
+  content:'';position:absolute;
+  bottom:8%;right:10%;width:18%;height:18%;
+  background:rgba(255,255,255,.12);
+  border-radius:50%;pointer-events:none;
+}
+
+.gem.lin  {background:radial-gradient(circle at 36% 26%,#f0c070,#a05520 52%,#2e1200);box-shadow:0 0 10px rgba(200,135,42,.45),inset 0 0 10px rgba(255,200,80,.12)}
+.gem.trini{background:radial-gradient(circle at 36% 26%,#e8b0ff,#8020cc 52%,#220742);box-shadow:0 0 10px rgba(155,89,182,.5),inset 0 0 10px rgba(200,80,255,.12)}
+.gem.zak  {background:radial-gradient(circle at 36% 26%,#aaf4ff,#0099cc 52%,#052840);box-shadow:0 0 10px rgba(0,200,255,.5),inset 0 0 10px rgba(80,240,255,.12)}
+.gem.bori {background:radial-gradient(circle at 36% 26%,#ffd090,#e06000 52%,#3d1200);box-shadow:0 0 10px rgba(255,100,0,.5),inset 0 0 10px rgba(255,160,60,.12)}
+.gem.mirex{background:radial-gradient(circle at 36% 26%,#ff90a8,#aa1030 52%,#300010);box-shadow:0 0 10px rgba(180,30,60,.5),inset 0 0 10px rgba(255,60,80,.12)}
+.gem.ferr {background:radial-gradient(circle at 36% 26%,#e8eef8,#8090a0 52%,#202830);box-shadow:0 0 8px rgba(150,165,180,.4),inset 0 0 10px rgba(220,235,255,.08)}
+
+.gem.sel{transform:scale(1.15);outline:2px solid rgba(255,255,255,.9);outline-offset:1px;z-index:5;box-shadow:0 0 22px rgba(255,255,255,.55),0 0 44px rgba(255,255,255,.2)!important}
+
+.gem.special{
+  border:2px solid #fff;
+  box-shadow:0 0 22px #fff,0 0 44px rgba(255,255,255,.4),inset 0 0 18px rgba(255,255,255,.3)!important;
+  animation:specPulse 1.8s ease-in-out infinite;
+}
+.gem.special .star-icon{
+  position:absolute;font-size:20px;
+  color:rgba(255,255,255,.9);text-shadow:0 0 10px #fff;
+  animation:spinStar 3s linear infinite;
+  pointer-events:none;
+}
+@keyframes specPulse{50%{filter:brightness(1.45)}}
+@keyframes spinStar{to{transform:rotate(360deg)}}
+
+.gem.match{animation:gemPop .25s ease-out forwards}
+@keyframes gemPop{0%{transform:scale(1)}40%{transform:scale(1.32);filter:brightness(2.2)}100%{transform:scale(.05);opacity:0}}
+
+.gem.fall{animation:fallIn .22s ease-out}
+@keyframes fallIn{from{transform:translateY(-28px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* ── AERONYX FIGURE ── */
+.boss-fig{
+  position:relative;
+  width:min(200px,22vw);height:min(280px,36vh);
+  filter:drop-shadow(0 0 30px rgba(0,229,255,.28));
+  flex:1;
+}
+.aero-glow{
+  position:absolute;inset:-30px;border-radius:50%;
+  background:radial-gradient(circle,rgba(0,229,255,.07) 0%,transparent 55%);
+  animation:auraP 3s ease-in-out infinite .5s;
+}
+.wring{
+  position:absolute;border-radius:50%;
+  border:7px solid rgba(0,229,255,.18);
+  filter:blur(1px);animation:spin 5s linear infinite;
+}
+.wr1{inset:18px}.wr2{inset:55px;animation-direction:reverse;border-color:rgba(200,220,235,.14)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.aero-core{
+  position:absolute;left:65px;top:82px;
+  width:85px;height:125px;
+  background:linear-gradient(135deg,#03080e,#111d28);
+  clip-path:polygon(50% 0,87% 17%,74% 100%,26% 100%,13% 17%);
+  box-shadow:0 0 40px rgba(0,229,255,.28);
+}
+.aero-eye{
+  position:absolute;top:136px;
+  width:19px;height:10px;
+  background:var(--c);border-radius:50%;
+  box-shadow:0 0 18px var(--c),0 0 36px rgba(0,229,255,.5);
+  animation:eyeBoss 1.7s ease-in-out infinite;
+}
+.ae1{left:94px}.ae2{right:94px;animation-delay:.45s}
+@keyframes eyeBoss{50%{opacity:.15;box-shadow:0 0 5px var(--c)}}
+.aclaw{
+  position:absolute;width:60px;height:18px;
+  background:#050d14;
+  clip-path:polygon(0 45%,82% 0,100% 48%,82% 100%);
+  top:182px;box-shadow:0 0 7px rgba(0,229,255,.18);
+}
+.ac1{left:18px;transform:rotate(22deg)}.ac2{right:18px;transform:scaleX(-1) rotate(22deg)}
+/* Aeronyx tendrils */
+.tendril{
+  position:absolute;width:3px;border-radius:3px;
+  background:linear-gradient(to bottom,rgba(0,229,255,.4),transparent);
+  animation:tendrilWave 2s ease-in-out infinite;
+  transform-origin:top center;
+}
+.t1{height:60px;left:30px;top:60px;animation-delay:0s}
+.t2{height:45px;right:25px;top:70px;animation-delay:.4s}
+.t3{height:50px;left:50px;top:180px;animation-delay:.8s}
+@keyframes tendrilWave{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+
+/* ══ BOTTOM BAR ══ */
+#bottom{
+  position:relative;z-index:20;
+  display:flex;align-items:center;
+  padding:7px 10px;gap:9px;
+  height:90px;flex-shrink:0;
+  background:linear-gradient(to top,rgba(0,0,0,.92),rgba(0,0,0,.6));
+  border-top:1px solid rgba(0,229,255,.1);
+}
+
+.objective{
+  padding:9px 13px;flex-shrink:0;
+  background:var(--panel);border:1px solid rgba(0,229,255,.12);
+  border-radius:9px;backdrop-filter:blur(8px);min-width:190px;
+}
+.obj-t{font-family:var(--ff3);font-size:.48rem;color:var(--c);letter-spacing:.15em;margin-bottom:3px}
+.obj-b{font-size:.65rem;color:#6a8a9a;line-height:1.4}
+.obj-b em{color:var(--c);font-style:normal}
+
+.skills{
+  display:flex;gap:5px;padding:7px;
+  background:var(--panel);border:1px solid rgba(0,229,255,.1);
+  border-radius:9px;backdrop-filter:blur(8px);
+}
+.skill{
+  width:68px;height:70px;border-radius:8px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;font-size:.62rem;font-weight:700;cursor:default;
+}
+.skill small{font-size:.44rem;color:#3a5a6a;font-weight:400}
+.sk-orb{width:20px;height:20px;border-radius:50%;margin-bottom:1px;border:1px solid rgba(255,255,255,.15)}
+.sk-e{background:radial-gradient(circle at 35%,#c8872a,#3d1600);box-shadow:0 0 8px rgba(200,135,42,.6)}
+.sk-s{background:radial-gradient(circle at 35%,#9b59b6,#220742);box-shadow:0 0 8px rgba(155,89,182,.6)}
+.sk-t{background:radial-gradient(circle at 35%,#00bcd4,#005060);box-shadow:0 0 8px rgba(0,200,220,.6)}
+.s-lin.active{border-color:rgba(200,135,42,.45);box-shadow:0 0 12px rgba(200,135,42,.18)}
+.s-tri{border-color:rgba(155,89,182,.3)}
+.s-zak{border-color:rgba(0,200,220,.3)}
+.locked{opacity:.4}
+
+/* ECO circle */
+.eco-wrap{margin-left:auto;flex-shrink:0}
+.eco-circle{
+  width:76px;height:76px;position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+.eco-svg{position:absolute;inset:0;width:100%;height:100%}
+#ecoArc{transition:stroke-dashoffset .5s ease}
+.eco-inner{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:0;
+}
+.eco-inner span{font-family:var(--ff3);font-size:.4rem;color:#2a6070;letter-spacing:.1em}
+.eco-inner b{font-family:var(--ff1);font-size:.95rem;color:var(--c);line-height:1;text-shadow:0 0 10px var(--c)}
+.eco-inner em{font-family:var(--ff3);font-size:.46rem;color:#aaeeff;font-style:normal}
+
+/* ══ ULTIMATE OVERLAY ══ */
+#ultimate{
+  position:absolute;inset:0;z-index:40;
+  display:none;align-items:center;justify-content:center;
+  flex-direction:column;gap:1rem;text-align:center;
+  background:rgba(0,0,0,.78);backdrop-filter:blur(5px);
+}
+#ultimate.show{display:flex}
+.ult-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(0,229,255,.25),transparent 55%);
+  animation:ultBg .35s linear infinite;
+}
+@keyframes ultBg{50%{opacity:.35}}
+.ult-wave{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:10px;height:10px;
+  border:3px solid var(--c);border-radius:50%;
+  animation:waveExpand .9s ease-out;
+}
+@keyframes waveExpand{to{width:500px;height:500px;opacity:0}}
+/* Ultimate char art */
+#ultChar{
+  position:relative;z-index:1;
+  width:190px;height:230px;border-radius:22px;
+  background:linear-gradient(175deg,#1b252c,#050607);
+  box-shadow:0 0 80px var(--c);
+  border:1px solid rgba(0,229,255,.3);
+  overflow:hidden;
+}
+#ultChar::before{content:'';position:absolute;left:65px;top:-42px;width:62px;height:62px;border-radius:50%;background:#201410}
+#ultChar::after{content:'';position:absolute;left:48px;top:-50px;width:98px;height:21px;border-radius:17px;background:#030405}
+.uc-rocks{position:absolute;inset:0}
+.uc-r{
+  position:absolute;background:linear-gradient(135deg,#c8872a,#7a3d12);
+  clip-path:polygon(50% 0,100% 36%,80% 100%,20% 100%,0 36%);
+  box-shadow:0 0 14px rgba(200,135,42,.8);
+  animation:floatBig 2s ease-in-out infinite;
+}
+.uc-r1{width:30px;height:30px;left:30px;top:80px;animation-delay:0s}
+.uc-r2{width:22px;height:22px;right:28px;top:110px;animation-delay:.4s}
+.uc-r3{width:18px;height:18px;left:50px;bottom:40px;animation-delay:.8s}
+
+#ultTitle{
+  position:relative;z-index:1;
+  font-family:var(--ff1);
+  font-size:clamp(1.8rem,6vw,3.5rem);
+  letter-spacing:.1em;
+  text-shadow:0 0 40px var(--c),0 0 80px rgba(0,229,255,.4);
+  animation:ultIn .4s ease-out;
+}
+@keyframes ultIn{from{transform:scale(1.7);opacity:0}}
+#ultText{position:relative;z-index:1;font-size:.95rem;color:#aaddee;letter-spacing:.05em}
+
+/* ══ MESSAGE POPUP ══ */
+#msg{
+  position:absolute;left:50%;top:44%;
+  transform:translate(-50%,-50%);
+  z-index:30;
+  font-family:var(--ff1);
+  font-size:clamp(1.3rem,5vw,2.2rem);
+  font-weight:900;text-align:center;
+  color:var(--c);
+  text-shadow:0 0 28px var(--c),0 0 56px rgba(0,229,255,.4);
+  pointer-events:none;opacity:0;
+  transition:opacity .2s,transform .2s;
+  white-space:nowrap;
+}
+#msg.show{opacity:1;transform:translate(-50%,-50%) scale(1.06)}
+
+/* ══════════════════════════════
+   END SCREEN
+══════════════════════════════ */
+#sEnd{
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(0,229,255,.1) 0%,transparent 50%),
+    linear-gradient(180deg,#040c18 0%,#020508 100%);
+}
+.end-card{
+  position:relative;z-index:2;
+  width:min(480px,90vw);padding:2.5rem 2rem;
+  border-radius:12px;
+  background:rgba(0,8,18,.9);
+  border:1px solid rgba(0,229,255,.18);
+  box-shadow:0 0 60px rgba(0,229,255,.1);
+  backdrop-filter:blur(12px);
+  display:flex;flex-direction:column;align-items:center;gap:1.2rem;
+  text-align:center;
+}
+.end-rule{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.5),transparent)}
+#endTitle{font-family:var(--ff1);font-size:clamp(2rem,8vw,3rem);color:var(--c);text-shadow:0 0 25px var(--c)}
+#endText{font-size:.9rem;color:#6a8a9a;line-height:1.6;max-width:340px}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  #hud{height:72px}
+  .portrait{display:none}
+  .ftitle,.ftag{display:none}
+  .ch-moves-n{font-size:1.3rem}
+  #battle{grid-template-columns:0 auto 0}
+  .hero-side,.boss-side{display:none}
+  #board{grid-template-columns:repeat(8,40px);grid-template-rows:repeat(8,40px);gap:3px}
+  .gem{width:40px;height:40px;border-radius:9px}
+  #bottom{height:84px;padding:5px 8px;gap:7px}
+  .objective{display:none}
+  .skill{width:58px;height:60px;font-size:.58rem}
+  .eco-circle{width:64px;height:64px}
+  .eco-inner b{font-size:.85rem}
+}
+@media(max-width:480px){
+  #board{
+    grid-template-columns:repeat(8,calc((100vw - 42px)/8));
+    grid-template-rows:repeat(8,calc((100vw - 42px)/8));
+  }
+  .gem{width:100%;height:100%}
+}
+</style>
+</head>
+<body>
+<canvas id="rainCanvas"></canvas>
+<div id="app">
+
+<!-- ══ MENU ══ -->
+<section id="sMenu" class="screen active">
+  <div class="menu-card">
+    <div class="mc-rule-top"></div>
+    <div>
+      <div class="logo-dual">DUAL</div>
+      <div class="logo-sub">— ECHO FRAGMENTS —</div>
+      <div class="logo-tag">UN MUNDO QUE SE HUNDE · UN ECO QUE DESPIERTA</div>
+    </div>
+    <div class="menu-vs">
+      <div class="mv-char">
+        <div class="mv-orb earth"></div>
+        <div class="mv-name">LIN</div>
+        <div class="mv-power">TIERRA</div>
+      </div>
+      <div class="mv-vs">VS</div>
+      <div class="mv-char">
+        <div class="mv-orb wind"></div>
+        <div class="mv-name">AERONYX</div>
+        <div class="mv-power">VIENTO</div>
+      </div>
+    </div>
+    <button class="btn-start" id="startBtn">
+      <span class="btn-shimmer"></span>
+      <span class="btn-txt">▶ &nbsp;COMENZAR</span>
+    </button>
+    <div class="menu-hints">
+      <span class="mh-item">3 iguales → Daño</span>
+      <span class="mh-sep">·</span>
+      <span class="mh-item">4 → Fragmento especial</span>
+      <span class="mh-sep">·</span>
+      <span class="mh-item">5 → Super Eco</span>
+    </div>
+    <div class="mc-rule-bot"></div>
+  </div>
+</section>
+
+<!-- ══ GAME ══ -->
+<section id="sGame" class="screen">
+  <div class="g-bg"></div>
+  <div class="g-storm"></div>
+  <div class="g-rain"></div>
+  <div class="g-vignette"></div>
+
+  <!-- HUD -->
+  <div id="hud">
+    <!-- LIN -->
+    <div class="fcard lin">
+      <div class="portrait lin-p">
+        <div class="lin-art">
+          <div class="la-cap"></div>
+          <div class="la-head"></div>
+          <div class="la-body"></div>
+          <div class="la-rock la-r1"></div>
+          <div class="la-rock la-r2"></div>
+        </div>
+      </div>
+      <div class="finfo">
+        <div class="fname">LIN <span class="ftitle">GUARDIÁN DE LA TIERRA</span></div>
+        <div class="brow">
+          <div class="bar hp"><i id="linHp" style="width:100%"></i></div>
+          <span class="bval" id="linHpN">100</span>
+        </div>
+        <div class="brow">
+          <div class="bar eco"><i id="ecoMeter" style="width:0%"></i></div>
+          <span class="bval" style="color:var(--smoke)">Eco</span>
+        </div>
+        <div class="ftag e">ECO: MARRÓN · PODER: TIERRA · Daño +35%</div>
+      </div>
+    </div>
+
+    <!-- CHAPTER -->
+    <div class="chap">
+      <div class="ch-label">CAPÍTULO 1</div>
+      <div class="ch-name">Vientos del Caos</div>
+      <span class="ch-moves-l">MOVIMIENTOS</span>
+      <strong class="ch-moves-n" id="moves">30</strong>
+    </div>
+
+    <!-- AERONYX -->
+    <div class="fcard boss">
+      <div class="finfo r">
+        <div class="fname">AERONYX <span class="ftitle">SEÑOR DEL VIENTO</span></div>
+        <div class="brow r">
+          <div class="bar bp"><i id="bossHp" style="width:100%"></i></div>
+          <span class="bval" id="bossHpN">100</span>
+        </div>
+        <div class="ftag w">⚡ CONTROL DEL VIENTO</div>
+      </div>
+      <div class="portrait boss-p">
+        <div class="boss-art">
+          <div class="ba-ring ba-r1"></div>
+          <div class="ba-ring ba-r2"></div>
+          <div class="ba-eye ba-e1"></div>
+          <div class="ba-eye ba-e2"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BATTLE -->
+  <div id="battle">
+    <!-- LIN side -->
+    <div class="hero-side">
+      <div class="lin-fig">
+        <div class="lin-aura"></div>
+        <div class="lf-cap"></div>
+        <div class="lf-head"></div>
+        <div class="lf-body"></div>
+        <div class="lf-bag"></div>
+        <div class="lf-rock lf-r1"></div>
+        <div class="lf-rock lf-r2"></div>
+        <div class="lf-rock lf-r3"></div>
+      </div>
+      <div class="spanel">
+        <div class="sp-lbl e">PODER: TIERRA</div>
+        <span>Los fragmentos de Lin dañan a Aeronyx.</span>
+      </div>
+    </div>
+
+    <!-- BOARD -->
+    <div id="bwrap">
+      <div class="bwrap-corner2"></div>
+      <div class="bwrap-corner3"></div>
+      <div id="board"></div>
+    </div>
+
+    <!-- AERONYX side -->
+    <div class="boss-side">
+      <div class="boss-fig">
+        <div class="aero-glow"></div>
+        <div class="wring wr1"></div>
+        <div class="wring wr2"></div>
+        <div class="tendril t1"></div>
+        <div class="tendril t2"></div>
+        <div class="tendril t3"></div>
+        <div class="aero-core"></div>
+        <div class="aero-eye ae1"></div>
+        <div class="aero-eye ae2"></div>
+        <div class="aclaw ac1"></div>
+        <div class="aclaw ac2"></div>
+      </div>
+      <div class="spanel">
+        <div class="sp-lbl w">AERONYX</div>
+        <span>Sus ráfagas mueven el tablero y dañan a Lin.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM -->
+  <div id="bottom">
+    <div class="objective">
+      <div class="obj-t">OBJETIVO</div>
+      <div class="obj-b">Derrotá a <em>Aeronyx</em> antes de quedarte sin movimientos.</div>
+    </div>
+    <div class="skills">
+      <div class="skill s-lin active">
+        <div class="sk-orb sk-e"></div>
+        <b>LIN</b><small>Roca gigante</small>
+      </div>
+      <div class="skill s-tri">
+        <div class="sk-orb sk-s"></div>
+        <b>TRINI</b><small>Niebla</small>
+      </div>
+      <div class="skill s-zak">
+        <div class="sk-orb sk-t"></div>
+        <b>ZAK</b><small>Glitch</small>
+      </div>
+      <div class="skill locked">
+        <div style="font-size:.9rem">🔒</div>
+        <b>???</b><small>Bloq.</small>
+      </div>
+    </div>
+    <div class="eco-wrap">
+      <div class="eco-circle">
+        <svg class="eco-svg" viewBox="0 0 76 76">
+          <circle cx="38" cy="38" r="33" fill="none" stroke="rgba(0,229,255,0.12)" stroke-width="4"/>
+          <circle id="ecoArc" cx="38" cy="38" r="33" fill="none" stroke="#00e5ff" stroke-width="3"
+            stroke-dasharray="207" stroke-dashoffset="207"
+            stroke-linecap="round" transform="rotate(-90 38 38)"/>
+        </svg>
+        <div class="eco-inner">
+          <span>MODO</span>
+          <b>ECO</b>
+          <em id="ecoText">0%</em>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ULTIMATE -->
+  <div id="ultimate">
+    <div class="ult-bg"></div>
+    <div class="ult-wave"></div>
+    <div id="ultChar">
+      <div class="uc-rocks">
+        <div class="uc-r uc-r1"></div>
+        <div class="uc-r uc-r2"></div>
+        <div class="uc-r uc-r3"></div>
+      </div>
+    </div>
+    <h2 id="ultTitle">SUPER ECO</h2>
+    <p id="ultText">El tablero responde al poder.</p>
+  </div>
+
+  <div id="msg"></div>
+</section>
+
+<!-- ══ END ══ -->
+<section id="sEnd" class="screen">
+  <div class="end-card">
+    <div class="end-rule"></div>
+    <div class="logo-dual" style="font-size:clamp(2.5rem,10vw,4.5rem)">DUAL</div>
+    <h2 id="endTitle">Victoria</h2>
+    <p id="endText"></p>
+    <button class="btn-start" id="againBtn" style="margin-top:.5rem">
+      <span class="btn-shimmer"></span>
+      <span class="btn-txt">↺ &nbsp;JUGAR DE NUEVO</span>
+    </button>
+    <div class="end-rule"></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════
+   DUAL: Echo Fragments — Game Logic
+   ═══════════════════════════════════════ */
+
+// ── Rain canvas ──
+(function(){
+  const c=document.getElementById('rainCanvas'),ctx=c.getContext('2d');
+  let drops=[];
+  function resize(){c.width=innerWidth;c.height=innerHeight}
+  resize();window.addEventListener('resize',resize);
+  for(let i=0;i<110;i++)drops.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,len:10+Math.random()*22,speed:5+Math.random()*9,op:.06+Math.random()*.22});
+  function draw(){
+    ctx.clearRect(0,0,c.width,c.height);
+    drops.forEach(d=>{
+      ctx.strokeStyle=`rgba(160,220,255,${d.op})`;ctx.lineWidth=.6;
+      ctx.beginPath();ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-1,d.y+d.len);ctx.stroke();
+      d.y+=d.speed;if(d.y>c.height){d.y=-d.len;d.x=Math.random()*innerWidth}
+    });requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── Game State ──
+const boardEl=document.getElementById('board'),msgEl=document.getElementById('msg');
+const W=8,H=8;
+let board=[],sel=null,moves=30,linHp=100,bossHp=100,eco=0,locked=false;
+
+const TYPES=[
+  {id:'lin',   d:8, ult:'LIN: TERREMOTO',       txt:'Lin golpea el suelo. El tablero tiembla y los fragmentos se dispersan.',  col:'#c8872a'},
+  {id:'trini', d:7, ult:'TRINI: NIEBLA FANTASMA',txt:'Trini cubre todo con humo. El tablero renace desde las cenizas.',         col:'#9b59b6'},
+  {id:'zak',   d:7, ult:'ZAK: INTERFERENCIA',    txt:'Zak glitchea los fragmentos. Las posiciones cambian en el caos digital.', col:'#00bcd4'},
+  {id:'bori',  d:4, ult:'BORINEX: VELOCIDAD',    txt:'La velocidad corrupta castiga a Lin con fuerza devastadora.',             col:'#ff6a00'},
+  {id:'mirex', d:4, ult:'MIREX: ILUSIÓN',        txt:'Mirex distorsiona el tablero. Nada es lo que parece.',                   col:'#8b1a3a'},
+  {id:'ferr',  d:4, ult:'FERRONIX: METAL',       txt:'Ferronix endurece los fragmentos. El tablero se vuelve más denso.',      col:'#7a8a9a'},
+];
+
+function rg(){return{...TYPES[Math.floor(Math.random()*TYPES.length)],s:false,matched:false}}
+
+// ── Screens ──
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.display='none'});
+  const s=document.getElementById(id);s.classList.add('active');s.style.display='flex';
+}
+
+function start(){
+  moves=30;linHp=100;bossHp=100;eco=0;sel=null;locked=false;
+  board=Array.from({length:H},()=>Array.from({length:W},rg));
+  // avoid initial matches
+  let tries=0;
+  while(matches().length&&tries<20){board=Array.from({length:H},()=>Array.from({length:W},rg));tries++}
+  showScreen('sGame');
+  render();
+}
+
+// ── Render ──
+function render(){
+  boardEl.innerHTML='';
+  document.getElementById('moves').textContent=moves;
+  // HP bars
+  document.getElementById('linHp').style.width=linHp+'%';
+  document.getElementById('linHpN').textContent=linHp;
+  document.getElementById('bossHp').style.width=bossHp+'%';
+  document.getElementById('bossHpN').textContent=bossHp;
+  // Eco
+  document.getElementById('ecoMeter').style.width=eco+'%';
+  document.getElementById('ecoText').textContent=eco+'%';
+  // Eco SVG arc
+  const arc=document.getElementById('ecoArc');
+  if(arc){const circ=207;arc.style.strokeDashoffset=circ-(circ*eco/100)}
+
+  // Color moves red when low
+  const movesEl=document.getElementById('moves');
+  movesEl.style.color=moves<=5?'#e74c3c':'#fff';
+
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const g=board[y][x];
+    const e=document.createElement('div');
+    let cls='gem '+g.id;
+    if(g.s)cls+=' special';
+    if(g.matched)cls+=' match';
+    if(sel&&sel.x===x&&sel.y===y)cls+=' sel';
+    e.className=cls;
+    if(g.s){const star=document.createElement('span');star.className='star-icon';star.textContent='✦';e.appendChild(star)}
+    e.addEventListener('click',()=>tap(x,y));
+    // Touch swipe
+    let tx,ty;
+    e.addEventListener('touchstart',ev=>{tx=ev.touches[0].clientX;ty=ev.touches[0].clientY},{ passive:true});
+    e.addEventListener('touchend',ev=>{
+      const dx=ev.changedTouches[0].clientX-tx,dy=ev.changedTouches[0].clientY-ty;
+      const ax=Math.abs(dx),ay=Math.abs(dy);
+      if(ax<8&&ay<8){tap(x,y);return}
+      let nx=x,ny=y;
+      if(ax>ay){nx=dx>0?x+1:x-1}else{ny=dy>0?y+1:y-1}
+      if(nx<0||nx>=W||ny<0||ny>=H)return;
+      if(locked)return;
+      if(sel){deselect()}
+      swap(x,y,nx,ny);moves--;resolve();sel=null;
+    },{passive:true});
+    boardEl.appendChild(e);
+  }
+}
+
+function tap(x,y){
+  if(locked)return;
+  const g=board[y][x];
+  if(g.s){special(x,y);return}
+  if(!sel){sel={x,y};render();return}
+  const dx=Math.abs(sel.x-x),dy=Math.abs(sel.y-y);
+  if(dx+dy===1){
+    swap(sel.x,sel.y,x,y);moves--;resolve();sel=null;
+  }else{
+    sel={x,y};
+  }
+  render();
+}
+function deselect(){sel=null}
+function swap(a,b,c,d){[board[b][a],board[d][c]]=[board[d][c],board[b][a]]}
+
+// ── Match detection ──
+function matches(){
+  const r=[];
+  // Horizontal
+  for(let y=0;y<H;y++){
+    let run=[{x:0,y}];
+    for(let x=1;x<W;x++){
+      if(board[y][x].id===board[y][x-1].id)run.push({x,y});
+      else{if(run.length>=3)r.push([...run]);run=[{x,y}]}
+    }
+    if(run.length>=3)r.push([...run]);
+  }
+  // Vertical
+  for(let x=0;x<W;x++){
+    let run=[{x,y:0}];
+    for(let y=1;y<H;y++){
+      if(board[y][x].id===board[y-1][x].id)run.push({x,y});
+      else{if(run.length>=3)r.push([...run]);run=[{x,y}]}
+    }
+    if(run.length>=3)r.push([...run]);
+  }
+  return r;
+}
+
+// ── Resolve chain ──
+function resolve(){
+  locked=true;
+  let hitAny=false,chain=0;
+  function step(){
+    const grs=matches();
+    if(!grs.length){
+      locked=false;
+      if(!hitAny)enemy();
+      checkEnd();
+      render();
+      return;
+    }
+    hitAny=true;chain++;
+    const clear=new Set();
+    grs.forEach(gr=>{
+      const f=board[gr[0].y][gr[0].x];
+      gr.forEach(p=>board[p.y][p.x].matched=true);
+      if(gr.length>=5){
+        clearGr(gr,clear);
+        superEco(f);
+      }else if(gr.length===4){
+        const p=gr[0];
+        board[p.y][p.x]={...f,s:true,matched:false};
+        gr.slice(1).forEach(q=>clear.add(q.x+','+q.y));
+        dmgBoss(f.d*2);gainEco(10);
+        popup(chain>1?'COMBO x'+chain+' · ESPECIAL':'FRAGMENTO ESPECIAL');
+      }else{
+        clearGr(gr,clear);
+        dmgBoss(f.d);gainEco(4);
+        if(chain>1)popup('COMBO x'+chain+'!');
+      }
+    });
+    render();
+    setTimeout(()=>{
+      clear.forEach(s=>{const[x,y]=s.split(',').map(Number);board[y][x]=null});
+      fall();render();
+      setTimeout(step,180);
+    },260);
+  }
+  step();
+}
+
+function clearGr(gr,clear){gr.forEach(p=>clear.add(p.x+','+p.y))}
+
+function fall(){
+  for(let x=0;x<W;x++){
+    const col=[];
+    for(let y=H-1;y>=0;y--)if(board[y][x]){board[y][x].matched=false;col.push(board[y][x])}
+    while(col.length<H)col.push(rg());
+    for(let y=H-1,i=0;y>=0;y--,i++)board[y][x]=col[i];
+  }
+}
+
+function dmgBoss(n){bossHp=Math.max(0,bossHp-n)}
+function dmgLin(n){linHp=Math.max(0,linHp-n)}
+function gainEco(n){eco=Math.min(100,eco+n)}
+
+function enemy(){
+  dmgLin(6);
+  const atks=['RÁFAGA DE VIENTO','TORNADO','CORTE AÉREO'];
+  popup(atks[Math.floor(Math.random()*atks.length)],true);
+  shuffle(false);
+}
+
+function special(x,y){
+  if(locked)return;locked=true;
+  const id=board[y][x].id;
+  for(let yy=Math.max(0,y-1);yy<=Math.min(H-1,y+1);yy++)
+    for(let xx=Math.max(0,x-1);xx<=Math.min(W-1,x+1);xx++)
+      board[yy][xx]=null;
+  dmgBoss(id==='lin'?22:16);gainEco(12);
+  popup(id==='lin'?'¡ROCA GIGANTE!':'¡FRAGMENTO ESPECIAL!');
+  fall();
+  setTimeout(()=>{locked=false;resolve()},220);
+}
+
+function superEco(f){
+  showUlt(f.ult,f.txt,f.id,f.col);
+  if(f.id==='lin'){dmgBoss(34);shake()}
+  else if(f.id==='trini'){dmgBoss(24);setTimeout(()=>board=Array.from({length:H},()=>Array.from({length:W},rg)),620)}
+  else if(f.id==='zak'){dmgBoss(26);setTimeout(()=>shuffle(false),620)}
+  else{dmgLin(14);setTimeout(()=>shuffle(false),620)}
+  gainEco(20);
+}
+
+function showUlt(title,text,id,col){
+  const u=document.getElementById('ultimate');
+  document.getElementById('ultTitle').textContent=title;
+  document.getElementById('ultText').textContent=text;
+  document.getElementById('ultTitle').style.textShadow=`0 0 40px ${col},0 0 80px ${col}44`;
+  document.getElementById('ultChar').style.boxShadow=`0 0 80px ${col}`;
+  document.getElementById('ultChar').style.borderColor=col+'55';
+  // Tint bg
+  u.querySelector('.ult-bg').style.background=`radial-gradient(ellipse at 50% 50%,${col}33,transparent 55%)`;
+  u.classList.add('show');
+  // Create new wave effect
+  const wave=u.querySelector('.ult-wave');
+  wave.style.animation='none';void wave.offsetWidth;wave.style.animation='waveExpand .9s ease-out';
+  wave.style.borderColor=col;
+  setTimeout(()=>u.classList.remove('show'),1100);
+}
+
+function shuffle(r=true){
+  let flat=board.flat().filter(Boolean).sort(()=>Math.random()-.5);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++)board[y][x]=flat.pop()||rg();
+  if(r)render();
+}
+
+function shake(){
+  document.getElementById('sGame').animate([
+    {transform:'translate(0,0)'},{transform:'translate(10px,-7px)'},
+    {transform:'translate(-8px,6px)'},{transform:'translate(5px,-4px)'},
+    {transform:'translate(0,0)'}
+  ],{duration:480});
+}
+
+function popup(t,enemy=false){
+  msgEl.textContent=t;
+  msgEl.style.color=enemy?'#e74c3c':'var(--c)';
+  msgEl.style.textShadow=enemy?'0 0 28px #e74c3c':'0 0 28px var(--c)';
+  msgEl.classList.add('show');
+  setTimeout(()=>msgEl.classList.remove('show'),900);
+}
+
+function checkEnd(){
+  if(bossHp<=0)end(true);
+  else if(linHp<=0||moves<=0)end(false);
+}
+
+function end(win){
+  document.getElementById('endTitle').textContent=win?'¡VICTORIA!':'DERROTA';
+  document.getElementById('endTitle').style.color=win?'var(--c)':'#e74c3c';
+  document.getElementById('endTitle').style.textShadow=win?'0 0 25px var(--c)':'0 0 25px #e74c3c';
+  document.getElementById('endText').textContent=win
+    ?'Aeronyx retrocede. La luz sigue esperando. El Eco nunca se fue.'
+    :'Lin cae bajo el viento corrupto. La ciudad se hunde en la oscuridad...';
+  showScreen('sEnd');
+}
+
+// ── Event listeners ──
+document.getElementById('startBtn').addEventListener('click',start);
+document.getElementById('againBtn').addEventListener('click',start);
+</script>
+</body>
+</html>
