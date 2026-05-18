@@ -3,429 +3,1090 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>DUAL: Echo Fragments</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<title>DUAL — Echo Fragments</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
 <style>
-:root{--c:#00e5ff;--earth:#c8872a;--smoke:#9b59b6;--tech:#00bcd4;--wind:#7aabb8;--red:#e74c3c;--bg:#030810;--panel:rgba(2,6,14,.85);--ff1:'Cinzel Decorative',serif;--ff2:'Rajdhani',sans-serif;--ff3:'Share Tech Mono',monospace}
+:root{
+  --c:#00e5ff;--earth:#c8872a;--smoke:#7a1fcc;--tech:#00bcd4;
+  --wind:#6a8090;--speed:#ff6a00;--psychic:#8b1030;--metal:#5a6070;
+  --lurnox:#00ffcc;--tronox:#cc1010;--cretox:#1040cc;
+  --bg:#020508;--panel:rgba(2,5,12,.88);
+  --ff1:'Cinzel Decorative',serif;--ff2:'Rajdhani',sans-serif;--ff3:'Share Tech Mono',monospace;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde8ee;font-family:var(--ff2);touch-action:none;user-select:none;-webkit-user-select:none}
-.hidden{display:none!important}
-#app{width:100vw;height:100vh;position:relative;display:flex;flex-direction:column}
-canvas{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.4}
-.bgl{position:fixed;inset:0;pointer-events:none;z-index:0}
-.bgc{background:radial-gradient(ellipse at 50% 100%,rgba(200,135,42,.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 40%,rgba(0,229,255,.06) 0%,transparent 35%),linear-gradient(180deg,#020508 0%,#050d18 40%,#020508 100%)}
-.bgr{background-image:linear-gradient(108deg,rgba(160,210,255,.14) 1px,transparent 1px);background-size:34px 52px;opacity:.16;animation:rainF .34s linear infinite;inset:-5%}
-@keyframes rainF{to{transform:translate(-34px,52px)}}
-.bgv{box-shadow:inset 0 0 160px rgba(0,0,0,.88)}
-.bglx{opacity:0;background:rgba(100,180,255,.04);animation:lx 8s ease-in-out infinite}
-@keyframes lx{0%,90%,100%{opacity:0}91%{opacity:1}92%{opacity:0}93%{opacity:.5}94%{opacity:0}}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde8ee;font-family:var(--ff2);touch-action:manipulation;user-select:none}
+#app{width:100vw;height:100vh;position:relative;overflow:hidden}
 
-/* MENU */
-#sMenu{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 20%,rgba(0,229,255,.11) 0%,transparent 50%),radial-gradient(ellipse at 20% 80%,rgba(200,135,42,.09) 0%,transparent 40%),linear-gradient(180deg,#020508 0%,#040c18 100%)}
-.mc{width:min(460px,92vw);padding:1.8rem 1.6rem;border-radius:14px;background:linear-gradient(160deg,rgba(0,15,28,.85),rgba(0,4,10,.92));border:1px solid rgba(0,229,255,.15);box-shadow:0 0 70px rgba(0,229,255,.09),inset 0 1px 0 rgba(0,229,255,.11);backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:1.3rem}
-.mlt{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.5),transparent)}
-.mlb{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,135,42,.4),transparent)}
-.ld{font-family:var(--ff1);font-size:clamp(3.2rem,15vw,5.5rem);font-weight:900;color:#fff;letter-spacing:.12em;line-height:1;text-shadow:0 0 22px var(--c),0 0 55px rgba(0,229,255,.3),0 3px 0 rgba(0,0,0,.9)}
-.ls{font-family:var(--ff3);font-size:clamp(.52rem,2.2vw,.75rem);color:var(--c);letter-spacing:.3em;margin-top:.3rem;text-align:center}
-.lt{font-size:.55rem;color:#1e2e38;letter-spacing:.1em;text-align:center;margin-top:.15rem}
-.mvs{display:flex;align-items:center;justify-content:center;gap:1.6rem;width:100%}
-.mvsi{display:flex;flex-direction:column;align-items:center;gap:.45rem}
-.mo{width:60px;height:60px;border-radius:50%;position:relative;overflow:hidden;border:2px solid;animation:orbP 2.8s ease-in-out infinite}
-.mo.e{border-color:var(--earth);background:radial-gradient(circle at 35% 30%,rgba(200,135,42,.7),rgba(60,25,5,.5));box-shadow:0 0 22px rgba(200,135,42,.6)}
-.mo.w{border-color:var(--wind);background:radial-gradient(circle at 35% 30%,rgba(122,171,184,.6),rgba(15,40,55,.5));box-shadow:0 0 22px rgba(122,171,184,.55);animation-delay:.9s}
-@keyframes orbP{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
-.mo.e::before{content:'';position:absolute;left:50%;top:18%;transform:translateX(-50%);width:18px;height:22px;background:rgba(200,135,42,.85);clip-path:polygon(30% 0,70% 0,90% 40%,70% 100%,30% 100%,10% 40%)}
-.mo.e::after{content:'';position:absolute;left:15%;top:12%;width:70%;height:14%;background:rgba(5,2,1,.85);border-radius:8px}
-.mo.w::before{content:'';position:absolute;inset:10px;border-radius:50%;border:3px solid rgba(0,229,255,.6);box-shadow:0 0 10px var(--c);animation:sr 3s linear infinite}
-.mo.w::after{content:'';position:absolute;left:50%;top:56%;transform:translateX(-50%);width:13px;height:7px;background:var(--c);border-radius:50%;box-shadow:0 0 10px var(--c)}
-@keyframes sr{to{transform:rotate(360deg)}}
-.mn{font-family:var(--ff1);font-size:.7rem;letter-spacing:.08em}
-.mp{font-size:.5rem;color:#1e2e38;letter-spacing:.14em}
-.mvs-vs{font-family:var(--ff3);font-size:.62rem;color:#111;letter-spacing:.12em}
-.btn{position:relative;width:100%;max-width:290px;padding:.9rem 2rem;border:1px solid var(--c);border-radius:6px;background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(0,140,170,.06));color:var(--c);font-family:var(--ff1);font-size:clamp(.78rem,3.5vw,.98rem);letter-spacing:.2em;cursor:pointer;overflow:hidden;transition:all .2s;box-shadow:0 0 20px rgba(0,229,255,.15),inset 0 0 18px rgba(0,229,255,.04)}
-.btn:hover,.btn:active{background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(0,160,200,.12));box-shadow:0 0 38px rgba(0,229,255,.3)}
+/* ── RAIN ── */
+.rain{position:fixed;inset:-5%;pointer-events:none;z-index:1;
+  background-image:linear-gradient(108deg,rgba(160,210,255,.15) 1px,transparent 1px);
+  background-size:32px 50px;opacity:.18;animation:rainF .32s linear infinite}
+@keyframes rainF{to{transform:translate(-32px,50px)}}
+.vign{position:fixed;inset:0;box-shadow:inset 0 0 200px rgba(0,0,0,.9);pointer-events:none;z-index:2}
+.lightning{position:fixed;inset:0;opacity:0;pointer-events:none;z-index:1;
+  background:rgba(100,180,255,.05);animation:lx 7s ease-in-out infinite}
+@keyframes lx{0%,88%,100%{opacity:0}89%{opacity:1}90%{opacity:0}91%{opacity:.4}92%{opacity:0}}
+
+/* ── SCENE ── */
+.scene{
+  position:fixed;inset:0;z-index:10;
+  display:none;flex-direction:column;
+  background:var(--bg);
+  transition:opacity .6s ease;
+  opacity:0;
+}
+.scene.active{display:flex;opacity:1}
+.scene.fade-in{animation:fadeIn .6s ease forwards}
+.scene.shake{animation:shake .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes shake{0%,100%{transform:translate(0,0)}20%{transform:translate(12px,-8px)}40%{transform:translate(-10px,6px)}60%{transform:translate(8px,-4px)}80%{transform:translate(-5px,3px)}}
+
+/* ── SCENE BG ── */
+.sbg{position:absolute;inset:0;z-index:0}
+
+/* ── HEADER BAR ── */
+.hbar{
+  position:relative;z-index:20;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 12px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.92),rgba(0,0,0,.5));
+  border-bottom:1px solid rgba(0,229,255,.12);
+  flex-shrink:0;
+}
+.hbar-title{font-family:var(--ff1);font-size:clamp(.55rem,2.2vw,.8rem);color:var(--c);letter-spacing:.15em}
+.hbar-sub{font-family:var(--ff3);font-size:.42rem;color:#2a4050;letter-spacing:.1em}
+.hbar-stats{display:flex;gap:10px;align-items:center}
+.stat{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.stat-label{font-family:var(--ff3);font-size:.38rem;color:#1a3040;letter-spacing:.1em}
+.stat-bar{width:80px;height:6px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.stat-bar i{display:block;height:100%;border-radius:4px;transition:width .5s ease}
+.hp-fill{background:linear-gradient(90deg,#b02020,#e74c3c,#ff7777);box-shadow:0 0 5px rgba(231,76,60,.6)}
+.eco-fill{background:linear-gradient(90deg,var(--c),#aaf4ff);box-shadow:0 0 5px rgba(0,229,255,.5)}
+
+/* ── MAIN SCENE AREA ── */
+.smain{flex:1;position:relative;display:flex;align-items:flex-end;overflow:hidden}
+
+/* ── CHARACTER CSS ART ── */
+.char-art{position:absolute;bottom:0;pointer-events:none}
+
+/* LIN */
+.lin-art{left:2%;width:28%;max-width:160px;height:75%;z-index:5}
+.lin-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:100%}
+.lin-aura{position:absolute;inset:-10%;border-radius:50%;background:radial-gradient(circle,rgba(200,135,42,.15) 0%,transparent 65%);animation:auraB 2.5s ease-in-out infinite}
+.lin-legs{position:absolute;bottom:0;left:20%;width:60%;height:30%;background:linear-gradient(#0a1218,#030405);border-radius:5px 5px 0 0}
+.lin-torso{position:absolute;bottom:28%;left:12%;width:76%;height:38%;background:linear-gradient(175deg,#1c242c,#050607);border-radius:10px 10px 5px 5px}
+.lin-torso::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(200,135,42,.5),transparent)}
+.lin-head{position:absolute;bottom:65%;left:28%;width:44%;height:20%;background:#201410;border-radius:50%}
+.lin-cap{position:absolute;bottom:83%;left:18%;width:64%;height:8%;background:#030405;border-radius:10px}
+.lin-rock{position:absolute;background:linear-gradient(135deg,#c8872a,#8a4e18,#3d1600);clip-path:polygon(50% 0,100% 36%,80% 100%,20% 100%,0 36%);box-shadow:0 0 10px rgba(200,135,42,.8);animation:rockF ease-in-out infinite}
+.lr1{width:16%;height:auto;aspect-ratio:1;left:2%;bottom:55%;animation-duration:2.2s}
+.lr2{width:12%;aspect-ratio:1;right:5%;bottom:48%;animation-duration:2.8s;animation-delay:.5s}
+.lr3{width:10%;aspect-ratio:1;left:8%;bottom:38%;animation-duration:3.2s;animation-delay:1s}
+.lin-glow{position:absolute;bottom:0;left:10%;right:10%;height:4px;background:linear-gradient(90deg,transparent,rgba(200,135,42,.6),transparent);border-radius:2px;box-shadow:0 0 12px rgba(200,135,42,.5);animation:glowP 2s ease-in-out infinite}
+@keyframes rockF{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-18px) rotate(10deg)}}
+@keyframes glowP{50%{box-shadow:0 0 22px rgba(200,135,42,.8);opacity:.5}}
+@keyframes auraB{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.12);opacity:1}}
+
+/* TRINI */
+.trini-art{left:22%;width:22%;max-width:130px;height:65%;z-index:4}
+.trini-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:100%}
+.trini-aura{position:absolute;inset:-15%;border-radius:50%;background:radial-gradient(circle,rgba(122,31,204,.18) 0%,transparent 65%);animation:auraB 2s ease-in-out infinite .4s}
+.trini-shadow{position:absolute;bottom:-2%;left:-20%;right:-20%;height:110%;
+  background:radial-gradient(ellipse at 50% 100%,rgba(80,0,120,.6) 0%,transparent 70%);
+  animation:shadowFlow 3s ease-in-out infinite;border-radius:50%}
+@keyframes shadowFlow{0%,100%{transform:scaleX(1) scaleY(1)}50%{transform:scaleX(1.2) scaleY(.9)}}
+.trini-legs{position:absolute;bottom:0;left:22%;width:56%;height:28%;background:linear-gradient(#0d0818,#030205);border-radius:5px 5px 0 0}
+.trini-torso{position:absolute;bottom:26%;left:14%;width:72%;height:36%;background:linear-gradient(175deg,#140820,#040106);border-radius:10px 10px 5px 5px}
+.trini-torso::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(122,31,204,.6),transparent)}
+.trini-head{position:absolute;bottom:60%;left:28%;width:44%;height:20%;background:#180820;border-radius:50%}
+.trini-hair{position:absolute;bottom:70%;left:20%;width:60%;height:18%;background:#0a0410;border-radius:50% 50% 0 0;filter:blur(.5px)}
+.smoke-particle{position:absolute;border-radius:50%;background:rgba(122,31,204,.4);animation:smokeUp linear infinite;filter:blur(3px)}
+.sp1{width:12px;height:12px;left:10%;bottom:20%;animation-duration:2s;animation-delay:0s}
+.sp2{width:8px;height:8px;right:15%;bottom:30%;animation-duration:2.5s;animation-delay:.6s}
+.sp3{width:10px;height:10px;left:5%;bottom:40%;animation-duration:3s;animation-delay:1.2s}
+@keyframes smokeUp{0%{opacity:0;transform:translateY(0) scale(1)}30%{opacity:.8}100%{opacity:0;transform:translateY(-60px) scale(2)}}
+
+/* ZAK */
+.zak-art{left:38%;width:22%;max-width:130px;height:65%;z-index:4}
+.zak-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:100%}
+.zak-aura{position:absolute;inset:-15%;border-radius:50%;background:radial-gradient(circle,rgba(0,188,212,.15) 0%,transparent 65%);animation:auraB 2.2s ease-in-out infinite .8s}
+.zak-legs{position:absolute;bottom:0;left:22%;width:56%;height:28%;background:linear-gradient(#080d12,#030405);border-radius:5px 5px 0 0}
+.zak-torso{position:absolute;bottom:26%;left:14%;width:72%;height:36%;background:linear-gradient(175deg,#0a1824,#030607);border-radius:10px 10px 5px 5px}
+.zak-torso::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,188,212,.6),transparent)}
+.zak-head{position:absolute;bottom:60%;left:28%;width:44%;height:20%;background:#101820;border-radius:50%}
+.zak-phone{position:absolute;bottom:38%;right:5%;width:14%;height:18%;background:linear-gradient(#0a1824,#030607);border-radius:2px;border:1px solid rgba(0,188,212,.5);box-shadow:0 0 8px rgba(0,188,212,.4)}
+.zak-phone::after{content:'';position:absolute;inset:2px;background:rgba(0,188,212,.15);animation:screenBlink 1.5s ease-in-out infinite}
+@keyframes screenBlink{0%,100%{opacity:.3}50%{opacity:1}}
+.tech-particle{position:absolute;width:3px;height:3px;background:var(--tech);border-radius:50%;box-shadow:0 0 5px var(--tech);animation:techFloat linear infinite}
+.tp1{left:5%;bottom:40%;animation-duration:1.5s;animation-delay:0s}
+.tp2{right:8%;bottom:50%;animation-duration:2s;animation-delay:.4s}
+.tp3{left:15%;bottom:30%;animation-duration:1.8s;animation-delay:.8s}
+.tp4{right:5%;bottom:35%;animation-duration:2.2s;animation-delay:1.2s}
+@keyframes techFloat{0%{opacity:0;transform:translateY(0)}20%{opacity:1}80%{opacity:.5}100%{opacity:0;transform:translateY(-30px)}}
+
+/* VILLAINS */
+/* AERONYX */
+.aeronyx-art{right:2%;width:35%;max-width:200px;height:85%;z-index:5}
+.aero-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:100%}
+.aero-glow{position:absolute;inset:-20%;border-radius:50%;background:radial-gradient(circle,rgba(100,128,144,.15) 0%,transparent 60%);animation:auraB 2.8s ease-in-out infinite}
+.wind-ring{position:absolute;left:50%;top:35%;transform:translate(-50%,-50%);border-radius:50%;border:solid rgba(100,128,144,.25);animation:windSp linear infinite}
+.wr1{width:90%;padding-top:90%;border-width:6px;animation-duration:5s}
+.wr2{width:65%;padding-top:65%;border-width:4px;animation-duration:3.5s;animation-direction:reverse;border-color:rgba(100,128,144,.15)}
+.wr3{width:38%;padding-top:38%;border-width:3px;animation-duration:2.2s;border-color:rgba(100,128,144,.3)}
+@keyframes windSp{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.aero-mass{position:absolute;left:20%;top:15%;width:60%;height:65%;
+  background:linear-gradient(175deg,#0e1c28,#030810);
+  clip-path:polygon(50% 0,88% 15%,80% 100%,20% 100%,12% 15%);
+  box-shadow:0 0 25px rgba(100,128,144,.3)}
+.aero-eye{position:absolute;top:42%;width:14%;height:7%;background:var(--wind);border-radius:50%;box-shadow:0 0 12px var(--wind),0 0 25px rgba(106,128,144,.5);animation:eyeGl 2s ease-in-out infinite}
+.ae1{left:28%}.ae2{right:28%;animation-delay:.5s}
+@keyframes eyeGl{50%{opacity:.15;box-shadow:0 0 4px var(--wind)}}
+.aero-tendril{position:absolute;width:3px;border-radius:3px;background:linear-gradient(to bottom,rgba(100,128,144,.5),transparent);transform-origin:top;animation:tendrilW ease-in-out infinite}
+.at1{height:20%;left:10%;top:55%;animation-duration:2.2s}
+.at2{height:15%;right:12%;top:50%;animation-duration:2.8s;animation-delay:.5s}
+.at3{height:18%;left:5%;top:68%;animation-duration:3s;animation-delay:1s}
+@keyframes tendrilW{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
+.aero-wind-particle{position:absolute;border-radius:50%;background:rgba(100,128,144,.5);box-shadow:0 0 4px var(--wind);animation:windP linear infinite}
+.awp1{width:5px;height:5px;left:5%;top:30%;animation-duration:3s}
+.awp2{width:3px;height:3px;right:8%;top:50%;animation-duration:4s;animation-delay:1s}
+.awp3{width:4px;height:4px;left:15%;top:65%;animation-duration:3.5s;animation-delay:.5s}
+@keyframes windP{0%{opacity:0;transform:translateY(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-40px)}}
+
+/* BORINEX */
+.borinex-art{right:2%;width:32%;max-width:180px;height:80%;z-index:5}
+.bori-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:100%}
+.bori-glow{position:absolute;inset:-15%;border-radius:50%;background:radial-gradient(circle,rgba(255,100,0,.2) 0%,transparent 60%);animation:auraB 1.8s ease-in-out infinite}
+.bori-streak{position:absolute;height:3px;background:linear-gradient(90deg,transparent,rgba(255,106,0,.8),transparent);border-radius:2px;animation:streakMove linear infinite}
+.bs1{width:60%;top:30%;left:-10%;animation-duration:.8s}
+.bs2{width:40%;top:50%;left:-5%;animation-duration:.6s;animation-delay:.2s}
+.bs3{width:50%;top:70%;left:-8%;animation-duration:.7s;animation-delay:.1s}
+@keyframes streakMove{0%{transform:translateX(-100%);opacity:0}50%{opacity:1}100%{transform:translateX(200%);opacity:0}}
+.bori-mass{position:absolute;left:15%;top:10%;width:70%;height:75%;
+  background:linear-gradient(175deg,#1a0a02,#050202);
+  clip-path:polygon(50% 0,90% 20%,85% 100%,15% 100%,10% 20%);
+  box-shadow:0 0 30px rgba(255,106,0,.3)}
+.bori-eye{position:absolute;top:38%;width:16%;height:8%;background:var(--speed);border-radius:50%;box-shadow:0 0 14px var(--speed),0 0 28px rgba(255,106,0,.5);animation:eyeGl 1.2s ease-in-out infinite}
+.be1{left:26%}.be2{right:26%;animation-delay:.3s}
+.bori-crack{position:absolute;bottom:5%;left:10%;right:10%;height:3px;background:linear-gradient(90deg,transparent,rgba(255,106,0,.6),transparent);animation:glowP 1s ease-in-out infinite}
+
+/* MIREX */
+.mirex-art{right:2%;width:32%;max-width:180px;height:80%;z-index:5}
+.mirex-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:100%}
+.mirex-glow{position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(circle,rgba(139,16,48,.22) 0%,transparent 60%);animation:auraB 3s ease-in-out infinite}
+.psy-ring{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(139,16,48,.3);animation:psySp linear infinite}
+.pr1{width:80%;padding-top:80%;animation-duration:4s}
+.pr2{width:55%;padding-top:55%;animation-duration:3s;animation-direction:reverse}
+@keyframes psySp{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.mirex-mass{position:absolute;left:18%;top:12%;width:64%;height:70%;
+  background:linear-gradient(175deg,#180510,#040105);
+  clip-path:polygon(50% 0,86% 18%,78% 100%,22% 100%,14% 18%);
+  box-shadow:0 0 25px rgba(139,16,48,.35)}
+.mirex-eye{position:absolute;top:40%;width:15%;height:7%;background:#cc2050;border-radius:50%;box-shadow:0 0 12px #cc2050,0 0 25px rgba(139,16,48,.6);animation:eyeGl 2.5s ease-in-out infinite}
+.me1{left:27%}.me2{right:27%;animation-delay:.6s}
+.psy-particle{position:absolute;border-radius:50%;background:rgba(139,16,48,.6);animation:psyFloat ease-in-out infinite}
+.pp1{width:6px;height:6px;left:8%;top:25%;animation-duration:3s}
+.pp2{width:4px;height:4px;right:10%;top:40%;animation-duration:4s;animation-delay:.8s}
+.pp3{width:5px;height:5px;left:5%;top:55%;animation-duration:3.5s;animation-delay:1.5s}
+@keyframes psyFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-20px) scale(1.5);opacity:.3}}
+
+/* FERRONIX */
+.ferronix-art{right:2%;width:32%;max-width:180px;height:82%;z-index:5}
+.ferr-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:100%}
+.ferr-glow{position:absolute;inset:-15%;border-radius:50%;background:radial-gradient(circle,rgba(80,90,100,.18) 0%,transparent 60%);animation:auraB 3.5s ease-in-out infinite}
+.metal-shard{position:absolute;background:linear-gradient(135deg,#8090a0,#404850);animation:shardFloat ease-in-out infinite}
+.ms1{width:8%;height:16%;left:5%;top:20%;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);animation-duration:2.5s;box-shadow:0 0 5px rgba(128,144,160,.5)}
+.ms2{width:6%;height:12%;right:8%;top:35%;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);animation-duration:3s;animation-delay:.6s;box-shadow:0 0 4px rgba(128,144,160,.4)}
+.ms3{width:5%;height:10%;left:10%;top:50%;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);animation-duration:3.5s;animation-delay:1.2s;box-shadow:0 0 3px rgba(128,144,160,.3)}
+@keyframes shardFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-15px) rotate(20deg)}}
+.ferr-mass{position:absolute;left:16%;top:10%;width:68%;height:72%;
+  background:linear-gradient(175deg,#101418,#030405);
+  clip-path:polygon(50% 0,88% 16%,82% 100%,18% 100%,12% 16%);
+  box-shadow:0 0 20px rgba(80,90,100,.3)}
+.ferr-eye{position:absolute;top:40%;width:15%;height:7%;background:#8090a0;border-radius:50%;box-shadow:0 0 10px #8090a0,0 0 22px rgba(80,90,100,.5);animation:eyeGl 3s ease-in-out infinite}
+.fe1{left:27%}.fe2{right:27%;animation-delay:.7s}
+
+/* LURNOX */
+.lurnox-art{right:0;width:55%;max-width:300px;height:95%;z-index:5}
+.lurnox-body{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:100%;height:100%}
+.lurnox-glow{position:absolute;inset:-20%;border-radius:50%;background:radial-gradient(circle,rgba(0,255,180,.15) 0%,transparent 55%);animation:auraB 2s ease-in-out infinite}
+.lurnox-ring{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);border-radius:50%;border:solid rgba(0,255,180,.2);animation:windSp linear infinite}
+.lur-r1{width:95%;padding-top:95%;border-width:8px;animation-duration:6s}
+.lur-r2{width:70%;padding-top:70%;border-width:5px;animation-duration:4s;animation-direction:reverse;border-color:rgba(0,255,180,.15)}
+.lur-r3{width:45%;padding-top:45%;border-width:4px;animation-duration:2.5s;border-color:rgba(0,255,180,.25)}
+.lurnox-mass{position:absolute;left:15%;top:8%;width:70%;height:70%;
+  background:linear-gradient(175deg,#051a14,#020508);
+  clip-path:polygon(50% 0,85% 12%,88% 45%,70% 100%,30% 100%,12% 45%,15% 12%);
+  box-shadow:0 0 40px rgba(0,255,180,.25)}
+.lurnox-eye{position:absolute;top:38%;width:18%;height:9%;background:var(--lurnox);border-radius:50%;box-shadow:0 0 20px var(--lurnox),0 0 40px rgba(0,255,180,.6);animation:eyeGl 1.5s ease-in-out infinite}
+.le1{left:24%}.le2{right:24%;animation-delay:.4s}
+.lurnox-horn{position:absolute;top:0;width:25%;background:linear-gradient(to top,#051a14,rgba(0,255,180,.4));clip-path:polygon(30% 100%,70% 100%,50% 0)}
+.lh1{left:12%;transform:rotate(-15deg)}.lh2{right:12%;transform:rotate(15deg)}
+.lurnox-tendril{position:absolute;width:4px;border-radius:3px;background:linear-gradient(to bottom,rgba(0,255,180,.5),transparent);transform-origin:top;animation:tendrilW ease-in-out infinite}
+.lt1{height:22%;left:5%;top:55%;animation-duration:2s}
+.lt2{height:18%;right:8%;top:48%;animation-duration:2.6s;animation-delay:.4s}
+.lt3{height:25%;left:2%;top:68%;animation-duration:3s;animation-delay:.8s}
+.lt4{height:15%;right:3%;top:65%;animation-duration:2.2s;animation-delay:1.2s}
+.lurnox-particle{position:absolute;border-radius:50%;background:rgba(0,255,180,.5);box-shadow:0 0 6px var(--lurnox);animation:windP linear infinite}
+.lp1{width:6px;height:6px;left:3%;top:25%;animation-duration:3s}
+.lp2{width:4px;height:4px;right:5%;top:45%;animation-duration:4s;animation-delay:1s}
+.lp3{width:5px;height:5px;left:8%;top:60%;animation-duration:3.5s;animation-delay:.5s}
+.lp4{width:3px;height:3px;right:2%;top:30%;animation-duration:2.5s;animation-delay:1.5s}
+
+/* CITY BG */
+.city-bg{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(to top,rgba(0,0,0,.9) 0%,transparent 50%),
+    repeating-linear-gradient(90deg,
+      #040810 0px,#040810 20px,#060c18 20px,#060c18 38px,
+      #030710 38px,#030710 60px,#050b15 60px,#050b15 78px,
+      #040912 78px,#040912 105px
+    );
+  opacity:.8;
+  -webkit-mask-image:linear-gradient(to top,black 35%,transparent 100%);
+  mask-image:linear-gradient(to top,black 35%,transparent 100%);
+}
+.city-fire{position:absolute;bottom:15%;left:0;right:0;height:8%;
+  background:linear-gradient(to top,rgba(255,80,0,.15),transparent);
+  animation:fireFlick 1.5s ease-in-out infinite}
+@keyframes fireFlick{0%,100%{opacity:.6;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.3)}}
+
+/* ECO color overlays */
+.eco-earth{background:radial-gradient(ellipse at 20% 80%,rgba(200,135,42,.12) 0%,transparent 45%),radial-gradient(ellipse at 80% 20%,rgba(0,229,255,.06) 0%,transparent 40%),linear-gradient(180deg,#04080e 0%,#0a1205 100%)}
+.eco-smoke{background:radial-gradient(ellipse at 25% 75%,rgba(122,31,204,.18) 0%,transparent 45%),linear-gradient(180deg,#04020e 0%,#080510 100%)}
+.eco-tech{background:radial-gradient(ellipse at 75% 25%,rgba(0,188,212,.14) 0%,transparent 45%),linear-gradient(180deg,#020810 0%,#041018 100%)}
+.eco-wind{background:radial-gradient(ellipse at 80% 60%,rgba(100,128,144,.18) 0%,transparent 45%),linear-gradient(180deg,#040810 0%,#08101a 100%)}
+.eco-speed{background:radial-gradient(ellipse at 80% 60%,rgba(255,106,0,.2) 0%,transparent 45%),linear-gradient(180deg,#080402 0%,#100802 100%)}
+.eco-psychic{background:radial-gradient(ellipse at 80% 60%,rgba(139,16,48,.22) 0%,transparent 45%),linear-gradient(180deg,#060202 0%,#100508 100%)}
+.eco-metal{background:radial-gradient(ellipse at 80% 60%,rgba(80,90,100,.18) 0%,transparent 45%),linear-gradient(180deg,#040608 0%,#080c10 100%)}
+.eco-lurnox{background:radial-gradient(ellipse at 80% 40%,rgba(0,255,180,.18) 0%,transparent 45%),linear-gradient(180deg,#020810 0%,#041510 100%)}
+
+/* ── TEXT BOX ── */
+.textbox{
+  position:relative;z-index:20;
+  margin:0 10px 8px;
+  padding:14px 16px;
+  background:linear-gradient(135deg,rgba(0,0,0,.88),rgba(0,5,12,.92));
+  border:1px solid rgba(0,229,255,.15);
+  border-radius:10px;
+  box-shadow:0 0 30px rgba(0,229,255,.07),inset 0 1px 0 rgba(0,229,255,.1);
+  backdrop-filter:blur(8px);
+  flex-shrink:0;
+}
+.tb-speaker{font-family:var(--ff1);font-size:clamp(.5rem,2vw,.72rem);color:var(--c);letter-spacing:.12em;margin-bottom:5px}
+.tb-text{font-size:clamp(.7rem,2.5vw,.9rem);line-height:1.6;color:#c8d8e0;min-height:3.5em;font-weight:600}
+.cursor{display:inline-block;width:2px;height:1em;background:var(--c);margin-left:2px;animation:blink .8s step-end infinite;vertical-align:middle}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+/* ── CHOICES ── */
+.choices{
+  position:relative;z-index:20;
+  display:flex;flex-direction:column;
+  gap:6px;margin:0 10px 10px;
+}
+.choice{
+  padding:10px 14px;
+  background:linear-gradient(135deg,rgba(0,0,0,.75),rgba(0,5,12,.85));
+  border:1px solid rgba(0,229,255,.18);
+  border-radius:8px;color:#dde8ee;
+  font-family:var(--ff2);font-size:clamp(.65rem,2.5vw,.85rem);
+  font-weight:600;cursor:pointer;
+  transition:all .2s;letter-spacing:.04em;
+  text-align:left;
+  backdrop-filter:blur(6px);
+}
+.choice:hover,.choice:active{
+  background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,100,130,.1));
+  border-color:var(--c);
+  box-shadow:0 0 15px rgba(0,229,255,.2);
+  transform:translateX(4px);
+}
+.choice-prefix{color:var(--c);margin-right:6px;font-family:var(--ff3)}
+
+/* ── CONTINUE BUTTON ── */
+.btn-continue{
+  position:relative;z-index:20;
+  margin:0 10px 10px;
+  padding:10px;
+  border:1px solid rgba(0,229,255,.2);
+  border-radius:8px;
+  background:transparent;color:rgba(0,229,255,.5);
+  font-family:var(--ff3);font-size:.55rem;
+  letter-spacing:.2em;cursor:pointer;
+  text-align:center;transition:all .2s;
+}
+.btn-continue:hover{color:var(--c);border-color:var(--c)}
+
+/* ── MENU SCREEN ── */
+#scMenu{
+  background:radial-gradient(ellipse at 50% 20%,rgba(0,229,255,.1) 0%,transparent 50%),
+    linear-gradient(180deg,#020508 0%,#040c18 100%);
+  align-items:center;justify-content:center;
+}
+.menu-wrap{
+  width:min(480px,92vw);display:flex;flex-direction:column;
+  align-items:center;gap:1.4rem;
+  padding:2rem 1.8rem;
+  background:linear-gradient(160deg,rgba(0,15,28,.82),rgba(0,4,10,.92));
+  border:1px solid rgba(0,229,255,.15);border-radius:14px;
+  box-shadow:0 0 60px rgba(0,229,255,.09);backdrop-filter:blur(14px);
+}
+.menu-rule{width:100%;height:1px}
+.menu-rule.top{background:linear-gradient(90deg,transparent,rgba(0,229,255,.5),transparent)}
+.menu-rule.bot{background:linear-gradient(90deg,transparent,rgba(200,135,42,.4),transparent)}
+.logo-big{font-family:var(--ff1);font-size:clamp(3.5rem,16vw,6rem);font-weight:900;color:#fff;letter-spacing:.12em;line-height:1;text-shadow:0 0 22px var(--c),0 0 55px rgba(0,229,255,.3),0 3px 0 rgba(0,0,0,.9);text-align:center}
+.logo-city{font-family:var(--ff3);font-size:clamp(.52rem,2vw,.75rem);color:var(--earth);letter-spacing:.25em;text-align:center;margin-top:.3rem}
+.logo-tag{font-size:.58rem;color:#1e2e38;letter-spacing:.1em;text-align:center}
+.menu-lore{font-size:clamp(.68rem,2.5vw,.85rem);color:#5a7a8a;line-height:1.6;text-align:center;max-width:360px}
+.menu-lore em{color:var(--c);font-style:normal}
+.btn-play{
+  position:relative;width:100%;max-width:280px;padding:.9rem;
+  border:1px solid var(--c);border-radius:6px;
+  background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(0,140,170,.06));
+  color:var(--c);font-family:var(--ff1);font-size:clamp(.78rem,3vw,.95rem);
+  letter-spacing:.2em;cursor:pointer;overflow:hidden;
+  box-shadow:0 0 20px rgba(0,229,255,.15);transition:all .2s;
+}
+.btn-play:hover{background:linear-gradient(135deg,rgba(0,229,255,.2),rgba(0,160,200,.12));box-shadow:0 0 35px rgba(0,229,255,.28)}
 .bsh{position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(0,229,255,.18),transparent);animation:shim 2.5s linear infinite}
 @keyframes shim{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 .btxt{position:relative;z-index:1}
-.mhints{display:flex;gap:.45rem;flex-wrap:wrap;justify-content:center}
-.mh{font-family:var(--ff3);font-size:.45rem;color:#1a2830}
-.mhs{color:#0d1618;font-size:.45rem}
+.menu-chars{display:flex;gap:1.2rem;justify-content:center}
+.mc-char{display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.mc-orb{width:48px;height:48px;border-radius:50%;border:2px solid;animation:orbP 2.8s ease-in-out infinite}
+@keyframes orbP{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.mc-orb.e{border-color:var(--earth);background:radial-gradient(circle at 35%,rgba(200,135,42,.6),rgba(60,25,5,.4));box-shadow:0 0 18px rgba(200,135,42,.55)}
+.mc-orb.s{border-color:var(--smoke);background:radial-gradient(circle at 35%,rgba(122,31,204,.6),rgba(30,5,50,.4));box-shadow:0 0 18px rgba(122,31,204,.5);animation-delay:.5s}
+.mc-orb.t{border-color:var(--tech);background:radial-gradient(circle at 35%,rgba(0,188,212,.6),rgba(0,30,40,.4));box-shadow:0 0 18px rgba(0,188,212,.5);animation-delay:1s}
+.mc-name{font-family:var(--ff1);font-size:.6rem;letter-spacing:.08em}
+.mc-power{font-size:.45rem;color:#1e2e38;letter-spacing:.12em}
 
-/* GAME */
-#sGame{position:fixed;inset:0;z-index:10;display:none;flex-direction:column}
-#sGame.act{display:flex}
-
-/* HUD */
-#hud{position:relative;z-index:20;display:flex;align-items:center;padding:5px 7px;gap:5px;background:linear-gradient(to bottom,rgba(0,0,0,.92),rgba(0,0,0,.58));border-bottom:1px solid rgba(0,229,255,.1);flex-shrink:0}
-.fc{flex:1;display:flex;align-items:center;gap:6px;background:var(--panel);border-radius:8px;padding:5px 7px;border:1px solid rgba(0,229,255,.1);min-width:0}
-.fc.li{border-color:rgba(200,135,42,.26)}
-.fc.bo{flex-direction:row-reverse;border-color:rgba(122,171,184,.2)}
-.pt{flex-shrink:0;width:42px;height:42px;border-radius:7px;position:relative;overflow:hidden;border:1px solid}
-.pt.lp{border-color:var(--earth);background:radial-gradient(circle at 40%,#221208,#040201);box-shadow:0 0 10px rgba(200,135,42,.38)}
-.pt.ap{border-color:var(--wind);background:radial-gradient(circle at 40%,#061018,#020406);box-shadow:0 0 10px rgba(0,229,255,.32)}
-.lpc{position:absolute;left:4px;top:4px;width:34px;height:7px;background:#030404;border-radius:5px}
-.lph{position:absolute;left:11px;top:10px;width:20px;height:21px;background:#1e1008;border-radius:50%}
-.lpb{position:absolute;left:7px;top:30px;width:28px;height:9px;background:linear-gradient(#1a2228,#040506);border-radius:4px}
-.lpr{position:absolute;width:6px;height:6px;background:linear-gradient(135deg,#c8872a,#7a3d10);clip-path:polygon(50% 0,100% 38%,78% 100%,22% 100%,0 38%);box-shadow:0 0 5px rgba(200,135,42,.8);animation:frk 2s ease-in-out infinite}
-.lr1{left:3px;top:20px}.lr2{right:3px;top:15px;animation-delay:.5s}
-@keyframes frk{50%{transform:translateY(-4px) rotate(8deg)}}
-.apr{position:absolute;border-radius:50%;border:2px solid rgba(0,229,255,.4);animation:sr 3.5s linear infinite}
-.ar1{inset:6px}.ar2{inset:13px;animation-direction:reverse;border-color:rgba(0,229,255,.2)}
-.ape{position:absolute;width:6px;height:3px;background:var(--c);border-radius:50%;box-shadow:0 0 7px var(--c);top:20px;animation:epls 1.8s ease-in-out infinite}
-.ae1{left:9px}.ae2{right:9px;animation-delay:.5s}
-@keyframes epls{50%{opacity:.12}}
-.fi{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
-.fi.r{align-items:flex-end}
-.fn{font-family:var(--ff1);font-size:clamp(.48rem,1.7vw,.68rem);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.br{display:flex;align-items:center;gap:4px;width:100%}
-.br.rv{flex-direction:row-reverse}
-.bar{flex:1;height:8px;background:rgba(255,255,255,.06);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.05)}
-.bar i{display:block;height:100%;border-radius:10px;transition:width .4s ease}
-.bar.h i{background:linear-gradient(90deg,#b02020,#e74c3c,#ff7777);box-shadow:0 0 6px rgba(231,76,60,.6)}
-.bar.b i{background:linear-gradient(90deg,#7a3a08,#c8872a);box-shadow:0 0 6px rgba(200,135,42,.5)}
-.bar.e{height:5px}.bar.e i{background:linear-gradient(90deg,var(--smoke),#d7aaff)}
-.bv{font-family:var(--ff3);font-size:.46rem;color:#2a4050;white-space:nowrap}
-.ftg{font-family:var(--ff3);font-size:.38rem;letter-spacing:.04em}
-.ftg.e{color:var(--earth)}.ftg.w{color:var(--wind)}
-.chp{flex-shrink:0;min-width:88px;display:flex;flex-direction:column;align-items:center;background:var(--panel);border-radius:8px;border:1px solid rgba(0,229,255,.1);padding:3px 7px}
-.cl{font-family:var(--ff3);font-size:.38rem;color:var(--c);letter-spacing:.12em}
-.cn{font-family:var(--ff1);font-size:clamp(.38rem,1.2vw,.52rem);text-align:center;line-height:1.2}
-.cml{font-family:var(--ff3);font-size:.36rem;color:#1a2e38;display:block;margin-top:2px}
-.cmn{font-family:var(--ff3);font-size:1.45rem;line-height:1;color:#fff;text-shadow:0 0 8px rgba(0,229,255,.5)}
-
-/* BATTLE */
-#battle{flex:1;position:relative;z-index:5;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;overflow:hidden;min-height:0}
-
-/* CHAR SIDES */
-.cside{height:100%;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
-
-/* LIN ART */
-.linsc{position:relative;width:clamp(60px,12vw,115px);height:clamp(120px,24vw,230px)}
-.laura{position:absolute;inset:-20%;border-radius:50%;background:radial-gradient(circle,rgba(200,135,42,.11) 0%,transparent 65%);animation:auraB 3s ease-in-out infinite}
-@keyframes auraB{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.14);opacity:1}}
-.ep{position:absolute;left:50%;top:50%;width:100%;height:100%;animation:orbE linear infinite;transform-origin:0 0}
-.ep::before{content:'';position:absolute;background:linear-gradient(135deg,#c8872a,#7a3d10,#3d1600);clip-path:polygon(50% 0,100% 36%,80% 100%,20% 100%,0 36%);box-shadow:0 0 9px rgba(200,135,42,.8);transform:translate(-50%,-50%)}
-.ep1{animation-duration:3.5s}.ep1::before{width:14px;height:14px;top:-52%;left:0%}
-.ep2{animation-duration:4.2s;animation-delay:-.8s}.ep2::before{width:10px;height:10px;top:10%;left:55%}
-.ep3{animation-duration:5.1s;animation-delay:-2s}.ep3::before{width:8px;height:8px;top:55%;left:-45%}
-@keyframes orbE{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.lbw{position:absolute;left:50%;top:10%;transform:translateX(-50%);width:58%}
-.lcp{width:100%;height:12%;background:#030405;border-radius:10px 10px 0 0;margin-bottom:-2px}
-.lhd{width:76%;height:20%;background:#1e1008;border-radius:50%;margin:0 auto}
-.ltr{width:100%;height:44%;background:linear-gradient(175deg,#1c242c,#050607);border-radius:8px 8px 4px 4px;margin-top:2px;position:relative;overflow:hidden}
-.ltr::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(200,135,42,.4),transparent)}
-.llg{width:80%;height:22%;background:linear-gradient(#0a1218,#030405);border-radius:4px;margin:1px auto 0}
-.lgr{position:absolute;bottom:5%;left:10%;right:10%;height:3px;background:linear-gradient(90deg,transparent,rgba(200,135,42,.5),rgba(200,135,42,.3),transparent);border-radius:2px;box-shadow:0 0 10px rgba(200,135,42,.4);animation:gp 2s ease-in-out infinite}
-@keyframes gp{50%{box-shadow:0 0 18px rgba(200,135,42,.7);opacity:.55}}
-.lrf{position:absolute;background:linear-gradient(135deg,#c8872a,#8a4e18,#3d1600);clip-path:polygon(50% 0,100% 36%,80% 100%,20% 100%,0 36%);box-shadow:0 0 7px rgba(200,135,42,.7);animation:rflt ease-in-out infinite}
-.lrf1{width:12px;height:12px;left:4%;top:24%;animation-duration:2.2s;animation-delay:0s}
-.lrf2{width:9px;height:9px;right:6%;top:38%;animation-duration:2.8s;animation-delay:.6s}
-.lrf3{width:7px;height:7px;left:10%;bottom:26%;animation-duration:3.2s;animation-delay:1.2s}
-@keyframes rflt{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-9px) rotate(12deg)}}
-
-/* AERONYX ART */
-.aerosc{position:relative;width:clamp(60px,12vw,115px);height:clamp(120px,24vw,230px)}
-.aglow{position:absolute;inset:-15%;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,.08) 0%,transparent 60%);animation:aeroB 2.5s ease-in-out infinite}
-@keyframes aeroB{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.18);opacity:1}}
-.wr{position:absolute;left:50%;top:35%;transform:translate(-50%,-50%);border-radius:50%;border:solid rgba(0,229,255,.18);animation:ws linear infinite}
-.wr1{width:85%;padding-top:85%;border-width:5px;animation-duration:5s}
-.wr2{width:58%;padding-top:58%;border-width:4px;animation-duration:3.5s;animation-direction:reverse;border-color:rgba(0,229,255,.13)}
-.wr3{width:32%;padding-top:32%;border-width:3px;animation-duration:2.5s;border-color:rgba(0,229,255,.22)}
-@keyframes ws{to{transform:translate(-50%,-50%) rotate(360deg)}}
-.abody{position:absolute;left:50%;top:18%;transform:translateX(-50%);width:52%}
-.amass{width:100%;background:linear-gradient(175deg,#0a1520,#020508);clip-path:polygon(50% 0,88% 15%,75% 100%,25% 100%,12% 15%);aspect-ratio:.68;box-shadow:0 0 18px rgba(0,229,255,.2);position:relative}
-.aeyes{position:absolute;top:42%;left:50%;transform:translateX(-50%);width:100%;display:flex;justify-content:center;gap:32%}
-.aey{width:7px;height:4px;background:var(--c);border-radius:50%;box-shadow:0 0 10px var(--c),0 0 22px rgba(0,229,255,.5);animation:eyG 1.7s ease-in-out infinite}
-.aey:last-child{animation-delay:.45s}
-@keyframes eyG{50%{opacity:.12;box-shadow:0 0 4px var(--c)}}
-.ahorn{position:absolute;top:-18%;width:22%;background:linear-gradient(to top,#0a1520,rgba(0,229,255,.3));clip-path:polygon(30% 100%,70% 100%,50% 0)}
-.ah1{left:10%;transform:rotate(-12deg)}.ah2{right:10%;transform:rotate(12deg)}
-.td{position:absolute;width:2px;border-radius:2px;background:linear-gradient(to bottom,rgba(0,229,255,.5),transparent);transform-origin:top center;animation:tds ease-in-out infinite}
-.td1{height:25%;left:10%;top:54%;animation-duration:2.2s;animation-delay:0s}
-.td2{height:18%;right:12%;top:47%;animation-duration:2.8s;animation-delay:.5s}
-.td3{height:20%;left:5%;top:70%;animation-duration:3.2s;animation-delay:1s}
-.td4{height:15%;right:5%;top:66%;animation-duration:2.5s;animation-delay:1.5s}
-@keyframes tds{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
-.wp{position:absolute;border-radius:50%;background:rgba(0,229,255,.4);animation:wpa linear infinite;box-shadow:0 0 4px var(--c)}
-.wp1{width:4px;height:4px;left:5%;top:28%;animation-duration:3s}
-.wp2{width:3px;height:3px;right:8%;top:53%;animation-duration:4s;animation-delay:1s}
-.wp3{width:2px;height:2px;left:15%;top:62%;animation-duration:3.5s;animation-delay:.5s}
-@keyframes wpa{0%{opacity:0;transform:translateY(0)}20%{opacity:1}80%{opacity:.5}100%{opacity:0;transform:translateY(-38px)}}
-
-/* BOARD */
-#bwrap{padding:7px;border-radius:13px;background:rgba(0,0,0,.6);border:1px solid rgba(0,229,255,.14);box-shadow:0 0 45px rgba(0,229,255,.07),inset 0 0 28px rgba(0,0,0,.6);position:relative;flex-shrink:0}
-.bc{position:absolute;width:11px;height:11px;border-color:var(--c);border-style:solid}
-.bc.tl{top:-1px;left:-1px;border-width:2px 0 0 2px;border-radius:3px 0 0 0}
-.bc.tr{top:-1px;right:-1px;border-width:2px 2px 0 0;border-radius:0 3px 0 0}
-.bc.bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px;border-radius:0 0 0 3px}
-.bc.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0;border-radius:0 0 3px 0}
-#board{display:grid;gap:3px}
-.gem{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.12);transition:transform .1s,box-shadow .1s}
-.gem::before{content:'';position:absolute;top:8%;left:13%;width:25%;height:38%;background:linear-gradient(135deg,rgba(255,255,255,.27) 0%,transparent 100%);clip-path:polygon(50% 0,100% 38%,72% 100%,28% 100%,0 38%);pointer-events:none}
-.gem.lin  {background:radial-gradient(circle at 36% 26%,#f0c070,#a05520 52%,#2e1200);box-shadow:0 0 8px rgba(200,135,42,.4),inset 0 0 7px rgba(255,200,80,.1)}
-.gem.trini{background:radial-gradient(circle at 36% 26%,#e8b0ff,#8020cc 52%,#220742);box-shadow:0 0 8px rgba(155,89,182,.44),inset 0 0 7px rgba(200,80,255,.1)}
-.gem.zak  {background:radial-gradient(circle at 36% 26%,#aaf4ff,#0099cc 52%,#052840);box-shadow:0 0 8px rgba(0,200,255,.44),inset 0 0 7px rgba(80,240,255,.1)}
-.gem.bori {background:radial-gradient(circle at 36% 26%,#ffd090,#e06000 52%,#3d1200);box-shadow:0 0 8px rgba(255,100,0,.44),inset 0 0 7px rgba(255,160,60,.1)}
-.gem.mirex{background:radial-gradient(circle at 36% 26%,#ff90a8,#aa1030 52%,#300010);box-shadow:0 0 8px rgba(180,30,60,.44),inset 0 0 7px rgba(255,60,80,.1)}
-.gem.ferr {background:radial-gradient(circle at 36% 26%,#e8eef8,#8090a0 52%,#202830);box-shadow:0 0 6px rgba(150,165,180,.34),inset 0 0 7px rgba(220,235,255,.08)}
-.gem.sel{transform:scale(1.13);outline:2px solid rgba(255,255,255,.85);outline-offset:1px;z-index:5;box-shadow:0 0 18px rgba(255,255,255,.5)!important}
-.gem.special{border:2px solid #fff;box-shadow:0 0 16px #fff,0 0 32px rgba(255,255,255,.32),inset 0 0 12px rgba(255,255,255,.22)!important;animation:spP 1.8s ease-in-out infinite}
-@keyframes spP{50%{filter:brightness(1.4)}}
-.gem.special .star{position:absolute;font-size:15px;color:rgba(255,255,255,.9);text-shadow:0 0 7px #fff;animation:stS 3s linear infinite;pointer-events:none}
-@keyframes stS{to{transform:rotate(360deg)}}
-.gem.match{animation:gPop .24s ease-out forwards}
-@keyframes gPop{0%{transform:scale(1)}40%{transform:scale(1.3);filter:brightness(2.2)}100%{transform:scale(.05);opacity:0}}
-
-/* BOTTOM */
-#bot{position:relative;z-index:20;display:flex;align-items:center;padding:5px 7px;gap:6px;background:linear-gradient(to top,rgba(0,0,0,.92),rgba(0,0,0,.65));border-top:1px solid rgba(0,229,255,.1);flex-shrink:0}
-.skls{display:flex;gap:3px;padding:4px 5px;background:var(--panel);border:1px solid rgba(0,229,255,.1);border-radius:8px}
-.sk{width:clamp(46px,10.5vw,62px);height:clamp(48px,10.5vw,62px);border-radius:7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;font-size:clamp(.48rem,1.5vw,.6rem);font-weight:700}
-.sk small{font-size:clamp(.34rem,1vw,.42rem);color:#1e3040;font-weight:400}
-.sko{width:15px;height:15px;border-radius:50%;margin-bottom:1px;border:1px solid rgba(255,255,255,.12)}
-.ske{background:radial-gradient(circle at 35%,#c8872a,#3d1600);box-shadow:0 0 6px rgba(200,135,42,.6)}
-.sks{background:radial-gradient(circle at 35%,#9b59b6,#220742);box-shadow:0 0 6px rgba(155,89,182,.6)}
-.skt{background:radial-gradient(circle at 35%,#00bcd4,#005060);box-shadow:0 0 6px rgba(0,200,220,.6)}
-.skl.act{border-color:rgba(200,135,42,.4);box-shadow:0 0 9px rgba(200,135,42,.15)}
-.skt2{border-color:rgba(155,89,182,.25)}
-.skz{border-color:rgba(0,200,220,.25)}
-.sklk{opacity:.38}
-.ecow{margin-left:auto;flex-shrink:0}
-.ecoc{width:clamp(54px,12vw,68px);height:clamp(54px,12vw,68px);position:relative;display:flex;align-items:center;justify-content:center}
-.ecosvg{position:absolute;inset:0;width:100%;height:100%}
-#ecoArc{transition:stroke-dashoffset .5s ease}
-.ecoin{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
-.ecoin span{font-family:var(--ff3);font-size:.36rem;color:#185060;letter-spacing:.08em}
-.ecoin b{font-family:var(--ff1);font-size:clamp(.7rem,2.3vw,.88rem);color:var(--c);line-height:1;text-shadow:0 0 8px var(--c)}
-.ecoin em{font-family:var(--ff3);font-size:.4rem;color:#88ccdd;font-style:normal}
-
-/* ULTIMATE */
-#ult{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;flex-direction:column;gap:.9rem;text-align:center;background:rgba(0,0,0,.8);backdrop-filter:blur(6px)}
-#ult.show{display:flex}
-.ultbg{position:absolute;inset:0;animation:ultbgP .35s linear infinite}
-@keyframes ultbgP{50%{opacity:.4}}
-.ultwave{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:10px;height:10px;border:3px solid var(--c);border-radius:50%;animation:wExp .9s ease-out}
-@keyframes wExp{to{width:600px;height:600px;opacity:0}}
-#ultChar{position:relative;z-index:1;width:min(170px,48vw);height:min(210px,52vw);border-radius:18px;background:linear-gradient(175deg,#1a2228,#040607);border:1px solid rgba(0,229,255,.3);overflow:hidden}
-#ultTitle{position:relative;z-index:1;font-family:var(--ff1);font-size:clamp(1.4rem,5.5vw,2.8rem);letter-spacing:.08em;animation:ultTI .4s ease-out}
-@keyframes ultTI{from{transform:scale(1.7);opacity:0}}
-#ultText{position:relative;z-index:1;font-size:.85rem;color:#aaddee;letter-spacing:.04em;max-width:270px}
-#msg{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%);z-index:40;font-family:var(--ff1);font-size:clamp(1rem,4.5vw,1.7rem);font-weight:900;text-align:center;pointer-events:none;opacity:0;transition:opacity .2s,transform .2s;white-space:nowrap}
-#msg.show{opacity:1;transform:translate(-50%,-50%) scale(1.06)}
-
-/* END */
-#sEnd{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 20%,rgba(0,229,255,.09) 0%,transparent 50%),linear-gradient(180deg,#030810 0%,#020508 100%)}
-#sEnd.act{display:flex}
-.ec{width:min(420px,88vw);padding:1.8rem 1.6rem;border-radius:12px;background:rgba(0,6,14,.9);border:1px solid rgba(0,229,255,.14);box-shadow:0 0 45px rgba(0,229,255,.08);backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center}
-.el{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.42),transparent)}
-#endTitle{font-family:var(--ff1);font-size:clamp(1.7rem,7.5vw,2.6rem)}
-#endText{font-size:.82rem;color:#4a6a7a;line-height:1.6;max-width:300px}
+/* ── END SCREEN ── */
+#scEnd{align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 30%,rgba(0,229,255,.08) 0%,transparent 50%),linear-gradient(180deg,#020508 0%,#040c18 100%)}
+.end-card{width:min(460px,88vw);padding:2rem 1.8rem;border-radius:12px;background:rgba(0,5,12,.9);border:1px solid rgba(0,229,255,.15);box-shadow:0 0 50px rgba(0,229,255,.08);backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;gap:1.1rem;text-align:center}
+.end-rule{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.42),transparent)}
+.end-title{font-family:var(--ff1);font-size:clamp(1.8rem,7vw,2.8rem)}
+.end-text{font-size:.85rem;color:#4a6a7a;line-height:1.6;max-width:320px}
 </style>
 </head>
 <body>
-<div class="bgl bgc"></div>
-<div class="bgl bgr"></div>
-<div class="bgl bgv"></div>
-<div class="bgl bglx"></div>
-<canvas id="rc"></canvas>
+<div class="rain"></div>
+<div class="vign"></div>
+<div class="lightning"></div>
 <div id="app">
 
-<div id="sMenu">
-  <div class="mc">
-    <div class="mlt"></div>
-    <div style="text-align:center">
-      <div class="ld">DUAL</div>
-      <div class="ls">— ECHO FRAGMENTS —</div>
-      <div class="lt">UN MUNDO QUE SE HUNDE · UN ECO QUE DESPIERTA</div>
+<!-- MENU -->
+<div id="scMenu" class="scene active">
+  <div class="menu-wrap">
+    <div class="menu-rule top"></div>
+    <div>
+      <div class="logo-big">DUAL</div>
+      <div class="logo-city">— ECHO FRAGMENTS —</div>
+      <div class="logo-tag">UN MUNDO QUE SE HUNDE · UN ECO QUE DESPIERTA</div>
     </div>
-    <div class="mvs">
-      <div class="mvsi"><div class="mo e"></div><div class="mn">LIN</div><div class="mp">TIERRA</div></div>
-      <div class="mvs-vs">VS</div>
-      <div class="mvsi"><div class="mo w"></div><div class="mn">AERONYX</div><div class="mp">VIENTO</div></div>
+    <div class="menu-chars">
+      <div class="mc-char"><div class="mc-orb e"></div><div class="mc-name">LIN</div><div class="mc-power">TIERRA</div></div>
+      <div class="mc-char"><div class="mc-orb s"></div><div class="mc-name">TRINI</div><div class="mc-power">SOMBRAS</div></div>
+      <div class="mc-char"><div class="mc-orb t"></div><div class="mc-name">ZAK</div><div class="mc-power">TECNOLOGÍA</div></div>
     </div>
-    <button class="btn" id="startBtn"><span class="bsh"></span><span class="btxt">▶ &nbsp;COMENZAR</span></button>
-    <div class="mhints">
-      <span class="mh">3 iguales → Daño</span><span class="mhs">·</span>
-      <span class="mh">4 → Especial</span><span class="mhs">·</span>
-      <span class="mh">5 → Super Eco</span>
-    </div>
-    <div class="mlb"></div>
+    <p class="menu-lore">La señal de <em>Trónox</em> fue enviada. Meteoritos caen sobre la ciudad.<br>Lurnox y sus criaturas han llegado. <em>Tú eliges hasta dónde llegar.</em></p>
+    <button class="btn-play" id="btnPlay"><span class="bsh"></span><span class="btxt">▶ &nbsp;COMENZAR</span></button>
+    <div class="menu-rule bot"></div>
   </div>
 </div>
 
-<div id="sGame">
-  <div id="hud">
-    <div class="fc li">
-      <div class="pt lp"><div class="lpc"></div><div class="lph"></div><div class="lpb"></div><div class="lpr lr1"></div><div class="lpr lr2"></div></div>
-      <div class="fi">
-        <div class="fn">LIN</div>
-        <div class="br"><div class="bar h"><i id="linHp" style="width:100%"></i></div><span class="bv" id="linN">100</span></div>
-        <div class="br"><div class="bar e"><i id="ecoM" style="width:0%"></i></div></div>
-        <div class="ftg e">TIERRA · +35%</div>
+<!-- GAME SCENE -->
+<div id="scGame" class="scene">
+  <div class="sbg" id="sceneBg"></div>
+  <div class="city-bg"></div>
+  <div class="city-fire"></div>
+
+  <!-- Characters (shown/hidden per scene) -->
+  <div class="smain">
+    <!-- LIN always left -->
+    <div id="charLin" class="char-art lin-art" style="display:none">
+      <div class="lin-body">
+        <div class="lin-aura"></div>
+        <div class="lin-legs"></div>
+        <div class="lin-torso"></div>
+        <div class="lin-head"></div>
+        <div class="lin-cap"></div>
+        <div class="lin-rock lr1"></div>
+        <div class="lin-rock lr2"></div>
+        <div class="lin-rock lr3"></div>
+        <div class="lin-glow"></div>
       </div>
     </div>
-    <div class="chp">
-      <div class="cl">CAP. 1</div>
-      <div class="cn">Vientos<br>del Caos</div>
-      <span class="cml">MOVIM.</span>
-      <strong class="cmn" id="moves">30</strong>
-    </div>
-    <div class="fc bo">
-      <div class="fi r">
-        <div class="fn">AERONYX</div>
-        <div class="br rv"><div class="bar b"><i id="bossHp" style="width:100%"></i></div><span class="bv" id="bossN">100</span></div>
-        <div class="ftg w">⚡ VIENTO</div>
+    <!-- TRINI -->
+    <div id="charTrini" class="char-art trini-art" style="display:none">
+      <div class="trini-body">
+        <div class="trini-aura"></div>
+        <div class="trini-shadow"></div>
+        <div class="trini-legs"></div>
+        <div class="trini-torso"></div>
+        <div class="trini-head"></div>
+        <div class="trini-hair"></div>
+        <div class="smoke-particle sp1"></div>
+        <div class="smoke-particle sp2"></div>
+        <div class="smoke-particle sp3"></div>
       </div>
-      <div class="pt ap"><div class="apr ar1"></div><div class="apr ar2"></div><div class="ape ae1"></div><div class="ape ae2"></div></div>
+    </div>
+    <!-- ZAK -->
+    <div id="charZak" class="char-art zak-art" style="display:none">
+      <div class="zak-body">
+        <div class="zak-aura"></div>
+        <div class="zak-legs"></div>
+        <div class="zak-torso"></div>
+        <div class="zak-head"></div>
+        <div class="zak-phone"></div>
+        <div class="tech-particle tp1"></div>
+        <div class="tech-particle tp2"></div>
+        <div class="tech-particle tp3"></div>
+        <div class="tech-particle tp4"></div>
+      </div>
+    </div>
+    <!-- AERONYX -->
+    <div id="charAeronyx" class="char-art aeronyx-art" style="display:none">
+      <div class="aero-body">
+        <div class="aero-glow"></div>
+        <div class="wind-ring wr1"></div>
+        <div class="wind-ring wr2"></div>
+        <div class="wind-ring wr3"></div>
+        <div class="aero-mass"></div>
+        <div class="aero-eye ae1"></div>
+        <div class="aero-eye ae2"></div>
+        <div class="aero-tendril at1"></div>
+        <div class="aero-tendril at2"></div>
+        <div class="aero-tendril at3"></div>
+        <div class="aero-wind-particle awp1"></div>
+        <div class="aero-wind-particle awp2"></div>
+        <div class="aero-wind-particle awp3"></div>
+      </div>
+    </div>
+    <!-- BORINEX -->
+    <div id="charBorinex" class="char-art borinex-art" style="display:none">
+      <div class="bori-body">
+        <div class="bori-glow"></div>
+        <div class="bori-streak bs1"></div>
+        <div class="bori-streak bs2"></div>
+        <div class="bori-streak bs3"></div>
+        <div class="bori-mass"></div>
+        <div class="bori-eye be1"></div>
+        <div class="bori-eye be2"></div>
+        <div class="bori-crack"></div>
+      </div>
+    </div>
+    <!-- MIREX -->
+    <div id="charMirex" class="char-art mirex-art" style="display:none">
+      <div class="mirex-body">
+        <div class="mirex-glow"></div>
+        <div class="psy-ring pr1"></div>
+        <div class="psy-ring pr2"></div>
+        <div class="mirex-mass"></div>
+        <div class="mirex-eye me1"></div>
+        <div class="mirex-eye me2"></div>
+        <div class="psy-particle pp1"></div>
+        <div class="psy-particle pp2"></div>
+        <div class="psy-particle pp3"></div>
+      </div>
+    </div>
+    <!-- FERRONIX -->
+    <div id="charFerronix" class="char-art ferronix-art" style="display:none">
+      <div class="ferr-body">
+        <div class="ferr-glow"></div>
+        <div class="metal-shard ms1"></div>
+        <div class="metal-shard ms2"></div>
+        <div class="metal-shard ms3"></div>
+        <div class="ferr-mass"></div>
+        <div class="ferr-eye fe1"></div>
+        <div class="ferr-eye fe2"></div>
+      </div>
+    </div>
+    <!-- LURNOX -->
+    <div id="charLurnox" class="char-art lurnox-art" style="display:none">
+      <div class="lurnox-body">
+        <div class="lurnox-glow"></div>
+        <div class="lurnox-ring lur-r1"></div>
+        <div class="lurnox-ring lur-r2"></div>
+        <div class="lurnox-ring lur-r3"></div>
+        <div class="lurnox-mass"></div>
+        <div class="lurnox-horn lh1"></div>
+        <div class="lurnox-horn lh2"></div>
+        <div class="lurnox-eye le1"></div>
+        <div class="lurnox-eye le2"></div>
+        <div class="lurnox-tendril lt1"></div>
+        <div class="lurnox-tendril lt2"></div>
+        <div class="lurnox-tendril lt3"></div>
+        <div class="lurnox-tendril lt4"></div>
+        <div class="lurnox-particle lp1"></div>
+        <div class="lurnox-particle lp2"></div>
+        <div class="lurnox-particle lp3"></div>
+        <div class="lurnox-particle lp4"></div>
+      </div>
     </div>
   </div>
 
-  <div id="battle">
-    <div class="cside">
-      <div class="linsc">
-        <div class="laura"></div>
-        <div class="ep ep1"></div><div class="ep ep2"></div><div class="ep ep3"></div>
-        <div class="lbw"><div class="lcp"></div><div class="lhd"></div><div class="ltr"></div><div class="llg"></div></div>
-        <div class="lrf lrf1"></div><div class="lrf lrf2"></div><div class="lrf lrf3"></div>
-        <div class="lgr"></div>
+  <!-- HUD -->
+  <div class="hbar">
+    <div>
+      <div class="hbar-title" id="hudTitle">DUAL</div>
+      <div class="hbar-sub" id="hudSub">ECHO FRAGMENTS</div>
+    </div>
+    <div class="hbar-stats">
+      <div class="stat">
+        <div class="stat-label">VIDA</div>
+        <div class="stat-bar"><i class="hp-fill" id="hpBar" style="width:100%"></i></div>
       </div>
-    </div>
-    <div id="bwrap">
-      <div class="bc tl"></div><div class="bc tr"></div><div class="bc bl"></div><div class="bc br"></div>
-      <div id="board"></div>
-    </div>
-    <div class="cside">
-      <div class="aerosc">
-        <div class="aglow"></div>
-        <div class="wr wr1"></div><div class="wr wr2"></div><div class="wr wr3"></div>
-        <div class="abody"><div class="amass"><div class="ahorn ah1"></div><div class="ahorn ah2"></div><div class="aeyes"><div class="aey"></div><div class="aey"></div></div></div></div>
-        <div class="td td1"></div><div class="td td2"></div><div class="td td3"></div><div class="td td4"></div>
-        <div class="wp wp1"></div><div class="wp wp2"></div><div class="wp wp3"></div>
+      <div class="stat">
+        <div class="stat-label">ECO</div>
+        <div class="stat-bar"><i class="eco-fill" id="ecoBar" style="width:0%"></i></div>
       </div>
     </div>
   </div>
 
-  <div id="bot">
-    <div class="skls">
-      <div class="sk skl act"><div class="sko ske"></div><b>LIN</b><small>Roca</small></div>
-      <div class="sk skt2"><div class="sko sks"></div><b>TRINI</b><small>Niebla</small></div>
-      <div class="sk skz"><div class="sko skt"></div><b>ZAK</b><small>Glitch</small></div>
-      <div class="sk sklk"><div style="font-size:.85rem">🔒</div><b>???</b><small>Bloq.</small></div>
-    </div>
-    <div class="ecow">
-      <div class="ecoc">
-        <svg class="ecosvg" viewBox="0 0 68 68">
-          <circle cx="34" cy="34" r="28" fill="none" stroke="rgba(0,229,255,0.1)" stroke-width="4"/>
-          <circle id="ecoArc" cx="34" cy="34" r="28" fill="none" stroke="#00e5ff" stroke-width="3" stroke-dasharray="176" stroke-dashoffset="176" stroke-linecap="round" transform="rotate(-90 34 34)"/>
-        </svg>
-        <div class="ecoin"><span>MODO</span><b>ECO</b><em id="ecoText">0%</em></div>
-      </div>
-    </div>
+  <div class="textbox">
+    <div class="tb-speaker" id="speaker">LIN</div>
+    <div class="tb-text" id="tbText"><span class="cursor"></span></div>
+  </div>
+  <div class="choices" id="choices"></div>
+  <button class="btn-continue hidden" id="btnContinue">[ CONTINUAR ]</button>
+</div>
+
+<!-- END -->
+<div id="scEnd" class="scene">
+  <div class="end-card">
+    <div class="end-rule"></div>
+    <div class="logo-big" style="font-size:clamp(2rem,9vw,3.5rem)">DUAL</div>
+    <div class="end-title" id="endTitle">FIN</div>
+    <p class="end-text" id="endText"></p>
+    <button class="btn-play" id="btnRestart" style="margin-top:.5rem"><span class="bsh"></span><span class="btxt">↺ &nbsp;VOLVER A JUGAR</span></button>
+    <div class="end-rule"></div>
   </div>
 </div>
 
-<div id="ult">
-  <div class="ultbg" id="ultBg"></div>
-  <div class="ultwave" id="ultWave"></div>
-  <div id="ultChar"></div>
-  <h2 id="ultTitle">SUPER ECO</h2>
-  <p id="ultText">El tablero responde al poder.</p>
 </div>
-<div id="msg"></div>
-
-<div id="sEnd">
-  <div class="ec">
-    <div class="el"></div>
-    <div class="ld" style="font-size:clamp(2rem,9vw,3.8rem)">DUAL</div>
-    <h2 id="endTitle">Victoria</h2>
-    <p id="endText"></p>
-    <button class="btn" id="againBtn" style="margin-top:.4rem"><span class="bsh"></span><span class="btxt">↺ &nbsp;JUGAR DE NUEVO</span></button>
-    <div class="el"></div>
-  </div>
-</div>
-</div>
-
 <script>
-// Rain
-(function(){const c=document.getElementById('rc'),ctx=c.getContext('2d');function r(){c.width=innerWidth;c.height=innerHeight}r();window.addEventListener('resize',r);const d=Array.from({length:85},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,l:8+Math.random()*20,s:4+Math.random()*8,o:.05+Math.random()*.17}));(function draw(){ctx.clearRect(0,0,c.width,c.height);d.forEach(p=>{ctx.strokeStyle=`rgba(150,210,255,${p.o})`;ctx.lineWidth=.5;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-1,p.y+p.l);ctx.stroke();p.y+=p.s;if(p.y>c.height){p.y=-p.l;p.x=Math.random()*innerWidth}});requestAnimationFrame(draw);})();})();
+/* ═══════════════════════════
+   DUAL: Echo Fragments
+   Narrative Decision Game
+═══════════════════════════ */
 
-// Game
-const boardEl=document.getElementById('board'),msgEl=document.getElementById('msg');
-const W=8,H=8;
-let board=[],sel=null,moves=30,linHp=100,bossHp=100,eco=0,locked=false;
-const TYPES=[
-  {id:'lin',  d:8,ult:'LIN: TERREMOTO',      txt:'Lin golpea el suelo. El tablero tiembla y los fragmentos se dispersan.',col:'#c8872a'},
-  {id:'trini',d:7,ult:'TRINI: NIEBLA',        txt:'Trini cubre el campo con humo. El tablero renace desde las cenizas.',  col:'#9b59b6'},
-  {id:'zak',  d:7,ult:'ZAK: INTERFERENCIA',   txt:'Zak glitchea el tablero. El caos digital toma control.',               col:'#00bcd4'},
-  {id:'bori', d:4,ult:'BORINEX: VELOCIDAD',   txt:'La velocidad corrupta castiga a Lin con fuerza devastadora.',           col:'#ff6a00'},
-  {id:'mirex',d:4,ult:'MIREX: ILUSIÓN',       txt:'Mirex distorsiona la realidad. Nada es lo que parece.',                col:'#8b1a3a'},
-  {id:'ferr', d:4,ult:'FERRONIX: METAL',      txt:'Ferronix endurece los fragmentos. El tablero se vuelve denso.',        col:'#7a8a9a'},
-];
-function rg(){return{...TYPES[Math.floor(Math.random()*TYPES.length)],s:false,matched:false}}
-function gs(){const b=document.getElementById('battle');if(!b)return 36;const av=Math.min(b.clientWidth*.52,b.clientHeight*.94);return Math.max(28,Math.floor((av-7*3)/8))}
-function showMenu(){document.getElementById('sMenu').style.display='flex';document.getElementById('sGame').classList.remove('act');document.getElementById('sEnd').classList.remove('act')}
-function showGame(){document.getElementById('sMenu').style.display='none';document.getElementById('sGame').classList.add('act');document.getElementById('sEnd').classList.remove('act')}
-function showEnd(){document.getElementById('sMenu').style.display='none';document.getElementById('sGame').classList.remove('act');document.getElementById('sEnd').classList.add('act')}
-function start(){
-  moves=30;linHp=100;bossHp=100;eco=0;sel=null;locked=false;
-  board=Array.from({length:H},()=>Array.from({length:W},rg));
-  let t=0;while(matches().length&&t++<30)board=Array.from({length:H},()=>Array.from({length:W},rg));
-  showGame();
-  const g=gs();boardEl.style.gridTemplateColumns=`repeat(8,${g}px)`;boardEl.style.gridTemplateRows=`repeat(8,${g}px)`;
-  render();
-}
-function render(){
-  boardEl.innerHTML='';
-  document.getElementById('moves').textContent=moves;
-  document.getElementById('moves').style.color=moves<=5?'#e74c3c':'#fff';
-  document.getElementById('linHp').style.width=linHp+'%';
-  document.getElementById('linN').textContent=linHp;
-  document.getElementById('bossHp').style.width=bossHp+'%';
-  document.getElementById('bossN').textContent=bossHp;
-  document.getElementById('ecoM').style.width=eco+'%';
-  document.getElementById('ecoText').textContent=eco+'%';
-  const arc=document.getElementById('ecoArc');if(arc)arc.style.strokeDashoffset=176-(176*eco/100);
-  const g=gs();
-  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
-    const gm=board[y][x],e=document.createElement('div');
-    e.className='gem '+gm.id+(gm.s?' special':'')+(gm.matched?' match':'')+(sel&&sel.x===x&&sel.y===y?' sel':'');
-    e.style.width=g+'px';e.style.height=g+'px';
-    if(gm.s){const s=document.createElement('span');s.className='star';s.textContent='✦';e.appendChild(s)}
-    e.addEventListener('click',()=>tap(x,y));
-    let tx,ty;
-    e.addEventListener('touchstart',ev=>{tx=ev.touches[0].clientX;ty=ev.touches[0].clientY},{passive:true});
-    e.addEventListener('touchend',ev=>{
-      const dx=ev.changedTouches[0].clientX-tx,dy=ev.changedTouches[0].clientY-ty,ax=Math.abs(dx),ay=Math.abs(dy);
-      if(ax<10&&ay<10){tap(x,y);return}
-      if(locked)return;
-      let nx=x,ny=y;if(ax>ay){nx=dx>0?x+1:x-1}else{ny=dy>0?y+1:y-1}
-      if(nx<0||nx>=W||ny<0||ny>=H)return;
-      sel=null;doSw(x,y,nx,ny);
-    },{passive:true});
-    boardEl.appendChild(e);
+let hp=100, eco=0;
+let currentNode='';
+let typing=false;
+
+// ── STORY DATA ──
+const story = {
+
+// ═══ ACTO 1: EL DESPERTAR ═══
+'s_intro':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin'],
+  title:'DUAL', sub:'ECHO FRAGMENTS · CAPÍTULO 1',
+  text:'La ciudad de Vertex. Madrugada.\nLin se despierta de golpe. El piso tiembla. Afuera, el cielo está roto.',
+  next:'s_lin_desperta'
+},
+'s_lin_desperta':{
+  bg:'eco-earth', speaker:'LIN',
+  chars:['lin'],
+  title:'EL DESPERTAR', sub:'',
+  text:'¿Qué fue eso...? El piso vibró. Las paredes... siento algo raro. Mis manos.',
+  next:'s_lin_manos'
+},
+'s_lin_manos':{
+  bg:'eco-earth', speaker:'LIN',
+  chars:['lin'],
+  text:'Las piedras del piso... se están moviendo. Sin tocarlas. Yo... las estoy moviendo.',
+  choices:[
+    {text:'Salir a ver qué pasa afuera', next:'s_salir', ecoChange:5, hpChange:0},
+    {text:'Quedarte adentro y entender el poder primero', next:'s_quedar', ecoChange:10, hpChange:0},
+  ]
+},
+'s_quedar':{
+  bg:'eco-earth', speaker:'LIN',
+  chars:['lin'],
+  text:'Levantás una roca del piso. Flota. La dirigís hacia la pared y la detenés a centímetros. Sos vos. Es tuyo.',
+  next:'s_explosion_afuera'
+},
+'s_salir':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin'],
+  text:'Abrís la puerta. El calor te golpea la cara. Tres edificios en llamas. Un rayo turquesa corta el cielo desde el horizonte.',
+  next:'s_explosion_afuera'
+},
+'s_explosion_afuera':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin'],
+  text:'Una explosión enorme sacude la ciudad. A lo lejos, soldados corren hacia algo. Algo que se mueve diferente. Algo que no es humano.',
+  next:'s_decision_ir'
+},
+'s_decision_ir':{
+  bg:'eco-earth', speaker:'LIN',
+  chars:['lin'],
+  text:'Ese rayo. Viene de algún lugar. Si hay algo ahí... alguien tiene que ir.',
+  choices:[
+    {text:'Ir hacia el rayo. Es tu problema ahora.', next:'s_camino_rayo', ecoChange:8, hpChange:0},
+    {text:'Buscar sobrevivientes primero.', next:'s_buscar_sobrevivientes', ecoChange:5, hpChange:5},
+  ]
+},
+
+// ═══ ACTO 2: LAS CALLES ═══
+'s_camino_rayo':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin'],
+  title:'ACTO 2', sub:'LAS CALLES DE VERTEX',
+  text:'Corrés por la ciudad destruida. Autos volcados. El asfalto partido. Una columna de piedra explota frente a vos — la detuviste sin pensar.',
+  next:'s_militares'
+},
+'s_buscar_sobrevivientes':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin'],
+  title:'ACTO 2', sub:'LAS CALLES DE VERTEX',
+  text:'Sacás a tres personas de los escombros. Tus manos gimen por el esfuerzo. Algo en vos se despierta más. El Eco crece.',
+  ecoChange:10, next:'s_militares'
+},
+'s_militares':{
+  bg:'eco-wind', speaker:'NARRADOR',
+  chars:['lin'],
+  text:'Un pelotón de soldados te rodea. Sus ojos... no están bien. Están nublados. Corruptos. Detrás de ellos, algo se mueve en el viento.',
+  next:'s_aeronyx_aparece'
+},
+'s_aeronyx_aparece':{
+  bg:'eco-wind', speaker:'AERONYX',
+  chars:['lin','aeronyx'],
+  text:'Una figura emerge del aire. Su voz suena como una tormenta.\n"Custodio. Llegaste tarde. Esta ciudad ya es nuestra."',
+  next:'s_aeronyx_decision'
+},
+'s_aeronyx_decision':{
+  bg:'eco-wind', speaker:'LIN',
+  chars:['lin','aeronyx'],
+  text:'Aeronyx. Control del viento. Un Trónox menor pero letal. Podés sentir su Eco marrón chocando contra el tuyo.',
+  choices:[
+    {text:'Pelear. Lanzar rocas contra Aeronyx.', next:'s_pelea_aeronyx', ecoChange:10, hpChange:-15},
+    {text:'Esquivar y buscar cobertura.', next:'s_esquivar_aeronyx', ecoChange:5, hpChange:-5},
+  ]
+},
+'s_pelea_aeronyx':{
+  bg:'eco-wind', speaker:'NARRADOR',
+  chars:['lin','aeronyx'],
+  shake:true,
+  text:'Las rocas vuelan. Aeronyx las desvía con ráfagas de viento. Te golpea y salís volando. Te levantás. No terminó.',
+  next:'s_trini_aparece'
+},
+'s_esquivar_aeronyx':{
+  bg:'eco-wind', speaker:'NARRADOR',
+  chars:['lin'],
+  text:'Rodás detrás de un auto volcado. El viento arrasa todo a tu alrededor. Aeronyx ríe. "¿Eso es todo, custodio?"',
+  next:'s_trini_aparece'
+},
+
+// ═══ ACTO 3: TRINI ═══
+'s_trini_aparece':{
+  bg:'eco-smoke', speaker:'NARRADOR',
+  chars:['lin','trini'],
+  title:'ACTO 3', sub:'LA ALIADA DE LAS SOMBRAS',
+  text:'Algo oscuro se mueve a tu lado. Una chica. Apareció de la nada, como si hubiera cruzado a través de tu propia sombra.',
+  next:'s_trini_habla'
+},
+'s_trini_habla':{
+  bg:'eco-smoke', speaker:'TRINI',
+  chars:['lin','trini'],
+  text:'"Me llamo Trini. También tengo uno adentro. Podemos hablar después — ahora hay que moverse."',
+  next:'s_decision_trini'
+},
+'s_decision_trini':{
+  bg:'eco-smoke', speaker:'LIN',
+  chars:['lin','trini'],
+  text:'No la conocés. Apareció de la nada. Pero su Eco se siente real. Diferente al tuyo, pero limpio.',
+  choices:[
+    {text:'Confiar en Trini. Escapar juntos.', next:'s_escapan_juntos', ecoChange:8, hpChange:0},
+    {text:'Desconfiar. Ir solo por ahora.', next:'s_ir_solo', ecoChange:0, hpChange:0},
+  ]
+},
+'s_escapan_juntos':{
+  bg:'eco-smoke', speaker:'NARRADOR',
+  chars:['lin','trini'],
+  text:'Trini toma tu mano y los dos se disuelven en sombra. Un segundo de oscuridad total. Aparecen tres cuadras adelante, en el tejado de un edificio.',
+  next:'s_tejado_vision'
+},
+'s_ir_solo':{
+  bg:'eco-earth', speaker:'LIN',
+  chars:['lin'],
+  text:'"Gracias, pero voy solo." Corrés. Trini no te sigue. Pero tres minutos después, cuando Borinex casi te aplasta, aparece detrás de él.',
+  next:'s_tejado_vision'
+},
+'s_tejado_vision':{
+  bg:'eco-earth', speaker:'TRINI',
+  chars:['lin','trini'],
+  text:'"Desde acá se ve todo. El rayo viene del centro de la ciudad. Y hay algo más — hay otros chicos luchando. En otra ciudad. Contra el más grande."',
+  next:'s_mencion_dual'
+},
+'s_mencion_dual':{
+  bg:'eco-earth', speaker:'LIN',
+  chars:['lin','trini'],
+  text:'"¿Otros?" Trini asiente.\n"Theo, Norrin, Mila, Lucy y Kate. Están enfrentando a Trónox. El que mandó la señal. El que trajo todo esto."',
+  next:'s_decision_seguir'
+},
+
+// ═══ ACTO 4: ZAK ═══
+'s_decision_seguir':{
+  bg:'eco-earth', speaker:'LIN',
+  chars:['lin','trini'],
+  text:'Si hay otros luchando, ustedes no están solos. El rayo del centro sigue ahí. Tienen que llegar.',
+  choices:[
+    {text:'Bajar y seguir hacia el centro.', next:'s_conocen_zak', ecoChange:5, hpChange:0},
+    {text:'Descansar y planear el próximo movimiento.', next:'s_descanso', ecoChange:0, hpChange:15},
+  ]
+},
+'s_descanso':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin','trini'],
+  text:'Diez minutos. Suficiente para respirar. El Eco de Lin se estabiliza. Trini practica con las sombras. Listos.',
+  next:'s_conocen_zak'
+},
+'s_conocen_zak':{
+  bg:'eco-tech', speaker:'NARRADOR',
+  chars:['lin','trini','zak'],
+  title:'ACTO 4', sub:'EL TÉCNICO',
+  text:'En el sótano de una radio destruida, encuentran a un chico rodeado de celulares rotos. Todos encendidos. Sin señal. Pero transmitiendo.',
+  next:'s_zak_habla'
+},
+'s_zak_habla':{
+  bg:'eco-tech', speaker:'ZAK',
+  chars:['lin','trini','zak'],
+  text:'"Los estaba esperando. Mapeé todos los Ecos de la ciudad. Somos tres. Y hay cuatro entidades acá adentro. Una de ellas es el jefe."',
+  next:'s_zak_decision'
+},
+'s_zak_decision':{
+  bg:'eco-tech', speaker:'LIN',
+  chars:['lin','trini','zak'],
+  text:'Zak sabe dónde están todos. Absorbe tecnología, puede interferir los militares corruptos. Es un activo clave.',
+  choices:[
+    {text:'Sumar a Zak al equipo.', next:'s_equipo_completo', ecoChange:10, hpChange:0},
+    {text:'Ir directo al centro. No hay tiempo.', next:'s_sin_zak', ecoChange:0, hpChange:0},
+  ]
+},
+'s_sin_zak':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin','trini'],
+  text:'Salen sin Zak. A mitad de camino, los militares los cercan. Sin interferencia de Zak, la pelea es brutal. Lin pierde Eco.',
+  hpChange:-20, ecoChange:-10, next:'s_equipo_completo_forzado'
+},
+'s_equipo_completo_forzado':{
+  bg:'eco-tech', speaker:'ZAK',
+  chars:['lin','trini','zak'],
+  text:'Zak aparece igual. "Me necesitaban." Sonríe. Interfiere las radios de los militares. El cerco se rompe.',
+  next:'s_camino_centro'
+},
+'s_equipo_completo':{
+  bg:'eco-tech', speaker:'NARRADOR',
+  chars:['lin','trini','zak'],
+  text:'Tres. Lin con las rocas. Trini con las sombras. Zak con la tecnología. El Eco fluye entre los tres. Son más fuertes juntos.',
+  next:'s_camino_centro'
+},
+
+// ═══ ACTO 5: LOS MINI BOSSES ═══
+'s_camino_centro':{
+  bg:'eco-speed', speaker:'NARRADOR',
+  chars:['lin','trini','zak','borinex'],
+  title:'ACTO 5', sub:'LOS GUARDIANES DE LURNOX',
+  text:'A tres cuadras del centro, el suelo vibra. Alguien los está rodeando. Demasiado rápido para verlo.',
+  next:'s_borinex'
+},
+'s_borinex':{
+  bg:'eco-speed', speaker:'BORINEX',
+  chars:['lin','borinex'],
+  shake:true,
+  text:'"¡DEMASIADO LENTOS!" Borinex aparece y desaparece. Cada vez que aparece, golpea. Velocidad extrema. Eco naranja ardiendo.',
+  choices:[
+    {text:'Lin lanza rocas en todas direcciones.', next:'s_borinex_lin', ecoChange:10, hpChange:-10},
+    {text:'Trini usa las sombras para predecir el movimiento.', next:'s_borinex_trini', ecoChange:8, hpChange:-5},
+  ]
+},
+'s_borinex_lin':{
+  bg:'eco-speed', speaker:'NARRADOR',
+  chars:['lin','borinex'],
+  shake:true,
+  text:'Rocas en todas partes. Borinex esquiva las primeras, pero la última lo atrapa en el hombro. Pierde velocidad un instante. Suficiente.',
+  next:'s_borinex_cae'
+},
+'s_borinex_trini':{
+  bg:'eco-smoke', speaker:'TRINI',
+  chars:['trini','borinex'],
+  text:'Trini se convierte en sombra. Viaja a donde Borinex va a aparecer. Cuando llega, ella ya está ahí. El choque lo desestabiliza.',
+  next:'s_borinex_cae'
+},
+'s_borinex_cae':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin','trini','zak'],
+  text:'Borinex cae. No muerto — las entidades son difíciles de matar. Pero fuera de combate. El camino al centro se abre un poco más.',
+  next:'s_mirex'
+},
+'s_mirex':{
+  bg:'eco-psychic', speaker:'MIREX',
+  chars:['lin','mirex'],
+  text:'"Ustedes no saben lo que son." La voz de Mirex no viene de ningún lado. O de todos. "Los veo. Sus miedos. Sus dudas. Todo."',
+  choices:[
+    {text:'Resistir mentalmente. Concentrarse en el Eco.', next:'s_mirex_resistir', ecoChange:12, hpChange:-8},
+    {text:'Cerrar los ojos y dejarse llevar... una trampa.', next:'s_mirex_trampa', ecoChange:-15, hpChange:-20},
+  ]
+},
+'s_mirex_trampa':{
+  bg:'eco-psychic', speaker:'NARRADOR',
+  chars:['lin','mirex'],
+  shake:true,
+  text:'La ilusión es perfecta. Ves a los chicos de Dual — Theo, Norrin — caídos. Es mentira, pero duele igual. Mirex aprovecha.',
+  next:'s_mirex_resistir'
+},
+'s_mirex_resistir':{
+  bg:'eco-earth', speaker:'ZAK',
+  chars:['lin','trini','zak'],
+  text:'Zak interfiere con una ráfaga tecnológica. "¡Psíquico contra electrónico — gana lo digital!" Mirex retrocede. Su ilusión se rompe.',
+  next:'s_ferronix'
+},
+'s_ferronix':{
+  bg:'eco-metal', speaker:'FERRONIX',
+  chars:['lin','ferronix'],
+  shake:true,
+  text:'El último antes de Lurnox. Ferronix. Todo el metal de la cuadra se levanta. Autos. Rejas. Postes. Una armadura de ciudad.',
+  choices:[
+    {text:'Lin ataca con rocas — tierra contra metal.', next:'s_ferronix_lin', ecoChange:15, hpChange:-12},
+    {text:'Zak interfiere el campo magnético.', next:'s_ferronix_zak', ecoChange:10, hpChange:-5},
+  ]
+},
+'s_ferronix_lin':{
+  bg:'eco-metal', speaker:'LIN',
+  chars:['lin','ferronix'],
+  shake:true,
+  text:'La piedra y el metal chocan. Es como dos mundos distintos. Pero la tierra siempre fue antes que el metal. Lin gana el pulso.',
+  next:'s_centro_llegada'
+},
+'s_ferronix_zak':{
+  bg:'eco-tech', speaker:'ZAK',
+  chars:['zak','ferronix'],
+  text:'Zak emite un pulso electromagnético. El metal de Ferronix cae. Todo. Al suelo. Ferronix queda expuesto.',
+  next:'s_centro_llegada'
+},
+
+// ═══ ACTO FINAL: LURNOX ═══
+'s_centro_llegada':{
+  bg:'eco-lurnox', speaker:'NARRADOR',
+  chars:['lin','trini','zak'],
+  title:'ACTO FINAL', sub:'LURNOX',
+  text:'El centro de la ciudad. El rayo turquesa sale de aquí. En el medio, una figura enorme. Turquesa corrupto. Ojos que queman.',
+  next:'s_lurnox_aparece'
+},
+'s_lurnox_aparece':{
+  bg:'eco-lurnox', speaker:'LURNOX',
+  chars:['lin','lurnox'],
+  shake:true,
+  text:'"Llegaron. Los tres custodios. Vengan — el portal se abre de todas formas. Aethrium llama a sus criaturas. Y yo soy la primera."',
+  next:'s_lurnox_decision'
+},
+'s_lurnox_decision':{
+  bg:'eco-lurnox', speaker:'LIN',
+  chars:['lin','lurnox'],
+  text:'Lurnox es diferente. Su Eco turquesa es más puro que el de los otros. Más antiguo. No es solo fuerza bruta — es inteligente.',
+  choices:[
+    {text:'Atacar directo. Todo el poder juntos.', next:'s_final_ataque', ecoChange:15, hpChange:-20},
+    {text:'Hablar. Preguntarle qué quiere realmente.', next:'s_final_hablar', ecoChange:20, hpChange:0},
+  ]
+},
+'s_final_ataque':{
+  bg:'eco-lurnox', speaker:'NARRADOR',
+  chars:['lin','trini','zak','lurnox'],
+  shake:true,
+  text:'Los tres lanzan todo lo que tienen. Rocas, sombras, interferencia tecnológica. Lurnox absorbe los primeros golpes. Pero no todos.',
+  next:'s_final_grieta'
+},
+'s_final_hablar':{
+  bg:'eco-lurnox', speaker:'LURNOX',
+  chars:['lin','lurnox'],
+  text:'"¿Qué quiero?" Se detiene. "Quiero lo que Trónox prometió. Un lugar. No hay lugar para nosotros en Aethrium."\nUn segundo de duda.',
+  next:'s_final_grieta'
+},
+'s_final_grieta':{
+  bg:'eco-lurnox', speaker:'NARRADOR',
+  chars:['lin','trini','zak','lurnox'],
+  shake:true,
+  text:'El portal arriba late. Los tres Ecos — tierra, sombra, tecnología — se unen. Una frecuencia que Lurnox no puede absorber.',
+  next:'s_final_decision'
+},
+'s_final_decision':{
+  bg:'eco-lurnox', speaker:'LIN',
+  chars:['lin','lurnox'],
+  text:'Lurnox está débil. El portal se cierra lentamente. Pero Lurnox sigue en pie. Última oportunidad.',
+  choices:[
+    {text:'Usar todo el Eco para cerrarlo de una vez.', next:'s_final_bueno', ecoChange:0, hpChange:-10},
+    {text:'Dejar que Lurnox cruce de regreso a Aethrium.', next:'s_final_alternativo', ecoChange:30, hpChange:0},
+  ]
+},
+'s_final_bueno':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin','trini','zak'],
+  text:'El portal colapsa. Lurnox queda atrapado entre las dos dimensiones. El rayo turquesa se apaga. La ciudad tiembla por última vez.',
+  next:'s_epilogo_bueno'
+},
+'s_final_alternativo':{
+  bg:'eco-lurnox', speaker:'LURNOX',
+  chars:['lin','lurnox'],
+  text:'"...Custodio." Lurnox los mira por última vez. Algo parecido al respeto. "Aethrium se los va a cobrar." Cruza. El portal se cierra.',
+  next:'s_epilogo_alternativo'
+},
+'s_epilogo_bueno':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin','trini','zak'],
+  title:'EPÍLOGO', sub:'',
+  text:'Vertex respira. Los militares corruptos caen sin su señal. Somewhere, en otra ciudad, Theo y sus amigos siguen luchando contra Trónox.\nEl Eco nunca se fue.',
+  end:true, endType:'good'
+},
+'s_epilogo_alternativo':{
+  bg:'eco-earth', speaker:'NARRADOR',
+  chars:['lin','trini','zak'],
+  title:'EPÍLOGO', sub:'EL TRATO',
+  text:'Lurnox volvió a Aethrium. Pero el portal se cerró diferente. Algo quedó abierto. Lin lo siente. Una grieta muy pequeña. Por ahora.',
+  end:true, endType:'alt'
+},
+};
+
+// ── ENGINE ──
+function showScene(id){
+  const data=story[id];
+  if(!data)return;
+  currentNode=id;
+
+  // BG
+  const bg=document.getElementById('sceneBg');
+  bg.className='sbg '+(data.bg||'eco-earth');
+
+  // Title
+  if(data.title){
+    document.getElementById('hudTitle').textContent=data.title;
+    document.getElementById('hudSub').textContent=data.sub||'';
   }
+
+  // Characters
+  const allChars=['lin','trini','zak','aeronyx','borinex','mirex','ferronix','lurnox'];
+  allChars.forEach(c=>{
+    const el=document.getElementById('char'+c.charAt(0).toUpperCase()+c.slice(1));
+    if(el)el.style.display=(data.chars&&data.chars.includes(c))?'block':'none';
+  });
+
+  // Shake
+  if(data.shake){
+    document.getElementById('scGame').classList.add('shake');
+    setTimeout(()=>document.getElementById('scGame').classList.remove('shake'),500);
+  }
+
+  // Speaker
+  const speakerEl=document.getElementById('speaker');
+  speakerEl.textContent=data.speaker||'';
+  const speakerColors={LIN:'#c8872a',TRINI:'#9b59b6',ZAK:'#00bcd4',AERONYX:'#7aabb8',BORINEX:'#ff6a00',MIREX:'#cc2050',FERRONIX:'#8090a0',LURNOX:'#00ffcc',NARRADOR:'#00e5ff'};
+  speakerEl.style.color=speakerColors[data.speaker]||'var(--c)';
+
+  // Stat changes
+  if(data.ecoChange){eco=Math.min(100,Math.max(0,eco+(data.ecoChange||0)));document.getElementById('ecoBar').style.width=eco+'%'}
+  if(data.hpChange){hp=Math.min(100,Math.max(0,hp+(data.hpChange||0)));document.getElementById('hpBar').style.width=hp+'%'}
+
+  // Choices & continue
+  document.getElementById('choices').innerHTML='';
+  document.getElementById('btnContinue').classList.add('hidden');
+
+  // Type text
+  typeText(data.text,()=>{
+    if(data.end){showEnd(data.endType);return}
+    if(data.choices&&data.choices.length){
+      showChoices(data.choices);
+    } else if(data.next){
+      document.getElementById('btnContinue').classList.remove('hidden');
+    }
+  });
 }
-function tap(x,y){if(locked)return;const gm=board[y][x];if(gm.s){doSp(x,y);return}if(!sel){sel={x,y};render();return}const dx=Math.abs(sel.x-x),dy=Math.abs(sel.y-y);if(dx+dy===1){doSw(sel.x,sel.y,x,y);sel=null}else sel={x,y};render()}
-function doSw(a,b,c,d){if(locked)return;sw(a,b,c,d);moves--;resolve()}
-function sw(a,b,c,d){[board[b][a],board[d][c]]=[board[d][c],board[b][a]]}
-function matches(){const r=[];for(let y=0;y<H;y++){let run=[{x:0,y}];for(let x=1;x<W;x++){if(board[y][x].id===board[y][x-1].id)run.push({x,y});else{if(run.length>=3)r.push([...run]);run=[{x,y}]}}if(run.length>=3)r.push([...run])}for(let x=0;x<W;x++){let run=[{x,y:0}];for(let y=1;y<H;y++){if(board[y][x].id===board[y-1][x].id)run.push({x,y});else{if(run.length>=3)r.push([...run]);run=[{x,y}]}}if(run.length>=3)r.push([...run])}return r}
-function resolve(){locked=true;let hit=false,chain=0;function step(){const grs=matches();if(!grs.length){locked=false;if(!hit)enemy();checkEnd();render();return}hit=true;chain++;const clear=new Set();grs.forEach(gr=>{const f=board[gr[0].y][gr[0].x];gr.forEach(p=>board[p.y][p.x].matched=true);if(gr.length>=5){clG(gr,clear);superEco(f)}else if(gr.length===4){const p=gr[0];board[p.y][p.x]={...f,s:true,matched:false};gr.slice(1).forEach(q=>clear.add(q.x+','+q.y));dmgB(f.d*2);gainE(10);popup(chain>1?'COMBO x'+chain+'!':'FRAGMENTO ESPECIAL')}else{clG(gr,clear);dmgB(f.d);gainE(4);if(chain>1)popup('COMBO x'+chain+'!')}});render();setTimeout(()=>{clear.forEach(k=>{const[x,y]=k.split(',').map(Number);board[y][x]=null});fall();render();setTimeout(step,180)},250)}step()}
-function clG(gr,clear){gr.forEach(p=>clear.add(p.x+','+p.y))}
-function fall(){for(let x=0;x<W;x++){const col=[];for(let y=H-1;y>=0;y--)if(board[y][x]){board[y][x].matched=false;col.push(board[y][x])}while(col.length<H)col.push(rg());for(let y=H-1,i=0;y>=0;y--,i++)board[y][x]=col[i]}}
-function dmgB(n){bossHp=Math.max(0,bossHp-n)}
-function dmgL(n){linHp=Math.max(0,linHp-n)}
-function gainE(n){eco=Math.min(100,eco+n)}
-function enemy(){dmgL(6);const a=['RÁFAGA DE VIENTO','TORNADO','CORTE AÉREO'];popup(a[Math.floor(Math.random()*a.length)],true);shuf(false)}
-function doSp(x,y){if(locked)return;locked=true;const id=board[y][x].id;for(let yy=Math.max(0,y-1);yy<=Math.min(H-1,y+1);yy++)for(let xx=Math.max(0,x-1);xx<=Math.min(W-1,x+1);xx++)board[yy][xx]=null;dmgB(id==='lin'?22:16);gainE(12);popup(id==='lin'?'¡ROCA GIGANTE!':'¡ESPECIAL!');fall();setTimeout(()=>{locked=false;resolve()},220)}
-function superEco(f){showUlt(f.ult,f.txt,f.col);if(f.id==='lin'){dmgB(34);shake()}else if(f.id==='trini'){dmgB(24);setTimeout(()=>board=Array.from({length:H},()=>Array.from({length:W},rg)),640)}else if(f.id==='zak'){dmgB(26);setTimeout(()=>shuf(false),640)}else{dmgL(14);setTimeout(()=>shuf(false),640)}gainE(20)}
-function showUlt(title,text,col){const u=document.getElementById('ult');document.getElementById('ultTitle').textContent=title;document.getElementById('ultTitle').style.textShadow=`0 0 35px ${col},0 0 70px ${col}44`;document.getElementById('ultText').textContent=text;document.getElementById('ultChar').style.boxShadow=`0 0 70px ${col}`;document.getElementById('ultChar').style.borderColor=col+'55';document.getElementById('ultBg').style.background=`radial-gradient(ellipse at 50% 50%,${col}30,transparent 55%)`;const w=document.getElementById('ultWave');w.style.animation='none';void w.offsetWidth;w.style.borderColor=col;w.style.animation='wExp .9s ease-out';u.classList.add('show');setTimeout(()=>u.classList.remove('show'),1100)}
-function shuf(r=true){let flat=board.flat().filter(Boolean).sort(()=>Math.random()-.5);for(let y=0;y<H;y++)for(let x=0;x<W;x++)board[y][x]=flat.pop()||rg();if(r)render()}
-function shake(){document.getElementById('sGame').animate([{transform:'translate(0,0)'},{transform:'translate(9px,-6px)'},{transform:'translate(-7px,5px)'},{transform:'translate(4px,-3px)'},{transform:'translate(0,0)'}],{duration:460})}
-function popup(t,en=false){msgEl.textContent=t;msgEl.style.color=en?'#e74c3c':'var(--c)';msgEl.style.textShadow=en?'0 0 24px #e74c3c':'0 0 24px var(--c)';msgEl.classList.add('show');setTimeout(()=>msgEl.classList.remove('show'),900)}
-function checkEnd(){if(bossHp<=0)end(true);else if(linHp<=0||moves<=0)end(false)}
-function end(win){document.getElementById('endTitle').textContent=win?'¡VICTORIA!':'DERROTA';document.getElementById('endTitle').style.color=win?'var(--c)':'#e74c3c';document.getElementById('endTitle').style.textShadow=win?'0 0 22px var(--c)':'0 0 22px #e74c3c';document.getElementById('endText').textContent=win?'Aeronyx retrocede entre sombras de viento. La luz sigue esperando. El Eco nunca se fue.':'Lin cae bajo el peso del viento corrupto. La ciudad se hunde en la oscuridad...';showEnd()}
-document.getElementById('startBtn').addEventListener('click',start);
-document.getElementById('againBtn').addEventListener('click',start);
-window.addEventListener('resize',()=>{if(document.getElementById('sGame').classList.contains('act')){const g=gs();boardEl.style.gridTemplateColumns=`repeat(8,${g}px)`;boardEl.style.gridTemplateRows=`repeat(8,${g}px)`;render()}});
+
+function typeText(text,cb){
+  const el=document.getElementById('tbText');
+  el.innerHTML='<span class="cursor"></span>';
+  const chars=text.split('');
+  let i=0;typing=true;
+  // Skip on tap
+  el.onclick=()=>{
+    if(typing){
+      el.textContent=text;
+      el.innerHTML=text.replace(/\n/g,'<br>');
+      typing=false;el.onclick=null;if(cb)cb();return;
+    }
+  };
+  function next(){
+    if(i>=chars.length){
+      typing=false;el.onclick=null;
+      if(cb)cb();return;
+    }
+    const ch=chars[i++];
+    if(i===1)el.innerHTML='';
+    if(ch==='\n')el.innerHTML+='<br>';
+    else el.innerHTML+=ch;
+    setTimeout(next,ch==='.'||ch==='!'||ch==='?'?55:22);
+  }
+  next();
+}
+
+function showChoices(choices){
+  const wrap=document.getElementById('choices');
+  wrap.innerHTML='';
+  choices.forEach((ch,idx)=>{
+    const btn=document.createElement('button');
+    btn.className='choice';
+    btn.innerHTML=`<span class="choice-prefix">${idx===0?'▶':'◆'}</span>${ch.text}`;
+    btn.addEventListener('click',()=>{
+      if(ch.ecoChange){eco=Math.min(100,Math.max(0,eco+ch.ecoChange));document.getElementById('ecoBar').style.width=eco+'%'}
+      if(ch.hpChange){hp=Math.min(100,Math.max(0,hp+ch.hpChange));document.getElementById('hpBar').style.width=hp+'%'}
+      wrap.innerHTML='';
+      showScene(ch.next);
+    });
+    wrap.appendChild(btn);
+  });
+}
+
+function showEnd(type){
+  const titles={good:'¡EL ECO RESISTE!',alt:'LA GRIETA'};
+  const texts={
+    good:'Lin, Trini y Zak salvaron Vertex. En algún lugar, Theo y sus amigos siguen la batalla. El universo DUAL continúa.\n\n"El Eco nunca se fue."',
+    alt:'Lurnox se fue... por ahora. La grieta que dejó es pequeña. Pero Lin la siente. Y algo del otro lado también la siente a ella.'
+  };
+  document.getElementById('endTitle').textContent=titles[type]||'FIN';
+  document.getElementById('endTitle').style.color=type==='good'?'var(--c)':'var(--lurnox)';
+  document.getElementById('endText').textContent=texts[type]||'';
+  showSceneEl('scEnd');
+}
+
+function showSceneEl(id){
+  document.querySelectorAll('.scene').forEach(s=>{s.classList.remove('active');s.style.display='none'});
+  const el=document.getElementById(id);
+  el.style.display='flex';
+  setTimeout(()=>el.classList.add('active'),10);
+}
+
+// ── INIT ──
+document.getElementById('btnPlay').addEventListener('click',()=>{
+  hp=100;eco=0;
+  document.getElementById('hpBar').style.width='100%';
+  document.getElementById('ecoBar').style.width='0%';
+  showSceneEl('scGame');
+  setTimeout(()=>showScene('s_intro'),300);
+});
+
+document.getElementById('btnContinue').addEventListener('click',()=>{
+  const data=story[currentNode];
+  if(data&&data.next){
+    document.getElementById('btnContinue').classList.add('hidden');
+    showScene(data.next);
+  }
+});
+
+document.getElementById('btnRestart').addEventListener('click',()=>{
+  hp=100;eco=0;
+  showSceneEl('scMenu');
+});
 </script>
 </body>
 </html>
