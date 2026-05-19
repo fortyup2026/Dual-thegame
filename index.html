@@ -15,7 +15,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 .g-vign{position:fixed;inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse at 50% 50%,transparent 20%,rgba(0,0,0,.65) 100%)}
 .g-lx{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0;background:rgba(120,190,255,.04);animation:lxA 7s ease-in-out infinite}
 @keyframes lxA{0%,88%,100%{opacity:0}89%{opacity:1}90%{opacity:0}91%{opacity:.3}92%{opacity:0}}
-.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column}
+.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column;opacity:0;transition:opacity .28s ease}
+.screen.active{opacity:1}
 .screen.active{display:flex}
 
 /* INTRO CINEMATICA */
@@ -122,7 +123,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 <div id="app">
 
 <!-- INTRO -->
-<div id="sIntro" class="screen" style="background:url('sc_valmora.png') center/cover no-repeat">
+<div id="sIntro" class="screen active" style="background:url('sc_valmora.png') center/cover no-repeat">
   <div style="position:absolute;inset:0;background:rgba(0,0,0,.75)"></div>
   <div class="intro-content" style="position:relative;z-index:2">
     <div class="intro-logo">DUAL</div>
@@ -145,7 +146,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 </div>
 
 <!-- MENU -->
-<div id="sMenu" class="screen active">
+<div id="sMenu" class="screen">
   <div class="mc">
     <div class="mc-top"></div>
     <div style="text-align:center">
@@ -206,169 +207,45 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 <script>
 // AUDIO
 const AC=new(window.AudioContext||window.webkitAudioContext)();
-function beep(f,d,v,t){try{const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.12,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.start();o.stop(AC.currentTime+d)}catch(e){}}
-function sndClick(){beep(440,.08,.12,'square');setTimeout(()=>beep(660,.1,.08,'sine'),40)}
+let audioUnlocked=false;
+let bgm=null,bgmGain=null,bgmSource=null,currentTrack='';
 
-// MUSIC SYSTEM
-let musicNodes=[];let currentMusic=null;
-
-function stopMusic(){
-  musicNodes.forEach(n=>{try{n.stop();n.disconnect()}catch(e){}});
-  musicNodes=[];currentMusic=null;
-}
-
-function playMusic(type){
-  if(currentMusic===type)return;
-  stopMusic();
-  currentMusic=type;
+function unlockAudio(){
+  if(audioUnlocked)return;
+  audioUnlocked=true;
   try{AC.resume()}catch(e){}
-
-  if(type==='suspense'){
-    // Tun tun tun - deep pulse suspense
-    function pulse(){
-      const o=AC.createOscillator(),g=AC.createGain(),f=AC.createBiquadFilter();
-      o.connect(f);f.connect(g);g.connect(AC.destination);
-      o.type='sine';o.frequency.value=55;
-      f.type='lowpass';f.frequency.value=200;
-      g.gain.setValueAtTime(0,AC.currentTime);
-      g.gain.linearRampToValueAtTime(.18,AC.currentTime+.05);
-      g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.5);
-      o.start();o.stop(AC.currentTime+.5);
-      musicNodes.push(o);
-    }
-    // Bass drone
-    const drone=AC.createOscillator(),dg=AC.createGain();
-    drone.connect(dg);dg.connect(AC.destination);
-    drone.type='sawtooth';drone.frequency.value=40;
-    dg.gain.value=.04;
-    drone.start();musicNodes.push(drone);
-    // High tension string
-    const str=AC.createOscillator(),sg=AC.createGain(),sf=AC.createBiquadFilter();
-    str.connect(sf);sf.connect(sg);sg.connect(AC.destination);
-    str.type='sawtooth';str.frequency.value=220;
-    sf.type='bandpass';sf.frequency.value=800;sf.Q.value=2;
-    sg.gain.value=.02;
-    str.start();musicNodes.push(str);
-    // LFO tremolo on string
-    const lfo=AC.createOscillator(),lfog=AC.createGain();
-    lfo.connect(lfog);lfog.connect(sg.gain);
-    lfo.frequency.value=.8;lfog.gain.value=.015;
-    lfo.start();musicNodes.push(lfo);
-    // Pulse every 1.2s
-    pulse();
-    const iv=setInterval(()=>{if(currentMusic==='suspense')pulse();else clearInterval(iv)},1200);
-
-  } else if(type==='action'){
-    // Fast intense battle music
-    const drone=AC.createOscillator(),dg=AC.createGain();
-    drone.connect(dg);dg.connect(AC.destination);
-    drone.type='sawtooth';drone.frequency.value=55;
-    dg.gain.value=.06;
-    drone.start();musicNodes.push(drone);
-    // Rhythm hits every 300ms
-    let beat=0;
-    function hit(){
-      const o=AC.createOscillator(),g=AC.createGain();
-      o.connect(g);g.connect(AC.destination);
-      const freqs=[110,110,165,110,110,220,110,165];
-      o.type='square';o.frequency.value=freqs[beat%freqs.length];
-      g.gain.setValueAtTime(0,AC.currentTime);
-      g.gain.linearRampToValueAtTime(.12,AC.currentTime+.02);
-      g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.28);
-      o.start();o.stop(AC.currentTime+.28);
-      musicNodes.push(o);beat++;
-    }
-    hit();
-    const iv=setInterval(()=>{if(currentMusic==='action')hit();else clearInterval(iv)},300);
-    // High melody
-    const mel=AC.createOscillator(),mg=AC.createGain(),mf=AC.createBiquadFilter();
-    mel.connect(mf);mf.connect(mg);mg.connect(AC.destination);
-    mel.type='sawtooth';mel.frequency.value=440;
-    mf.type='bandpass';mf.frequency.value=1200;mf.Q.value=3;
-    mg.gain.value=.03;
-    mel.start();musicNodes.push(mel);
-    const lfo=AC.createOscillator(),lfog=AC.createGain();
-    lfo.connect(lfog);lfog.connect(mg.gain);
-    lfo.frequency.value=4;lfog.gain.value=.025;
-    lfo.start();musicNodes.push(lfo);
-
-  } else if(type==='danger'){
-    // Dark chaotic - Mirex/Lurnox
-    const o1=AC.createOscillator(),g1=AC.createGain();
-    o1.connect(g1);g1.connect(AC.destination);
-    o1.type='sawtooth';o1.frequency.value=40;
-    g1.gain.value=.07;
-    o1.start();musicNodes.push(o1);
-    const o2=AC.createOscillator(),g2=AC.createGain();
-    o2.connect(g2);g2.connect(AC.destination);
-    o2.type='sawtooth';o2.frequency.value=41.5;// slight detune = tension
-    g2.gain.value=.06;
-    o2.start();musicNodes.push(o2);
-    // Dissonant high
-    const o3=AC.createOscillator(),g3=AC.createGain(),f3=AC.createBiquadFilter();
-    o3.connect(f3);f3.connect(g3);g3.connect(AC.destination);
-    o3.type='sawtooth';o3.frequency.value=311;
-    f3.type='bandpass';f3.frequency.value=600;f3.Q.value=4;
-    g3.gain.value=.025;
-    o3.start();musicNodes.push(o3);
-    // Slow pulse hits
-    function dpulse(){
-      const o=AC.createOscillator(),g=AC.createGain();
-      o.connect(g);g.connect(AC.destination);
-      o.type='sine';o.frequency.value=30;
-      g.gain.setValueAtTime(0,AC.currentTime);
-      g.gain.linearRampToValueAtTime(.2,AC.currentTime+.08);
-      g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.8);
-      o.start();o.stop(AC.currentTime+.8);
-      musicNodes.push(o);
-    }
-    dpulse();
-    const iv=setInterval(()=>{if(currentMusic==='danger')dpulse();else clearInterval(iv)},2000);
-
-  } else if(type==='victory'){
-    // Triumphant rising tones
-    const notes=[261,329,392,523,659];
-    notes.forEach((freq,i)=>{
-      setTimeout(()=>{
-        const o=AC.createOscillator(),g=AC.createGain();
-        o.connect(g);g.connect(AC.destination);
-        o.type='sine';o.frequency.value=freq;
-        g.gain.setValueAtTime(0,AC.currentTime);
-        g.gain.linearRampToValueAtTime(.15,AC.currentTime+.1);
-        g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+1.5);
-        o.start();o.stop(AC.currentTime+1.5);
-        musicNodes.push(o);
-      },i*200);
-    });
-    // Warm pad
-    setTimeout(()=>{
-      const pad=AC.createOscillator(),pg=AC.createGain(),pf=AC.createBiquadFilter();
-      pad.connect(pf);pf.connect(pg);pg.connect(AC.destination);
-      pad.type='sine';pad.frequency.value=130;
-      pf.type='lowpass';pf.frequency.value=400;
-      pg.gain.setValueAtTime(0,AC.currentTime);
-      pg.gain.linearRampToValueAtTime(.08,AC.currentTime+.5);
-      pad.start();musicNodes.push(pad);
-    },600);
-
-  } else if(type==='defeat'){
-    // Dark descending
-    const notes=[220,196,174,155,130];
-    notes.forEach((freq,i)=>{
-      setTimeout(()=>{
-        const o=AC.createOscillator(),g=AC.createGain();
-        o.connect(g);g.connect(AC.destination);
-        o.type='sawtooth';o.frequency.value=freq;
-        g.gain.setValueAtTime(.1,AC.currentTime);
-        g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+1.2);
-        o.start();o.stop(AC.currentTime+1.2);
-        musicNodes.push(o);
-      },i*300);
-    });
-  }
+  document.removeEventListener('touchstart',unlockAudio);
+  document.removeEventListener('click',unlockAudio);
 }
-function sndCont(){beep(330,.1,.1,'sine');setTimeout(()=>beep(440,.15,.08,'sine'),80)}
-function sndShake(){beep(80,.3,.2,'sawtooth');setTimeout(()=>beep(60,.2,.15,'sawtooth'),100)}
+document.addEventListener('touchstart',unlockAudio,{once:true,passive:true});
+document.addEventListener('click',unlockAudio,{once:true});
+
+function haptic(ms=18){try{if(navigator.vibrate)navigator.vibrate(ms)}catch(e){}}
+function beep(f,d,v,t){try{unlockAudio();const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.12,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+
+// MUSICA: si subis archivos al mismo directorio en Vercel, estos nombres ya quedan listos.
+// Podes cambiarlos por los nombres reales de tus pistas.
+const MUSIC={
+  menu:'music_menu.mp3',
+  story:'music_story.mp3',
+  battle:'music_battle.mp3',
+  boss:'music_boss.mp3',
+  end:'music_end.mp3'
+};
+function playMusic(track){
+  if(!MUSIC[track]||currentTrack===track)return;
+  currentTrack=track;
+  try{
+    if(bgm){bgm.pause();bgm.currentTime=0;}
+    bgm=new Audio(MUSIC[track]);
+    bgm.loop=true;bgm.volume=.38;bgm.preload='auto';
+    bgm.play().catch(()=>{});
+  }catch(e){}
+}
+function stopMusic(){try{if(bgm){bgm.pause();bgm.currentTime=0;}currentTrack=''}catch(e){}}
+function sndClick(){haptic(14);beep(440,.08,.12,'square');setTimeout(()=>beep(660,.1,.08,'sine'),40)}
+function sndCont(){haptic(18);beep(330,.1,.1,'sine');setTimeout(()=>beep(440,.15,.08,'sine'),80)}
+function sndShake(){haptic(35);beep(80,.3,.2,'sawtooth');setTimeout(()=>beep(60,.2,.15,'sawtooth'),100)}
 function sndEco(){beep(880,.15,.08,'sine');setTimeout(()=>beep(1100,.2,.06,'sine'),100)}
 
 // STATE
@@ -428,11 +305,13 @@ const IMG={
 function setScene(key){
   const sc=document.getElementById('sc');
   const img=IMG[key];
+  const fallback='<div class="sc-img" style="background:radial-gradient(ellipse at 50% 25%,rgba(0,229,255,.12),transparent 45%),radial-gradient(ellipse at 15% 80%,rgba(200,135,42,.10),transparent 40%),linear-gradient(180deg,#020508,#040c18)"></div>';
   if(img){
     sc.innerHTML=`<div class="sc-img" style="background-image:url('${img}')"></div>`;
-  } else {
-    sc.innerHTML='<div style="position:absolute;inset:0;background:linear-gradient(180deg,#020508,#040c18)"></div>';
-  }
+    const test=new Image();
+    test.onerror=()=>{if(sc)sc.innerHTML=fallback};
+    test.src=img;
+  } else sc.innerHTML=fallback;
 }
 
 // STORY
@@ -560,7 +439,7 @@ s21c:{img:'lin_trini_avanza',spk:'NARRADOR',
 txt:'Lin se queda quieto. Un anzuelo obvio.\n\nBorinex cae en la trampa — aparece directo sobre Lin.\n\nTrini emerge de la sombra de Lin mismo y golpea hacia arriba. El impacto lo desestabiliza por completo.',next:'s22'},
 
 s22:{img:'sc_borinex_ataca',shake:true,spk:'NARRADOR',
-txt:'Borinex pierde el control de su velocidad por un segundo.\n\nUn segundo es todo lo que necesitaban.\n\nLin lanza un bloque que lo aplasta contra la pared. La velocidad no sirve si no podes moverte.',next:'s22b_decision'},
+txt:'Borinex pierde el control de su velocidad por un segundo.\n\nUn segundo es todo lo que necesitaban.\n\nLin lanza un bloque que lo aplasta contra la pared. La velocidad no sirve si no podes moverte.',next:'s23'},
 
 s23:{img:'sc_borinex_cae',spk:'BORINEX',
 txt:'"Imposible... nadie me habia..." Sus ojos naranjas se apagan uno por uno.\n\n"Lurnox va a destruirlos personalmente."\n\nCae. Segundo guardian vencido.\n\nTrini se sienta en los escombros. "Necesitamos refuerzos."',next:'s24'},
@@ -604,7 +483,7 @@ s29c:{img:'lin_ilusiones',shake:true,spk:'NARRADOR',
 txt:'Lin se paraliza. Las ilusiones son demasiado reales.\n\nMirex aprovecha. El ataque psiquico es brutal — como si le vaciaran la memoria.\n\nTrini lo sacude fisicamente. El contacto rompe todo.\n\nLin vuelve. Mas debil. Pero vuelve.',next:'s30'},
 
 s30:{img:'mirex_aparece',shake:true,spk:'NARRADOR',
-txt:'Mirex intenta reconstruir las ilusiones. Pero los tres ya saben el truco.\n\nZak interfiere su campo. Trini ataca desde las sombras que Mirex mismo proyecta. Lin lo aplasta con tierra.\n\nMirex cae. Los tres lo miran caer.',next:'s30b_decision'},
+txt:'Mirex intenta reconstruir las ilusiones. Pero los tres ya saben el truco.\n\nZak interfiere su campo. Trini ataca desde las sombras que Mirex mismo proyecta. Lin lo aplasta con tierra.\n\nMirex cae. Los tres lo miran caer.',next:'s31'},
 
 s31:{img:'mirex_cae',spk:'MIREX',
 txt:'"Lurnox... ya sabe que estan aqui. Ya los vio."\n\nSus ojos bordo se apagan.\n\nLin mira sus manos. El Eco brilla mas intenso que nunca. Como si cada batalla lo hiciera crecer.',next:'s32'},
@@ -622,13 +501,13 @@ choices:[
 ]},
 
 s34a:{img:'sc_ferronix_ataca',shake:true,spk:'LIN',
-txt:'Bloques de pavimento enormes — del tamaño de autos — vuelan contra el metal de Ferronix.\n\nPiedra contra acero. La tierra siempre fue primero.\n\nEl metal cede bajo el peso de las rocas. La armadura de Ferronix colapsa pieza por pieza.',next:'s34b_decision'},
+txt:'Bloques de pavimento enormes — del tamaño de autos — vuelan contra el metal de Ferronix.\n\nPiedra contra acero. La tierra siempre fue primero.\n\nEl metal cede bajo el peso de las rocas. La armadura de Ferronix colapsa pieza por pieza.',next:'s35'},
 
 s34b:{img:'sc_ferronix_ataca',spk:'ZAK',
-txt:'Cuatro celulares. Un solo pulso sincronizado.\n\nEl campo electromagnetico de Ferronix colapsa en milisegundos. Todo el metal cae al suelo al mismo tiempo.\n\nEl ruido es ensordecedor. Ferronix queda parado en medio de un cementerio de hierro.',next:'s34b_decision'},
+txt:'Cuatro celulares. Un solo pulso sincronizado.\n\nEl campo electromagnetico de Ferronix colapsa en milisegundos. Todo el metal cae al suelo al mismo tiempo.\n\nEl ruido es ensordecedor. Ferronix queda parado en medio de un cementerio de hierro.',next:'s35'},
 
 s34c:{img:'sc_ferronix_ataca',spk:'TRINI',
-txt:'El metal proyecta sombras enormes y densas. Perfectas.\n\nTrini desaparece y reaparece dentro de la armadura de Ferronix — golpeandolo desde adentro donde el metal no puede protegerlo.\n\nFerronix no tiene respuesta para eso.',next:'s34b_decision'},
+txt:'El metal proyecta sombras enormes y densas. Perfectas.\n\nTrini desaparece y reaparece dentro de la armadura de Ferronix — golpeandolo desde adentro donde el metal no puede protegerlo.\n\nFerronix no tiene respuesta para eso.',next:'s35'},
 
 s35:{img:'ferronix_cae',shake:true,spk:'NARRADOR',
 txt:'Ferronix cae. El cuarto y ultimo guardian antes de Lurnox.\n\nLin, Trini y Zak se miran. Estan golpeados. Agotados. Pero estan los tres.\n\nUn kilometro hasta el centro. El rayo de Lurnox late como un corazon enfermo.',next:'s36'},
@@ -669,34 +548,30 @@ choices:[
   {t:'No tienen suficiente fuerza — Lurnox gana',d:'La realidad: estan demasiado debiles.',tag:'FINAL D',tc:'#cc2020',next:'endD',hp:0,eco:0},
 ]},
 
-endA:{end:true,type:'A'},endB:{end:true,type:'B'},endC:{end:true,type:'C'},endD:{end:true,type:'D'},endE:{end:true,type:'E'},
+endA:{end:true,type:'A'},endB:{end:true,type:'B'},endC:{end:true,type:'C'},endD:{end:true,type:'D'},
 };
 
 // ENGINE
 function $i(id){return document.getElementById(id)}
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.display='none'});const el=$i(id);el.style.display='flex';requestAnimationFrame(()=>el.classList.add('active'))}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.display='none'});
+  const el=$i(id);el.style.display='flex';requestAnimationFrame(()=>el.classList.add('active'));
+  if(id==='sMenu'||id==='sIntro')playMusic('menu');
+  if(id==='sEnd')playMusic('end');
+}
 function bars(){$i('bHp').style.width=Math.max(0,hp)+'%';$i('bEco').style.width=Math.max(0,eco)+'%'}
 
 function showNode(id){
   const d=S[id];if(!d)return;cur=id;
   if(d.end){showEnd(d.type);return}
-  // Music
-  const mtype=getMusicForNode(id);
-  playMusic(mtype);
+  if(['s08','s19','s27','s32'].includes(id))playMusic('battle');
+  else if(['s36','s37','s38','s39a','s39b','s39c','s40','s41'].includes(id))playMusic('boss');
+  else if(id==='intro'||id==='s01'||id==='s02'||id==='s03')playMusic('story');
   if(d.hp){hp=Math.max(0,Math.min(100,hp+d.hp));bars();if(d.hp<0)sndShake()}
   if(d.eco){eco=Math.max(0,Math.min(100,eco+d.eco));bars();if(d.eco>0)sndEco()}
   if(hp<=0){showEnd('D');return}
   setScene(d.img||'streets');
   if(d.shake){const g=$i('sGame');g.classList.remove('shake');void g.offsetWidth;g.classList.add('shake');setTimeout(()=>g.classList.remove('shake'),500)}
-  // Auto music based on chapter
-  if(d.ch==='ACTO 1'||d.ch==='PROLOGO')playMusic('suspense');
-  else if(d.ch==='ACTO 2')playMusic('suspense');
-  else if(d.ch==='ACTO 3'||d.ch==='ACTO 4')playMusic('action');
-  else if(d.ch==='ACTO 5')playMusic('action');
-  else if(d.ch==='ACTO 6')playMusic('suspense');
-  else if(d.ch==='ACTO 7')playMusic('danger');
-  else if(d.ch==='ACTO 8')playMusic('danger');
-  else if(d.ch==='ACTO FINAL')playMusic('danger');
   const lbl=$i('lbl');
   if(d.ch!==undefined&&d.tt){
     lbl.style.display='block';
@@ -708,7 +583,7 @@ function showNode(id){
   const c=COL[d.spk||'NARRADOR']||'var(--c)';
   $i('snam').textContent=d.spk||'NARRADOR';$i('snam').style.color=c;
   $i('sbar').style.background=c;
-  if(d.ch&&d.tt){$i('hudT').textContent=d.tt;$i('hudS').textContent=(d.ch||'')+(d.ch?' - ':'')+'LUSTONIA'}
+  if(d.ch&&d.tt){$i('hudT').textContent=d.tt;$i('hudS').textContent=(d.ch||'')+(d.ch?' · ':'')+'LUSTONIA'}
   $i('ch').innerHTML='';$i('cont').style.display='none';$i('tap').style.display='none';
   typeText(d.txt||'',()=>{
     if(d.choices&&d.choices.length)showChoices(d.choices);
@@ -742,8 +617,6 @@ function showChoices(cs){
 }
 
 function showEnd(type){
-  if(type==='D')playMusic('defeat');
-  else playMusic('victory');
   const D={
     A:{title:'EL ECO RESISTE',col:'var(--c)',text:'El portal colapsa. Lurnox queda atrapado entre las dos dimensiones.\n\nEl rayo turquesa se apaga. Lustonia respira por primera vez en horas.\n\nEn Valmora, Theo y sus amigos siguen luchando. La guerra no termino.\n\nPero esta noche, esta ciudad sobrevivio.',quote:'"EL ECO NUNCA SE FUE."'},
     B:{title:'LA GRIETA',col:'var(--lurnox)',text:'Lurnox cruza el portal de regreso a Aethrium.\n\nAntes de irse, los mira por ultima vez.\n\n"Custodio... esto no termina aca."\n\nEl portal se cierra. Pero Lin lo siente — quedo una grieta. Muy pequeña. Por ahora.\n\nAlgo del otro lado tambien la siente.',quote:'"LA VERDAD ESTA BAJO NOSOTROS."'},
@@ -753,15 +626,13 @@ function showEnd(type){
   const d=D[type]||D.D;
   $i('eT').textContent=d.title;$i('eT').style.color=d.col;$i('eT').style.textShadow='0 0 25px '+d.col;
   $i('eTx').textContent=d.text;$i('eQ').textContent=d.quote;
-  if(type==='A'||type==='B'||type==='C')playMusic('victory');
-  else playMusic('defeat');
   showScreen('sEnd');
 }
 
-$i('btnIntro').addEventListener('click',()=>{try{AC.resume()}catch(e){}sndCont();showScreen('sMenu')});
-$i('btnPlay').addEventListener('click',()=>{sndCont();hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>playMusic('suspense');showNode('intro'),300)});
+$i('btnIntro').addEventListener('click',()=>{unlockAudio();sndCont();showScreen('sMenu')});
+$i('btnPlay').addEventListener('click',()=>{unlockAudio();sndCont();playMusic('story');hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
 $i('cont').addEventListener('click',()=>{sndCont();const d=S[cur];if(d&&d.next){$i('cont').style.display='none';showNode(d.next)}});
-$i('btnR').addEventListener('click',()=>{stopMusic();hp=100;eco=0;showScreen('sMenu')});
+$i('btnR').addEventListener('click',()=>{hp=100;eco=0;playMusic('menu');showScreen('sMenu')});
 </script>
 </body>
 </html>
