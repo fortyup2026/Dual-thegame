@@ -8,8 +8,9 @@
 <style>
 :root{--c:#00e5ff;--earth:#c8872a;--smoke:#9b30cc;--tech:#00bcd4;--wind:#6a9ab0;--speed:#ff6a00;--psychic:#cc1050;--metal:#8090a0;--lurnox:#00ffcc;--bg:#020508;--ff1:'Cinzel Decorative',serif;--ff2:'Cinzel',serif;--ff3:'Rajdhani',sans-serif;--ff4:'Share Tech Mono',monospace}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde8ee;font-family:var(--ff3);touch-action:manipulation;user-select:none}
-#app{width:100vw;height:100vh;position:relative;overflow:hidden}
+html,body{width:100%;min-height:100%;overflow:hidden;background:var(--bg);color:#dde8ee;font-family:var(--ff3);touch-action:manipulation;user-select:none}
+body{height:100dvh}
+#app{width:100vw;height:100dvh;min-height:100vh;position:relative;overflow:hidden}
 .g-rain{position:fixed;inset:-5%;pointer-events:none;z-index:2;background-image:linear-gradient(108deg,rgba(160,210,255,.13) 1px,transparent 1px);background-size:32px 50px;opacity:.15;animation:rainF .32s linear infinite}
 @keyframes rainF{to{transform:translate(-32px,50px)}}
 .g-vign{position:fixed;inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse at 50% 50%,transparent 20%,rgba(0,0,0,.65) 100%)}
@@ -20,18 +21,27 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 .screen.active{display:flex}
 
 /* INTRO CINEMATICA */
-#sIntro{background:#000;align-items:center;justify-content:center;padding:30px}
+#sIntro{background:#000;align-items:center;justify-content:flex-start;padding:18px 14px 92px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #sIntro::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 18%,rgba(0,229,255,.22),transparent 42%),radial-gradient(ellipse at 20% 90%,rgba(200,135,42,.12),transparent 45%),linear-gradient(180deg,#020508 0%,#050b14 48%,#000 100%)}
 #sIntro::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(115deg,transparent 0 42%,rgba(0,229,255,.08) 43%,transparent 46% 100%),linear-gradient(to bottom,rgba(0,0,0,.25),rgba(0,0,0,.8));pointer-events:none}
 .intro-content{max-width:480px;width:100%;text-align:center;display:flex;flex-direction:column;gap:1.5rem;max-height:92vh;overflow-y:auto;padding-right:4px}
-.intro-logo{font-family:var(--ff1);font-size:clamp(2.5rem,12vw,4rem);color:#fff;text-shadow:0 0 20px var(--c);letter-spacing:.15em}
+.intro-logo{font-family:var(--ff1);font-size:clamp(2.1rem,11vw,3.5rem);color:#fff;text-shadow:0 0 20px var(--c);letter-spacing:.15em}
 .intro-text{font-family:var(--ff3);font-size:clamp(.88rem,3.2vw,1rem);color:#8aacbb;line-height:1.8;font-weight:500;background:rgba(0,0,0,.42);border:1px solid rgba(0,229,255,.12);border-radius:14px;padding:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
 .intro-text em{color:var(--c);font-style:normal;font-weight:700}
 .intro-text strong{color:var(--earth);font-weight:700}
 .intro-divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.4),transparent)}
-.intro-sub{font-family:var(--ff4);font-size:clamp(.5rem,2vw,.65rem);color:rgba(0,229,255,.5);letter-spacing:.2em}
-.btn-p{position:relative;width:100%;padding:1.1rem 2rem;border:2px solid var(--c);border-radius:10px;background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,140,170,.07));color:var(--c);font-family:var(--ff2);font-size:clamp(1rem,4vw,1.2rem);letter-spacing:.22em;cursor:pointer;overflow:hidden;box-shadow:0 0 28px rgba(0,229,255,.2);transition:all .2s}
+.intro-sub{font-family:var(--ff4);font-size:clamp(.48rem,1.8vw,.62rem);color:rgba(0,229,255,.5);letter-spacing:.24em}
+.btn-p{position:relative;width:100%;min-height:58px;padding:1rem 1.25rem;border:2px solid var(--c);border-radius:14px;background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,140,170,.07));color:var(--c);font-family:var(--ff2);font-size:clamp(.92rem,3.8vw,1.1rem);letter-spacing:.18em;cursor:pointer;overflow:hidden;box-shadow:0 0 28px rgba(0,229,255,.22);transition:all .2s}
 .btn-p:active{background:linear-gradient(135deg,rgba(0,229,255,.22),rgba(0,160,200,.14))}
+
+@media (max-width:430px){
+  #sIntro{padding-top:10px;padding-left:10px;padding-right:10px;padding-bottom:86px}
+  .intro-content{gap:.72rem;margin-top:4px}
+  .intro-divider{opacity:.55}
+  .intro-text{line-height:1.5;padding:12px 10px;font-size:clamp(.78rem,3.25vw,.92rem)}
+  .btn-p{min-height:54px;letter-spacing:.14em}
+}
+
 .bsh{position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(0,229,255,.2),transparent);animation:shim 2.5s linear infinite}
 @keyframes shim{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 .btxt{position:relative;z-index:1}
@@ -114,7 +124,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 .el{font-family:var(--ff1);font-size:clamp(2.2rem,10vw,3.5rem);font-weight:900;color:#fff;text-shadow:0 0 25px var(--c),0 0 55px rgba(0,229,255,.3)}
 .esub{font-family:var(--ff2);font-size:clamp(.9rem,3.5vw,1.1rem);color:var(--earth);letter-spacing:.2em;font-style:italic;margin-top:-.5rem}
 .etit{font-family:var(--ff2);font-size:clamp(1.6rem,7vw,2.3rem);font-weight:700;letter-spacing:.06em}
-.etxt{font-size:clamp(.88rem,3.2vw,1rem);color:#4a6878;line-height:1.7;max-width:360px;font-weight:500}
+.etxt{font-size:clamp(.88rem,3.2vw,1rem);color:#4a6878;line-height:1.7;max-width:360px;font-weight:500;white-space:pre-line}
 .eqt{font-family:var(--ff4);font-size:clamp(.58rem,2.2vw,.7rem);color:rgba(0,229,255,.5);letter-spacing:.12em}
 </style>
 </head>
@@ -224,24 +234,35 @@ document.addEventListener('click',unlockAudio,{once:true});
 function haptic(ms=18){try{if(navigator.vibrate)navigator.vibrate(ms)}catch(e){}}
 function beep(f,d,v,t){try{unlockAudio();const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.12,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.start();o.stop(AC.currentTime+d)}catch(e){}}
 
-// MUSICA: si subis archivos al mismo directorio en Vercel, estos nombres ya quedan listos.
-// Podes cambiarlos por los nombres reales de tus pistas.
+// MUSICA
+// IMPORTANTE: subí tus mp3 junto al HTML en Vercel.
+// Nombres recomendados: music_menu.mp3, music_story.mp3, music_battle.mp3, music_boss.mp3, music_end.mp3
+// Si todavía tenés una sola pista, nombrala music_story.mp3 o musica.mp3 y también va a sonar.
 const MUSIC={
-  menu:'music_menu.mp3',
-  story:'music_story.mp3',
-  battle:'music_battle.mp3',
-  boss:'music_boss.mp3',
-  end:'music_end.mp3'
+  menu:['music_menu.mp3','menu.mp3','musica.mp3','music.mp3','bgm.mp3','audio.mp3'],
+  story:['music_story.mp3','story.mp3','historia.mp3','musica.mp3','music.mp3','bgm.mp3','audio.mp3'],
+  battle:['music_battle.mp3','battle.mp3','pelea.mp3','combate.mp3','musica.mp3','music.mp3','bgm.mp3','audio.mp3'],
+  boss:['music_boss.mp3','boss.mp3','lurnox.mp3','final.mp3','musica.mp3','music.mp3','bgm.mp3','audio.mp3'],
+  end:['music_end.mp3','end.mp3','final.mp3','musica.mp3','music.mp3','bgm.mp3','audio.mp3']
 };
+function tryPlayCandidate(track,candidates,index=0){
+  if(index>=candidates.length)return;
+  try{
+    const a=new Audio(candidates[index]);
+    a.loop=true;a.volume=.42;a.preload='auto';
+    a.addEventListener('error',()=>{ if(currentTrack===track) tryPlayCandidate(track,candidates,index+1); },{once:true});
+    const p=a.play();
+    if(p&&p.then){
+      p.then(()=>{ if(bgm&&bgm!==a){try{bgm.pause();bgm.currentTime=0}catch(e){}} bgm=a; })
+       .catch(()=>{ if(currentTrack===track) tryPlayCandidate(track,candidates,index+1); });
+    }else{ if(bgm&&bgm!==a){try{bgm.pause();bgm.currentTime=0}catch(e){}} bgm=a; }
+  }catch(e){tryPlayCandidate(track,candidates,index+1)}
+}
 function playMusic(track){
   if(!MUSIC[track]||currentTrack===track)return;
+  unlockAudio();
   currentTrack=track;
-  try{
-    if(bgm){bgm.pause();bgm.currentTime=0;}
-    bgm=new Audio(MUSIC[track]);
-    bgm.loop=true;bgm.volume=.38;bgm.preload='auto';
-    bgm.play().catch(()=>{});
-  }catch(e){}
+  tryPlayCandidate(track,MUSIC[track],0);
 }
 function stopMusic(){try{if(bgm){bgm.pause();bgm.currentTime=0;}currentTrack=''}catch(e){}}
 function sndClick(){haptic(14);beep(440,.08,.12,'square');setTimeout(()=>beep(660,.1,.08,'sine'),40)}
@@ -630,7 +651,7 @@ function showEnd(type){
   showScreen('sEnd');
 }
 
-$i('btnIntro').addEventListener('click',()=>{unlockAudio();sndCont();showScreen('sMenu')});
+$i('btnIntro').addEventListener('click',()=>{unlockAudio();sndCont();playMusic('menu');showScreen('sMenu')});
 $i('btnPlay').addEventListener('click',()=>{unlockAudio();sndCont();playMusic('story');hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
 $i('cont').addEventListener('click',()=>{sndCont();const d=S[cur];if(d&&d.next){$i('cont').style.display='none';showNode(d.next)}});
 $i('btnR').addEventListener('click',()=>{hp=100;eco=0;playMusic('menu');showScreen('sMenu')});
