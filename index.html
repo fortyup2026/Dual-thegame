@@ -208,6 +208,165 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 const AC=new(window.AudioContext||window.webkitAudioContext)();
 function beep(f,d,v,t){try{const o=AC.createOscillator(),g=AC.createGain();o.connect(g);g.connect(AC.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.12,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.start();o.stop(AC.currentTime+d)}catch(e){}}
 function sndClick(){beep(440,.08,.12,'square');setTimeout(()=>beep(660,.1,.08,'sine'),40)}
+
+// MUSIC SYSTEM
+let musicNodes=[];let currentMusic=null;
+
+function stopMusic(){
+  musicNodes.forEach(n=>{try{n.stop();n.disconnect()}catch(e){}});
+  musicNodes=[];currentMusic=null;
+}
+
+function playMusic(type){
+  if(currentMusic===type)return;
+  stopMusic();
+  currentMusic=type;
+  try{AC.resume()}catch(e){}
+
+  if(type==='suspense'){
+    // Tun tun tun - deep pulse suspense
+    function pulse(){
+      const o=AC.createOscillator(),g=AC.createGain(),f=AC.createBiquadFilter();
+      o.connect(f);f.connect(g);g.connect(AC.destination);
+      o.type='sine';o.frequency.value=55;
+      f.type='lowpass';f.frequency.value=200;
+      g.gain.setValueAtTime(0,AC.currentTime);
+      g.gain.linearRampToValueAtTime(.18,AC.currentTime+.05);
+      g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.5);
+      o.start();o.stop(AC.currentTime+.5);
+      musicNodes.push(o);
+    }
+    // Bass drone
+    const drone=AC.createOscillator(),dg=AC.createGain();
+    drone.connect(dg);dg.connect(AC.destination);
+    drone.type='sawtooth';drone.frequency.value=40;
+    dg.gain.value=.04;
+    drone.start();musicNodes.push(drone);
+    // High tension string
+    const str=AC.createOscillator(),sg=AC.createGain(),sf=AC.createBiquadFilter();
+    str.connect(sf);sf.connect(sg);sg.connect(AC.destination);
+    str.type='sawtooth';str.frequency.value=220;
+    sf.type='bandpass';sf.frequency.value=800;sf.Q.value=2;
+    sg.gain.value=.02;
+    str.start();musicNodes.push(str);
+    // LFO tremolo on string
+    const lfo=AC.createOscillator(),lfog=AC.createGain();
+    lfo.connect(lfog);lfog.connect(sg.gain);
+    lfo.frequency.value=.8;lfog.gain.value=.015;
+    lfo.start();musicNodes.push(lfo);
+    // Pulse every 1.2s
+    pulse();
+    const iv=setInterval(()=>{if(currentMusic==='suspense')pulse();else clearInterval(iv)},1200);
+
+  } else if(type==='action'){
+    // Fast intense battle music
+    const drone=AC.createOscillator(),dg=AC.createGain();
+    drone.connect(dg);dg.connect(AC.destination);
+    drone.type='sawtooth';drone.frequency.value=55;
+    dg.gain.value=.06;
+    drone.start();musicNodes.push(drone);
+    // Rhythm hits every 300ms
+    let beat=0;
+    function hit(){
+      const o=AC.createOscillator(),g=AC.createGain();
+      o.connect(g);g.connect(AC.destination);
+      const freqs=[110,110,165,110,110,220,110,165];
+      o.type='square';o.frequency.value=freqs[beat%freqs.length];
+      g.gain.setValueAtTime(0,AC.currentTime);
+      g.gain.linearRampToValueAtTime(.12,AC.currentTime+.02);
+      g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.28);
+      o.start();o.stop(AC.currentTime+.28);
+      musicNodes.push(o);beat++;
+    }
+    hit();
+    const iv=setInterval(()=>{if(currentMusic==='action')hit();else clearInterval(iv)},300);
+    // High melody
+    const mel=AC.createOscillator(),mg=AC.createGain(),mf=AC.createBiquadFilter();
+    mel.connect(mf);mf.connect(mg);mg.connect(AC.destination);
+    mel.type='sawtooth';mel.frequency.value=440;
+    mf.type='bandpass';mf.frequency.value=1200;mf.Q.value=3;
+    mg.gain.value=.03;
+    mel.start();musicNodes.push(mel);
+    const lfo=AC.createOscillator(),lfog=AC.createGain();
+    lfo.connect(lfog);lfog.connect(mg.gain);
+    lfo.frequency.value=4;lfog.gain.value=.025;
+    lfo.start();musicNodes.push(lfo);
+
+  } else if(type==='danger'){
+    // Dark chaotic - Mirex/Lurnox
+    const o1=AC.createOscillator(),g1=AC.createGain();
+    o1.connect(g1);g1.connect(AC.destination);
+    o1.type='sawtooth';o1.frequency.value=40;
+    g1.gain.value=.07;
+    o1.start();musicNodes.push(o1);
+    const o2=AC.createOscillator(),g2=AC.createGain();
+    o2.connect(g2);g2.connect(AC.destination);
+    o2.type='sawtooth';o2.frequency.value=41.5;// slight detune = tension
+    g2.gain.value=.06;
+    o2.start();musicNodes.push(o2);
+    // Dissonant high
+    const o3=AC.createOscillator(),g3=AC.createGain(),f3=AC.createBiquadFilter();
+    o3.connect(f3);f3.connect(g3);g3.connect(AC.destination);
+    o3.type='sawtooth';o3.frequency.value=311;
+    f3.type='bandpass';f3.frequency.value=600;f3.Q.value=4;
+    g3.gain.value=.025;
+    o3.start();musicNodes.push(o3);
+    // Slow pulse hits
+    function dpulse(){
+      const o=AC.createOscillator(),g=AC.createGain();
+      o.connect(g);g.connect(AC.destination);
+      o.type='sine';o.frequency.value=30;
+      g.gain.setValueAtTime(0,AC.currentTime);
+      g.gain.linearRampToValueAtTime(.2,AC.currentTime+.08);
+      g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+.8);
+      o.start();o.stop(AC.currentTime+.8);
+      musicNodes.push(o);
+    }
+    dpulse();
+    const iv=setInterval(()=>{if(currentMusic==='danger')dpulse();else clearInterval(iv)},2000);
+
+  } else if(type==='victory'){
+    // Triumphant rising tones
+    const notes=[261,329,392,523,659];
+    notes.forEach((freq,i)=>{
+      setTimeout(()=>{
+        const o=AC.createOscillator(),g=AC.createGain();
+        o.connect(g);g.connect(AC.destination);
+        o.type='sine';o.frequency.value=freq;
+        g.gain.setValueAtTime(0,AC.currentTime);
+        g.gain.linearRampToValueAtTime(.15,AC.currentTime+.1);
+        g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+1.5);
+        o.start();o.stop(AC.currentTime+1.5);
+        musicNodes.push(o);
+      },i*200);
+    });
+    // Warm pad
+    setTimeout(()=>{
+      const pad=AC.createOscillator(),pg=AC.createGain(),pf=AC.createBiquadFilter();
+      pad.connect(pf);pf.connect(pg);pg.connect(AC.destination);
+      pad.type='sine';pad.frequency.value=130;
+      pf.type='lowpass';pf.frequency.value=400;
+      pg.gain.setValueAtTime(0,AC.currentTime);
+      pg.gain.linearRampToValueAtTime(.08,AC.currentTime+.5);
+      pad.start();musicNodes.push(pad);
+    },600);
+
+  } else if(type==='defeat'){
+    // Dark descending
+    const notes=[220,196,174,155,130];
+    notes.forEach((freq,i)=>{
+      setTimeout(()=>{
+        const o=AC.createOscillator(),g=AC.createGain();
+        o.connect(g);g.connect(AC.destination);
+        o.type='sawtooth';o.frequency.value=freq;
+        g.gain.setValueAtTime(.1,AC.currentTime);
+        g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+1.2);
+        o.start();o.stop(AC.currentTime+1.2);
+        musicNodes.push(o);
+      },i*300);
+    });
+  }
+}
 function sndCont(){beep(330,.1,.1,'sine');setTimeout(()=>beep(440,.15,.08,'sine'),80)}
 function sndShake(){beep(80,.3,.2,'sawtooth');setTimeout(()=>beep(60,.2,.15,'sawtooth'),100)}
 function sndEco(){beep(880,.15,.08,'sine');setTimeout(()=>beep(1100,.2,.06,'sine'),100)}
@@ -521,11 +680,23 @@ function bars(){$i('bHp').style.width=Math.max(0,hp)+'%';$i('bEco').style.width=
 function showNode(id){
   const d=S[id];if(!d)return;cur=id;
   if(d.end){showEnd(d.type);return}
+  // Music
+  const mtype=getMusicForNode(id);
+  playMusic(mtype);
   if(d.hp){hp=Math.max(0,Math.min(100,hp+d.hp));bars();if(d.hp<0)sndShake()}
   if(d.eco){eco=Math.max(0,Math.min(100,eco+d.eco));bars();if(d.eco>0)sndEco()}
   if(hp<=0){showEnd('D');return}
   setScene(d.img||'streets');
   if(d.shake){const g=$i('sGame');g.classList.remove('shake');void g.offsetWidth;g.classList.add('shake');setTimeout(()=>g.classList.remove('shake'),500)}
+  // Auto music based on chapter
+  if(d.ch==='ACTO 1'||d.ch==='PROLOGO')playMusic('suspense');
+  else if(d.ch==='ACTO 2')playMusic('suspense');
+  else if(d.ch==='ACTO 3'||d.ch==='ACTO 4')playMusic('action');
+  else if(d.ch==='ACTO 5')playMusic('action');
+  else if(d.ch==='ACTO 6')playMusic('suspense');
+  else if(d.ch==='ACTO 7')playMusic('danger');
+  else if(d.ch==='ACTO 8')playMusic('danger');
+  else if(d.ch==='ACTO FINAL')playMusic('danger');
   const lbl=$i('lbl');
   if(d.ch!==undefined&&d.tt){
     lbl.style.display='block';
@@ -571,6 +742,8 @@ function showChoices(cs){
 }
 
 function showEnd(type){
+  if(type==='D')playMusic('defeat');
+  else playMusic('victory');
   const D={
     A:{title:'EL ECO RESISTE',col:'var(--c)',text:'El portal colapsa. Lurnox queda atrapado entre las dos dimensiones.\n\nEl rayo turquesa se apaga. Lustonia respira por primera vez en horas.\n\nEn Valmora, Theo y sus amigos siguen luchando. La guerra no termino.\n\nPero esta noche, esta ciudad sobrevivio.',quote:'"EL ECO NUNCA SE FUE."'},
     B:{title:'LA GRIETA',col:'var(--lurnox)',text:'Lurnox cruza el portal de regreso a Aethrium.\n\nAntes de irse, los mira por ultima vez.\n\n"Custodio... esto no termina aca."\n\nEl portal se cierra. Pero Lin lo siente — quedo una grieta. Muy pequeña. Por ahora.\n\nAlgo del otro lado tambien la siente.',quote:'"LA VERDAD ESTA BAJO NOSOTROS."'},
@@ -580,13 +753,15 @@ function showEnd(type){
   const d=D[type]||D.D;
   $i('eT').textContent=d.title;$i('eT').style.color=d.col;$i('eT').style.textShadow='0 0 25px '+d.col;
   $i('eTx').textContent=d.text;$i('eQ').textContent=d.quote;
+  if(type==='A'||type==='B'||type==='C')playMusic('victory');
+  else playMusic('defeat');
   showScreen('sEnd');
 }
 
 $i('btnIntro').addEventListener('click',()=>{try{AC.resume()}catch(e){}sndCont();showScreen('sMenu')});
-$i('btnPlay').addEventListener('click',()=>{sndCont();hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
+$i('btnPlay').addEventListener('click',()=>{sndCont();hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>playMusic('suspense');showNode('intro'),300)});
 $i('cont').addEventListener('click',()=>{sndCont();const d=S[cur];if(d&&d.next){$i('cont').style.display='none';showNode(d.next)}});
-$i('btnR').addEventListener('click',()=>{hp=100;eco=0;showScreen('sMenu')});
+$i('btnR').addEventListener('click',()=>{stopMusic();hp=100;eco=0;showScreen('sMenu')});
 </script>
 </body>
 </html>
