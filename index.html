@@ -79,7 +79,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 .lsb{font-family:var(--ff4);font-size:clamp(.5rem,2vw,.65rem);color:rgba(200,135,42,.85);letter-spacing:.14em;margin-top:4px}
 #sp{flex:1;min-height:0}
 
-#tb{position:relative;z-index:20;flex-shrink:0;margin:0 10px 8px;padding:16px 16px 14px;background:linear-gradient(135deg,rgba(0,0,0,.94),rgba(0,5,16,.96));border:1px solid rgba(0,229,255,.2);border-radius:14px;box-shadow:0 0 40px rgba(0,0,0,.8),inset 0 1px 0 rgba(0,229,255,.12);backdrop-filter:blur(12px)}
+#tb{position:relative;z-index:20;flex-shrink:0;margin:0 10px 8px;padding:16px 16px 14px;background:linear-gradient(135deg,rgba(0,0,0,.70),rgba(0,5,16,.74));border:1px solid rgba(0,229,255,.2);border-radius:14px;box-shadow:0 0 40px rgba(0,0,0,.8),inset 0 1px 0 rgba(0,229,255,.12);backdrop-filter:blur(12px)}
 .tspk{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .sbar{width:4px;height:22px;border-radius:3px;flex-shrink:0}
 .snam{font-family:var(--ff2);font-size:clamp(.75rem,3vw,.95rem);letter-spacing:.14em;font-weight:700}
@@ -88,7 +88,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 @keyframes tapA{0%,100%{opacity:.4}50%{opacity:.8}}
 
 #ch{position:relative;z-index:20;flex-shrink:0;display:flex;flex-direction:column;gap:8px;margin:0 10px 10px}
-.cb{position:relative;overflow:hidden;padding:14px 16px;background:linear-gradient(135deg,rgba(0,0,0,.88),rgba(0,5,16,.92));border:1px solid rgba(0,229,255,.25);border-radius:12px;cursor:pointer;transition:all .15s;text-align:left;backdrop-filter:blur(8px);display:flex;align-items:flex-start;gap:14px}
+.cb{position:relative;overflow:hidden;padding:14px 16px;background:linear-gradient(135deg,rgba(0,0,0,.60),rgba(0,5,16,.66));border:1px solid rgba(0,229,255,.25);border-radius:12px;cursor:pointer;transition:all .15s;text-align:left;backdrop-filter:blur(8px);display:flex;align-items:flex-start;gap:14px}
 .cb::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--c);border-radius:12px 0 0 12px;opacity:.7}
 .cb:active{background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,100,140,.1));border-color:var(--c);box-shadow:0 0 24px rgba(0,229,255,.2);transform:translateX(4px)}
 .cn{font-family:var(--ff4);font-size:.9rem;color:var(--c);flex-shrink:0;margin-top:1px;line-height:1}
@@ -293,7 +293,7 @@ const IMG={
   'aeronyx_cae':'sc_aeronyx_cae.png',
   'borinex_aparece':'sc_borinex_aparece.png',
   'borinex_golpea':'sc_borinex_golpea.png',
-  'borinex_cae':'sc_borinex_aparece.png',
+  'borinex_cae':'sc_borinex_cae.png',
   'zak_sotano':'sc_zak_sotano.png',
   'tres_juntos':'sc_tres_juntos.png',
   'mirex_aparece':'sc_mirex_aparece.png',
@@ -318,6 +318,12 @@ const IMG={
   'explosion':'sc_explosion.png',
   'ciudad_lluvia':'sc_ciudad_lluvia.png',
   'valmora':'sc_valmora.png',
+  'linescondidomilitares':'Linescondidomilitares.png',
+  'sc_ciudad_lluvia':'sc_ciudad_lluvia.png',
+  'borinex_habla':'sc_borinex_aparece.png',
+  'mirex_ataca':'sc_mirex_habla.png',
+  'ferronix_ataca':'sc_ferronix_ataca.png',
+  'lurnox_final':'sc_lurnox_habla.png',
   'sc_aeronyx_ataca':'sc_aeronyx_ataca.png',
   'sc_borinex_ataca':'sc_borinex_ataca.png',
   'sc_borinex_cae':'sc_borinex_cae.png',
@@ -340,11 +346,24 @@ function sceneFallback(key){
   if(k.includes('room')||k.includes('door')||k.includes('rayo')) return 'Linmirandoventanadestruccion.png';
   return 'sc_ciudad_lluvia.png';
 }
+function imgCandidates(key){
+  const k=String(key||'');
+  const fb=sceneFallback(k);
+  const base=[];
+  if(IMG[k]) base.push(IMG[k]);
+  // Si alguna escena usa directamente el nombre del archivo, también lo probamos.
+  base.push(k);
+  base.push(k+'.png', k+'.jpg', k+'.jpeg', k+'.webp');
+  if(!k.startsWith('sc_')) base.push('sc_'+k+'.png','sc_'+k+'.jpg');
+  if(fb) base.push(fb);
+  base.push('sc_ciudad_lluvia.png','sc_valmora.png','cover.png');
+  // Sacar duplicados y valores raros
+  return [...new Set(base.filter(x=>x && !/^undefined/.test(x) && !/^null/.test(x)))];
+}
 function setScene(key){
   const sc=document.getElementById('sc');
-  const img=IMG[key] || sceneFallback(key);
-  const fb=sceneFallback(key);
-  sc.innerHTML=`<div class="sc-img" style="background-image:url('${img}'),url('${fb}');background-color:#020508"></div>`;
+  const imgs=imgCandidates(key).map(x=>`url('${x}')`).join(',');
+  sc.innerHTML=`<div class="sc-img" data-scene="${String(key||'')}" style="background-image:${imgs};background-color:#020508"></div>`;
 }
 
 // STORY
