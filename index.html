@@ -239,40 +239,13 @@ const COL={LIN:'#c8872a',TRINI:'#9b30cc',ZAK:'#00bcd4',AERONYX:'#6a9ab0',BORINEX
 // BUILD CSS SCENES
 function buildScene(k){
   const scenes={
-    room:`<div style="position:absolute;inset:0;background:linear-gradient(180deg,#030405,#0a0e14 40%,#080c10)">
-      <div style="position:absolute;top:0;left:0;right:0;height:60%;background:linear-gradient(180deg,#060810,#0a1018)"></div>
-      <div style="position:absolute;top:8%;left:20%;width:30%;height:35%;border:2px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(200,135,42,.07),rgba(255,100,0,.04));overflow:hidden">
-        <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,120,0,.25),transparent 70%);animation:glwA 2s ease-in-out infinite"></div>
-        <div style="position:absolute;bottom:0;width:45%;height:55%;left:8%;background:radial-gradient(rgba(255,110,0,.55),transparent);border-radius:50% 50% 0 0;animation:fireA 1.2s ease-in-out infinite"></div>
-        <div style="position:absolute;bottom:0;width:38%;height:48%;right:8%;background:radial-gradient(rgba(255,80,0,.5),transparent);border-radius:50% 50% 0 0;animation:fireA 1.5s ease-in-out infinite .3s"></div>
-      </div>
-      <div style="position:absolute;top:12%;right:8%;width:18%;height:25%;background:#0a0e14;border:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
-        <div style="width:55%;aspect-ratio:1;border:1px solid rgba(0,229,255,.25);border-radius:50%"></div>
-        <div style="font-family:var(--ff4);font-size:.28rem;color:rgba(0,229,255,.35);text-align:center">EL ECO<br>NADA ES ETERNO</div>
-      </div>
-      <div class="city"></div>
-      <div style="position:absolute;bottom:0;left:10%;width:45%;height:20%;background:linear-gradient(#1a2028,#0d1218);border-radius:4px 4px 0 0;border-top:2px solid rgba(255,255,255,.05)"></div>
-      <div class="lin-sit">
-        <div style="width:52px;height:10px;background:#030405;border-radius:8px;margin:0 auto 2px"></div>
-        <div style="width:38px;height:42px;background:#1e1008;border-radius:50% 50% 40% 40%;margin:0 auto"></div>
-        <div style="width:58px;height:52px;background:linear-gradient(175deg,#1c242c,#080c10);border-radius:12px 12px 4px 4px;margin:2px auto 0"></div>
-        <div style="display:flex;justify-content:space-around;width:80px;margin:4px auto 0">
-          <div style="width:22px;height:18px;background:#1a1208;border-radius:30% 30% 40% 40%;position:relative"><div class="eco-hand"></div></div>
-          <div style="width:22px;height:18px;background:#1a1208;border-radius:30% 30% 40% 40%;position:relative"><div class="eco-hand" style="animation-delay:.4s"></div></div>
-        </div>
-      </div>
-    </div>`,
+    room:`<div style="position:absolute;inset:0;background:url('sc01.png') center/cover no-repeat"><div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 65%,rgba(0,0,0,.97) 100%)"></div></div>`,
 
-    streets:`<div style="position:absolute;inset:0;background:linear-gradient(180deg,#020408,#040810 30%,#030608)">
-      <div class="sky"></div><div class="city"></div><div class="fire-line"></div>
-      <div class="mil" style="right:30%"><div class="mh"><div style="position:absolute;top:30%;left:15%;right:15%;height:3px;background:rgba(0,0,0,.8);border-radius:1px;box-shadow:0 0 5px rgba(100,0,0,.5)"></div></div><div class="mb"><div class="mg"></div></div></div>
-      <div class="mil" style="right:15%;opacity:.6"><div class="mh"></div><div class="mb"></div></div>
-      <div class="lin-hide" style="left:8%"><div class="lh-b"></div></div>
-      <div class="wt" style="left:5%;top:20%">EL ECO<br>NADA ES ETERNO</div>
-      <div class="wt" style="left:4%;top:38%;font-size:.35rem">LA VERDAD<br>ESTA BAJO<br>NOSOTROS</div>
-      <div class="floor"></div><div class="wet"></div>
-    </div>`,
+    streets:`<div style="position:absolute;inset:0;background:url('sc05.png') center/cover no-repeat"><div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 65%,rgba(0,0,0,.97) 100%)"></div></div>`,
 
+    room2:`<div style="position:absolute;inset:0;background:url('sc02.png') center/cover no-repeat"><div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.15) 0%,rgba(0,0,0,.0) 30%,rgba(0,0,0,.6) 65%,rgba(0,0,0,.97) 100%)"></div></div>`,
+    door:`<div style="position:absolute;inset:0;background:url('sc03.png') center/cover no-repeat"><div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 65%,rgba(0,0,0,.97) 100%)"></div></div>`,
+    rayo:`<div style="position:absolute;inset:0;background:url('sc04.png') center/cover no-repeat"><div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.2) 0%,rgba(0,0,0,.05) 30%,rgba(0,0,0,.6) 65%,rgba(0,0,0,.97) 100%)"></div></div>`,
     aeronyx:`<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 80% 30%,rgba(106,154,176,.12),transparent 50%),linear-gradient(180deg,#030810,#04080e)">
       <div class="sky"></div><div class="city"></div><div class="fire-line"></div>
       <div style="position:absolute;right:5%;top:5%;width:42%;height:80%">
@@ -431,14 +404,14 @@ const S={
 intro:{sc:'room',ch:'PROLOGO',tt:'EL ECO NUNCA SE FUE',sb:'Lustonia - Madrugada',spk:'NARRADOR',txt:'En Valmora, cinco chicos descubrieron que no estaban solos.\n\nTheo, Norrin, Mila, Lucy y Kate. Cada uno con un custodio adentro. Cada uno enfrentando a Tronox — el monstruo que cayó del meteorito y se metio en el cuerpo de Nevius.\n\nEsa batalla sigue. Pero la señal de Tronox llego mas lejos.\n\nEn Lustonia — otra ciudad. Otra noche. Otro custodio que acaba de despertar.',next:'s01'},
 s01:{sc:'room',spk:'NARRADOR',txt:'Lin se sienta de golpe en la cama. El piso tiembla. Sus manos brillan con una luz turquesa que no entiende.\n\nAfuera, el cielo esta roto. Edificios en llamas. En la pared — un simbolo que el no recuerda haber dibujado.\n\nEL ECO. NADA ES ETERNO.',next:'s02'},
 s02:{sc:'room',spk:'LIN',txt:'"Las piedras del piso... se estan moviendo. Sin tocarlas. Yo las estoy moviendo."\n\nUna roca flota a diez centimetros de su mano. La detiene. La suelta. Vuelve a levantarla.\n\nAlgo adentro suyo desperto. Un custodio. El no lo sabe todavia.',next:'s03'},
-s03:{sc:'room',ch:'',tt:'LA PRIMERA DECISION',sb:'',spk:'LIN',txt:'Se para frente a la puerta abierta. La ciudad de Lustonia arde. Militares con ojos negros patrullan las calles.\n\nEn el horizonte — un rayo de luz turquesa que corta el cielo desde el suelo hasta las nubes.',choices:[
+s03:{sc:'door',ch:'',tt:'LA PRIMERA DECISION',sb:'',spk:'LIN',txt:'Se para frente a la puerta abierta. La ciudad de Lustonia arde. Militares con ojos negros patrullan las calles.\n\nEn el horizonte — un rayo de luz turquesa que corta el cielo desde el suelo hasta las nubes.',choices:[
   {t:'Ir hacia el rayo ahora',d:'Algo ahi llama. Tenes que ir.',tag:'ECO +8 - RIESGO ALTO',tc:'var(--c)',next:'s04a',hp:0,eco:8},
   {t:'Buscar sobrevivientes primero',d:'Hay gente atrapada en los escombros.',tag:'VIDA +8 - ECO +4',tc:'#4a8a4a',next:'s04b',hp:8,eco:4},
   {t:'Esconderse y entender el poder',d:'No vas a servir de nada si no sabes usarlo.',tag:'ECO +12',tc:'var(--smoke)',next:'s04c',hp:0,eco:12},
 ]},
-s04a:{sc:'streets',spk:'NARRADOR',txt:'Lin corre hacia la luz. El asfalto se parte bajo sus pies. Su Eco responde a cada paso.\n\nEl rayo viene del centro de Lustonia. Cinco kilometros. Pero se siente cerca.',next:'s05'},
-s04b:{sc:'streets',spk:'NARRADOR',txt:'Saca a tres personas de los escombros. Sus manos mueven piedras como si siempre hubiera sabido hacerlo.\n\nCuando termina, el rayo sigue ahi. Esperandolo.',next:'s05'},
-s04c:{sc:'room',spk:'LIN',txt:'Levanta rocas. Las mueve. Las lanza. Aprende en diez minutos lo que otros aprenderían en semanas.\n\nEl Eco late mas fuerte. Esta listo.\n\nO eso cree.',next:'s05'},
+s04a:{sc:'rayo',spk:'NARRADOR',txt:'Lin corre hacia la luz. El asfalto se parte bajo sus pies. Su Eco responde a cada paso.\n\nEl rayo viene del centro de Lustonia. Cinco kilometros. Pero se siente cerca.',next:'s05'},
+s04b:{sc:'rayo',spk:'NARRADOR',txt:'Saca a tres personas de los escombros. Sus manos mueven piedras como si siempre hubiera sabido hacerlo.\n\nCuando termina, el rayo sigue ahi. Esperandolo.',next:'s05'},
+s04c:{sc:'door',spk:'LIN',txt:'Levanta rocas. Las mueve. Las lanza. Aprende en diez minutos lo que otros aprenderían en semanas.\n\nEl Eco late mas fuerte. Esta listo.\n\nO eso cree.',next:'s05'},
 s05:{sc:'streets',ch:'ACTO 2',tt:'LAS CALLES',sb:'Lustonia - Zona Roja',spk:'NARRADOR',txt:'Los militares no estan bien. Ojos nublados — un velo negro que no es humano. Patrullan con precision mecanica.\n\nEn las paredes: carteles. "SEGURIDAD. ORDEN. PAZ. CON EL ECO TODO ES POSIBLE."\n\nLin reconoce el patron. Corruptos. Igual que los de Valmora con Tronox.',next:'s06'},
 s06:{sc:'streets',spk:'LIN',txt:'Un militar lo ve. Levanta el arma.\n\nLin levanta la mano — y una roca del pavimento sale disparada.',choices:[
   {t:'Pelear de frente',d:'Rocas, escombros, todo lo que haya.',tag:'HP -10 - ECO +8',tc:'var(--earth)',next:'s07a',hp:-10,eco:8},
