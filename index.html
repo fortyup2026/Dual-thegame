@@ -20,6 +20,24 @@ body{height:100dvh}
 .screen.active{opacity:1}
 .screen.active{display:flex}
 
+
+/* COVER / PORTADA */
+#sCover{background:#000;align-items:center;justify-content:center;padding:0;overflow:hidden}
+.cover-bg{position:absolute;inset:0;background-image:linear-gradient(to bottom,rgba(0,0,0,.08),rgba(0,0,0,.35) 45%,rgba(0,0,0,.94) 100%),url('cover_dual.jpg');background-size:cover;background-position:center top;background-repeat:no-repeat;transform:scale(1.01)}
+.cover-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 25%,transparent 20%,rgba(0,0,0,.28) 62%,rgba(0,0,0,.92) 100%);pointer-events:none}
+.cover-ui{position:relative;z-index:3;width:100%;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:24px 18px calc(26px + env(safe-area-inset-bottom));gap:14px;text-align:center}
+.cover-title{font-family:var(--ff1);font-size:clamp(2.8rem,16vw,5.2rem);line-height:.9;color:#fff;letter-spacing:.12em;text-shadow:0 0 22px rgba(0,229,255,.95),0 0 65px rgba(0,229,255,.35),0 4px 0 rgba(0,0,0,.9)}
+.cover-sub{font-family:var(--ff2);font-size:clamp(1.05rem,5.2vw,1.55rem);letter-spacing:.26em;color:#d6ff5b;text-shadow:0 0 14px rgba(182,255,46,.65),0 2px 0 rgba(0,0,0,.9);font-style:italic;margin-top:-4px}
+.cover-characters{display:flex;gap:18px;justify-content:center;align-items:center;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.46);border:1px solid rgba(255,255,255,.10);backdrop-filter:blur(10px);box-shadow:0 0 22px rgba(0,0,0,.55)}
+.cover-char{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:62px;opacity:.98}
+.cover-orb{width:42px;height:42px;border-radius:50%;border:2px solid;box-shadow:0 0 18px currentColor;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.42),rgba(0,0,0,.35) 68%)}
+.cover-char span{font-family:var(--ff2);font-size:.76rem;letter-spacing:.12em;font-weight:700;text-shadow:0 2px 0 #000}
+.cover-char small{font-family:var(--ff4);font-size:.46rem;letter-spacing:.12em;color:rgba(215,230,235,.62)}
+.cover-char.lin{color:var(--earth)}.cover-char.trini{color:var(--smoke)}.cover-char.zak{color:var(--tech)}
+.cover-note{font-family:var(--ff4);font-size:clamp(.48rem,2vw,.62rem);letter-spacing:.18em;color:rgba(210,235,245,.58);text-shadow:0 2px 0 #000}
+.cover-btn{max-width:420px;width:100%;margin-top:2px;background:linear-gradient(135deg,rgba(0,229,255,.18),rgba(0,10,20,.82));backdrop-filter:blur(10px)}
+@media (max-width:430px){.cover-bg{background-position:center top}.cover-ui{padding-left:14px;padding-right:14px;padding-bottom:calc(18px + env(safe-area-inset-bottom));gap:11px}.cover-title{font-size:clamp(2.45rem,15vw,3.8rem)}.cover-sub{font-size:clamp(.94rem,4.8vw,1.25rem)}.cover-characters{gap:10px;padding:7px 9px}.cover-char{min-width:54px}.cover-orb{width:36px;height:36px}.cover-char span{font-size:.67rem}.cover-char small{font-size:.4rem}.cover-note{font-size:.45rem}.cover-btn{min-height:52px}}
+
 /* INTRO CINEMATICA */
 #sIntro{background:#000;align-items:center;justify-content:flex-start;padding:18px 14px 92px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #sIntro::before{content:'';position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse at 50% 18%,rgba(0,229,255,.22),transparent 42%),radial-gradient(ellipse at 20% 90%,rgba(200,135,42,.12),transparent 45%),linear-gradient(180deg,#020508 0%,#050b14 48%,#000 100%)}
@@ -100,7 +118,7 @@ body{height:100dvh}
 #tap{font-family:var(--ff4);font-size:clamp(.45rem,1.8vw,.58rem);color:rgba(0,229,255,.4);text-align:right;margin-top:8px;letter-spacing:.1em;animation:tapA 2s ease-in-out infinite;display:none}
 @keyframes tapA{0%,100%{opacity:.4}50%{opacity:.8}}
 
-#ch{position:relative;z-index:20;flex-shrink:0;display:flex;flex-direction:column;gap:8px;margin:0 10px 10px}
+#ch{position:relative;z-index:20;flex-shrink:0;display:flex;flex-direction:column;gap:8px;margin:0 10px 10px;max-height:38dvh;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:8px;touch-action:pan-y}
 .cb{--choice-c:var(--c);position:relative;overflow:hidden;padding:14px 16px;background:linear-gradient(135deg,rgba(0,0,0,.88),rgba(0,5,16,.92));border:1px solid color-mix(in srgb,var(--choice-c) 35%,transparent);border-radius:12px;cursor:pointer;transition:all .15s;text-align:left;backdrop-filter:blur(8px);display:flex;align-items:flex-start;gap:14px}
 .cb::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px;background:var(--choice-c);border-radius:12px 0 0 12px;opacity:.8}
 .cb:active{background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(0,5,16,.9));border-color:var(--choice-c);box-shadow:0 0 24px color-mix(in srgb,var(--choice-c) 28%,transparent);transform:translateX(4px)}
@@ -114,6 +132,8 @@ body{height:100dvh}
 #cont:active{color:var(--c);border-color:var(--c);box-shadow:0 0 20px rgba(0,229,255,.2)}
 @keyframes shakeA{0%,100%{transform:translate(0,0)}15%{transform:translate(10px,-7px)}30%{transform:translate(-8px,5px)}45%{transform:translate(6px,-4px)}60%{transform:translate(-4px,3px)}75%{transform:translate(3px,-2px)}}
 .shake{animation:shakeA .45s ease}
+
+@media (max-width:430px){#tb{padding:12px 12px 10px;margin:0 8px 7px}#txt{max-height:22dvh;line-height:1.48;font-size:clamp(.82rem,3.35vw,.96rem)}#ch{max-height:44dvh;margin:0 8px 8px;padding-bottom:18px}.cb{padding:12px 12px;gap:10px}.ct{font-size:clamp(.78rem,3.35vw,.94rem)}.cd{font-size:clamp(.68rem,2.9vw,.82rem);line-height:1.28}.ctg{font-size:.44rem}}
 
 /* END */
 #sEnd{background:radial-gradient(ellipse at 50% 20%,rgba(0,229,255,.09),transparent 55%),linear-gradient(180deg,#020508,#040c18);align-items:center;justify-content:center;padding:20px}
@@ -134,8 +154,27 @@ body{height:100dvh}
 <div class="g-lx"></div>
 <div id="app">
 
+
+<!-- COVER / PORTADA -->
+<div id="sCover" class="screen active">
+  <div class="cover-bg"></div>
+  <div class="cover-ui">
+    <div>
+      <div class="cover-title">DUAL</div>
+      <div class="cover-sub">LUSTONIA</div>
+    </div>
+    <div class="cover-characters">
+      <div class="cover-char lin"><div class="cover-orb"></div><span>LIN</span><small>TIERRA</small></div>
+      <div class="cover-char trini"><div class="cover-orb"></div><span>TRINI</span><small>SOMBRAS</small></div>
+      <div class="cover-char zak"><div class="cover-orb"></div><span>ZAK</span><small>TECNOLOGIA</small></div>
+    </div>
+    <div class="cover-note">EL ECO NUNCA SE FUE</div>
+    <button class="btn-p cover-btn" id="btnCover"><span class="bsh"></span><span class="btxt">&#9654; &nbsp;INICIAR</span></button>
+  </div>
+</div>
+
 <!-- INTRO -->
-<div id="sIntro" class="screen active">
+<div id="sIntro" class="screen">
   <div class="intro-content" style="position:relative;z-index:2">
     <div class="intro-logo">DUAL</div>
     <div class="intro-divider"></div>
@@ -578,7 +617,7 @@ function $i(id){return document.getElementById(id)}
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.display='none'});
   const el=$i(id);el.style.display='flex';requestAnimationFrame(()=>el.classList.add('active'));
-  if(id==='sMenu'||id==='sIntro')playMusic('menu');
+  if(id==='sMenu'||id==='sIntro'||id==='sCover')playMusic('menu');
   if(id==='sEnd')playMusic('end');
 }
 function bars(){$i('bHp').style.width=Math.max(0,hp)+'%';$i('bEco').style.width=Math.max(0,eco)+'%'}
@@ -652,10 +691,11 @@ function showEnd(type){
   showScreen('sEnd');
 }
 
-$i('btnIntro').addEventListener('click',()=>{unlockAudio();sndCont();playMusic('menu');showScreen('sMenu')});
+$i('btnCover').addEventListener('click',()=>{unlockAudio();sndCont();playMusic('menu');showScreen('sIntro')});
+$i('btnIntro').addEventListener('click',()=>{unlockAudio();sndCont();playMusic('story');hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
 $i('btnPlay').addEventListener('click',()=>{unlockAudio();sndCont();playMusic('story');hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
 $i('cont').addEventListener('click',()=>{sndCont();const d=S[cur];if(d&&d.next){$i('cont').style.display='none';showNode(d.next)}});
-$i('btnR').addEventListener('click',()=>{hp=100;eco=0;playMusic('menu');showScreen('sMenu')});
+$i('btnR').addEventListener('click',()=>{hp=100;eco=0;playMusic('menu');showScreen('sCover')});
 </script>
 </body>
 </html>
