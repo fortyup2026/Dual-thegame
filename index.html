@@ -382,6 +382,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
     <div>
       <div class="logo-big">DUAL</div>
       <div class="logo-city">— ECHO FRAGMENTS —</div>
+    <div class="logo-city" style="color:var(--earth);margin-top:.2rem">LUSTONIA · CIUDAD DEL NORTE</div>
+      <div class="logo-city">LUSTONIA · CIUDAD DEL SUR</div>
       <div class="logo-tag">UN MUNDO QUE SE HUNDE · UN ECO QUE DESPIERTA</div>
     </div>
     <div class="menu-chars">
@@ -582,8 +584,8 @@ const story = {
 's_intro':{
   bg:'eco-earth', speaker:'NARRADOR',
   chars:['lin'],
-  title:'DUAL', sub:'ECHO FRAGMENTS · CAPÍTULO 1',
-  text:'La ciudad de Vertex. Madrugada.\nLin se despierta de golpe. El piso tiembla. Afuera, el cielo está roto.',
+  title:'DUAL', sub:'LUSTONIA · CAPÍTULO 1',
+  text:'La ciudad de Lustonia. Madrugada.\nLin se despierta de golpe. El piso tiembla. Afuera, el cielo está roto.',
   next:'s_lin_desperta'
 },
 's_lin_desperta':{
@@ -718,7 +720,7 @@ const story = {
 's_tejado_vision':{
   bg:'eco-earth', speaker:'TRINI',
   chars:['lin','trini'],
-  text:'"Desde acá se ve todo. El rayo viene del centro de la ciudad. Y hay algo más — hay otros chicos luchando. En otra ciudad. Contra el más grande."',
+  text:'"Desde acá se ve todo. El rayo viene del centro de la ciudad. Y hay algo más — hay otros chicos luchando. En Valmora, contra Trónox."',
   next:'s_mencion_dual'
 },
 's_mencion_dual':{
@@ -937,7 +939,7 @@ const story = {
   bg:'eco-earth', speaker:'NARRADOR',
   chars:['lin','trini','zak'],
   title:'EPÍLOGO', sub:'',
-  text:'Vertex respira. Los militares corruptos caen sin su señal. Somewhere, en otra ciudad, Theo y sus amigos siguen luchando contra Trónox.\nEl Eco nunca se fue.',
+  text:'Lustonia respira. Los militares corruptos caen sin su señal. En Valmora, Theo y sus amigos siguen luchando contra Trónox.\nEl Eco nunca se fue.',
   end:true, endType:'good'
 },
 's_epilogo_alternativo':{
@@ -1050,7 +1052,7 @@ function showChoices(choices){
 function showEnd(type){
   const titles={good:'¡EL ECO RESISTE!',alt:'LA GRIETA'};
   const texts={
-    good:'Lin, Trini y Zak salvaron Vertex. En algún lugar, Theo y sus amigos siguen la batalla. El universo DUAL continúa.\n\n"El Eco nunca se fue."',
+    good:'Lin, Trini y Zak salvaron Lustonia. En Valmora, Theo y sus amigos siguen la batalla. El universo DUAL continúa.\n\n"El Eco nunca se fue."',
     alt:'Lurnox se fue... por ahora. La grieta que dejó es pequeña. Pero Lin la siente. Y algo del otro lado también la siente a ella.'
   };
   document.getElementById('endTitle').textContent=titles[type]||'FIN';
