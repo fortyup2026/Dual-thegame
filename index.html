@@ -8,332 +8,379 @@
 <style>
 :root{
   --c:#00e5ff;--earth:#c8872a;--smoke:#9b30cc;--tech:#00bcd4;
-  --wind:#6a9ab0;--speed:#ff6a00;--psychic:#9b1040;--metal:#607080;
+  --wind:#6a9ab0;--speed:#ff6a00;--psychic:#cc1050;--metal:#8090a0;
   --lurnox:#00ffcc;--bg:#020508;
   --ff1:'Cinzel Decorative',serif;--ff2:'Cinzel',serif;
   --ff3:'Rajdhani',sans-serif;--ff4:'Share Tech Mono',monospace;
+  --txt:1.05rem;--txt-sm:.75rem;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde8ee;font-family:var(--ff3);touch-action:manipulation;user-select:none;-webkit-user-select:none}
-#app{width:100vw;height:100vh;position:relative;overflow:hidden}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{
+  width:100%;height:100%;
+  overflow:hidden;
+  background:var(--bg);
+  color:#dde8ee;
+  font-family:var(--ff3);
+  touch-action:manipulation;
+  user-select:none;
+}
+#app{
+  width:100vw;height:100vh;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
 
-/* ══ GLOBAL BG EFFECTS ══ */
-.g-rain{position:fixed;inset:-5%;pointer-events:none;z-index:2;
+/* RAIN */
+.g-rain{
+  position:fixed;inset:-5%;pointer-events:none;z-index:2;
   background-image:linear-gradient(108deg,rgba(160,210,255,.13) 1px,transparent 1px);
-  background-size:32px 50px;opacity:.15;animation:rainF .32s linear infinite}
+  background-size:32px 50px;opacity:.15;
+  animation:rainF .32s linear infinite;
+}
 @keyframes rainF{to{transform:translate(-32px,50px)}}
-.g-vign{position:fixed;inset:0;pointer-events:none;z-index:3;
-  background:radial-gradient(ellipse at 50% 50%,transparent 30%,rgba(0,0,0,.7) 100%)}
-.g-lightning{position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0;
-  background:rgba(120,190,255,.04);animation:lx 7s ease-in-out infinite}
+.g-vign{
+  position:fixed;inset:0;pointer-events:none;z-index:3;
+  background:radial-gradient(ellipse at 50% 50%,transparent 20%,rgba(0,0,0,.65) 100%);
+}
+.g-lightning{
+  position:fixed;inset:0;pointer-events:none;z-index:2;opacity:0;
+  background:rgba(120,190,255,.04);
+  animation:lx 7s ease-in-out infinite;
+}
 @keyframes lx{0%,88%,100%{opacity:0}89%{opacity:1}90%{opacity:0}91%{opacity:.3}92%{opacity:0}}
 
-/* ══ SCREENS ══ */
-.screen{position:fixed;inset:0;z-index:10;display:none;flex-direction:column}
+/* SCREENS */
+.screen{
+  position:fixed;inset:0;z-index:10;
+  display:none;flex-direction:column;
+}
 .screen.active{display:flex}
 
-/* ══════════════════════════
+/* ══════════════
    MENU
-══════════════════════════ */
+══════════════ */
 #sMenu{
   background:
     radial-gradient(ellipse at 50% 0%,rgba(0,229,255,.14) 0%,transparent 55%),
-    radial-gradient(ellipse at 20% 85%,rgba(200,135,42,.1) 0%,transparent 45%),
+    radial-gradient(ellipse at 20% 90%,rgba(200,135,42,.1) 0%,transparent 45%),
     linear-gradient(180deg,#020508 0%,#040c18 100%);
   align-items:center;justify-content:center;
+  padding:20px;
 }
 .menu-card{
-  width:min(500px,93vw);
-  padding:2.2rem 1.8rem;
-  border-radius:16px;
-  background:linear-gradient(160deg,rgba(0,18,32,.82),rgba(0,4,10,.94));
-  border:1px solid rgba(0,229,255,.16);
-  box-shadow:0 0 80px rgba(0,229,255,.1),inset 0 1px 0 rgba(0,229,255,.14);
+  width:100%;max-width:500px;
+  padding:2rem 1.8rem 1.8rem;
+  border-radius:18px;
+  background:linear-gradient(160deg,rgba(0,18,32,.88),rgba(0,4,10,.96));
+  border:1px solid rgba(0,229,255,.18);
+  box-shadow:0 0 80px rgba(0,229,255,.1),inset 0 1px 0 rgba(0,229,255,.15);
   backdrop-filter:blur(16px);
   display:flex;flex-direction:column;align-items:center;gap:1.5rem;
   position:relative;
 }
-.mc-line-top{position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.6),transparent)}
-.mc-line-bot{position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,135,42,.5),transparent)}
+.mc-top{position:absolute;top:0;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,var(--c),transparent);border-radius:2px}
+.mc-bot{position:absolute;bottom:0;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,var(--earth),transparent);border-radius:2px}
 
-.logo-main{text-align:center}
 .logo-dual{
   font-family:var(--ff1);
-  font-size:clamp(3.8rem,16vw,6rem);
+  font-size:clamp(3.5rem,18vw,5.5rem);
   font-weight:900;color:#fff;
   letter-spacing:.12em;line-height:1;
-  text-shadow:0 0 25px var(--c),0 0 60px rgba(0,229,255,.3),0 3px 0 rgba(0,0,0,.95);
+  text-shadow:0 0 28px var(--c),0 0 60px rgba(0,229,255,.3),0 3px 0 rgba(0,0,0,.95);
+  text-align:center;
 }
-.logo-echo{font-family:var(--ff4);font-size:clamp(.55rem,2.2vw,.8rem);color:var(--c);letter-spacing:.32em;margin-top:.4rem}
-.logo-city{font-family:var(--ff4);font-size:clamp(.48rem,1.8vw,.65rem);color:var(--earth);letter-spacing:.22em;margin-top:.2rem}
-.logo-tag{font-size:.55rem;color:#1a2a35;letter-spacing:.1em;margin-top:.3rem}
+.logo-echo{
+  font-family:var(--ff4);
+  font-size:clamp(.65rem,3vw,.9rem);
+  color:var(--c);letter-spacing:.3em;text-align:center;margin-top:.3rem;
+}
+.logo-city{
+  font-family:var(--ff4);
+  font-size:clamp(.55rem,2.5vw,.75rem);
+  color:var(--earth);letter-spacing:.2em;text-align:center;margin-top:.2rem;
+}
+.logo-tag{
+  font-size:clamp(.55rem,2.2vw,.7rem);
+  color:#1a2a35;letter-spacing:.1em;text-align:center;margin-top:.2rem;
+}
 
 .menu-lore{
-  text-align:center;max-width:380px;
-  font-size:clamp(.72rem,2.5vw,.88rem);
-  color:#5a7a8a;line-height:1.65;font-weight:500;
+  text-align:center;
+  font-size:clamp(.9rem,3.5vw,1.05rem);
+  color:#5a7a8a;line-height:1.7;font-weight:500;
+  max-width:380px;
 }
-.menu-lore strong{color:var(--c);font-weight:600}
+.menu-lore strong{color:var(--c);font-weight:700}
 .menu-lore em{color:var(--earth);font-style:normal}
 
-.menu-chars{display:flex;gap:1.2rem;justify-content:center}
-.mc-char{display:flex;flex-direction:column;align-items:center;gap:.35rem}
+.menu-chars{display:flex;gap:1.5rem;justify-content:center}
+.mc-char{display:flex;flex-direction:column;align-items:center;gap:.4rem}
 .mc-orb{
-  width:54px;height:54px;border-radius:50%;
-  border:2px solid;position:relative;overflow:hidden;
-  animation:orbP 2.8s ease-in-out infinite;
+  width:60px;height:60px;border-radius:50%;
+  border:2px solid;animation:orbP 2.8s ease-in-out infinite;
 }
-.mc-orb.e{border-color:var(--earth);background:radial-gradient(circle at 35% 30%,rgba(200,135,42,.65),rgba(60,25,5,.45));box-shadow:0 0 20px rgba(200,135,42,.55)}
-.mc-orb.s{border-color:var(--smoke);background:radial-gradient(circle at 35% 30%,rgba(155,48,204,.6),rgba(30,5,50,.45));box-shadow:0 0 20px rgba(155,48,204,.5);animation-delay:.6s}
-.mc-orb.t{border-color:var(--tech);background:radial-gradient(circle at 35% 30%,rgba(0,188,212,.6),rgba(0,28,38,.45));box-shadow:0 0 20px rgba(0,188,212,.5);animation-delay:1.2s}
+.mc-orb.e{border-color:var(--earth);background:radial-gradient(circle at 35%,rgba(200,135,42,.65),rgba(60,25,5,.45));box-shadow:0 0 22px rgba(200,135,42,.55)}
+.mc-orb.s{border-color:var(--smoke);background:radial-gradient(circle at 35%,rgba(155,48,204,.6),rgba(30,5,50,.45));box-shadow:0 0 22px rgba(155,48,204,.5);animation-delay:.6s}
+.mc-orb.t{border-color:var(--tech);background:radial-gradient(circle at 35%,rgba(0,188,212,.6),rgba(0,28,38,.45));box-shadow:0 0 22px rgba(0,188,212,.5);animation-delay:1.2s}
 @keyframes orbP{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.mc-name{font-family:var(--ff2);font-size:.68rem;letter-spacing:.1em;font-weight:700}
-.mc-power{font-size:.48rem;color:#1e2e38;letter-spacing:.14em}
+.mc-name{font-family:var(--ff2);font-size:.85rem;letter-spacing:.1em;font-weight:700}
+.mc-power{font-size:.6rem;color:#1e2e38;letter-spacing:.12em}
 
 .btn-play{
-  position:relative;width:100%;max-width:300px;
-  padding:1rem 2rem;
-  border:1px solid var(--c);border-radius:8px;
+  position:relative;width:100%;
+  padding:1.1rem 2rem;
+  border:2px solid var(--c);border-radius:10px;
   background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,140,170,.07));
   color:var(--c);font-family:var(--ff2);
-  font-size:clamp(.82rem,3.2vw,1rem);
+  font-size:clamp(1rem,4vw,1.2rem);
   letter-spacing:.22em;cursor:pointer;overflow:hidden;
-  box-shadow:0 0 25px rgba(0,229,255,.18),inset 0 0 20px rgba(0,229,255,.05);
+  box-shadow:0 0 28px rgba(0,229,255,.2),inset 0 0 20px rgba(0,229,255,.05);
   transition:all .2s;
 }
-.btn-play:hover{background:linear-gradient(135deg,rgba(0,229,255,.22),rgba(0,160,200,.14));box-shadow:0 0 45px rgba(0,229,255,.32);transform:translateY(-1px)}
-.btn-play:active{transform:translateY(0)}
+.btn-play:active{background:linear-gradient(135deg,rgba(0,229,255,.22),rgba(0,160,200,.14));box-shadow:0 0 50px rgba(0,229,255,.35)}
 .bsh{position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(0,229,255,.2),transparent);animation:shim 2.5s linear infinite}
 @keyframes shim{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 .btxt{position:relative;z-index:1}
 
-/* ══════════════════════════
-   GAME SCENE
-══════════════════════════ */
-#sGame{position:relative}
+/* ══════════════
+   GAME
+══════════════ */
+#sGame{
+  position:fixed;inset:0;z-index:10;
+  display:none;flex-direction:column;
+  overflow:hidden;
+}
+#sGame.active{display:flex}
 
-/* Scene image - full background */
 #sceneBg{
   position:absolute;inset:0;z-index:0;
-  background-size:cover;
-  background-position:center top;
+  background-size:cover;background-position:center top;
   background-repeat:no-repeat;
-  transition:background-image .4s ease;
+  transition:opacity .5s ease;
 }
-/* Dark overlay on image */
 #sceneBg::after{
   content:'';position:absolute;inset:0;
   background:linear-gradient(
     to bottom,
-    rgba(0,0,0,.35) 0%,
-    rgba(0,0,0,.1) 35%,
-    rgba(0,0,0,.15) 55%,
-    rgba(0,0,0,.75) 72%,
-    rgba(0,0,0,.96) 100%
+    rgba(0,0,0,.4) 0%,
+    rgba(0,0,0,.15) 30%,
+    rgba(0,0,0,.55) 60%,
+    rgba(0,0,0,.93) 100%
   );
 }
-/* Eco color tint */
 #ecoTint{
   position:absolute;inset:0;z-index:1;
-  pointer-events:none;
-  mix-blend-mode:screen;
-  opacity:.25;
-  transition:background .5s ease;
+  pointer-events:none;mix-blend-mode:screen;opacity:.3;
+  transition:background .5s;
 }
 
-/* ── TOP HUD ── */
+/* HUD */
 #hud{
-  position:relative;z-index:20;
+  position:relative;z-index:20;flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
-  padding:8px 12px;
-  background:linear-gradient(to bottom,rgba(0,0,0,.9),rgba(0,0,0,.4));
-  flex-shrink:0;
-  border-bottom:1px solid rgba(0,229,255,.08);
+  padding:10px 14px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.92),rgba(0,0,0,.45));
+  border-bottom:1px solid rgba(0,229,255,.1);
 }
-.hud-left{display:flex;flex-direction:column;gap:2px}
-.hud-title{font-family:var(--ff2);font-size:clamp(.6rem,2.3vw,.85rem);color:var(--c);letter-spacing:.15em;font-weight:700}
-.hud-sub{font-family:var(--ff4);font-size:.38rem;color:#1a3040;letter-spacing:.12em}
-.hud-right{display:flex;gap:12px;align-items:center}
-.hud-stat{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
-.hud-stat-label{font-family:var(--ff4);font-size:.36rem;color:#1a3040;letter-spacing:.1em}
-.hud-bar{width:85px;height:7px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+.hud-l{display:flex;flex-direction:column;gap:2px}
+.hud-title{
+  font-family:var(--ff2);
+  font-size:clamp(.75rem,3vw,1rem);
+  color:var(--c);letter-spacing:.14em;font-weight:700;
+}
+.hud-sub{font-family:var(--ff4);font-size:clamp(.42rem,1.8vw,.55rem);color:#1a3040;letter-spacing:.1em}
+.hud-r{display:flex;gap:14px;align-items:center}
+.hud-stat{display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.hud-lbl{font-family:var(--ff4);font-size:clamp(.4rem,1.5vw,.5rem);color:#1a3040;letter-spacing:.1em}
+.hud-bar{width:90px;height:9px;background:rgba(255,255,255,.07);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
 .hud-bar i{display:block;height:100%;border-radius:10px;transition:width .55s ease}
-.bar-hp i{background:linear-gradient(90deg,#8b1010,#e74c3c,#ff8888);box-shadow:0 0 6px rgba(231,76,60,.7)}
-.bar-eco i{background:linear-gradient(90deg,var(--c),#aaf4ff);box-shadow:0 0 6px rgba(0,229,255,.6)}
+.bar-hp i{background:linear-gradient(90deg,#8b1010,#e74c3c,#ff8888);box-shadow:0 0 7px rgba(231,76,60,.7)}
+.bar-eco i{background:linear-gradient(90deg,var(--c),#aaf4ff);box-shadow:0 0 7px rgba(0,229,255,.6)}
 
-/* ── SCENE LABEL ── */
-.scene-label{
-  position:relative;z-index:20;
-  text-align:center;
-  padding:10px 16px 0;
-  flex-shrink:0;
+/* SCENE LABEL */
+#scLabel{
+  position:relative;z-index:20;flex-shrink:0;
+  text-align:center;padding:12px 16px 8px;
 }
-.sl-chapter{
+.sl-ch{
   display:inline-block;
-  font-family:var(--ff4);font-size:.5rem;
-  color:rgba(0,229,255,.7);letter-spacing:.2em;
+  font-family:var(--ff4);font-size:clamp(.5rem,2vw,.65rem);
+  color:rgba(0,229,255,.75);letter-spacing:.2em;
   border-bottom:1px solid rgba(0,229,255,.25);
-  padding-bottom:3px;margin-bottom:5px;
+  padding-bottom:3px;margin-bottom:6px;
 }
 .sl-title{
   font-family:var(--ff2);
-  font-size:clamp(.9rem,3.5vw,1.3rem);
+  font-size:clamp(1.1rem,4.5vw,1.5rem);
   color:#fff;letter-spacing:.08em;font-weight:700;
-  text-shadow:0 0 20px rgba(0,229,255,.4),0 2px 0 rgba(0,0,0,.9);
+  text-shadow:0 0 22px rgba(0,229,255,.4),0 2px 0 rgba(0,0,0,.9);
 }
-.sl-subtitle{
-  font-family:var(--ff4);font-size:.44rem;
-  color:rgba(200,135,42,.8);letter-spacing:.15em;margin-top:3px;
-}
-
-/* ── MAIN AREA (spacer) ── */
-.scene-spacer{flex:1}
-
-/* ── TEXT BOX ── */
-.textbox{
-  position:relative;z-index:20;
-  margin:0 10px 6px;
-  padding:14px 16px 12px;
-  background:linear-gradient(135deg,rgba(0,0,0,.92),rgba(0,5,14,.95));
-  border:1px solid rgba(0,229,255,.18);
-  border-radius:12px;
-  box-shadow:0 0 40px rgba(0,0,0,.8),inset 0 1px 0 rgba(0,229,255,.12);
-  backdrop-filter:blur(10px);
-  flex-shrink:0;
-}
-.tb-speaker-wrap{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.tb-speaker-bar{width:3px;height:18px;border-radius:2px;flex-shrink:0}
-.tb-speaker{font-family:var(--ff2);font-size:clamp(.55rem,2.2vw,.78rem);letter-spacing:.14em;font-weight:700}
-.tb-text{
-  font-size:clamp(.75rem,2.7vw,.92rem);
-  line-height:1.65;color:#c8d8e2;
-  font-weight:500;min-height:3.2em;
-  font-family:var(--ff3);
-}
-.cursor{display:inline-block;width:2px;height:.9em;background:var(--c);margin-left:2px;animation:blink .75s step-end infinite;vertical-align:middle}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-.tb-tap{font-family:var(--ff4);font-size:.42rem;color:rgba(0,229,255,.35);text-align:right;margin-top:6px;letter-spacing:.1em;animation:tapPulse 2s ease-in-out infinite}
-@keyframes tapPulse{0%,100%{opacity:.35}50%{opacity:.7}}
-
-/* ── CHOICES ── */
-#choices{
-  position:relative;z-index:20;
-  display:flex;flex-direction:column;
-  gap:7px;margin:0 10px 10px;
-}
-.choice-btn{
-  position:relative;overflow:hidden;
-  padding:12px 16px;
-  background:linear-gradient(135deg,rgba(0,0,0,.85),rgba(0,5,14,.9));
-  border:1px solid rgba(0,229,255,.22);
-  border-radius:10px;
-  cursor:pointer;
-  transition:all .2s;
-  text-align:left;
-  backdrop-filter:blur(8px);
-  display:flex;align-items:flex-start;gap:12px;
-}
-.choice-btn::before{
-  content:'';position:absolute;
-  top:0;left:0;bottom:0;width:3px;
-  background:var(--c);border-radius:10px 0 0 10px;
-  opacity:.7;
-  transition:opacity .2s,width .2s;
-}
-.choice-btn:hover,.choice-btn:active{
-  background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(0,100,140,.1));
-  border-color:var(--c);
-  box-shadow:0 0 20px rgba(0,229,255,.18),inset 0 0 20px rgba(0,229,255,.04);
-  transform:translateX(3px);
-}
-.choice-btn:hover::before{opacity:1;width:4px}
-.choice-num{
-  font-family:var(--ff4);font-size:.65rem;
-  color:var(--c);flex-shrink:0;
-  margin-top:2px;line-height:1;
-}
-.choice-content{flex:1}
-.choice-title{
-  font-family:var(--ff2);
-  font-size:clamp(.72rem,2.8vw,.9rem);
-  font-weight:700;color:#fff;
-  letter-spacing:.06em;margin-bottom:3px;
-}
-.choice-desc{
-  font-family:var(--ff3);
-  font-size:clamp(.58rem,2vw,.72rem);
-  color:#5a7a8a;line-height:1.35;font-weight:500;
-}
-.choice-tag{
-  font-family:var(--ff4);font-size:.42rem;
-  margin-top:5px;letter-spacing:.1em;
-  display:inline-block;padding:2px 6px;
-  border-radius:3px;border:1px solid;
+.sl-sub{
+  font-family:var(--ff4);font-size:clamp(.5rem,2vw,.65rem);
+  color:rgba(200,135,42,.85);letter-spacing:.14em;margin-top:4px;
 }
 
-/* ── CONTINUE BTN ── */
-#btnContinue{
-  position:relative;z-index:20;
-  margin:0 10px 10px;
-  padding:11px;
+/* SPACER */
+#spacer{flex:1;min-height:0}
+
+/* TEXTBOX */
+#tbox{
+  position:relative;z-index:20;flex-shrink:0;
+  margin:0 10px 8px;
+  padding:16px 16px 14px;
+  background:linear-gradient(135deg,rgba(0,0,0,.94),rgba(0,5,16,.96));
   border:1px solid rgba(0,229,255,.2);
-  border-radius:10px;
-  background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(0,80,100,.04));
-  color:rgba(0,229,255,.6);
-  font-family:var(--ff4);font-size:.55rem;
+  border-radius:14px;
+  box-shadow:0 0 40px rgba(0,0,0,.8),inset 0 1px 0 rgba(0,229,255,.12);
+  backdrop-filter:blur(12px);
+}
+.tbox-spk{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.spk-bar{width:4px;height:22px;border-radius:3px;flex-shrink:0}
+.spk-name{
+  font-family:var(--ff2);
+  font-size:clamp(.75rem,3vw,.95rem);
+  letter-spacing:.14em;font-weight:700;
+}
+#tbText{
+  font-size:clamp(.92rem,3.5vw,1.08rem);
+  line-height:1.7;color:#ccd8e0;
+  font-weight:500;font-family:var(--ff3);
+  max-height:35vh;overflow-y:auto;
+}
+.cursor{
+  display:inline-block;width:2px;height:.9em;
+  background:var(--c);margin-left:2px;
+  animation:blink .75s step-end infinite;vertical-align:middle;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+#tapHint{
+  font-family:var(--ff4);font-size:clamp(.45rem,1.8vw,.58rem);
+  color:rgba(0,229,255,.4);text-align:right;
+  margin-top:8px;letter-spacing:.1em;
+  animation:tapP 2s ease-in-out infinite;
+  display:none;
+}
+@keyframes tapP{0%,100%{opacity:.4}50%{opacity:.8}}
+
+/* CHOICES */
+#choices{
+  position:relative;z-index:20;flex-shrink:0;
+  display:flex;flex-direction:column;
+  gap:8px;margin:0 10px 10px;
+}
+.ch-btn{
+  position:relative;overflow:hidden;
+  padding:14px 16px;
+  background:linear-gradient(135deg,rgba(0,0,0,.88),rgba(0,5,16,.92));
+  border:1px solid rgba(0,229,255,.25);
+  border-radius:12px;cursor:pointer;
+  transition:all .2s;text-align:left;
+  backdrop-filter:blur(8px);
+  display:flex;align-items:flex-start;gap:14px;
+}
+.ch-btn::before{
+  content:'';position:absolute;
+  top:0;left:0;bottom:0;width:4px;
+  background:var(--c);border-radius:12px 0 0 12px;
+  opacity:.7;transition:all .2s;
+}
+.ch-btn:active{
+  background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,100,140,.1));
+  border-color:var(--c);
+  box-shadow:0 0 24px rgba(0,229,255,.2);
+  transform:translateX(4px);
+}
+.ch-btn:active::before{opacity:1;width:5px}
+.ch-num{
+  font-family:var(--ff4);font-size:.9rem;
+  color:var(--c);flex-shrink:0;margin-top:1px;line-height:1;
+}
+.ch-body{flex:1}
+.ch-title{
+  font-family:var(--ff2);
+  font-size:clamp(.88rem,3.5vw,1.05rem);
+  font-weight:700;color:#fff;
+  letter-spacing:.05em;margin-bottom:4px;
+}
+.ch-desc{
+  font-family:var(--ff3);
+  font-size:clamp(.75rem,2.8vw,.88rem);
+  color:#4a6a7a;line-height:1.4;font-weight:500;
+}
+.ch-tag{
+  font-family:var(--ff4);font-size:clamp(.42rem,1.6vw,.52rem);
+  margin-top:6px;letter-spacing:.1em;
+  display:inline-block;padding:3px 8px;
+  border-radius:4px;border:1px solid;
+}
+
+/* CONTINUE BTN */
+#btnCont{
+  position:relative;z-index:20;flex-shrink:0;
+  margin:0 10px 10px;
+  padding:15px;
+  border:2px solid rgba(0,229,255,.25);
+  border-radius:12px;
+  background:linear-gradient(135deg,rgba(0,229,255,.07),rgba(0,80,100,.05));
+  color:rgba(0,229,255,.7);
+  font-family:var(--ff2);font-size:clamp(.88rem,3.5vw,1rem);
   letter-spacing:.2em;cursor:pointer;
   text-align:center;transition:all .2s;
   display:none;
 }
-#btnContinue:hover{color:var(--c);border-color:var(--c);background:linear-gradient(135deg,rgba(0,229,255,.1),rgba(0,80,100,.08))}
+#btnCont:active{
+  color:var(--c);border-color:var(--c);
+  background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(0,80,100,.08));
+  box-shadow:0 0 20px rgba(0,229,255,.2);
+}
 
-/* ══ CSS VILLAINS fallback for missing images ══ */
-/* ECO TINT COLORS */
-.tint-earth{background:radial-gradient(ellipse at 20% 80%,rgba(200,135,42,.5) 0%,transparent 55%)}
-.tint-smoke{background:radial-gradient(ellipse at 25% 80%,rgba(155,48,204,.55) 0%,transparent 55%)}
-.tint-tech{background:radial-gradient(ellipse at 75% 80%,rgba(0,188,212,.5) 0%,transparent 55%)}
-.tint-wind{background:radial-gradient(ellipse at 80% 60%,rgba(100,154,176,.55) 0%,transparent 50%)}
-.tint-speed{background:radial-gradient(ellipse at 80% 60%,rgba(255,106,0,.6) 0%,transparent 50%)}
-.tint-psychic{background:radial-gradient(ellipse at 80% 50%,rgba(155,16,64,.6) 0%,transparent 50%)}
-.tint-metal{background:radial-gradient(ellipse at 80% 50%,rgba(80,100,120,.5) 0%,transparent 50%)}
-.tint-lurnox{background:radial-gradient(ellipse at 80% 40%,rgba(0,255,180,.55) 0%,transparent 50%)}
-.tint-red{background:radial-gradient(ellipse at 50% 30%,rgba(180,20,20,.55) 0%,transparent 55%)}
-
-/* ══ SHAKE ANIMATION ══ */
-@keyframes shake{0%,100%{transform:translate(0,0)}15%{transform:translate(10px,-7px)}30%{transform:translate(-8px,5px)}45%{transform:translate(6px,-4px)}60%{transform:translate(-4px,3px)}75%{transform:translate(3px,-2px)}}
+/* SHAKE */
+@keyframes shake{
+  0%,100%{transform:translate(0,0)}
+  15%{transform:translate(10px,-7px)}
+  30%{transform:translate(-8px,5px)}
+  45%{transform:translate(6px,-4px)}
+  60%{transform:translate(-4px,3px)}
+  75%{transform:translate(3px,-2px)}
+}
 .shake{animation:shake .45s ease}
 
-/* ══ SCENE TRANSITION ══ */
-@keyframes sceneFadeIn{from{opacity:0}to{opacity:1}}
-.fade-in{animation:sceneFadeIn .5s ease forwards}
+/* ECO TINTS */
+.tint-earth{background:radial-gradient(ellipse at 15% 85%,rgba(200,135,42,.5),transparent 55%)}
+.tint-smoke{background:radial-gradient(ellipse at 20% 85%,rgba(155,48,204,.55),transparent 55%)}
+.tint-tech{background:radial-gradient(ellipse at 80% 85%,rgba(0,188,212,.5),transparent 55%)}
+.tint-wind{background:radial-gradient(ellipse at 82% 60%,rgba(106,154,176,.55),transparent 50%)}
+.tint-speed{background:radial-gradient(ellipse at 82% 60%,rgba(255,106,0,.6),transparent 50%)}
+.tint-psychic{background:radial-gradient(ellipse at 82% 50%,rgba(204,16,80,.6),transparent 50%)}
+.tint-metal{background:radial-gradient(ellipse at 82% 50%,rgba(80,100,120,.5),transparent 50%)}
+.tint-lurnox{background:radial-gradient(ellipse at 82% 40%,rgba(0,255,180,.55),transparent 50%)}
 
-/* ══ END SCREEN ══ */
+/* ══════════════
+   END SCREEN
+══════════════ */
 #sEnd{
-  background:radial-gradient(ellipse at 50% 20%,rgba(0,229,255,.09) 0%,transparent 55%),
-    linear-gradient(180deg,#020508 0%,#040c18 100%);
-  align-items:center;justify-content:center;
+  background:
+    radial-gradient(ellipse at 50% 20%,rgba(0,229,255,.09),transparent 55%),
+    linear-gradient(180deg,#020508,#040c18);
+  align-items:center;justify-content:center;padding:20px;
 }
 .end-card{
-  width:min(460px,88vw);padding:2rem 1.8rem;border-radius:14px;
-  background:rgba(0,5,12,.92);border:1px solid rgba(0,229,255,.16);
-  box-shadow:0 0 60px rgba(0,229,255,.09);backdrop-filter:blur(16px);
-  display:flex;flex-direction:column;align-items:center;gap:1.2rem;text-align:center;
-  position:relative;
+  width:100%;max-width:500px;
+  padding:2rem 1.8rem;border-radius:18px;
+  background:rgba(0,5,12,.94);
+  border:1px solid rgba(0,229,255,.18);
+  box-shadow:0 0 70px rgba(0,229,255,.1);
+  backdrop-filter:blur(16px);
+  display:flex;flex-direction:column;align-items:center;gap:1.3rem;
+  text-align:center;position:relative;
 }
-.end-rule-top{position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,229,255,.55),transparent)}
-.end-rule-bot{position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(200,135,42,.45),transparent)}
-.end-logo{font-family:var(--ff1);font-size:clamp(2.2rem,9vw,3.5rem);font-weight:900;color:#fff;text-shadow:0 0 22px var(--c),0 0 55px rgba(0,229,255,.3)}
-.end-title{font-family:var(--ff2);font-size:clamp(1.5rem,6vw,2.2rem);font-weight:700}
-.end-text{font-size:clamp(.72rem,2.5vw,.88rem);color:#4a6a7a;line-height:1.65;max-width:340px;font-weight:500}
-.end-quote{font-family:var(--ff4);font-size:.6rem;color:rgba(0,229,255,.5);letter-spacing:.12em;margin-top:.3rem}
-
-/* ══ RESPONSIVE ══ */
-@media(max-width:480px){
-  .hud-bar{width:65px}
-  .textbox{margin:0 7px 5px;padding:11px 13px 10px}
-  #choices{gap:5px;margin:0 7px 7px}
-  .choice-btn{padding:10px 13px}
-}
+.end-rule{width:100%;height:2px;border-radius:2px}
+.end-rule.t{background:linear-gradient(90deg,transparent,var(--c),transparent)}
+.end-rule.b{background:linear-gradient(90deg,transparent,var(--earth),transparent)}
+.end-logo{font-family:var(--ff1);font-size:clamp(2.2rem,10vw,3.5rem);font-weight:900;color:#fff;text-shadow:0 0 25px var(--c),0 0 55px rgba(0,229,255,.3)}
+.end-title{font-family:var(--ff2);font-size:clamp(1.6rem,7vw,2.3rem);font-weight:700;letter-spacing:.06em}
+.end-text{font-size:clamp(.88rem,3.2vw,1rem);color:#4a6878;line-height:1.7;max-width:360px;font-weight:500}
+.end-quote{font-family:var(--ff4);font-size:clamp(.58rem,2.2vw,.7rem);color:rgba(0,229,255,.5);letter-spacing:.12em}
 </style>
 </head>
 <body>
@@ -342,11 +389,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 <div class="g-lightning"></div>
 <div id="app">
 
-<!-- ══ MENU ══ -->
+<!-- MENU -->
 <div id="sMenu" class="screen active">
   <div class="menu-card">
-    <div class="mc-line-top"></div>
-    <div class="logo-main">
+    <div class="mc-top"></div>
+    <div>
       <div class="logo-dual">DUAL</div>
       <div class="logo-echo">— ECHO FRAGMENTS —</div>
       <div class="logo-city">LUSTONIA · CIUDAD DEL NORTE</div>
@@ -360,352 +407,418 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
     <p class="menu-lore">
       La señal de <strong>Trónox</strong> fue enviada desde Valmora.<br>
       En Lustonia, <em>Lurnox</em> y sus criaturas han llegado.<br>
-      Jugás como <strong>Lin</strong>. Tú elegís hasta dónde llegar.
+      Jugás como <strong>Lin</strong>. Vos elegís hasta dónde llegar.
     </p>
     <button class="btn-play" id="btnPlay"><span class="bsh"></span><span class="btxt">▶ &nbsp;COMENZAR</span></button>
-    <div class="mc-line-bot"></div>
+    <div class="mc-bot"></div>
   </div>
 </div>
 
-<!-- ══ GAME ══ -->
+<!-- GAME -->
 <div id="sGame" class="screen">
   <div id="sceneBg"></div>
   <div id="ecoTint"></div>
-
   <div id="hud">
-    <div class="hud-left">
+    <div class="hud-l">
       <div class="hud-title" id="hudTitle">DUAL</div>
       <div class="hud-sub" id="hudSub">LUSTONIA · ECHO FRAGMENTS</div>
     </div>
-    <div class="hud-right">
+    <div class="hud-r">
       <div class="hud-stat">
-        <div class="hud-stat-label">VIDA</div>
+        <div class="hud-lbl">VIDA</div>
         <div class="hud-bar bar-hp"><i id="barHp" style="width:100%"></i></div>
       </div>
       <div class="hud-stat">
-        <div class="hud-stat-label">ECO</div>
+        <div class="hud-lbl">ECO</div>
         <div class="hud-bar bar-eco"><i id="barEco" style="width:0%"></i></div>
       </div>
     </div>
   </div>
-
-  <div class="scene-label" id="sceneLabel" style="display:none">
-    <div class="sl-chapter" id="slChapter"></div>
-    <div class="sl-title" id="slTitle"></div>
-    <div class="sl-subtitle" id="slSub"></div>
+  <div id="scLabel">
+    <div class="sl-ch" id="slCh"></div>
+    <div class="sl-title" id="slTt"></div>
+    <div class="sl-sub" id="slSb"></div>
   </div>
-
-  <div class="scene-spacer"></div>
-
-  <div class="textbox">
-    <div class="tb-speaker-wrap">
-      <div class="tb-speaker-bar" id="speakerBar"></div>
-      <div class="tb-speaker" id="speaker">LIN</div>
+  <div id="spacer"></div>
+  <div id="tbox">
+    <div class="tbox-spk">
+      <div class="spk-bar" id="spkBar"></div>
+      <div class="spk-name" id="spkName">NARRADOR</div>
     </div>
-    <div class="tb-text" id="tbText"></div>
-    <div class="tb-tap" id="tbTap" style="display:none">[ TOCÁ PARA CONTINUAR ]</div>
+    <div id="tbText"></div>
+    <div id="tapHint">[ TOCÁ PARA CONTINUAR ]</div>
   </div>
-
   <div id="choices"></div>
-  <button id="btnContinue">▶ &nbsp;CONTINUAR</button>
+  <button id="btnCont">▶ &nbsp;CONTINUAR</button>
 </div>
 
-<!-- ══ END ══ -->
+<!-- END -->
 <div id="sEnd" class="screen">
   <div class="end-card">
-    <div class="end-rule-top"></div>
+    <div class="end-rule t"></div>
     <div class="end-logo">DUAL</div>
     <div class="end-title" id="endTitle"></div>
     <p class="end-text" id="endText"></p>
     <div class="end-quote" id="endQuote"></div>
-    <button class="btn-play" id="btnRestart" style="margin-top:.8rem">
+    <button class="btn-play" id="btnRestart" style="margin-top:.5rem">
       <span class="bsh"></span><span class="btxt">↺ &nbsp;VOLVER A JUGAR</span>
     </button>
-    <div class="end-rule-bot"></div>
+    <div class="end-rule b"></div>
   </div>
 </div>
-
 </div>
 
 <script>
-/* ═══════════════════════════════════════
-   DUAL: Echo Fragments — Engine v3
-   Historia completa con imágenes reales
-═══════════════════════════════════════ */
-
 // ── STATE ──
-let hp=100, eco=0, currentNode='', typing=false;
+let hp=100,eco=0,cur='';
 
-// ── SPEAKER COLORS ──
-const COLORS={
-  LIN:'#c8872a', TRINI:'#9b30cc', ZAK:'#00bcd4',
-  AERONYX:'#6a9ab0', BORINEX:'#ff6a00', MIREX:'#cc1050',
-  FERRONIX:'#8090a0', LURNOX:'#00ffcc',
-  NARRADOR:'#00e5ff', SISTEMA:'#ffffff'
-};
+const COL={LIN:'#c8872a',TRINI:'#9b30cc',ZAK:'#00bcd4',AERONYX:'#6a9ab0',BORINEX:'#ff6a00',MIREX:'#cc1050',FERRONIX:'#8090a0',LURNOX:'#00ffcc',NARRADOR:'#00e5ff'};
+const TINTS={earth:'tint-earth',smoke:'tint-smoke',tech:'tint-tech',wind:'tint-wind',speed:'tint-speed',psychic:'tint-psychic',metal:'tint-metal',lurnox:'tint-lurnox',none:''};
 
-// ── TINT CLASSES ──
-const TINTS={
-  earth:'tint-earth', smoke:'tint-smoke', tech:'tint-tech',
-  wind:'tint-wind', speed:'tint-speed', psychic:'tint-psychic',
-  metal:'tint-metal', lurnox:'tint-lurnox', red:'tint-red', none:''
-};
-
-// ══════════════════════════════════════
-//   STORY NODES
-// ══════════════════════════════════════
+// ══════════════════════════════════════════
+//  STORY
+// ══════════════════════════════════════════
 const S={
 
-/* ═══ PRÓLOGO ═══ */
-'intro':{
-  img:'', tint:'none',
-  chapter:'PRÓLOGO', title:'EL ECO NUNCA SE FUE', sub:'Lustonia · Madrugada',
-  speaker:'NARRADOR', text:'En algún lugar de Valmora, cinco chicos descubrieron que no estaban solos. Que algo había llegado con el meteorito. Algo que cambió todo.\n\nEn Lustonia — otra ciudad. Otra noche. Otra señal.',
-  next:'s01'
-},
+// ─── PRÓLOGO ───
+intro:{img:'',tint:'none',
+  ch:'PRÓLOGO',tt:'EL ECO NUNCA SE FUE',sb:'Lustonia · Madrugada',
+  spk:'NARRADOR',
+  txt:'En Valmora, cinco chicos descubrieron que no estaban solos. Que algo cayó con el meteorito. Algo que cambió todo.\n\nEn Lustonia — otra ciudad. Otra noche. Otra señal en el cielo.',
+  next:'s01'},
 
-/* ═══ ACTO 1: EL DESPERTAR ═══ */
-'s01':{
-  img:'sc01_lin_cama.png', tint:'earth',
-  chapter:'ACTO 1', title:'EL DESPERTAR', sub:'Habitación de Lin · 03:14 AM',
-  speaker:'NARRADOR', text:'Lin se sienta en la cama. Sus manos brillan. El piso tiembla. Afuera, el cielo explota en naranjas y fuego.\n\nEn la pared: un símbolo que él no recuerda haber dibujado. EL ECO. NADA ES ETERNO.',
-  next:'s02'
-},
-'s02':{
-  img:'sc01_lin_cama.png', tint:'earth',
-  speaker:'LIN', text:'"¿Qué... qué me pasa? Las piedras del piso. Las estoy moviendo. Sin tocarlas."\n\nUna roca flota a diez centímetros de su mano. La detiene. La suelta. Vuelve a levantarla.',
-  next:'s03'
-},
-'s03':{
-  img:'sc02_lin_puerta.png', tint:'earth',
-  chapter:'ACTO 1', title:'LA DECISIÓN', sub:'',
-  speaker:'LIN', text:'Se para frente a la puerta abierta. La ciudad destruida lo espera. Fuego. Militares. Y en el horizonte — un rayo de luz que corta el cielo desde el suelo hasta las nubes.',
-  choices:[
-    {t:'Ir hacia el rayo', d:'Algo ahí llama. Tenés que averiguar qué es.',tag:'+ ECO · RIESGO ALTO', tc:'var(--c)', next:'s04a', hp:0, eco:8},
-    {t:'Buscar sobrevivientes primero', d:'Hay gente atrapada. Podés ayudar antes de ir.', tag:'+ VIDA · ECO MODERADO', tc:'#4a8a4a', next:'s04b', hp:8, eco:4},
-  ]
-},
-'s04a':{
-  img:'sc03_lin_rayo.png', tint:'earth',
-  chapter:'ACTO 1', title:'EL RAYO', sub:'',
-  speaker:'NARRADOR', text:'Lin corre hacia la luz. El asfalto se parte bajo sus pies — o quizás es él quien lo parte. Su Eco responde a cada paso.\n\nEl rayo viene del centro de Lustonia. A kilómetros. Pero se siente cerca.',
-  next:'s05'
-},
-'s04b':{
-  img:'sc03_lin_rayo.png', tint:'earth',
-  speaker:'NARRADOR', text:'Saca a tres personas de los escombros. Sus manos mueven piedras como si siempre hubiera sabido hacerlo. El Eco crece. Se estabiliza.\n\nCuando termina, el rayo sigue ahí. Esperándolo.',
-  next:'s05'
-},
+// ─── ACTO 1: EL DESPERTAR ───
+s01:{img:'sc01_lin_cama.png',tint:'earth',
+  ch:'ACTO 1',tt:'EL DESPERTAR',sb:'Habitación de Lin · 03:14 AM',
+  spk:'NARRADOR',
+  txt:'Lin se sienta en la cama de golpe. El piso tiembla. Sus manos brillan con una luz que no entiende.\n\nAfuera, el cielo está roto. Edificios en llamas. Y en la pared de su cuarto — un símbolo que él no recuerda haber dibujado.\n\nEL ECO. NADA ES ETERNO.',
+  next:'s02'},
 
-/* ═══ ACTO 2: LAS CALLES ═══ */
-'s05':{
-  img:'sc04_lin_calles.png', tint:'wind',
-  chapter:'ACTO 2', title:'LAS CALLES', sub:'Lustonia · Zona Roja',
-  speaker:'NARRADOR', text:'Los militares no están bien. Sus ojos están nublados — un velo negro que no es humano. Patrullan las calles vacías con una precisión que da miedo.\n\n"SEGURIDAD. ORDEN. PAZ. CON EL ECO TODO ES POSIBLE."',
-  next:'s06'
-},
-'s06':{
-  img:'sc04_lin_calles.png', tint:'wind',
-  speaker:'LIN', text:'"Corruptos. Igual que en Valmora con Trónox."\n\nUno lo ve. Levanta el arma. Lin levanta la mano — y una roca del pavimento vuela.',
-  choices:[
-    {t:'Pelear: usar el Eco contra los militares', d:'Rocas, escombros, todo lo que haya cerca.', tag:'HP -12 · ECO +10', tc:'#cc4020', next:'s07a', hp:-12, eco:10},
-    {t:'Esconderse y esperar', d:'Quedarse en las sombras. Estudiar sus movimientos.', tag:'HP -3 · ECO +5', tc:'var(--c)', next:'s07b', hp:-3, eco:5},
-  ]
-},
-'s07a':{
-  img:'sc05_lin_pelea.png', tint:'earth',
-  shake:true,
-  chapter:'', title:'PRIMER COMBATE', sub:'',
-  speaker:'LIN', text:'La roca impacta en el casco del militar. Cae. Dos más se acercan. Lin levanta ambas manos — el pavimento se abre.\n\nSabe que puede con ellos. Pero sabe que hay algo más grande adentro.',
-  next:'s08'
-},
-'s07b':{
-  img:'sc04_lin_calles.png', tint:'none',
-  speaker:'NARRADOR', text:'Se aplasta contra la pared. Los militares pasan a dos metros. Uno gira la cabeza — sus ojos negros escanean la oscuridad. Lin contiene la respiración.\n\nPasan. Por ahora.',
-  next:'s08'
-},
+s02:{img:'sc01_lin_cama.png',tint:'earth',
+  spk:'LIN',
+  txt:'"Las piedras del piso... se están moviendo. Sin tocarlas. Yo las estoy moviendo."\n\nUna roca flota a diez centímetros de su mano. La detiene. La suelta. Vuelve a levantarla.\n\nAlgo adentro suyo despertó.',
+  next:'s03'},
 
-/* ═══ ACTO 3: TRINI ═══ */
-'s08':{
-  img:'sc06_lin_trini.png', tint:'smoke',
-  chapter:'ACTO 3', title:'ENCONTRASTE A TRINI', sub:'',
-  speaker:'NARRADOR', text:'Aparece de la nada. Literalmente. Se disuelve de una sombra y toma forma a su lado. Una chica. Su cuerpo todavía chispa con energía turquesa que se apaga.\n\n"Tranquilo. No soy de ellos."',
-  next:'s09'
-},
-'s09':{
-  img:'sc06_lin_trini.png', tint:'smoke',
-  speaker:'TRINI', text:'"Me llamo Trini. También tengo uno adentro — un custodio. Me da el poder de viajar por las sombras. Rápido, silencioso.\n\nSé lo que sos. Sé lo que tenés. Y necesito que confíes en mí ahora mismo."',
+s03:{img:'sc02_lin_puerta.png',tint:'earth',
+  ch:'',tt:'LA PRIMERA DECISIÓN',sb:'',
+  spk:'LIN',
+  txt:'Se para frente a la puerta abierta. La ciudad de Lustonia arde afuera. Militares con ojos negros patrullan las calles.\n\nY en el horizonte — un rayo de luz que corta el cielo desde el suelo hasta las nubes.',
   choices:[
-    {t:'Confiar en Trini', d:'Su Eco se siente limpio. Diferente al tuyo, pero real.', tag:'ALIADA CONFIRMADA', tc:'var(--smoke)', next:'s10a', hp:0, eco:8},
-    {t:'Desconfiar. Ir solo por ahora.', d:'No la conocés. Puede ser una trampa de Lurnox.', tag:'RIESGO FUTURO', tc:'#cc4020', next:'s10b', hp:0, eco:0},
-  ]
-},
-'s10a':{
-  img:'sc06_lin_trini.png', tint:'smoke',
-  speaker:'TRINI', text:'Trini asiente. Toma su mano.\n\n"Bien. Cerrá los ojos."\n\nUn segundo de oscuridad total. Aparecen en el techo de un edificio, tres cuadras adelante. La ciudad destruida de Lustonia a sus pies.',
-  next:'s11'
-},
-'s10b':{
-  img:'sc04_lin_calles.png', tint:'none',
-  speaker:'LIN', text:'"Gracias, pero voy solo."\n\nTrini no discute. Desaparece en una sombra.\n\nDiez minutos después, cuando Borinex casi lo aplasta, aparece detrás de la entidad y lo golpea desde atrás. Sin decir nada.',
-  next:'s11'
-},
-'s11':{
-  img:'sc07_pelea_grupal.png', tint:'earth',
-  speaker:'TRINI', text:'"Desde acá se ve todo. El rayo viene del centro — cinco kilómetros. Y hay más custodios activos en la ciudad."\n\nLin mira el horizonte. El rayo late como un corazón.\n\n"¿Sabés algo de unos chicos en Valmora?"\n\n"Sí. Están luchando contra Trónox. El que mandó la señal que trajo todo esto."',
-  next:'s12'
-},
+    {t:'Ir hacia el rayo ahora',d:'Algo ahí llama. Tenés que ir.',tag:'ECO +8 · RIESGO ALTO',tc:'var(--c)',next:'s04a',hp:0,eco:8},
+    {t:'Buscar sobrevivientes primero',d:'Hay gente atrapada en los escombros.',tag:'VIDA +8 · ECO +4',tc:'#4a8a4a',next:'s04b',hp:8,eco:4},
+    {t:'Esconderse y entender el poder',d:'No vas a servir de nada si no sabés usarlo.',tag:'ECO +12 · TIEMPO PERDIDO',tc:'var(--smoke)',next:'s04c',hp:0,eco:12},
+  ]},
 
-/* ═══ ACTO 4: ZAK ═══ */
-'s12':{
-  img:'sc07_pelea_grupal.png', tint:'tech',
-  chapter:'ACTO 4', title:'EL TÉCNICO', sub:'Radio abandonada · Subsuelo',
-  speaker:'NARRADOR', text:'En el sótano de una radio destruida, encuentran a un pibe rodeado de celulares rotos. Todos prendidos. Sin señal. Transmitiendo igual.\n\nEn la pared, en código binario: SISTEMA ACTIVO. ECO DETECTADO. TRES PUNTOS.',
-  next:'s13'
-},
-'s13':{
-  img:'sc07_pelea_grupal.png', tint:'tech',
-  speaker:'ZAK', text:'"Los estaba esperando. Mapeé todos los Ecos de Lustonia desde acá. Somos tres custodios activos.\n\nY hay cuatro entidades. Una de ellas es el jefe. Las otras tres son guardias. Los cuatro están convergiendo en el centro."\n\nLevanta el celular. Una interferencia estática dibuja un mapa de la ciudad.',
-  choices:[
-    {t:'Sumar a Zak al equipo', d:'Tiene información clave. Su poder puede cambiar peleas.', tag:'EQUIPO COMPLETO · ECO +10', tc:'var(--tech)', next:'s14a', hp:0, eco:10},
-    {t:'No hay tiempo. Ir directo al centro.', d:'Cada minuto cuenta. El rayo se intensifica.', tag:'HP -15 EN PRÓXIMA PELEA', tc:'#cc4020', next:'s14b', hp:0, eco:0},
-  ]
-},
-'s14a':{
-  img:'sc07_pelea_grupal.png', tint:'tech',
-  speaker:'ZAK', text:'"Bien. Dos cosas que necesitan saber: Borinex es el más rápido — su punto ciego es el flanco izquierdo. Mirex opera con ilusiones — el contacto físico las rompe.\n\nY Ferronix..." pausa. "Ese es el problema. Pero llegamos."',
-  next:'s15'
-},
-'s14b':{
-  img:'sc04_lin_calles.png', tint:'speed',
-  shake:true,
-  speaker:'NARRADOR', text:'Salen sin Zak. A tres cuadras, Borinex los intercepta. Sin información, la pelea es brutal. Lin pierde terreno. Trini sangra.\n\nZak aparece igual, tarde pero aparece. "Los necesitaba. Ustedes me necesitaban."',
-  next:'s15', hp:-15
-},
+s04a:{img:'sc03_lin_rayo.png',tint:'earth',
+  spk:'NARRADOR',
+  txt:'Lin corre hacia la luz. El asfalto se parte bajo sus pies — o quizás es él quien lo parte. Su Eco responde a cada paso.\n\nEl rayo viene del centro de Lustonia. Cinco kilómetros. Pero se siente cerca.',
+  next:'s05'},
 
-/* ═══ ACTO 5: LOS GUARDIANES ═══ */
-'s15':{
-  img:'sc08_borinex.png', tint:'speed',
-  chapter:'ACTO 5', title:'BORINEX ATACA', sub:'Velocidad extrema · Eco Naranja',
-  speaker:'NARRADOR', text:'No lo ven llegar. Lo sienten. Un impacto de calor naranja. Borinex se mueve tan rápido que el tiempo parece romperse a su alrededor.',
-  next:'s16'
-},
-'s16':{
-  img:'sc08_borinex.png', tint:'speed',
-  shake:true,
-  speaker:'BORINEX', text:'"¡DEMASIADO LENTOS! ¡Lurnox dijo que serían más!"\n\nCada vez que aparece, golpea. Cada vez que desaparece, deja una ráfaga de calor. Los tres tienen que trabajar juntos.',
-  choices:[
-    {t:'Lin lanza rocas en todas direcciones', d:'Cubrir el espacio. Si aparece en cualquier lado, lo va a golpear algo.', tag:'ECO +10 · HP -10', tc:'var(--earth)', next:'s17a', hp:-10, eco:10},
-    {t:'Trini viaja a donde va a aparecer', d:'Si Trini predice el movimiento en las sombras, puede interceptarlo.', tag:'ECO +8 · HP -5', tc:'var(--smoke)', next:'s17b', hp:-5, eco:8},
-  ]
-},
-'s17a':{
-  img:'sc08_borinex.png', tint:'speed',
-  shake:true,
-  speaker:'LIN', text:'Rocas en todas partes. El espacio se llena de piedra girando. Borinex esquiva las primeras cuatro. La quinta lo atrapa en el hombro.\n\nPierde velocidad. Un segundo. Suficiente para que Zak interfiera su sistema nervioso con un pulso electromagnético.',
-  next:'s18'
-},
-'s17b':{
-  img:'sc08_borinex.png', tint:'smoke',
-  speaker:'TRINI', text:'Trini cierra los ojos. Lee las sombras que Borinex deja. Ve el patrón. Se disuelve y viaja a donde él va a aparecer.\n\nCuando Borinex materializa, Trini ya está ahí. El choque lo desestabiliza. Cae.',
-  next:'s18'
-},
-'s18':{
-  img:'sc07_pelea_grupal.png', tint:'earth',
-  speaker:'NARRADOR', text:'Borinex cae. No muerto — las entidades son difíciles de eliminar. Pero fuera de combate. Lin respira.\n\nEl rayo del centro late más fuerte. Quedan tres kilómetros. Y tres entidades más.',
-  next:'s19'
-},
-'s19':{
-  img:'sc09_mirex.png', tint:'psychic',
-  chapter:'', title:'MIREX: DOMINIO PSÍQUICO', sub:'La mente es el campo de batalla',
-  speaker:'MIREX', text:'La voz no viene de ningún lado. O de todos.\n\n"¿Saben quiénes son realmente? ¿En quién confían? ¿Son seguros el uno del otro...?"\n\nLas imágenes empiezan. Theo caído. Norrin gritando. Valmora en llamas.',
-  choices:[
-    {t:'Resistir. Concentrarse en el Eco propio.', d:'El Eco es real. Las ilusiones no. Aferrarse a lo que es tuyo.', tag:'ECO +12 · RESISTENCIA ALTA', tc:'var(--c)', next:'s20a', hp:-8, eco:12},
-    {t:'Dejarse llevar por las imágenes...', d:'Son tan reales. Quizás sean verdad. Quizás Valmora ya cayó.', tag:'HP -20 · ECO -10 · TRAMPA', tc:'#cc2020', next:'s20b', hp:-20, eco:-10},
-  ]
-},
-'s20a':{
-  img:'sc09_mirex.png', tint:'psychic',
-  speaker:'ZAK', text:'"¡Son mentiras! ¡Mirex opera con miedo y recuerdos — no tiene acceso real a Valmora!"\n\nZak emite un pulso desde el celular. La interferencia tecnológica choca con el psíquico. Las ilusiones se fragmentan.\n\n"¡Psíquico contra digital. Gana lo digital!"',
-  next:'s21'
-},
-'s20b':{
-  img:'sc09_mirex.png', tint:'psychic',
-  shake:true,
-  speaker:'NARRADOR', text:'Las imágenes de Valmora son devastadoras. Lin se paraliza. Mirex aprovecha. El golpe psíquico los deja desorientados.\n\nTrini logra romper el contacto visual. "¡No es real! ¡Mirá las paredes, no a él!" Lentamente, el eco de Lin se restablece.',
-  next:'s21'
-},
-'s21':{
-  img:'sc07_pelea_grupal.png', tint:'metal',
-  chapter:'', title:'FERRONIX: TELEKINESIS METÁLICA', sub:'',
-  speaker:'NARRADOR', text:'El último guardián antes de Lurnox.\n\nTodo el metal de tres cuadras se levanta simultáneamente. Autos. Rejas. Postes. Cables. Una armadura de ciudad que obedece a Ferronix.',
-  choices:[
-    {t:'Lin: tierra contra metal', d:'La piedra y el metal chocan. Pero la tierra siempre fue primero.', tag:'ECO +15 · HP -12', tc:'var(--earth)', next:'s22a', hp:-12, eco:15},
-    {t:'Zak: pulso electromagnético', d:'Interferir el campo magnético. Sin magnetismo, el metal cae.', tag:'ECO +10 · HP -5', tc:'var(--tech)', next:'s22b', hp:-5, eco:10},
-  ]
-},
-'s22a':{
-  img:'sc07_pelea_grupal.png', tint:'earth',
-  shake:true,
-  speaker:'LIN', text:'Roca contra acero. El pavimento explota hacia arriba en bloques enormes. Ferronix los detiene con el metal — pero los bloques son demasiado grandes, demasiado pesados.\n\nEl metal cede. La tierra gana.',
-  next:'s23'
-},
-'s22b':{
-  img:'sc07_pelea_grupal.png', tint:'tech',
-  speaker:'ZAK', text:'Zak levanta los cuatro celulares que lleva encima. Los fusiona en un solo pulso.\n\nEl campo electromagnético de Ferronix colapsa. Todo el metal cae al suelo al mismo tiempo. Ferronix queda expuesto, sin armadura.',
-  next:'s23'
-},
+s04b:{img:'sc03_lin_rayo.png',tint:'earth',
+  spk:'NARRADOR',
+  txt:'Saca a tres personas de los escombros. Sus manos mueven piedras como si siempre hubiera sabido hacerlo.\n\nCuando termina, el rayo sigue ahí. Esperándolo.',
+  next:'s05'},
 
-/* ═══ ACTO FINAL: LURNOX ═══ */
-'s23':{
-  img:'sc03_lin_rayo.png', tint:'lurnox',
-  chapter:'ACTO FINAL', title:'LURNOX', sub:'El centro de Lustonia · El rayo',
-  speaker:'NARRADOR', text:'El centro de la ciudad. El rayo turquesa sale de aquí — de una grieta en el suelo que brilla con luz corrompida.\n\nY en el medio de todo: una figura. Enorme. Turquesa. Sus ojos arden con una luz que no es de este plano.',
-  next:'s24'
-},
-'s24':{
-  img:'sc07_pelea_grupal.png', tint:'lurnox',
-  shake:true,
-  speaker:'LURNOX', text:'"Llegaron los tres custodios. Bien.\n\nNo cambia nada. El portal se abre de todas formas. Aethrium llama a los suyos. Y yo soy solo el primero."\n\nEl rayo late. El suelo tiembla. Algo del otro lado del portal responde.',
-  next:'s25'
-},
-'s25':{
-  img:'sc07_pelea_grupal.png', tint:'lurnox',
-  speaker:'LIN', text:'Lin mira a Trini. Mira a Zak. Sus tres Ecos pulsan al mismo tiempo — tierra, sombra, tecnología.\n\nLurnox es diferente a los otros. Más antiguo. Más inteligente. No es solo fuerza bruta.',
-  choices:[
-    {t:'Atacar. Todo el poder junto, ahora.', d:'No hay tiempo para hablar. Si el portal se abre, todo terminó.', tag:'FINAL COMBATE · ECO +15', tc:'var(--earth)', next:'s26a', hp:-20, eco:15},
-    {t:'Hablarle. Preguntarle qué quiere.', d:'Algo en su Eco se siente diferente. Distinto a Trónox.', tag:'FINAL DIPLOMÁTICO · ECO +20', tc:'var(--lurnox)', next:'s26b', hp:0, eco:20},
-  ]
-},
-'s26a':{
-  img:'sc07_pelea_grupal.png', tint:'lurnox',
-  shake:true,
-  speaker:'NARRADOR', text:'Los tres lanzan todo.\n\nRocas enormes. Sombras que cortan. Pulsos electromagnéticos. Lurnox absorbe los primeros golpes. Pero los tres Ecos juntos generan una frecuencia que él no puede procesar.\n\nEl portal tiembla.',
-  next:'s27'
-},
-'s26b':{
-  img:'sc07_pelea_grupal.png', tint:'lurnox',
-  speaker:'LURNOX', text:'Lurnox se detiene.\n\n"¿Qué quiero?" Una pausa larga.\n\n"Lo que Trónox prometió. Un lugar. En Aethrium no hay lugar para los que somos como yo. No hay lugar para ninguno de nosotros."\n\nUn segundo de duda. Genuina.',
-  next:'s27'
-},
-'s27':{
-  img:'sc07_pelea_grupal.png', tint:'lurnox',
-  shake:true,
-  speaker:'NARRADOR', text:'Los tres Ecos se unen. Tierra. Sombra. Tecnología.\n\nUna frecuencia que Lurnox no puede absorber. El portal arriba colapsa — pero no del todo. El rayo se apaga. Lurnox retrocede.\n\nÚltima oportunidad.',
-  choices:[
-    {t:'Cerrar el portal completamente. Todo el Eco ahora.', d:'Puede matar a Lurnox. Puede costarles todo el Eco.', tag:'FINAL A · SACRIFICIO', tc:'var(--c)', next:'endA', hp:-10, eco:0},
-    {t:'Dejar que Lurnox cruce de regreso a Aethrium.', d:'El portal se cierra desde adentro. Lurnox vuelve. Por ahora.', tag:'FINAL B · TRATO', tc:'var(--lurnox)', next:'endB', hp:0, eco:30},
-  ]
-},
+s04c:{img:'sc01_lin_cama.png',tint:'earth',
+  spk:'LIN',
+  txt:'Levanta rocas. Las mueve. Las lanza contra la pared. Aprende en diez minutos lo que otros aprenderían en semanas.\n\nEl Eco late más fuerte. Está listo.\n\nO eso cree.',
+  next:'s05'},
 
-/* ═══ FINALES ═══ */
-'endA':{end:true,type:'A'},
-'endB':{end:true,type:'B'},
+// ─── ACTO 2: CALLES & AERONYX ───
+s05:{img:'sc04_lin_calles.png',tint:'wind',
+  ch:'ACTO 2',tt:'LAS CALLES',sb:'Lustonia · Zona Roja',
+  spk:'NARRADOR',
+  txt:'Los militares no están bien. Ojos nublados — un velo negro que no es humano. Patrullan con precisión mecánica.\n\nEn las paredes: carteles. "SEGURIDAD. ORDEN. PAZ. CON EL ECO TODO ES POSIBLE."\n\nLin reconoce el patrón. Corruptos. Igual que los de Valmora con Trónox.',
+  next:'s06'},
+
+s06:{img:'sc04_lin_calles.png',tint:'wind',
+  spk:'LIN',
+  txt:'Un militar lo ve. Levanta el arma.\n\nLin levanta la mano — y una roca del pavimento sale disparada.',
+  choices:[
+    {t:'Pelear de frente',d:'Rocas, escombros, todo lo que haya.',tag:'HP -10 · ECO +8',tc:'var(--earth)',next:'s07a',hp:-10,eco:8},
+    {t:'Esconderse y esperar',d:'Estudiar sus movimientos antes de actuar.',tag:'HP -3 · ECO +4',tc:'var(--c)',next:'s07b',hp:-3,eco:4},
+    {t:'Correr hacia el edificio abandonado',d:'Buscar cobertura. Reagruparse.',tag:'HP 0 · ECO +2',tc:'#4a6a4a',next:'s07c',hp:0,eco:2},
+  ]},
+
+s07a:{img:'sc05_lin_pelea.png',tint:'earth',shake:true,
+  spk:'LIN',
+  txt:'La roca impacta en el casco. El militar cae. Dos más se acercan. Lin levanta ambas manos — el pavimento se abre.\n\nPuede con ellos. Pero siente que está llamando la atención de algo más grande.',
+  next:'s08'},
+
+s07b:{img:'sc04_lin_calles.png',tint:'none',
+  spk:'NARRADOR',
+  txt:'Se aplasta contra la pared. Los militares pasan a dos metros. Uno gira — sus ojos negros escanean la oscuridad. Lin contiene la respiración.\n\nPasan. Por ahora.',
+  next:'s08'},
+
+s07c:{img:'sc04_lin_calles.png',tint:'none',
+  spk:'NARRADOR',
+  txt:'Corre hacia el edificio. Las botas golpean el pavimento mojado. Un militar dispara — la bala arranca pedazos de la pared sobre su cabeza.\n\nAdentro. A salvo. Por ahora.',
+  next:'s08'},
+
+s08:{img:'sc04_lin_calles.png',tint:'wind',
+  ch:'',tt:'AERONYX APARECE',sb:'Control del Viento · Eco Gris',
+  spk:'NARRADOR',
+  txt:'El viento cambia. Se vuelve frío, cortante, antinatural.\n\nUna figura emerge del aire entre los militares. Alta. Sus ojos grises brillan como tormenta. El Eco a su alrededor es gris y pesado.',
+  next:'s09'},
+
+s09:{img:'sc04_lin_calles.png',tint:'wind',
+  spk:'AERONYX',
+  txt:'"Custodio. Llegaste tarde. Esta ciudad ya pertenece a Lurnox."\n\nSu voz suena como una tormenta adentro de un edificio. Los militares corruptos forman un círculo alrededor de Lin.\n\n"Rendite. O terminá como ellos."',
+  choices:[
+    {t:'Pelear contra Aeronyx solo',d:'Rocas contra viento. Puede salir muy mal.',tag:'HP -20 · ECO +10',tc:'#cc4020',next:'s10a',hp:-20,eco:10},
+    {t:'Buscar una salida — escapar',d:'No podés ganar esto solo. Todavía no.',tag:'HP -8 · ECO +5',tc:'var(--c)',next:'s10b',hp:-8,eco:5},
+    {t:'Provocarlo para que ataque primero',d:'Si ataca primero, vas a ver sus debilidades.',tag:'HP -15 · ECO +15',tc:'var(--earth)',next:'s10c',hp:-15,eco:15},
+  ]},
+
+s10a:{img:'sc05_lin_pelea.png',tint:'wind',shake:true,
+  spk:'NARRADOR',
+  txt:'Las rocas vuelan. Aeronyx las desvía con ráfagas de viento — una a una, sin esfuerzo. La última roca casi lo toca.\n\nPero el viento te golpea de vuelta. Salís volando tres metros.\n\nEstás en el suelo. Aeronyx se acerca.',
+  next:'s11'},
+
+s10b:{img:'sc04_lin_calles.png',tint:'none',
+  spk:'LIN',
+  txt:'Rompés el círculo con una explosión de tierra — el pavimento estalla hacia afuera. Los militares caen.\n\nAeronyx grita algo pero ya estás corriendo. Tres cuadras. Cuatro. Cinco.\n\nEstás solo en un callejón oscuro. Aeronyx viene.',
+  next:'s11'},
+
+s10c:{img:'sc05_lin_pelea.png',tint:'wind',shake:true,
+  spk:'LIN',
+  txt:'"¿Eso es todo lo que sos? ¿Viento?"\n\nAeronyx ataca furioso. Las ráfagas revelan un patrón: siempre ataca de izquierda a derecha.\n\nEl costo: te golpea tres veces antes de que puedas esquivar.',
+  next:'s11'},
+
+// ─── ACTO 3: TRINI ───
+s11:{img:'sc06_lin_trini.png',tint:'smoke',
+  ch:'ACTO 3',tt:'ENCONTRASTE A TRINI',sb:'',
+  spk:'NARRADOR',
+  txt:'Aparece de la nada. Literalmente. Se disuelve de una sombra y toma forma a su lado.\n\nUna chica. Su cuerpo todavía chispa con energía turquesa oscura. Mira a Aeronyx. Mira a Lin.\n\n"Tranquilo. No soy de ellos."',
+  next:'s12'},
+
+s12:{img:'sc06_lin_trini.png',tint:'smoke',
+  spk:'TRINI',
+  txt:'"Me llamo Trini. También tengo uno adentro — un custodio. Me da el poder de viajar por las sombras.\n\nSé lo que sos. Sé lo que tenés. Y ahora mismo necesito que confíes en mí porque ese Aeronyx va a estar acá en treinta segundos."',
+  choices:[
+    {t:'Confiar en Trini — pelear juntos',d:'Dos custodios contra una entidad. Mejor chance.',tag:'ALIADA + TRINI SE UNE',tc:'var(--smoke)',next:'s13a',hp:0,eco:8},
+    {t:'Usar a Trini como distracción',d:'Que ella lo distraiga mientras vos atacás.',tag:'HP -5 · ECO +10',tc:'var(--earth)',next:'s13b',hp:-5,eco:10},
+    {t:'Desconfiar — ir solo de todas formas',d:'No conocés a esta chica.',tag:'HP -10 · RIESGO',tc:'#cc4020',next:'s13c',hp:-10,eco:0},
+  ]},
+
+s13a:{img:'sc06_lin_trini.png',tint:'smoke',
+  spk:'TRINI',
+  txt:'"Bien. Hacé esto: cuando yo desaparezca, lanzá todo lo que tengas hacia arriba."\n\nTrini se disuelve en sombra. Aeronyx llega. Lin lanza todas las rocas que puede hacia el cielo.\n\nTrini materializa DETRÁS de Aeronyx y lo golpea en el punto ciego.',
+  next:'s14'},
+
+s13b:{img:'sc06_lin_trini.png',tint:'wind',shake:true,
+  spk:'NARRADOR',
+  txt:'Trini se sacrifica como distracción. Aeronyx la golpea — ella cae.\n\nPero en ese momento Lin lanza el bloque de hormigón más grande que pudo levantar.\n\nImpacta. Aeronyx tambalea.',
+  next:'s14'},
+
+s13c:{img:'sc05_lin_pelea.png',tint:'wind',shake:true,
+  spk:'NARRADOR',
+  txt:'Lin va solo contra Aeronyx. El viento es implacable.\n\nCuando ya casi no puede más, Trini aparece de todas formas. "Sos un idiota." Lo saca de ahí cargándolo en sombras.',
+  next:'s14'},
+
+s14:{img:'sc07_pelea_grupal.png',tint:'earth',shake:true,
+  ch:'',tt:'AERONYX CAE',sb:'',
+  spk:'NARRADOR',
+  txt:'Aeronyx intenta una última ráfaga. Lin la detiene con un muro de tierra de dos metros. El impacto lo sacude pero aguanta.\n\nTrini pasa a través del muro como sombra y golpea a Aeronyx desde adentro.\n\nLa entidad cae. Sus ojos grises se apagan.',
+  next:'s15'},
+
+// ─── ACTO 4: BORINEX ───
+s15:{img:'sc08_borinex.png',tint:'speed',
+  ch:'ACTO 4',tt:'BORINEX ATACA',sb:'Velocidad extrema · Eco Naranja',
+  spk:'NARRADOR',
+  txt:'No lo ven llegar. Lo sienten.\n\nUn impacto de calor naranja. Borinex se mueve tan rápido que el tiempo parece quebrarse a su alrededor. Líneas de calor dejan rastros en el aire donde estuvo.',
+  next:'s16'},
+
+s16:{img:'sc08_borinex.png',tint:'speed',shake:true,
+  spk:'BORINEX',
+  txt:'"¡Demasiado lentos! ¿Eso es todo lo que tienen dos custodios?"\n\nAparece y desaparece. Cada materialización deja un golpe. Lin y Trini no pueden predecir dónde va a aparecer.\n\n"Lurnox dijo que serían un problema. No veo el problema."',
+  choices:[
+    {t:'Lin crea una red de rocas en el espacio',d:'Si llena el espacio, Borinex tiene que esquivar.',tag:'HP -10 · ECO +10',tc:'var(--earth)',next:'s17a',hp:-10,eco:10},
+    {t:'Trini viaja a donde va a aparecer',d:'Si lee el patrón en las sombras, puede interceptarlo.',tag:'HP -5 · ECO +8',tc:'var(--smoke)',next:'s17b',hp:-5,eco:8},
+    {t:'Ignorarlo y correr hacia el centro',d:'Esquivar es mejor que pelear contra velocidad pura.',tag:'HP -18 · ECO +4',tc:'#cc4020',next:'s17c',hp:-18,eco:4},
+  ]},
+
+s17a:{img:'sc08_borinex.png',tint:'speed',shake:true,
+  spk:'LIN',
+  txt:'Rocas de todos los tamaños llenan el espacio. Borinex esquiva las primeras seis. La séptima lo atrapa en el hombro.\n\nPierde velocidad un instante. Trini aprovecha — aparece junto a él y lo golpea antes de que pueda reaccionar.',
+  next:'s18'},
+
+s17b:{img:'sc08_borinex.png',tint:'smoke',
+  spk:'TRINI',
+  txt:'Trini cierra los ojos. Lee las sombras que Borinex deja al moverse. Ve el patrón.\n\nSe disuelve. Viaja a donde él va a aparecer.\n\nCuando Borinex materializa, Trini ya está ahí. El choque lo desestabiliza por completo.',
+  next:'s18'},
+
+s17c:{img:'sc08_borinex.png',tint:'speed',shake:true,
+  spk:'NARRADOR',
+  txt:'Corren. Borinex los golpea una y otra vez mientras se alejan. Cada golpe arranca pedazos de energía.\n\nLlegan al próximo bloque devastados. Pero llegaron.',
+  next:'s18'},
+
+s18:{img:'sc07_pelea_grupal.png',tint:'earth',
+  spk:'NARRADOR',
+  txt:'Borinex cae. No muerto — las entidades son difíciles de eliminar. Pero fuera de combate.\n\nLin y Trini se miran. Dos entidades abajo. Quedan dos más — y Lurnox.\n\nEl rayo del centro late más fuerte.',
+  next:'s19'},
+
+// ─── ACTO 5: ZAK ───
+s19:{img:'sc07_pelea_grupal.png',tint:'tech',
+  ch:'ACTO 5',tt:'EL TÉCNICO',sb:'Radio abandonada · Subsuelo',
+  spk:'NARRADOR',
+  txt:'En el sótano de una radio destruida, encuentran a un pibe rodeado de celulares rotos. Todos prendidos. Sin señal. Transmitiendo igual.\n\nEn la pared, en código: SISTEMA ACTIVO. ECO DETECTADO. TRES PUNTOS.',
+  next:'s20'},
+
+s20:{img:'sc07_pelea_grupal.png',tint:'tech',
+  spk:'ZAK',
+  txt:'"Los estaba esperando. Mapeé todos los Ecos de Lustonia. Somos tres custodios activos.\n\nQuedan dos entidades antes de Lurnox. Mirex — psíquico, opera con ilusiones. Ferronix — metal. Y después está el jefe."\n\nLevanta cuatro celulares. Chispas tecnológicas saltan entre sus dedos.',
+  choices:[
+    {t:'Sumar a Zak al equipo',d:'Tiene información y poder. Es clave.',tag:'EQUIPO COMPLETO · ECO +10',tc:'var(--tech)',next:'s21a',hp:0,eco:10},
+    {t:'No confiar — demasiada información',d:'¿Cómo sabe todo esto? Puede ser una trampa.',tag:'SIN ZAK · RIESGO FUTURO',tc:'#cc4020',next:'s21b',hp:0,eco:0},
+    {t:'Llevarlo pero vigilarlo',d:'Que ayude, pero no le contás todo.',tag:'ECO +5 · TENSIÓN',tc:'var(--c)',next:'s21c',hp:0,eco:5},
+  ]},
+
+s21a:{img:'sc07_pelea_grupal.png',tint:'tech',
+  spk:'ZAK',
+  txt:'"Bien. Dos cosas que necesitan saber: Mirex opera con miedo — el contacto físico rompe sus ilusiones. Ferronix controla el metal, pero no las rocas.\n\nTienen ventaja. Úsenla."',
+  next:'s22'},
+
+s21b:{img:'sc07_pelea_grupal.png',tint:'none',
+  spk:'TRINI',
+  txt:'"Lin, necesitamos la información que tiene."\n\n"No lo conozco." \n\n"Tampoco me conocías a mí."\n\nLin acepta a regañadientes. Zak se une.',
+  next:'s22'},
+
+s21c:{img:'sc07_pelea_grupal.png',tint:'tech',
+  spk:'LIN',
+  txt:'"Venís. Pero vas al frente mío, en todo momento."\n\nZak asiente. No discute. "Razonable."\n\nLos tres avanzan juntos hacia el centro de Lustonia.',
+  next:'s22'},
+
+// ─── ACTO 6: MIREX ───
+s22:{img:'sc09_mirex.png',tint:'psychic',
+  ch:'ACTO 6',tt:'MIREX: DOMINIO PSÍQUICO',sb:'La mente es el campo de batalla',
+  spk:'MIREX',
+  txt:'La voz llega desde adentro de la cabeza de Lin.\n\n"¿En quién confiás realmente? ¿La chica de las sombras? ¿El técnico con demasiada información? ¿Ninguno de ellos es lo que parece."',
+  next:'s23'},
+
+s23:{img:'sc09_mirex.png',tint:'psychic',
+  spk:'NARRADOR',
+  txt:'Las ilusiones empiezan. Lin ve a Trini atacándolo por la espalda. Ve a Zak enviando señales al enemigo. Ve a Valmora en llamas — Theo, Norrin, todos caídos.\n\nSon tan reales que duelen.',
+  choices:[
+    {t:'Resistir — concentrarse en el Eco',d:'El Eco es real. Las ilusiones no. Aferrarse a lo propio.',tag:'ECO +12 · RESISTENCIA',tc:'var(--c)',next:'s24a',hp:-8,eco:12},
+    {t:'Dejarse llevar... creer en las ilusiones',d:'Y si son verdad. Y si Valmora ya cayó.',tag:'HP -22 · ECO -10 · TRAMPA',tc:'#cc2020',next:'s24b',hp:-22,eco:-10},
+    {t:'Tocar a Trini — romper la ilusión por contacto',d:'Zak dijo que el contacto físico rompe todo.',tag:'HP -8 · ECO +15',tc:'var(--smoke)',next:'s24c',hp:-8,eco:15},
+  ]},
+
+s24a:{img:'sc09_mirex.png',tint:'psychic',
+  spk:'ZAK',
+  txt:'"¡Son mentiras! ¡Mirex opera con miedo — no tiene acceso real a Valmora!"\n\nZak emite un pulso desde los celulares. La interferencia tecnológica choca con el psíquico. Las ilusiones se fragmentan como vidrio.',
+  next:'s25'},
+
+s24b:{img:'sc09_mirex.png',tint:'psychic',shake:true,
+  spk:'NARRADOR',
+  txt:'Lin se paraliza. Mirex aprovecha. El golpe psíquico es brutal — como si le vaciaran la cabeza.\n\nTrini lo sacude físicamente. "¡No es real! ¡Mirá mis ojos!" El contacto rompe todo.\n\nLin vuelve. Más débil. Pero vuelve.',
+  next:'s25'},
+
+s24c:{img:'sc09_mirex.png',tint:'smoke',
+  spk:'LIN',
+  txt:'Busca a Trini en el caos. La agarra del brazo.\n\nEl contacto físico con otro custodio es como un choque eléctrico. Las ilusiones de Mirex explotan — todas al mismo tiempo.\n\nMirex grita. Nunca le habían hecho eso.',
+  next:'s25'},
+
+s25:{img:'sc07_pelea_grupal.png',tint:'earth',
+  spk:'NARRADOR',
+  txt:'Mirex intenta reconstruir las ilusiones. Pero los tres custodios ya saben cómo funciona.\n\nZak interfiere su campo psíquico. Trini ataca desde las sombras. Lin lo aplasta con tierra.\n\nMirex cae.',
+  next:'s26'},
+
+// ─── ACTO 7: FERRONIX ───
+s26:{img:'sc07_pelea_grupal.png',tint:'metal',
+  ch:'ACTO 7',tt:'FERRONIX: TELEKINESIS METÁLICA',sb:'',
+  spk:'NARRADOR',
+  txt:'Todo el metal de tres cuadras se levanta simultáneamente.\n\nAutos. Rejas. Postes. Cables. Una armadura de ciudad entera que obedece a Ferronix como si siempre hubiera sido suya.',
+  next:'s27'},
+
+s27:{img:'sc07_pelea_grupal.png',tint:'metal',
+  spk:'FERRONIX',
+  txt:'"Tres custodios. Qué decepción. Yo esperaba algo... más."\n\nLa voz de Ferronix suena metálica, vacía. Levanta un auto volcado y lo lanza directo hacia los tres.',
+  choices:[
+    {t:'Lin: tierra contra metal',d:'La piedra existió antes que el acero.',tag:'HP -12 · ECO +15',tc:'var(--earth)',next:'s28a',hp:-12,eco:15},
+    {t:'Zak: pulso electromagnético',d:'Sin magnetismo, el metal cae.',tag:'HP -5 · ECO +10',tc:'var(--tech)',next:'s28b',hp:-5,eco:10},
+    {t:'Trini: atacar desde las sombras del metal',d:'El metal proyecta sombras. Trini puede usarlas.',tag:'HP -8 · ECO +12',tc:'var(--smoke)',next:'s28c',hp:-8,eco:12},
+  ]},
+
+s28a:{img:'sc07_pelea_grupal.png',tint:'earth',shake:true,
+  spk:'LIN',
+  txt:'Bloques de pavimento enormes vuelan hacia el metal de Ferronix. Piedra contra acero.\n\nLa tierra siempre fue primero. El metal cede. La armadura de ciudad colapsa.\n\nFerronix queda expuesto.',
+  next:'s29'},
+
+s28b:{img:'sc07_pelea_grupal.png',tint:'tech',
+  spk:'ZAK',
+  txt:'Cuatro celulares. Un solo pulso.\n\nEl campo electromagnético de Ferronix colapsa. Todo el metal cae al suelo al mismo tiempo con un estruendo enorme.\n\nFerronix se queda sin armadura. Sin poder.',
+  next:'s29'},
+
+s28c:{img:'sc07_pelea_grupal.png',tint:'smoke',
+  spk:'TRINI',
+  txt:'El metal crea sombras. Sombras enormes, densas, perfectas para viajar.\n\nTrini desaparece y reaparece dentro de la armadura de metal de Ferronix — golpeándolo desde adentro donde no puede defenderse.',
+  next:'s29'},
+
+s29:{img:'sc07_pelea_grupal.png',tint:'earth',
+  spk:'NARRADOR',
+  txt:'Ferronix cae. El último guardián antes del jefe final.\n\nLin, Trini y Zak se miran. Están golpeados. Cansados. Pero están.\n\nUn kilómetro hasta el centro. El rayo de Lurnox late como un corazón enfermo.',
+  next:'s30'},
+
+// ─── ACTO FINAL: LURNOX ───
+s30:{img:'sc03_lin_rayo.png',tint:'lurnox',
+  ch:'ACTO FINAL',tt:'LURNOX',sb:'El centro de Lustonia · El rayo',
+  spk:'NARRADOR',
+  txt:'El centro de la ciudad. El rayo turquesa sale de una grieta en el suelo que brilla con luz corrompida.\n\nY en el medio: una figura. Enorme. Turquesa corrupto. Sus ojos arden con una luz que no es de este plano.\n\nLurnox. El jefe.',
+  next:'s31'},
+
+s31:{img:'sc07_pelea_grupal.png',tint:'lurnox',shake:true,
+  spk:'LURNOX',
+  txt:'"Llegaron los tres custodios de Lustonia. Bien.\n\nEn Valmora, Trónox ya tiene a los suyos. Aquí, yo tengo los míos. El portal se abre de todas formas. Aethrium llama a los suyos.\n\n¿Qué piensan hacer? ¿Los tres? ¿Contra mí?"',
+  choices:[
+    {t:'Atacar juntos — todo el poder ahora',d:'Sin estrategia. Solo fuerza pura.',tag:'HP -20 · ECO +15',tc:'var(--earth)',next:'s32a',hp:-20,eco:15},
+    {t:'Hablarle — preguntarle qué quiere',d:'Algo en su Eco se siente diferente a Trónox.',tag:'ECO +20 · OPCIÓN DIPLOMÁTICA',tc:'var(--lurnox)',next:'s32b',hp:0,eco:20},
+    {t:'Crear una trampa con el entorno',d:'Usar los escombros de la ciudad contra él.',tag:'HP -10 · ECO +12',tc:'var(--c)',next:'s32c',hp:-10,eco:12},
+  ]},
+
+s32a:{img:'sc07_pelea_grupal.png',tint:'lurnox',shake:true,
+  spk:'NARRADOR',
+  txt:'Los tres lanzan todo.\n\nRocas enormes. Sombras cortantes. Pulsos electromagnéticos. Lurnox absorbe los primeros golpes como si no fueran nada.\n\nPero los tres Ecos juntos generan una frecuencia que él no puede procesar del todo. El portal tiembla.',
+  next:'s33'},
+
+s32b:{img:'sc07_pelea_grupal.png',tint:'lurnox',
+  spk:'LURNOX',
+  txt:'Lurnox se detiene. Genuinamente sorprendido.\n\n"¿Qué quiero?" Pausa larga. "Lo que Trónox prometió. En Aethrium no hay lugar para los que somos como yo. Ninguno de nosotros eligió ser lo que somos."\n\nUn segundo de vulnerabilidad real.',
+  next:'s33'},
+
+s32c:{img:'sc07_pelea_grupal.png',tint:'lurnox',shake:true,
+  spk:'ZAK',
+  txt:'"Escuchen. El edificio de la derecha — tiene vigas de acero. Si Ferronix pudo moverlas, también podemos nosotros."\n\nLin derrumba el edificio sobre Lurnox. El impacto lo entierra bajo tres pisos de escombros.\n\nPero Lurnox emerge. Más lento. Más furioso.',
+  next:'s33'},
+
+s33:{img:'sc07_pelea_grupal.png',tint:'lurnox',shake:true,
+  spk:'NARRADOR',
+  txt:'Los tres Ecos se unen. Tierra. Sombra. Tecnología.\n\nUna frecuencia que Lurnox no puede absorber. El portal colapsa a medias — el rayo se debilita. Lurnox retrocede por primera vez.\n\nPero no cae. Está de rodillas. Todavía es peligroso.\n\nDecisión final.',
+  next:'s34'},
+
+// DECISIÓN FINAL
+s34:{img:'sc07_pelea_grupal.png',tint:'lurnox',
+  ch:'',tt:'DECISIÓN FINAL',sb:'No hay vuelta atrás',
+  spk:'LIN',
+  txt:'Lurnox de rodillas. El portal medio cerrado. El Eco de los tres casi agotado.\n\nUna sola oportunidad. ¿Cómo termina esto?',
+  choices:[
+    {t:'Cerrar el portal — todo el Eco ahora',d:'Puede destruir a Lurnox. Puede destruiros a ustedes también.',tag:'FINAL A — SACRIFICIO',tc:'var(--c)',next:'endA',hp:0,eco:0},
+    {t:'Lurnox cruza de regreso a Aethrium',d:'El portal se cierra desde adentro. Lurnox vuelve. Por ahora.',tag:'FINAL B — LA GRIETA',tc:'var(--lurnox)',next:'endB',hp:0,eco:0},
+    {t:'Intentar controlar a Lurnox con los tres Ecos',d:'Arriesgado. Puede salir muy mal.',tag:'FINAL C — EL CONTROL',tc:'var(--smoke)',next:'endC',hp:0,eco:0},
+    {t:'No tienen suficiente poder — Lurnox gana',d:'La realidad: están demasiado débiles.',tag:'FINAL D — LA DERROTA',tc:'#cc2020',next:'endD',hp:0,eco:0},
+  ]},
+
+// ─── FINALES ───
+endA:{end:true,type:'A'},
+endB:{end:true,type:'B'},
+endC:{end:true,type:'C'},
+endD:{end:true,type:'D'},
 };
 
-// ══════════════════════════════════════
-//   ENGINE
-// ══════════════════════════════════════
+// ══════════════════════════════════════════
+//  ENGINE
+// ══════════════════════════════════════════
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>{s.classList.remove('active');s.style.display='none'});
   const el=document.getElementById(id);
@@ -713,146 +826,130 @@ function showScreen(id){
   requestAnimationFrame(()=>el.classList.add('active'));
 }
 
-function updateBars(){
+function bars(){
   document.getElementById('barHp').style.width=Math.max(0,hp)+'%';
   document.getElementById('barEco').style.width=Math.max(0,eco)+'%';
 }
 
-function showNode(id){
-  const d=S[id];
-  if(!d)return;
-  currentNode=id;
+let skipFn=null;
 
-  // Handle end nodes
+function showNode(id){
+  const d=S[id];if(!d)return;
+  cur=id;
   if(d.end){showEnd(d.type);return}
 
-  // Apply stat changes
-  if(d.hp){hp=Math.max(0,Math.min(100,hp+d.hp));updateBars()}
-  if(d.eco){eco=Math.max(0,Math.min(100,eco+d.eco));updateBars()}
+  // Stats
+  if(d.hp){hp=Math.max(0,Math.min(100,hp+d.hp));bars()}
+  if(d.eco){eco=Math.max(0,Math.min(100,eco+d.eco));bars()}
 
-  // Background image
+  // Check death
+  if(hp<=0&&!d.end){showEnd('D');return}
+
+  // BG image
   const bg=document.getElementById('sceneBg');
-  if(d.img){
-    bg.style.backgroundImage=`url('${d.img}')`;
-  } else {
-    bg.style.backgroundImage='none';
-    bg.style.background='linear-gradient(180deg,#020508 0%,#040c18 100%)';
-  }
+  if(d.img){bg.style.backgroundImage=`url('${d.img}')`;bg.style.background='none'}
+  else{bg.style.backgroundImage='none';bg.style.background='linear-gradient(180deg,#020508 0%,#040c18 100%)'}
 
-  // Eco tint
+  // Tint
   const tint=document.getElementById('ecoTint');
   tint.className=TINTS[d.tint||'none']||'';
 
   // Shake
   if(d.shake){
     const g=document.getElementById('sGame');
+    g.classList.remove('shake');void g.offsetWidth;
     g.classList.add('shake');
     setTimeout(()=>g.classList.remove('shake'),500);
   }
 
-  // Scene label
-  const labelEl=document.getElementById('sceneLabel');
-  if(d.chapter||d.title){
-    labelEl.style.display='block';
-    document.getElementById('slChapter').textContent=d.chapter||'';
-    document.getElementById('slChapter').style.display=d.chapter?'inline-block':'none';
-    document.getElementById('slTitle').textContent=d.title||'';
-    const col=COLORS[d.speaker]||'var(--c)';
-    document.getElementById('slTitle').style.textShadow=`0 0 20px ${col}88,0 2px 0 rgba(0,0,0,.9)`;
-    document.getElementById('slSub').textContent=d.sub||'';
-    document.getElementById('slSub').style.display=d.sub?'block':'none';
+  // Label
+  const lbl=document.getElementById('scLabel');
+  if(d.ch||d.tt){
+    lbl.style.display='block';
+    const chEl=document.getElementById('slCh');
+    chEl.textContent=d.ch||'';chEl.style.display=d.ch?'inline-block':'none';
+    const ttEl=document.getElementById('slTt');
+    ttEl.textContent=d.tt||'';
+    const c=COL[d.spk]||'var(--c)';
+    ttEl.style.textShadow=`0 0 22px ${c}88,0 2px 0 rgba(0,0,0,.9)`;
+    const sbEl=document.getElementById('slSb');
+    sbEl.textContent=d.sb||'';sbEl.style.display=d.sb?'block':'none';
   } else {
-    labelEl.style.display='none';
+    lbl.style.display='none';
   }
 
   // Speaker
-  const col=COLORS[d.speaker||'NARRADOR']||'var(--c)';
-  document.getElementById('speaker').textContent=d.speaker||'NARRADOR';
-  document.getElementById('speaker').style.color=col;
-  document.getElementById('speakerBar').style.background=col;
+  const c=COL[d.spk||'NARRADOR']||'var(--c)';
+  document.getElementById('spkName').textContent=d.spk||'NARRADOR';
+  document.getElementById('spkName').style.color=c;
+  document.getElementById('spkBar').style.background=c;
 
-  // HUD title update
-  if(d.chapter&&d.title){
-    document.getElementById('hudTitle').textContent=d.title;
-    document.getElementById('hudSub').textContent=d.chapter+' · LUSTONIA';
+  // HUD
+  if(d.ch&&d.tt){
+    document.getElementById('hudTitle').textContent=d.tt;
+    document.getElementById('hudSub').textContent=(d.ch||'')+(d.ch?' · ':'')+'LUSTONIA';
   }
 
-  // Clear choices & continue
+  // Clear
   document.getElementById('choices').innerHTML='';
-  document.getElementById('btnContinue').style.display='none';
-  document.getElementById('tbTap').style.display='none';
+  document.getElementById('btnCont').style.display='none';
+  document.getElementById('tapHint').style.display='none';
 
-  // Type text
-  typeText(d.text||'',()=>{
-    if(d.choices&&d.choices.length){
-      showChoices(d.choices);
-    } else if(d.next){
-      document.getElementById('btnContinue').style.display='block';
-    }
+  // Type
+  typeText(d.txt||'',()=>{
+    if(d.choices&&d.choices.length)showChoices(d.choices);
+    else if(d.next)document.getElementById('btnCont').style.display='block';
   });
 }
 
-// ── TYPE TEXT ──
-function typeText(text,cb){
+function typeText(txt,cb){
   const el=document.getElementById('tbText');
-  const tapEl=document.getElementById('tbTap');
+  const tap=document.getElementById('tapHint');
   el.innerHTML='';
-  let i=0;typing=true;
+  let i=0,done=false;
 
-  const full=text;
-  // Tap to skip
-  const skip=()=>{
-    if(!typing)return;
-    typing=false;
-    el.innerHTML=full.replace(/\n/g,'<br>');
-    tapEl.style.display='none';
-    el.removeEventListener('click',skip);
+  function finish(){
+    if(done)return;done=true;
+    el.innerHTML=txt.replace(/\n/g,'<br>');
+    tap.style.display='none';
+    el.removeEventListener('click',finish);
     if(cb)cb();
-  };
-  el.addEventListener('click',skip,{once:true});
+  }
+  el.addEventListener('click',finish,{once:true});
+  tap.style.display='block';
 
-  const chars=full.split('');
   function next(){
-    if(!typing)return;
-    if(i>=chars.length){
-      typing=false;
-      tapEl.style.display='none';
-      if(cb)cb();return;
-    }
-    const ch=chars[i++];
+    if(done)return;
+    if(i>=txt.length){finish();return}
+    const ch=txt[i++];
     if(ch==='\n')el.innerHTML+='<br>';
-    else el.textContent+=ch;
-    // Scroll
+    else el.innerHTML+=ch;
     el.scrollTop=el.scrollHeight;
-    const delay=ch==='.'||ch==='!'||ch==='?'||ch==='…'?60:ch===','?35:20;
-    setTimeout(next,delay);
+    const d=ch==='.'||ch==='!'||ch==='?'||ch==='…'?65:ch===','?38:22;
+    setTimeout(next,d);
   }
   next();
 }
 
-// ── SHOW CHOICES ──
 function showChoices(choices){
   const wrap=document.getElementById('choices');
   wrap.innerHTML='';
   choices.forEach((ch,i)=>{
     const btn=document.createElement('button');
-    btn.className='choice-btn';
-
-    // Tag color
-    const tagStyle=ch.tc?`color:${ch.tc};border-color:${ch.tc}44;background:${ch.tc}11`:'';
-
+    btn.className='ch-btn';
+    const nums=['①','②','③','④'];
+    const tc=ch.tc||'var(--c)';
+    const tagStyle=`color:${tc};border-color:${tc}55;background:${tc}18`;
     btn.innerHTML=`
-      <div class="choice-num">${['①','②','③','④'][i]||'▶'}</div>
-      <div class="choice-content">
-        <div class="choice-title">${ch.t}</div>
-        ${ch.d?`<div class="choice-desc">${ch.d}</div>`:''}
-        ${ch.tag?`<div class="choice-tag" style="${tagStyle}">${ch.tag}</div>`:''}
+      <div class="ch-num">${nums[i]||'▶'}</div>
+      <div class="ch-body">
+        <div class="ch-title">${ch.t}</div>
+        ${ch.d?`<div class="ch-desc">${ch.d}</div>`:''}
+        ${ch.tag?`<div class="ch-tag" style="${tagStyle}">${ch.tag}</div>`:''}
       </div>`;
-
     btn.addEventListener('click',()=>{
-      // Apply stats
-      if(ch.hp){hp=Math.max(0,Math.min(100,hp+ch.hp));updateBars()}
-      if(ch.eco){eco=Math.max(0,Math.min(100,eco+ch.eco));updateBars()}
+      if(ch.hp){hp=Math.max(0,Math.min(100,hp+ch.hp));bars()}
+      if(ch.eco){eco=Math.max(0,Math.min(100,eco+ch.eco));bars()}
       wrap.innerHTML='';
       showNode(ch.next);
     });
@@ -860,44 +957,51 @@ function showChoices(choices){
   });
 }
 
-// ── SHOW END ──
 function showEnd(type){
-  const data={
+  const D={
     A:{
-      title:'¡EL ECO RESISTE!',
-      color:'var(--c)',
-      text:'El portal colapsa. Lurnox queda atrapado entre las dos dimensiones. El rayo turquesa se apaga por primera vez en horas.\n\nLustonia respira.\n\nEn Valmora, Theo y sus amigos siguen luchando contra Trónox. La guerra no terminó. Pero esta ciudad, esta noche, sobrevivió.',
+      title:'¡EL ECO RESISTE!',col:'var(--c)',
+      text:'El portal colapsa. Lurnox queda atrapado entre las dos dimensiones. El rayo turquesa se apaga por primera vez en horas.\n\nLustonia respira. En Valmora, Theo y sus amigos siguen luchando contra Trónox. La guerra no terminó. Pero esta noche, esta ciudad sobrevivió.',
       quote:'"EL ECO NUNCA SE FUE."'
     },
     B:{
-      title:'LA GRIETA',
-      color:'var(--lurnox)',
-      text:'Lurnox cruza el portal de regreso a Aethrium. Antes de irse, los mira por última vez.\n\n"Custodio... esto no termina acá."\n\nEl portal se cierra. Pero Lin lo siente — hay una grieta. Muy pequeña. Por ahora.\n\nAlgo del otro lado también la siente.',
+      title:'LA GRIETA',col:'var(--lurnox)',
+      text:'Lurnox cruza el portal de regreso a Aethrium. Antes de irse, los mira por última vez.\n\n"Custodio... esto no termina acá."\n\nEl portal se cierra. Pero Lin lo siente — hay una grieta. Muy pequeña. Por ahora.',
       quote:'"LA VERDAD ESTÁ BAJO NOSOTROS."'
+    },
+    C:{
+      title:'EL CONTROL IMPOSIBLE',col:'var(--smoke)',
+      text:'Los tres intentan contener a Lurnox con sus Ecos. Por un momento, parece funcionar.\n\nDespués Lurnox rompe el control. Y hace lo que quiere con Lustonia antes de que el portal lo lleve de vuelta.\n\nSobrevivieron. Pero la ciudad quedó marcada.',
+      quote:'"NADA ES ETERNO."'
+    },
+    D:{
+      title:'DERROTA',col:'#e74c3c',
+      text:'Lurnox gana. El portal se abre completamente. Desde Aethrium, más criaturas empiezan a cruzar.\n\nLin, Trini y Zak caen. La grieta que Lurnox deja en el cielo de Lustonia brillará turquesa por meses.\n\nLa batalla se perdió. Pero el Eco sigue adentro de los tres.',
+      quote:'"EL ECO NUNCA SE FUE — AUNQUE TODO LO DEMÁS SÍ."'
     }
   };
-  const d=data[type]||data.A;
+  const d=D[type]||D.D;
   document.getElementById('endTitle').textContent=d.title;
-  document.getElementById('endTitle').style.color=d.color;
-  document.getElementById('endTitle').style.textShadow=`0 0 25px ${d.color}`;
+  document.getElementById('endTitle').style.color=d.col;
+  document.getElementById('endTitle').style.textShadow=`0 0 25px ${d.col}`;
   document.getElementById('endText').textContent=d.text;
   document.getElementById('endQuote').textContent=d.quote;
   showScreen('sEnd');
 }
 
-// ── INIT ──
+// ── EVENTS ──
 document.getElementById('btnPlay').addEventListener('click',()=>{
-  hp=100;eco=0;updateBars();
+  hp=100;eco=0;bars();
   document.getElementById('hudTitle').textContent='DUAL';
   document.getElementById('hudSub').textContent='LUSTONIA · ECHO FRAGMENTS';
   showScreen('sGame');
   setTimeout(()=>showNode('intro'),300);
 });
 
-document.getElementById('btnContinue').addEventListener('click',()=>{
-  const d=S[currentNode];
+document.getElementById('btnCont').addEventListener('click',()=>{
+  const d=S[cur];
   if(d&&d.next){
-    document.getElementById('btnContinue').style.display='none';
+    document.getElementById('btnCont').style.display='none';
     showNode(d.next);
   }
 });
