@@ -273,6 +273,8 @@ function musicForNode(id,d){ if(d&&d.end)return 'end'; if(id&&/^end/.test(id))re
 
 // STATE
 let hp=100,eco=0,cur='';
+let stats={kills:0,captures:0,escapes:0,saved:'both',finalMove:''};
+function resetRun(){hp=100;eco=0;stats={kills:0,captures:0,escapes:0,saved:'both',finalMove:''};bars();}
 const COL={LIN:'#b87932',TRINI:'#a735ff',ZAK:'#bfff36',AERONYX:'#9aa8b5',BORINEX:'#ff7a18',MIREX:'#8b1232',FERRONIX:'#4b5660',LURNOX:'#00ffd5',NARRADOR:'#00e5ff'};
 
 // IMAGE MAP
@@ -436,31 +438,31 @@ txt:`Aeronyx ataca. Lin levanta rocas, pero el viento las devuelve como proyecti
 
 Cada golpe lo empuja más atrás. Cada error le roba aire.`,
 choices:[
-  {t:'Aplastar a Aeronyx con un bloque masivo',d:'Ataque brutal. Si falla, quedás expuesto.',tag:'RUTA: MATAR',tc:'var(--lin)',next:'aero_kill',hp:-12,eco:10},
-  {t:'Inmovilizarlo con columnas de piedra',d:'No lo matás. Lo encerrás.',tag:'RUTA: INMOVILIZAR',tc:'var(--c)',next:'aero_capture',hp:-8,eco:8},
-  {t:'Escapar por el subte destruido',d:'Sobrevivís, pero Aeronyx queda vivo.',tag:'RUTA: ESCAPE',tc:'var(--aeronyx)',next:'aero_escape',hp:-15,eco:5},
+  {t:'Aplastar a Aeronyx con un bloque masivo',d:'Ataque brutal. Si falla, quedás expuesto.',tag:'ATAQUE DIRECTO',tc:'var(--lin)',next:'aero_kill',hp:-12,eco:10},
+  {t:'Inmovilizarlo con columnas de piedra',d:'No lo matás. Lo encerrás.',tag:'CONTENER',tc:'var(--c)',next:'aero_capture',hp:-8,eco:8},
+  {t:'Escapar por el subte destruido',d:'Sobrevivís, pero Aeronyx queda vivo.',tag:'RETIRADA',tc:'var(--aeronyx)',next:'aero_escape',hp:-15,eco:5},
 ]},
 
-aero_kill:{img:'aeronyx_cae',shake:true,spk:'NARRADOR',
+aero_kill:{img:'aeronyx_cae',ch:'RESULTADO',tt:'AERONYX MURIÓ',sb:'El viento se apaga',shake:true,spk:'NARRADOR',
 txt:`Lin concentra todo el peso de la calle en un solo golpe. Aeronyx intenta elevarse, pero el bloque cae antes.
 
 El viento se corta. Aeronyx desaparece entre polvo gris.
 
-Primer final de Aeronyx: muerto. Lin gana, pero siente que cruzó una línea.`,next:'trini_save'},
+Resultado de Aeronyx: murió. Lin gana, pero siente que cruzó una línea.`,next:'trini_save'},
 
-aero_capture:{img:'aeronyx_cae',shake:true,spk:'LIN',
+aero_capture:{img:'aeronyx_cae',ch:'RESULTADO',tt:'AERONYX INMOVILIZADO',sb:'Vivo, pero encerrado',shake:true,spk:'LIN',
 txt:`Lin no golpea para matar. Hace crecer columnas desde el suelo, una tras otra, hasta cerrar a Aeronyx en una jaula de piedra.
 
 Aeronyx grita, atrapado, vivo.
 
-Segundo final de Aeronyx: inmovilizado.`,next:'trini_save'},
+Resultado de Aeronyx: inmovilizado. Queda vivo, encerrado bajo columnas de piedra.`,next:'trini_save'},
 
-aero_escape:{img:'sc_aeronyx_ataca',shake:true,spk:'NARRADOR',
+aero_escape:{img:'sc_aeronyx_ataca',ch:'RESULTADO',tt:'AERONYX ESCAPÓ',sb:'La amenaza sigue en el aire',shake:true,spk:'NARRADOR',
 txt:`Lin rompe una entrada al subte y cae entre escaleras destruidas. Aeronyx queda arriba, vivo, furioso.
 
 "Te voy a encontrar, custodio."
 
-Tercer final de Aeronyx: escapan, pero el villano sigue suelto.`,next:'trini_save'},
+Resultado de Aeronyx: escapó. Sobreviven, pero el villano sigue suelto.`,next:'trini_save'},
 
 trini_save:{img:'trini_aparece',ch:'ACTO 4',tt:'TRINI',sb:'La sombra también eligió',spk:'NARRADOR',
 txt:`Cuando Lin cree que no puede más, una sombra se mueve donde no debería.
@@ -507,29 +509,29 @@ Aparece detrás de Lin. Después frente a Trini. Después arriba de un cartel.
 bori_dec:{img:'sc_borinex_ataca',spk:'NARRADOR',shake:true,
 txt:`Borinex ataca desde todos lados. Lin puede llenar el callejón de piedra. Trini puede viajar por sombras. Pero si calculan mal, no van a verla venir.`,
 choices:[
-  {t:'Cerrar el callejón con rocas',d:'Una jaula de tierra para matar la velocidad.',tag:'RUTA: MATAR',tc:'var(--lin)',next:'bori_kill',hp:-13,eco:10},
-  {t:'Usar las sombras como red',d:'Trini predice sus puntos de apoyo.',tag:'RUTA: INMOVILIZAR',tc:'var(--trini)',next:'bori_capture',hp:-8,eco:12},
-  {t:'Romper una pared y escapar',d:'La velocista queda viva y furiosa.',tag:'RUTA: ESCAPE',tc:'var(--borinex)',next:'bori_escape',hp:-15,eco:5},
+  {t:'Cerrar el callejón con rocas',d:'Una jaula de tierra para matar la velocidad.',tag:'ATAQUE DIRECTO',tc:'var(--lin)',next:'bori_kill',hp:-13,eco:10},
+  {t:'Usar las sombras como red',d:'Trini predice sus puntos de apoyo.',tag:'CONTENER',tc:'var(--trini)',next:'bori_capture',hp:-8,eco:12},
+  {t:'Romper una pared y escapar',d:'La velocista queda viva y furiosa.',tag:'RETIRADA',tc:'var(--borinex)',next:'bori_escape',hp:-15,eco:5},
 ]},
 
-bori_kill:{img:'sc_borinex_cae',shake:true,spk:'NARRADOR',
+bori_kill:{img:'sc_borinex_cae',ch:'RESULTADO',tt:'BORINEX MURIÓ',sb:'La velocidad se detiene',shake:true,spk:'NARRADOR',
 txt:`Lin cierra el callejón como una trampa. Borinex acelera, pero ya no tiene dónde girar.
 
 El impacto final rompe el muro y apaga su Eco naranja.
 
-Primer final de Borinex: muerta.`,next:'parasites_01'},
+Resultado de Borinex: murió. La velocista cae antes de volver a correr.`,next:'parasites_01'},
 
-bori_capture:{img:'sc_borinex_cae',shake:true,spk:'TRINI',
+bori_capture:{img:'sc_borinex_cae',ch:'RESULTADO',tt:'BORINEX INMOVILIZADA',sb:'Atrapada entre sombra y roca',shake:true,spk:'TRINI',
 txt:`Trini no intenta alcanzarla. Espera donde la sombra aparece antes que el cuerpo.
 
 Cuando Borinex cae en el punto exacto, las sombras le atan piernas y brazos. Lin sella el suelo.
 
-Segundo final de Borinex: inmovilizada.`,next:'parasites_01'},
+Resultado de Borinex: inmovilizada. Sigue viva, pero ya no puede moverse.`,next:'parasites_01'},
 
-bori_escape:{img:'sc_borinex_ataca',shake:true,spk:'NARRADOR',
+bori_escape:{img:'sc_borinex_ataca',ch:'RESULTADO',tt:'BORINEX ESCAPÓ',sb:'Una estela naranja queda atrás',shake:true,spk:'NARRADOR',
 txt:`Lin rompe una pared y ambos saltan a una lavandería abandonada. Borinex queda atrás, viva, gritando de rabia.
 
-Tercer final de Borinex: escapan, pero ella sigue cazándolos.`,next:'parasites_01'},
+Resultado de Borinex: escapó. La velocista sigue cazándolos.`,next:'parasites_01'},
 
 parasites_01:{img:'sc_ciudad_lluvia',ch:'INTERLUDIO',tt:'PARÁSITOS DE ECO',sb:'Criaturas menores de Aethrium',spk:'NARRADOR',
 txt:`Del asfalto agrietado salen cosas pequeñas. No son animales. No son soldados.
@@ -576,31 +578,31 @@ txt:`Lin ve a Trini traicionándolo. Trini ve a Zak entregándolos a Lurnox. Zak
 
 Mirex no los golpea. Los separa.`,
 choices:[
-  {t:'Romper la ilusión con fuerza bruta',d:'Lin ataca el centro del campo mental.',tag:'RUTA: MATAR',tc:'var(--mirex)',next:'mirex_kill',hp:-15,eco:12},
-  {t:'Unir manos para anclar la realidad',d:'Contacto físico entre custodios. Zak lo había advertido.',tag:'RUTA: INMOVILIZAR',tc:'var(--zak)',next:'mirex_capture',hp:-7,eco:15},
-  {t:'Seguir una falsa salida',d:'Escapan, pero Mirex queda vivo dentro de sus cabezas.',tag:'RUTA: ESCAPE',tc:'var(--mirex)',next:'mirex_escape',hp:-18,eco:4},
+  {t:'Romper la ilusión con fuerza bruta',d:'Lin ataca el centro del campo mental.',tag:'ATAQUE DIRECTO',tc:'var(--mirex)',next:'mirex_kill',hp:-15,eco:12},
+  {t:'Unir manos para anclar la realidad',d:'Contacto físico entre custodios. Zak lo había advertido.',tag:'CONTENER',tc:'var(--zak)',next:'mirex_capture',hp:-7,eco:15},
+  {t:'Seguir una falsa salida',d:'Escapan, pero Mirex queda vivo dentro de sus cabezas.',tag:'RETIRADA',tc:'var(--mirex)',next:'mirex_escape',hp:-18,eco:4},
 ]},
 
-mirex_kill:{img:'mirex_cae',shake:true,spk:'NARRADOR',
+mirex_kill:{img:'mirex_cae',ch:'RESULTADO',tt:'MIREX MURIÓ',sb:'La mentira se rompe',shake:true,spk:'NARRADOR',
 txt:`Lin ataca el núcleo de la ilusión. El golpe no rompe huesos: rompe pensamiento.
 
 Mirex cae gritando, como si todas sus mentiras volvieran a él al mismo tiempo.
 
-Primer final de Mirex: muerto.`,next:'parasites_02'},
+Resultado de Mirex: murió. Sus ilusiones se apagan con él.`,next:'parasites_02'},
 
-mirex_capture:{img:'mirex_cae',spk:'ZAK',
+mirex_capture:{img:'mirex_cae',ch:'RESULTADO',tt:'MIREX ATRAPADO',sb:'Preso dentro de su propia mente',spk:'ZAK',
 txt:`Los tres se toman de las manos. Zak sincroniza los celulares. Trini fija las sombras. Lin ancla el suelo.
 
 Mirex queda encerrado en un bucle mental hecho de su propio miedo.
 
-Segundo final de Mirex: atrapado vivo.`,next:'parasites_02'},
+Resultado de Mirex: atrapado vivo dentro de su propio miedo.`,next:'parasites_02'},
 
-mirex_escape:{img:'mirex_habla',shake:true,spk:'MIREX',
+mirex_escape:{img:'mirex_habla',ch:'RESULTADO',tt:'MIREX ESCAPÓ',sb:'La voz sigue adentro',shake:true,spk:'MIREX',
 txt:`Siguen una puerta que no existe y despiertan dos cuadras más lejos.
 
 Mirex no los persigue. No necesita. Les dejó una voz adentro.
 
-Tercer final de Mirex: escapan, pero él sigue vivo.`,next:'parasites_02'},
+Resultado de Mirex: escapó. Queda vivo dentro de sus cabezas.`,next:'parasites_02'},
 
 parasites_02:{img:'sc_ciudad_lluvia',ch:'INTERLUDIO',tt:'NIDO DE PARÁSITOS',sb:'El Eco se pudre cerca del centro',spk:'NARRADOR',
 txt:`Cuanto más se acercan al centro, más parásitos aparecen. Ahora no salen del suelo: salen de los soldados caídos, como si la corrupción tuviera raíces.`,
@@ -626,31 +628,31 @@ Un colectivo aplastado se eleva sobre los tres.
 ferronix_dec:{img:'sc_ferronix_ataca',spk:'NARRADOR',shake:true,
 txt:`Ferronix controla todo el metal de la cuadra. Pero no controla piedra. No controla sombra. Y no controla la electricidad si Zak logra interferirlo.`,
 choices:[
-  {t:'Derribarlo con columnas de piedra',d:'La tierra contra el metal. Sin piedad.',tag:'RUTA: MATAR',tc:'var(--lin)',next:'ferronix_kill',hp:-14,eco:12},
-  {t:'Apagar su campo con Zak',d:'Pulso electromagnético y jaula de roca.',tag:'RUTA: INMOVILIZAR',tc:'var(--zak)',next:'ferronix_capture',hp:-8,eco:10},
-  {t:'Escapar por las sombras de los edificios',d:'Ferronix queda vivo, pero el equipo pasa.',tag:'RUTA: ESCAPE',tc:'var(--trini)',next:'ferronix_escape',hp:-16,eco:5},
+  {t:'Derribarlo con columnas de piedra',d:'La tierra contra el metal. Sin piedad.',tag:'ATAQUE DIRECTO',tc:'var(--lin)',next:'ferronix_kill',hp:-14,eco:12},
+  {t:'Apagar su campo con Zak',d:'Pulso electromagnético y jaula de roca.',tag:'CONTENER',tc:'var(--zak)',next:'ferronix_capture',hp:-8,eco:10},
+  {t:'Escapar por las sombras de los edificios',d:'Ferronix queda vivo, pero el equipo pasa.',tag:'RETIRADA',tc:'var(--trini)',next:'ferronix_escape',hp:-16,eco:5},
 ]},
 
-ferronix_kill:{img:'ferronix_cae',shake:true,spk:'NARRADOR',
+ferronix_kill:{img:'ferronix_cae',ch:'RESULTADO',tt:'FERRONIX MURIÓ',sb:'El metal cae como lluvia',shake:true,spk:'NARRADOR',
 txt:`Lin levanta la calle entera en tres golpes. Ferronix intenta cubrirse con metal, pero la piedra entra por debajo.
 
 El cuerpo gris oscuro cae. El metal llueve alrededor.
 
-Primer final de Ferronix: muerto.`,next:'choice_save'},
+Resultado de Ferronix: murió. El metal deja de obedecer.`,next:'choice_save'},
 
-ferronix_capture:{img:'ferronix_cae',spk:'ZAK',
+ferronix_capture:{img:'ferronix_cae',ch:'RESULTADO',tt:'FERRONIX INMOVILIZADO',sb:'Sin campo, sin armadura',spk:'ZAK',
 txt:`Zak sincroniza los celulares y corta el campo. Trini oscurece el perímetro. Lin cierra una prisión de roca.
 
 Ferronix queda de rodillas, vivo, sin metal que lo escuche.
 
-Segundo final de Ferronix: inmovilizado.`,next:'choice_save'},
+Resultado de Ferronix: inmovilizado. Queda vivo, de rodillas, sin metal que lo escuche.`,next:'choice_save'},
 
-ferronix_escape:{img:'sc_ferronix_ataca',shake:true,spk:'NARRADOR',
+ferronix_escape:{img:'sc_ferronix_ataca',ch:'RESULTADO',tt:'FERRONIX ESCAPÓ',sb:'El hierro sigue respirando',shake:true,spk:'NARRADOR',
 txt:`Trini abre una ruta de sombras entre dos edificios. El equipo cruza a ciegas.
 
 Ferronix queda atrás, vivo. Sus últimas palabras los siguen: "Lurnox ya ganó."
 
-Tercer final de Ferronix: escape.`,next:'choice_save'},
+Resultado de Ferronix: escapó. El equipo pasa, pero él queda vivo.`,next:'choice_save'},
 
 choice_save:{img:'tres_juntos',ch:'ACTO 9',tt:'A QUIÉN SALVAR',sb:'La decisión que rompe al equipo',spk:'NARRADOR',
 txt:`A una cuadra del portal, Lurnox mueve una mano. No ataca a Lin. Ataca al equipo.
@@ -702,18 +704,21 @@ Lurnox extiende sus garras.
 
 "Yo necesito una puerta estable. Y ustedes, custodios de Lustonia, son la llave."`,next:'lurnox_dec'},
 
-lurnox_dec:{img:'final_pelea',ch:'',tt:'DECISIÓN FINAL',sb:'Cinco finales posibles',spk:'LIN',
+lurnox_dec:{img:'final_pelea',ch:'',tt:'DECISIÓN FINAL',sb:'No hay pistas. Solo consecuencias.',spk:'LIN',
 txt:`El portal tiembla. Lurnox está adelante. La ciudad atrás.
 
-Queda una última decisión. No hay una opción limpia. Solo consecuencias.`,
+Todo lo que hicieron antes pesa ahora: a quién mataron, a quién dejaron vivo, a quién salvaron y cuánto Eco les queda.
+
+No hay una opción limpia. Solo consecuencias.`,
 choices:[
-  {t:'Cerrar el portal con los tres Ecos unidos',d:'Final bueno: salvan Lustonia y sellan la grieta.',tag:'FINAL BUENO A',tc:'var(--c)',next:'endA',hp:-10,eco:0},
-  {t:'Usar el Eco de Lin como ancla',d:'Final bueno con sacrificio: la ciudad vive, pero Lin paga el precio.',tag:'FINAL BUENO B',tc:'var(--lin)',next:'endB',hp:-25,eco:-20},
-  {t:'Dejar que Lurnox vuelva por el portal',d:'Final medio: se va, pero la amenaza queda abierta.',tag:'FINAL MEDIO',tc:'var(--lurnox)',next:'endC',hp:0,eco:0},
-  {t:'Intentar controlar a Lurnox',d:'Final malo: lo contenés un segundo, pero rompe el control.',tag:'FINAL MALO A',tc:'var(--mirex)',next:'endD',hp:-20,eco:-20},
-  {t:'Atacar sin estrategia',d:'Final malo: el portal se abre por completo.',tag:'FINAL MALO B',tc:'#e74c3c',next:'endE',hp:-30,eco:-30},
+  {t:'Unir los tres Ecos contra el portal',d:'Lin, Trini y Zak concentran todo en la grieta.',tag:'SIN VUELTA ATRÁS',tc:'var(--c)',next:'resolve_lurnox',finalMove:'seal',hp:-10,eco:-8},
+  {t:'Anclar el portal al cuerpo de Lin',d:'La tierra puede cerrar la puerta... si Lin aguanta.',tag:'RIESGO EXTREMO',tc:'var(--lin)',next:'resolve_lurnox',finalMove:'anchor',hp:-25,eco:-20},
+  {t:'Forzar a Lurnox a cruzar de regreso',d:'No lo destruyen: lo empujan al otro lado.',tag:'JUGADA INESTABLE',tc:'var(--lurnox)',next:'resolve_lurnox',finalMove:'return',hp:-5,eco:-5},
+  {t:'Encerrar a Lurnox dentro del Eco combinado',d:'Usar la misma frecuencia que los unió como prisión.',tag:'CONTROL IMPOSIBLE',tc:'var(--mirex)',next:'resolve_lurnox',finalMove:'control',hp:-18,eco:-18},
+  {t:'Atacar a Lurnox de frente',d:'Todo el poder restante en un solo golpe.',tag:'TODO O NADA',tc:'#e74c3c',next:'resolve_lurnox',finalMove:'attack',hp:-22,eco:-22},
 ]},
 
+resolve_lurnox:{resolveFinal:true},
 endA:{end:true,type:'A'},endB:{end:true,type:'B'},endC:{end:true,type:'C'},endD:{end:true,type:'D'},endE:{end:true,type:'E'},
 };
 
@@ -725,6 +730,7 @@ function bars(){$i('bHp').style.width=Math.max(0,hp)+'%';$i('bEco').style.width=
 function showNode(id){
   const d=S[id];if(!d)return;cur=id;
   if(d.end){showEnd(d.type);return}
+  if(d.resolveFinal){showEnd(calcLurnoxFinal());return}
   playMusic(musicForNode(id,d));
   if(d.hp){hp=Math.max(0,Math.min(100,hp+d.hp));bars();if(d.hp<0)sndShake()}
   if(d.eco){eco=Math.max(0,Math.min(100,eco+d.eco));bars();if(d.eco>0)sndEco()}
@@ -770,9 +776,23 @@ function showChoices(cs){
     const nums=['①','②','③','④','⑤','⑥'];const tc=c.tc||'var(--c)';
     const ts='color:'+tc+';border-color:'+tc+'55;background:'+tc+'18';
     b.innerHTML='<div class="cn">'+nums[i]+'</div><div class="cbo"><div class="ct">'+c.t+'</div>'+(c.d?'<div class="cd">'+c.d+'</div>':'')+(c.tag?'<div class="ctg" style="'+ts+'">'+c.tag+'</div>':'')+'</div>';
-    b.addEventListener('click',()=>{sndClick();if(c.hp){hp=Math.max(0,Math.min(100,hp+c.hp));bars()}if(c.eco){eco=Math.max(0,Math.min(100,eco+c.eco));bars()}$i('ch').innerHTML='';showNode(c.next)});
+    b.addEventListener('click',()=>{sndClick();if(c.next&&c.next.includes('_kill'))stats.kills++;if(c.next&&c.next.includes('_capture'))stats.captures++;if(c.next&&c.next.includes('_escape'))stats.escapes++;if(c.next==='save_trini')stats.saved='trini';if(c.next==='save_zak')stats.saved='zak';if(c.next==='save_both')stats.saved='both';if(c.finalMove)stats.finalMove=c.finalMove;if(c.hp){hp=Math.max(0,Math.min(100,hp+c.hp));bars()}if(c.eco){eco=Math.max(0,Math.min(100,eco+c.eco));bars()}$i('ch').innerHTML='';showNode(c.next)});
     w.appendChild(b);
   });
+}
+
+
+function calcLurnoxFinal(){
+  const danger = stats.escapes + (stats.saved==='zak'?1:0) + (hp<35?1:0) + (eco<25?1:0);
+  const mercy = stats.captures;
+  const blood = stats.kills;
+  const move = stats.finalMove;
+  if(move==='seal') return danger<=1 ? 'A' : 'C';
+  if(move==='anchor') return (hp>=25 && blood<=2) ? 'B' : 'D';
+  if(move==='return') return 'C';
+  if(move==='control') return (mercy>=2 && eco>=30) ? 'C' : 'D';
+  if(move==='attack') return (blood>=3 && eco>=45 && danger<=2) ? 'A' : 'E';
+  return danger>=3 ? 'E' : 'C';
 }
 
 function showEnd(type){
@@ -810,10 +830,10 @@ Lin, Trini y Zak caen, pero sus Ecos no se apagan.`,quote:'"A VECES PERDER ES SO
 }
 
 $i('btnCover').addEventListener('click',()=>{try{AC.resume()}catch(e){}sndCont();playMusic('menu');showScreen('sIntro')});
-$i('btnIntro').addEventListener('click',()=>{try{AC.resume()}catch(e){}sndCont();playMusic('story');hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA · UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
-$i('btnPlay').addEventListener('click',()=>{sndCont();playMusic('story');hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
+$i('btnIntro').addEventListener('click',()=>{try{AC.resume()}catch(e){}sndCont();playMusic('story');resetRun();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA · UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
+$i('btnPlay').addEventListener('click',()=>{sndCont();playMusic('story');resetRun();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
 $i('cont').addEventListener('click',()=>{sndCont();const d=S[cur];if(d&&d.next){$i('cont').style.display='none';showNode(d.next)}});
-$i('btnR').addEventListener('click',()=>{hp=100;eco=0;showScreen('sCover');playMusic('menu')});
+$i('btnR').addEventListener('click',()=>{resetRun();showScreen('sCover');playMusic('menu')});
 </script>
 </body>
 </html>
