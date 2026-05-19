@@ -122,8 +122,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
 <div id="app">
 
 <!-- INTRO -->
-<div id="sIntro" class="screen active">
-  <div class="intro-content">
+<div id="sIntro" class="screen" style="background:url('sc_valmora.png') center/cover no-repeat">
+  <div style="position:absolute;inset:0;background:rgba(0,0,0,.75)"></div>
+  <div class="intro-content" style="position:relative;z-index:2">
     <div class="intro-logo">DUAL</div>
     <div class="intro-divider"></div>
     <div class="intro-text">
@@ -138,12 +139,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#dde
     </div>
     <div class="intro-divider"></div>
     <div class="intro-sub">EL ECO NUNCA SE FUE</div>
-    <button class="btn-p" id="btnIntro"><span class="bsh"></span><span class="btxt">CONTINUAR &#9654;</span></button>
+    <button class="btn-p" id="btnIntro"><span class="bsh"></span><span class="btxt">&#9654; &nbsp;COMENZAR HISTORIA</span></button>
+  </div>
   </div>
 </div>
 
 <!-- MENU -->
-<div id="sMenu" class="screen">
+<div id="sMenu" class="screen active">
   <div class="mc">
     <div class="mc-top"></div>
     <div style="text-align:center">
@@ -244,6 +246,24 @@ const IMG={
   'final_pelea':'sc_final_pelea.png',
   'final_victoria':'sc_final_victoria.png',
   'final_grieta':'sc_final_grieta.png',
+  'aeronyx_habla':'sc_aeronyx_habla.png',
+  'lurnox_habla':'sc_lurnox_habla.png',
+  'borinex_ataca':'sc_borinex_ataca.png',
+  'ferronix_habla':'sc_ferronix_habla.png',
+  'ferronix_ataca':'sc_ferronix_ataca.png',
+  'mirex_habla':'sc_mirex_habla.png',
+  'lin_combate':'sc_lin_combate.png',
+  'lin_trini_avanza':'sc_lin_trini_avanza.png',
+  'explosion':'sc_explosion.png',
+  'ciudad_lluvia':'sc_ciudad_lluvia.png',
+  'valmora':'sc_valmora.png',
+  'sc_aeronyx_ataca':'sc_aeronyx_ataca.png',
+  'sc_borinex_ataca':'sc_borinex_ataca.png',
+  'sc_borinex_cae':'sc_borinex_cae.png',
+  'sc_ferronix_ataca':'sc_ferronix_ataca.png',
+  'ferronix_habla':'sc_ferronix_habla.png',
+  'mirex_habla':'sc_mirex_habla.png',
+  'lin_trini_avanza':'sc_lin_trini_avanza.png',
 };
 
 function setScene(key){
@@ -286,7 +306,7 @@ s04c:{img:'room',spk:'LIN',
 txt:'Levanta rocas. Las mueve. Las lanza. Las detiene en el aire.\n\nAprende en diez minutos lo que otros tardarian semanas.\n\nEl Eco pulsa mas fuerte. Esta listo. O eso cree.',next:'s05'},
 
 // ACTO 2 - CALLES
-s05:{img:'streets',ch:'ACTO 2',tt:'LAS CALLES',sb:'Lustonia - Zona Roja',spk:'NARRADOR',
+s05:{img:'ciudad_lluvia',ch:'ACTO 2',tt:'LAS CALLES',sb:'Lustonia - Zona Roja',spk:'NARRADOR',
 txt:'Los militares no estan bien. Ojos nublados con un velo negro que no es humano.\n\nEn las paredes: "SEGURIDAD. ORDEN. PAZ. CON EL ECO TODO ES POSIBLE."\n\nLin reconoce el patron. Son como los de Valmora. Corruptos por una entidad.',next:'s06'},
 
 s06:{img:'streets',spk:'LIN',
@@ -310,10 +330,10 @@ txt:'Corre hacia el edificio. Un militar dispara — la bala arranca pedazos de 
 s08:{img:'aeronyx_aparece',ch:'ACTO 3',tt:'AERONYX',sb:'Primer guardian de Lurnox',spk:'NARRADOR',
 txt:'El viento cambia de repente. Se vuelve frio, cortante, antinatural.\n\nUna figura emerge del aire entre los militares. Sus ojos grises brillan como una tormenta.\n\nAeronyx. El primero de los guardianes de Lurnox. Control total del viento.',next:'s09'},
 
-s09:{img:'aeronyx_aparece',spk:'AERONYX',
+s09:{img:'aeronyx_habla',spk:'AERONYX',
 txt:'"Custodio. Llegaste tarde. Esta ciudad ya pertenece a Lurnox."\n\nSu voz suena como una tormenta dentro de un edificio. Los militares corruptos forman un circulo apretado alrededor de Lin.\n\n"Rendite ahora. O terminas como ellos."',next:'s10'},
 
-s10:{img:'aeronyx_aparece',spk:'LIN',
+s10:{img:'aeronyx_habla',spk:'LIN',
 txt:'Aeronyx flota sobre el suelo. El viento a su alrededor mueve los escombros como si fueran hojas.\n\nLin siente el Eco pulsar en sus manos. Las rocas del suelo vibran.\n\nTiene una oportunidad. Una sola.',
 choices:[
   {t:'Atacar primero — rocas masivas',d:'Si ataca antes de que el viento crezca, tiene chance.',tag:'HP -15 - ECO +10',tc:'var(--earth)',next:'s11a',hp:-15,eco:10},
@@ -321,13 +341,13 @@ choices:[
   {t:'Escapar del circulo de militares',d:'No podes ganar solo. Todavia no.',tag:'HP -8 - ECO +5',tc:'#cc4020',next:'s11c',hp:-8,eco:5},
 ]},
 
-s11a:{img:'lin_vs_aeronyx',shake:true,spk:'LIN',
+s11a:{img:'sc_aeronyx_ataca',spk:'LIN',shake:true,
 txt:'Lin lanza tres bloques enormes de pavimento al mismo tiempo.\n\nAeronyx los desvía con rafagas — uno, dos, tres — pero el cuarto lo toma de sorpresa en el hombro.\n\nRetrocede. Furioso. El Eco de Lin late con mas fuerza.',next:'s12'},
 
-s11b:{img:'lin_vs_aeronyx',spk:'NARRADOR',
+s11b:{img:'sc_aeronyx_ataca',spk:'NARRADOR',
 txt:'"Eso es todo lo que sos? Viento?"\n\nAeronyx ataca furioso. Las rafagas revelan el patron: siempre ataca de izquierda a derecha, nunca en diagonal.\n\nEl costo es alto — Lin recibe tres golpes. Pero ahora sabe como moverse.',next:'s12'},
 
-s11c:{img:'lin_caido',shake:true,spk:'NARRADOR',
+s11c:{img:'sc_aeronyx_ataca',shake:true,spk:'NARRADOR',
 txt:'Lin rompe el circulo de militares con una explosion de tierra. Corre.\n\nAeronyx lanza una rafaga que lo levanta del suelo y lo estrella contra una pared.\n\nCae. Aeronyx se acerca lentamente, sin apuro.',next:'s12'},
 
 s12:{img:'lin_caido',spk:'NARRADOR',
@@ -347,13 +367,13 @@ choices:[
   {t:'Pelear cada uno por su cuenta',d:'No la conoces todavia. Cada uno hace lo suyo.',tag:'HP -10 - ECO +5',tc:'var(--c)',next:'s16b',hp:-10,eco:5},
 ]},
 
-s16a:{img:'lin_trini',spk:'TRINI',
+s16a:{img:'lin_trini_avanza',spk:'TRINI',
 txt:'"Bien. Cuando yo desaparezca, lanza todo hacia arriba. Todo. Sin mirar donde cae."\n\nTrini se disuelve. Lin lanza. El aire se llena de rocas girando.\n\nTrini materializa DETRAS de Aeronyx con una roca enorme que Lin dirigio sin saberlo.',next:'s17'},
 
-s16b:{img:'lin_vs_aeronyx',shake:true,spk:'NARRADOR',
+s16b:{img:'sc_aeronyx_ataca',shake:true,spk:'NARRADOR',
 txt:'Lin ataca por la izquierda. Trini por la derecha. Sin coordinacion, Aeronyx los separa con una rafaga.\n\nPero en el caos, Lin ve el patron. Y lanza la roca mas grande que pudo levantar.',next:'s17'},
 
-s17:{img:'lin_vs_aeronyx',shake:true,spk:'NARRADOR',
+s17:{img:'sc_aeronyx_ataca',shake:true,spk:'NARRADOR',
 txt:'Aeronyx bloquea con viento. Pero Lin ya aprendio — lanza por las diagonales.\n\nLa primera roca lo distrae. La segunda lo golpea en el pecho. La tercera...\n\nAeronyx cae de rodillas. El viento a su alrededor se debilita.',next:'s18'},
 
 s18:{img:'aeronyx_cae',spk:'AERONYX',
@@ -371,19 +391,19 @@ choices:[
   {t:'Ambos juntos — trampa coordinada',d:'Lin como anzuelo, Trini en la sombra esperando.',tag:'HP -8 - ECO +12',tc:'var(--c)',next:'s21c',hp:-8,eco:12},
 ]},
 
-s21a:{img:'borinex_golpea',shake:true,spk:'LIN',
+s21a:{img:'sc_borinex_ataca',shake:true,spk:'LIN',
 txt:'Rocas de todos los tamaños llenan el aire. Borinex esquiva la primera docena sin problema.\n\nPero la decimo tercera — una que Lin no lanzo sino que hizo girar en circulos — lo atrapa en el hombro.\n\nUn segundo. Solo uno. Trini lo usa.',next:'s22'},
 
-s21b:{img:'borinex_golpea',spk:'TRINI',
+s21b:{img:'sc_borinex_ataca',spk:'TRINI',
 txt:'Trini cierra los ojos. El Eco le muestra las sombras que Borinex deja al moverse.\n\nVe el patron. Siempre toca el suelo en el mismo punto antes de cada ataque.\n\nSe disuelve. Viaja. Cuando Borinex llega, Trini ya esta ahi.',next:'s22'},
 
-s21c:{img:'lin_trini',spk:'NARRADOR',
+s21c:{img:'lin_trini_avanza',spk:'NARRADOR',
 txt:'Lin se queda quieto. Un anzuelo obvio.\n\nBorinex cae en la trampa — aparece directo sobre Lin.\n\nTrini emerge de la sombra de Lin mismo y golpea hacia arriba. El impacto lo desestabiliza por completo.',next:'s22'},
 
-s22:{img:'borinex_golpea',shake:true,spk:'NARRADOR',
+s22:{img:'sc_borinex_ataca',shake:true,spk:'NARRADOR',
 txt:'Borinex pierde el control de su velocidad por un segundo.\n\nUn segundo es todo lo que necesitaban.\n\nLin lanza un bloque que lo aplasta contra la pared. La velocidad no sirve si no podes moverte.',next:'s23'},
 
-s23:{img:'borinex_aparece',spk:'BORINEX',
+s23:{img:'sc_borinex_cae',spk:'BORINEX',
 txt:'"Imposible... nadie me habia..." Sus ojos naranjas se apagan uno por uno.\n\n"Lurnox va a destruirlos personalmente."\n\nCae. Segundo guardian vencido.\n\nTrini se sienta en los escombros. "Necesitamos refuerzos."',next:'s24'},
 
 // ZAK
@@ -404,7 +424,7 @@ s26b:{img:'zak_sotano',spk:'TRINI',
 txt:'"Lin. Necesitamos lo que sabe."\n\n"No lo conozco."\n\n"Tampoco me conocias a mi."\n\nSilencio. Luego Lin mira a Zak. "Venis. Pero al frente mio, en todo momento."\n\nZak asiente. No discute.',next:'s27'},
 
 // MIREX
-s27:{img:'mirex_aparece',ch:'ACTO 7',tt:'MIREX',sb:'Dominio Psiquico - La mente es el campo',spk:'MIREX',
+s27:{img:'mirex_habla',ch:'ACTO 7',tt:'MIREX',sb:'Dominio Psiquico - La mente es el campo',spk:'MIREX',
 txt:'La voz llega desde adentro de la cabeza. No desde afuera.\n\n"Custodios. Tres juntos. Que tierno."\n\n"Vamos a ver si siguen juntos cuando sepan la verdad el uno del otro."',next:'s28'},
 
 s28:{img:'lin_ilusiones',spk:'NARRADOR',
@@ -415,7 +435,7 @@ choices:[
   {t:'Dejarse llevar por las ilusiones',d:'Y si son verdad. Y si Valmora ya cayo.',tag:'HP -25 - ECO -15 - TRAMPA',tc:'#cc2020',next:'s29c',hp:-25,eco:-15},
 ]},
 
-s29a:{img:'mirex_aparece',spk:'ZAK',
+s29a:{img:'mirex_habla',spk:'ZAK',
 txt:'"Son mentiras! Mirex opera con miedo — no tiene acceso real a Valmora!"\n\nZak emite un pulso electromagnetico desde los cuatro celulares al mismo tiempo.\n\nLa interferencia choca con el campo psiquico de Mirex. Las ilusiones se fragmentan como vidrio roto.',next:'s30'},
 
 s29b:{img:'lin_trini',spk:'LIN',
@@ -434,7 +454,7 @@ txt:'"Lurnox... ya sabe que estan aqui. Ya los vio."\n\nSus ojos bordo se apagan
 s32:{img:'ferronix_aparece',ch:'ACTO 8',tt:'FERRONIX',sb:'Telekinesis Metalica',spk:'NARRADOR',
 txt:'El sonido llega primero. Un crujido enorme. Metalico.\n\nTodo el metal de tres cuadras se levanta al mismo tiempo.\n\nAutos. Rejas. Postes. Cables. Una armadura de ciudad completa que obedece a Ferronix.',next:'s33'},
 
-s33:{img:'ferronix_aparece',spk:'FERRONIX',
+s33:{img:'ferronix_habla',spk:'FERRONIX',
 txt:'"Tres custodios. Llegaron hasta aca. Respeto."\n\nNo hay burla en su voz. Solo frialdad.\n\n"Pero hasta aca llegan."\n\nUn auto volcado levanta vuelo y viene directo hacia los tres.',
 choices:[
   {t:'Lin: tierra contra metal — la piedra fue primero',d:'Las rocas no obedecen a Ferronix. Esa es la ventaja.',tag:'HP -12 - ECO +15',tc:'var(--earth)',next:'s34a',hp:-12,eco:15},
@@ -442,13 +462,13 @@ choices:[
   {t:'Trini: atacar desde las sombras del metal mismo',d:'El metal proyecta sombras enormes. Trini puede viajar por ellas.',tag:'HP -8 - ECO +12',tc:'var(--smoke)',next:'s34c',hp:-8,eco:12},
 ]},
 
-s34a:{img:'lin_vs_ferronix',shake:true,spk:'LIN',
+s34a:{img:'sc_ferronix_ataca',shake:true,spk:'LIN',
 txt:'Bloques de pavimento enormes — del tamaño de autos — vuelan contra el metal de Ferronix.\n\nPiedra contra acero. La tierra siempre fue primero.\n\nEl metal cede bajo el peso de las rocas. La armadura de Ferronix colapsa pieza por pieza.',next:'s35'},
 
-s34b:{img:'tres_juntos',spk:'ZAK',
+s34b:{img:'sc_ferronix_ataca',spk:'ZAK',
 txt:'Cuatro celulares. Un solo pulso sincronizado.\n\nEl campo electromagnetico de Ferronix colapsa en milisegundos. Todo el metal cae al suelo al mismo tiempo.\n\nEl ruido es ensordecedor. Ferronix queda parado en medio de un cementerio de hierro.',next:'s35'},
 
-s34c:{img:'lin_trini',spk:'TRINI',
+s34c:{img:'sc_ferronix_ataca',spk:'TRINI',
 txt:'El metal proyecta sombras enormes y densas. Perfectas.\n\nTrini desaparece y reaparece dentro de la armadura de Ferronix — golpeandolo desde adentro donde el metal no puede protegerlo.\n\nFerronix no tiene respuesta para eso.',next:'s35'},
 
 s35:{img:'ferronix_cae',shake:true,spk:'NARRADOR',
@@ -458,10 +478,10 @@ txt:'Ferronix cae. El cuarto y ultimo guardian antes de Lurnox.\n\nLin, Trini y 
 s36:{img:'lurnox_portal',ch:'ACTO FINAL',tt:'LURNOX',sb:'El centro de Lustonia',spk:'NARRADOR',
 txt:'El centro de la ciudad.\n\nUna grieta en el suelo brilla con luz turquesa corrompida. El portal.\n\nY en el medio de todo: Lurnox. Sus ojos arden con un color que no es de este plano.\n\nEs mas grande que los otros. Mas antiguo. Mas inteligente.',next:'s37'},
 
-s37:{img:'lurnox_aparece',shake:true,spk:'LURNOX',
+s37:{img:'lurnox_habla',shake:true,spk:'LURNOX',
 txt:'"Llegaron los tres custodios de Lustonia."\n\nNo hay sorpresa en su voz. Los esperaba.\n\n"En Valmora, Tronox tiene a los suyos ocupados. Aqui, yo tenia los mios cuidandome el camino.\n\nY aun asi llegaron. Interesante."\n\nEl portal detras de el pulsa con mas fuerza.',next:'s38'},
 
-s38:{img:'lurnox_aparece',spk:'LIN',
+s38:{img:'lurnox_habla',spk:'LIN',
 txt:'Lin siente el Eco en sus manos mas intenso que nunca. Las rocas del suelo vibran.\n\nTrini esta lista en las sombras. Zak tiene los cuatro celulares cargados.\n\nUna oportunidad.',
 choices:[
   {t:'Atacar todo junto — sin estrategia, pura fuerza',d:'Los tres Ecos unidos generan algo que Lurnox no espera.',tag:'HP -20 - ECO +15',tc:'var(--earth)',next:'s39a',hp:-20,eco:15},
@@ -472,7 +492,7 @@ choices:[
 s39a:{img:'final_pelea',shake:true,spk:'NARRADOR',
 txt:'Los tres lanzan todo al mismo tiempo.\n\nRocas. Sombras. Pulsos electromagneticos. Lurnox absorbe los primeros golpes.\n\nPero los tres Ecos juntos crean una frecuencia que el no puede procesar. El portal tiembla.\n\nLurnox retrocede. Por primera vez.',next:'s40'},
 
-s39b:{img:'lurnox_aparece',spk:'LURNOX',
+s39b:{img:'lurnox_habla',spk:'LURNOX',
 txt:'Lurnox se detiene. Sorprendido genuinamente.\n\n"Quieren saber?" Pausa larga.\n\n"En Aethrium no hay lugar para los que somos como yo. Ninguno de nosotros eligio ser lo que somos. Tronox prometio un lugar."\n\nUn segundo de algo que parece dolor real.',next:'s40'},
 
 s39c:{img:'final_pelea',shake:true,spk:'ZAK',
@@ -481,7 +501,7 @@ txt:'"El edificio de la izquierda — vigas de acero. Si Ferronix pudo moverlas,
 s40:{img:'final_pelea',shake:true,spk:'NARRADOR',
 txt:'Los tres Ecos se unen. Tierra. Sombra. Tecnologia.\n\nUna frecuencia imposible. El portal colapsa a medias. El rayo turquesa se debilita por primera vez desde que aparecio.\n\nLurnox esta de rodillas. El Eco de los tres esta casi agotado.\n\nDecision final.',next:'s41'},
 
-s41:{img:'lurnox_aparece',ch:'',tt:'DECISION FINAL',sb:'No hay vuelta atras',spk:'LIN',
+s41:{img:'lurnox_habla',ch:'',tt:'DECISION FINAL',sb:'No hay vuelta atras',spk:'LIN',
 txt:'Lurnox de rodillas. El portal medio cerrado.\n\nEl Eco de los tres casi agotado.\n\nUna oportunidad. La ultima.',
 choices:[
   {t:'Cerrar el portal — todo el Eco ahora',d:'Puede destruir a Lurnox. Puede destruirlos a ustedes tambien.',tag:'FINAL A',tc:'var(--c)',next:'endA',hp:0,eco:0},
@@ -566,7 +586,7 @@ function showEnd(type){
 $i('btnIntro').addEventListener('click',()=>{try{AC.resume()}catch(e){}sndCont();showScreen('sMenu')});
 $i('btnPlay').addEventListener('click',()=>{sndCont();hp=100;eco=0;bars();$i('hudT').textContent='DUAL';$i('hudS').textContent='LUSTONIA \u00b7 UN ECO QUE DESPIERTA';showScreen('sGame');setTimeout(()=>showNode('intro'),300)});
 $i('cont').addEventListener('click',()=>{sndCont();const d=S[cur];if(d&&d.next){$i('cont').style.display='none';showNode(d.next)}});
-$i('btnR').addEventListener('click',()=>{hp=100;eco=0;showScreen('sIntro')});
+$i('btnR').addEventListener('click',()=>{hp=100;eco=0;showScreen('sMenu')});
 </script>
 </body>
 </html>
