@@ -71,6 +71,45 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 .toast-soon{position:absolute;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);min-width:min(86vw,360px);padding:20px 18px;border-radius:22px;background:rgba(0,0,0,.72);border:1px solid rgba(0,229,255,.35);box-shadow:0 0 60px rgba(0,229,255,.18);backdrop-filter:blur(12px);text-align:center;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}.toast-soon.show{opacity:1;transform:translate(-50%,-50%) scale(1)}.toast-soon .t1{font-family:var(--ff2);font-size:1.4rem;letter-spacing:.18em;color:#fff;text-shadow:0 0 16px var(--cyan)}.toast-soon .t2{font-family:var(--ff4);font-size:.72rem;letter-spacing:.25em;color:rgba(0,229,255,.82);margin-top:8px}
 @media (max-height:650px){.cover-ui .tagline{display:none}.character-selector{top:14px;gap:9px}.char-dot{width:29px;height:29px}.btn-main{padding:16px 18px!important}}
 
+
+/* ===== CAMPAÑAS EN PORTADA: fondo individual + semáforo activo ===== */
+.cover-ui .tagline{display:none!important}
+.cover-bg.campaign-locked{
+  filter:grayscale(.62) saturate(.72) contrast(1.02) brightness(.55)!important;
+}
+.cover-bg.campaign-lin{
+  filter:saturate(1.12) contrast(1.08) brightness(.96)!important;
+}
+.char-dot{
+  width:36px!important;
+  height:36px!important;
+  font-size:8px!important;
+  letter-spacing:.04em!important;
+}
+.char-dot.lin{
+  color:#fff!important;
+  background:radial-gradient(circle at 35% 25%,#ffd7a7 0%,#b87832 36%,#3f1f0c 82%)!important;
+  border-color:rgba(255,213,168,.95)!important;
+}
+.char-dot.lin.active{
+  box-shadow:0 0 12px #ffd7a7,0 0 30px rgba(184,120,50,.95),0 0 62px rgba(184,120,50,.52)!important;
+  animation:linPulse 1.85s ease-in-out infinite!important;
+}
+.char-dot.trini,.char-dot.zack{
+  opacity:.42!important;
+}
+.char-dot.trini.active,.char-dot.zack.active{
+  opacity:.92!important;
+}
+.character-selector{
+  top:calc(18px + env(safe-area-inset-top))!important;
+  right:14px!important;
+}
+@media (max-width:420px){
+  .char-dot{width:34px!important;height:34px!important;font-size:7px!important}
+  .character-selector{gap:11px!important;padding:10px 8px!important}
+}
+
 </style>
 </head>
 <body>
@@ -80,9 +119,9 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
   <div class="cover-bg" id="coverBg"></div>
   <div class="cover-shade"></div>
   <div class="character-selector" aria-label="Selector de campañas">
-    <button class="char-dot lin" id="selLin" title="Lin disponible" type="button">IN<span class="label">LIN · DISPONIBLE</span></button>
-    <button class="char-dot trini locked" id="selTrini" title="Trini próximamente" type="button">T<span class="label">TRINI · PRÓXIMAMENTE</span></button>
-    <button class="char-dot zack locked" id="selZack" title="Zack próximamente" type="button">Z<span class="label">ZACK · PRÓXIMAMENTE</span></button>
+    <button class="char-dot lin active" id="selLin" title="Lin disponible" type="button">LIN<span class="label">LIN · DISPONIBLE</span></button>
+    <button class="char-dot trini locked" id="selTrini" title="Trini próximamente" type="button">TRI<span class="label">TRINI · PRÓXIMAMENTE</span></button>
+    <button class="char-dot zack locked" id="selZack" title="Zack próximamente" type="button">ZAK<span class="label">ZACK · PRÓXIMAMENTE</span></button>
   </div>
   <div class="toast-soon" id="toastSoon"><div class="t1" id="toastTitle">PRÓXIMAMENTE</div><div class="t2">NUEVA CAMPAÑA EN DESARROLLO</div></div>
   <div class="cover-brand" aria-hidden="true">
@@ -120,7 +159,11 @@ function vib(n=20){if(navigator.vibrate)navigator.vibrate(n)}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
 function bars(){state.hp=Math.max(0,Math.min(100,state.hp));state.eco=Math.max(0,Math.min(100,state.eco));$('hpBar').style.width=state.hp+'%';$('ecoBar').style.width=state.eco+'%';$('hpTxt').textContent=Math.round(state.hp);$('ecoTxt').textContent=Math.round(state.eco)}
 const IMG_ALIASES={
- cover:['cover.png','cover_dual.png',EMBED_COVER], room:['Lindespertandoconeleco.png'], room2:['Linmirandoventanadestruccion.png'], door:['Linenlapuertadudasisalir.png'], ray:['Linveelrayodeluz.png'], streets:['Linescondidomilitares.png','sc_ciudad_lluvia.png'], raincity:['sc_ciudad_lluvia.png'], linfight:['sc_lin_pelea_militares.png','sc_lin_combate.png'],
+ cover:['cover.png','cover_dual.png','portada_dual.png','dual_portada.png',EMBED_COVER],
+ cover_main:['cover.png','cover_dual.png','portada_dual.png','dual_portada.png',EMBED_COVER],
+ cover_lin:['cover_lin.png','lin_cover.png','portada_lin.png','lin_portada.png','Lin.png','lin.png','cover.png','cover_dual.png',EMBED_COVER],
+ cover_trini:['cover_trini.png','trini_cover.png','portada_trini.png','trini_portada.png','Trini.png','trini.png','cover.png','cover_dual.png',EMBED_COVER],
+ cover_zack:['cover_zack.png','zack_cover.png','portada_zack.png','zack_portada.png','Zak.png','Zack.png','zack.png','cover.png','cover_dual.png',EMBED_COVER], room:['Lindespertandoconeleco.png'], room2:['Linmirandoventanadestruccion.png'], door:['Linenlapuertadudasisalir.png'], ray:['Linveelrayodeluz.png'], streets:['Linescondidomilitares.png','sc_ciudad_lluvia.png'], raincity:['sc_ciudad_lluvia.png'], linfight:['sc_lin_pelea_militares.png','sc_lin_combate.png'],
  aer_appear:['sc_aeronyx_aparece.png','sc_aeronyx_aparece.jpg','sc_aeronyx_aparece.jpeg'], aer_talk:['sc_aeronyx_habla.png','sc_aeronyx_aparece.png'], aer_attack:['sc_aeronyx_ataca.png','sc_lin_vs_aeronyx.png','sc_aeronyx_aparece.png'], aer_down:['sc_aeronyx_cae.png','sc_aeronyx_ataca.png'],
  trini:['sc_trini_aparece.png'], lintrini:['sc_lin_trini_juntos.png','sc_lin_trini_avanza.png'], parasites:['sc_explosion.png','sc_ciudad_lluvia.png'],
  bor_appear:['sc_borinex_aparece.png','sc_borinex_aparece.jpg','sc_borinex_ataca.png'], bor_attack:['sc_borinex_ataca.png','sc_borinex_golpea.png','sc_borinex_aparece.png'], bor_down:['sc_borinex_cae.png','sc_borinex_golpea.png','sc_borinex_ataca.png'],
@@ -134,7 +177,7 @@ function setBg(el,key){
   function apply(src){el.style.backgroundImage=`url("${src}")`}
   function tryNext(){
     if(i>=list.length){
-      if(key==='cover') apply(EMBED_COVER); else el.style.backgroundImage='radial-gradient(ellipse at center,rgba(0,229,255,.18),#000 65%)';
+      if(String(key).startsWith('cover')) apply(EMBED_COVER); else el.style.backgroundImage='radial-gradient(ellipse at center,rgba(0,229,255,.18),#000 65%)';
       return;
     }
     const raw=list[i++];
@@ -152,7 +195,7 @@ function setBg(el,key){
   }
   tryNext();
 }
-setBg($('coverBg'),'cover');
+setBg($('coverBg'),'cover_main');
 function sceneBg(key){setBg($('scene'),key||'raincity')}
 function apply(delta){if(!delta)return;for(const [k,v] of Object.entries(delta)){if(typeof state[k]==='number')state[k]+=v;else state[k]=v}bars()}
 function teamCount(){return 1+(state.trini==='alive'?1:0)+(state.zack==='alive'?1:0)}
@@ -236,14 +279,33 @@ const S={
   {t:'Proteger al equipo que queda',d:'Tal vez ganar no sea lo único.',tag:'SACRIFICIO',color:C.green,delta:{hp:-8,triniTrust:2,zackTrust:2},next:()=>{state.finalChoice='protect';ending()}}]}
 };
 
+function setCampaign(name, locked=false){
+  const bg=$('coverBg');
+  if(bg){
+    bg.classList.toggle('campaign-locked', !!locked);
+    bg.classList.toggle('campaign-lin', name==='lin' && !locked);
+  }
+  ['selLin','selTrini','selZack'].forEach(id=>{
+    const b=$(id);
+    if(!b) return;
+    b.classList.remove('active');
+  });
+  const activeId = name==='trini' ? 'selTrini' : name==='zack' ? 'selZack' : 'selLin';
+  const activeBtn=$(activeId);
+  if(activeBtn) activeBtn.classList.add('active');
+  setBg(bg, name==='trini' ? 'cover_trini' : name==='zack' ? 'cover_zack' : 'cover_lin');
+}
 function showSoon(name){
+  setCampaign(name.toLowerCase()==='trini'?'trini':'zack', true);
   const t=$('toastSoon');
   if($('toastTitle')) $('toastTitle').textContent=name+' · PRÓXIMAMENTE';
-  if(t){t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1450)}
+  if(t){t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1500)}
   sfx('mid');
 }
-['selTrini','selZack'].forEach(id=>{const b=$(id); if(b)b.onclick=()=>showSoon(id==='selTrini'?'TRINI':'ZACK')});
-const linBtn=$('selLin'); if(linBtn)linBtn.onclick=()=>sfx('win');
+const triniBtn=$('selTrini'); if(triniBtn) triniBtn.onclick=()=>showSoon('TRINI');
+const zackBtn=$('selZack'); if(zackBtn) zackBtn.onclick=()=>showSoon('ZACK');
+const linBtn=$('selLin'); if(linBtn)linBtn.onclick=()=>{setCampaign('lin',false);sfx('win')};
+setCampaign('lin',false);
 
 $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sfx('mid');show('intro')};$('introBtn').onclick=()=>{vib();node('start')};$('againBtn').onclick=()=>location.reload();bars();
 </script>
