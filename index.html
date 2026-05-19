@@ -560,7 +560,7 @@ s21c:{img:'lin_trini_avanza',spk:'NARRADOR',
 txt:'Lin se queda quieto. Un anzuelo obvio.\n\nBorinex cae en la trampa — aparece directo sobre Lin.\n\nTrini emerge de la sombra de Lin mismo y golpea hacia arriba. El impacto lo desestabiliza por completo.',next:'s22'},
 
 s22:{img:'sc_borinex_ataca',shake:true,spk:'NARRADOR',
-txt:'Borinex pierde el control de su velocidad por un segundo.\n\nUn segundo es todo lo que necesitaban.\n\nLin lanza un bloque que lo aplasta contra la pared. La velocidad no sirve si no podes moverte.',next:'s23'},
+txt:'Borinex pierde el control de su velocidad por un segundo.\n\nUn segundo es todo lo que necesitaban.\n\nLin lanza un bloque que lo aplasta contra la pared. La velocidad no sirve si no podes moverte.',next:'s22b_decision'},
 
 s23:{img:'sc_borinex_cae',spk:'BORINEX',
 txt:'"Imposible... nadie me habia..." Sus ojos naranjas se apagan uno por uno.\n\n"Lurnox va a destruirlos personalmente."\n\nCae. Segundo guardian vencido.\n\nTrini se sienta en los escombros. "Necesitamos refuerzos."',next:'s24'},
@@ -604,7 +604,7 @@ s29c:{img:'lin_ilusiones',shake:true,spk:'NARRADOR',
 txt:'Lin se paraliza. Las ilusiones son demasiado reales.\n\nMirex aprovecha. El ataque psiquico es brutal — como si le vaciaran la memoria.\n\nTrini lo sacude fisicamente. El contacto rompe todo.\n\nLin vuelve. Mas debil. Pero vuelve.',next:'s30'},
 
 s30:{img:'mirex_aparece',shake:true,spk:'NARRADOR',
-txt:'Mirex intenta reconstruir las ilusiones. Pero los tres ya saben el truco.\n\nZak interfiere su campo. Trini ataca desde las sombras que Mirex mismo proyecta. Lin lo aplasta con tierra.\n\nMirex cae. Los tres lo miran caer.',next:'s31'},
+txt:'Mirex intenta reconstruir las ilusiones. Pero los tres ya saben el truco.\n\nZak interfiere su campo. Trini ataca desde las sombras que Mirex mismo proyecta. Lin lo aplasta con tierra.\n\nMirex cae. Los tres lo miran caer.',next:'s30b_decision'},
 
 s31:{img:'mirex_cae',spk:'MIREX',
 txt:'"Lurnox... ya sabe que estan aqui. Ya los vio."\n\nSus ojos bordo se apagan.\n\nLin mira sus manos. El Eco brilla mas intenso que nunca. Como si cada batalla lo hiciera crecer.',next:'s32'},
@@ -622,13 +622,13 @@ choices:[
 ]},
 
 s34a:{img:'sc_ferronix_ataca',shake:true,spk:'LIN',
-txt:'Bloques de pavimento enormes — del tamaño de autos — vuelan contra el metal de Ferronix.\n\nPiedra contra acero. La tierra siempre fue primero.\n\nEl metal cede bajo el peso de las rocas. La armadura de Ferronix colapsa pieza por pieza.',next:'s35'},
+txt:'Bloques de pavimento enormes — del tamaño de autos — vuelan contra el metal de Ferronix.\n\nPiedra contra acero. La tierra siempre fue primero.\n\nEl metal cede bajo el peso de las rocas. La armadura de Ferronix colapsa pieza por pieza.',next:'s34b_decision'},
 
 s34b:{img:'sc_ferronix_ataca',spk:'ZAK',
-txt:'Cuatro celulares. Un solo pulso sincronizado.\n\nEl campo electromagnetico de Ferronix colapsa en milisegundos. Todo el metal cae al suelo al mismo tiempo.\n\nEl ruido es ensordecedor. Ferronix queda parado en medio de un cementerio de hierro.',next:'s35'},
+txt:'Cuatro celulares. Un solo pulso sincronizado.\n\nEl campo electromagnetico de Ferronix colapsa en milisegundos. Todo el metal cae al suelo al mismo tiempo.\n\nEl ruido es ensordecedor. Ferronix queda parado en medio de un cementerio de hierro.',next:'s34b_decision'},
 
 s34c:{img:'sc_ferronix_ataca',spk:'TRINI',
-txt:'El metal proyecta sombras enormes y densas. Perfectas.\n\nTrini desaparece y reaparece dentro de la armadura de Ferronix — golpeandolo desde adentro donde el metal no puede protegerlo.\n\nFerronix no tiene respuesta para eso.',next:'s35'},
+txt:'El metal proyecta sombras enormes y densas. Perfectas.\n\nTrini desaparece y reaparece dentro de la armadura de Ferronix — golpeandolo desde adentro donde el metal no puede protegerlo.\n\nFerronix no tiene respuesta para eso.',next:'s34b_decision'},
 
 s35:{img:'ferronix_cae',shake:true,spk:'NARRADOR',
 txt:'Ferronix cae. El cuarto y ultimo guardian antes de Lurnox.\n\nLin, Trini y Zak se miran. Estan golpeados. Agotados. Pero estan los tres.\n\nUn kilometro hasta el centro. El rayo de Lurnox late como un corazon enfermo.',next:'s36'},
@@ -669,7 +669,7 @@ choices:[
   {t:'No tienen suficiente fuerza — Lurnox gana',d:'La realidad: estan demasiado debiles.',tag:'FINAL D',tc:'#cc2020',next:'endD',hp:0,eco:0},
 ]},
 
-endA:{end:true,type:'A'},endB:{end:true,type:'B'},endC:{end:true,type:'C'},endD:{end:true,type:'D'},
+endA:{end:true,type:'A'},endB:{end:true,type:'B'},endC:{end:true,type:'C'},endD:{end:true,type:'D'},endE:{end:true,type:'E'},
 };
 
 // ENGINE
@@ -708,7 +708,7 @@ function showNode(id){
   const c=COL[d.spk||'NARRADOR']||'var(--c)';
   $i('snam').textContent=d.spk||'NARRADOR';$i('snam').style.color=c;
   $i('sbar').style.background=c;
-  if(d.ch&&d.tt){$i('hudT').textContent=d.tt;$i('hudS').textContent=(d.ch||'')+(d.ch?' · ':'')+'LUSTONIA'}
+  if(d.ch&&d.tt){$i('hudT').textContent=d.tt;$i('hudS').textContent=(d.ch||'')+(d.ch?' - ':'')+'LUSTONIA'}
   $i('ch').innerHTML='';$i('cont').style.display='none';$i('tap').style.display='none';
   typeText(d.txt||'',()=>{
     if(d.choices&&d.choices.length)showChoices(d.choices);
