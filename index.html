@@ -49,6 +49,28 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 /* RESULT */
 #result,#ending{align-items:center;justify-content:center;padding:18px;background:#000}.res-bg{position:absolute;inset:0;background:center/cover no-repeat;opacity:.55;filter:saturate(1.1) contrast(1.08)}.res-bg:after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.32),rgba(0,0,0,.92))}.res-card{position:relative;z-index:5;width:100%;max-width:600px;padding:24px 20px;border-radius:25px;border:1px solid rgba(0,229,255,.35);background:rgba(0,7,13,.70);backdrop-filter:blur(12px);box-shadow:0 0 60px rgba(0,229,255,.12);text-align:center}.res-small{font-family:var(--ff4);font-size:11px;letter-spacing:.35em;color:rgba(0,229,255,.7)}.res-title{font-family:var(--ff1);font-size:clamp(2rem,10vw,4rem);letter-spacing:.08em;margin:12px 0;color:#fff;text-shadow:0 0 25px var(--res,var(--cyan))}.res-text{font-size:clamp(1rem,4vw,1.2rem);line-height:1.5;color:#c8d8e0;white-space:pre-line}.bad{--res:var(--red)}.mid{--res:var(--gold)}.good{--res:var(--cyan2)}
 @media (max-width:560px){.bars{gap:8px}.stat{width:82px}.hud{padding:9px 10px}.panel{padding:17px}.choice{grid-template-columns:auto 1fr;}.tag{grid-column:2}.scene-title .t{font-size:1.7rem}.game-scroll{padding-top:20dvh}.cover-ui{gap:12px;left:14px;right:14px;bottom:calc(22px + env(safe-area-inset-bottom))}.tagline{font-size:9px;letter-spacing:.36em}.btn-main{padding:18px 18px}.intro-card{padding:16px}.intro-text{font-size:1.02rem}.text{line-height:1.6}.scene{background-position:center top}}
+
+
+/* ===== MENU FINAL LIMPIO: portada sin título duplicado + selector vertical tipo semáforo ===== */
+.cover-brand{display:none!important}
+.cover-bg{background-position:center center!important;filter:saturate(1.08) contrast(1.06) brightness(.96)!important}
+.cover-bg:after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,.04) 0%,rgba(0,0,0,.03) 45%,rgba(0,0,0,.52) 78%,rgba(0,0,0,.90) 100%)!important}
+.cover-shade{background:linear-gradient(to bottom,rgba(0,0,0,.05),transparent 38%,rgba(0,0,0,.30) 74%,#000 100%)!important}
+.cover-ui{bottom:calc(22px + env(safe-area-inset-bottom))!important;left:22px!important;right:22px!important;gap:10px!important;z-index:12!important}
+.cover-ui .tagline{font-size:10px!important;letter-spacing:.34em!important;color:rgba(210,245,255,.82)!important;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:7px 10px;backdrop-filter:blur(7px);align-self:center;max-width:100%}
+.btn-main{border-radius:18px!important;background:linear-gradient(90deg,rgba(0,229,255,.10),rgba(0,229,255,.25),rgba(0,229,255,.10))!important;box-shadow:0 0 28px rgba(0,229,255,.32),inset 0 0 28px rgba(0,229,255,.10)!important}
+.character-selector{position:absolute;top:calc(20px + env(safe-area-inset-top));right:16px;z-index:30;display:flex;flex-direction:column;align-items:center;gap:13px;padding:11px 9px;border-radius:999px;background:rgba(0,0,0,.26);border:1px solid rgba(255,255,255,.14);box-shadow:0 0 25px rgba(0,0,0,.35),inset 0 0 20px rgba(255,255,255,.03);backdrop-filter:blur(10px)}
+.char-dot{width:32px;height:32px;border-radius:50%;position:relative;border:1px solid rgba(255,255,255,.28);display:grid;place-items:center;color:#fff;font-family:var(--ff4);font-size:9px;font-weight:900;letter-spacing:.05em;text-shadow:0 1px 4px #000;transition:transform .18s ease,opacity .18s ease,filter .18s ease;background:#333;overflow:visible}
+.char-dot:active{transform:scale(.92)}
+.char-dot.lin{background:radial-gradient(circle at 35% 25%,#ffd3a1 0%,#b87832 34%,#4b250d 80%);box-shadow:0 0 10px #b87832,0 0 26px rgba(184,120,50,.78),0 0 45px rgba(184,120,50,.38);animation:linPulse 2.2s ease-in-out infinite;border-color:rgba(255,206,151,.75);color:#b87832}
+.char-dot.trini{background:radial-gradient(circle at 35% 25%,#f0c5ff 0%,#9d37ff 38%,#291049 82%);opacity:.58;box-shadow:0 0 10px rgba(157,55,255,.65);filter:saturate(.9);color:#9d37ff}
+.char-dot.zack{background:radial-gradient(circle at 35% 25%,#f3ffb6 0%,#d7ff45 33%,#37570a 82%);opacity:.58;box-shadow:0 0 10px rgba(215,255,69,.65);filter:saturate(.9);color:#d7ff45}
+.char-dot.locked:hover{opacity:.92;filter:saturate(1.15);box-shadow:0 0 18px currentColor}.char-dot .label{position:absolute;right:43px;top:50%;transform:translateY(-50%);padding:5px 8px;border-radius:9px;background:rgba(0,0,0,.52);border:1px solid rgba(255,255,255,.12);font-size:9px;letter-spacing:.16em;color:#fff;opacity:0;pointer-events:none;white-space:nowrap;transition:opacity .18s ease,transform .18s ease;backdrop-filter:blur(8px)}
+.char-dot:hover .label{opacity:1;transform:translateY(-50%) translateX(-2px)}
+@keyframes linPulse{0%,100%{transform:scale(1);box-shadow:0 0 10px #b87832,0 0 24px rgba(184,120,50,.74),0 0 42px rgba(184,120,50,.34)}50%{transform:scale(1.08);box-shadow:0 0 14px #ffd3a1,0 0 34px rgba(184,120,50,.95),0 0 62px rgba(184,120,50,.45)}}
+.toast-soon{position:absolute;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);min-width:min(86vw,360px);padding:20px 18px;border-radius:22px;background:rgba(0,0,0,.72);border:1px solid rgba(0,229,255,.35);box-shadow:0 0 60px rgba(0,229,255,.18);backdrop-filter:blur(12px);text-align:center;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}.toast-soon.show{opacity:1;transform:translate(-50%,-50%) scale(1)}.toast-soon .t1{font-family:var(--ff2);font-size:1.4rem;letter-spacing:.18em;color:#fff;text-shadow:0 0 16px var(--cyan)}.toast-soon .t2{font-family:var(--ff4);font-size:.72rem;letter-spacing:.25em;color:rgba(0,229,255,.82);margin-top:8px}
+@media (max-height:650px){.cover-ui .tagline{display:none}.character-selector{top:14px;gap:9px}.char-dot{width:29px;height:29px}.btn-main{padding:16px 18px!important}}
+
 </style>
 </head>
 <body>
@@ -57,6 +79,12 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 <section id="cover" class="screen active">
   <div class="cover-bg" id="coverBg"></div>
   <div class="cover-shade"></div>
+  <div class="character-selector" aria-label="Selector de campañas">
+    <button class="char-dot lin" id="selLin" title="Lin disponible" type="button">IN<span class="label">LIN · DISPONIBLE</span></button>
+    <button class="char-dot trini locked" id="selTrini" title="Trini próximamente" type="button">T<span class="label">TRINI · PRÓXIMAMENTE</span></button>
+    <button class="char-dot zack locked" id="selZack" title="Zack próximamente" type="button">Z<span class="label">ZACK · PRÓXIMAMENTE</span></button>
+  </div>
+  <div class="toast-soon" id="toastSoon"><div class="t1" id="toastTitle">PRÓXIMAMENTE</div><div class="t2">NUEVA CAMPAÑA EN DESARROLLO</div></div>
   <div class="cover-brand" aria-hidden="true">
     <div class="brand-title">DUAL</div>
     <div class="brand-sub">LUSTONIA</div>
@@ -207,6 +235,16 @@ const S={
   {t:'Dominar su Eco corrupto',d:'Usar la corrupción contra él.',tag:'RIESGO',color:C.red,delta:{corr:2,eco:6},next:()=>{state.finalChoice='dominate';ending()}},
   {t:'Proteger al equipo que queda',d:'Tal vez ganar no sea lo único.',tag:'SACRIFICIO',color:C.green,delta:{hp:-8,triniTrust:2,zackTrust:2},next:()=>{state.finalChoice='protect';ending()}}]}
 };
+
+function showSoon(name){
+  const t=$('toastSoon');
+  if($('toastTitle')) $('toastTitle').textContent=name+' · PRÓXIMAMENTE';
+  if(t){t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1450)}
+  sfx('mid');
+}
+['selTrini','selZack'].forEach(id=>{const b=$(id); if(b)b.onclick=()=>showSoon(id==='selTrini'?'TRINI':'ZACK')});
+const linBtn=$('selLin'); if(linBtn)linBtn.onclick=()=>sfx('win');
+
 $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sfx('mid');show('intro')};$('introBtn').onclick=()=>{vib();node('start')};$('againBtn').onclick=()=>location.reload();bars();
 </script>
 </body>
