@@ -110,6 +110,64 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
   .character-selector{gap:11px!important;padding:10px 8px!important}
 }
 
+
+/* ===== AJUSTE FINAL MENU SEBAS: sin "EL ECO NUNCA SE FUE" y botón arriba ===== */
+#cover .tagline{display:none!important}
+#cover .cover-brand{display:none!important}
+#cover .cover-ui{
+  position:absolute!important;
+  z-index:42!important;
+  top:calc(26px + env(safe-area-inset-top))!important;
+  left:18px!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:min(48vw,260px)!important;
+  max-width:260px!important;
+  margin:0!important;
+  gap:0!important;
+}
+#cover .btn-main{
+  width:100%!important;
+  padding:12px 14px!important;
+  min-height:48px!important;
+  border-radius:14px!important;
+  font-size:clamp(.82rem,3.4vw,1.08rem)!important;
+  letter-spacing:.18em!important;
+  background:linear-gradient(90deg,rgba(0,229,255,.08),rgba(0,229,255,.19),rgba(0,229,255,.08))!important;
+  border:1.5px solid rgba(0,229,255,.85)!important;
+  box-shadow:0 0 22px rgba(0,229,255,.28), inset 0 0 18px rgba(0,229,255,.08)!important;
+}
+#cover .btn-main span{white-space:nowrap}
+#cover .character-selector{
+  top:calc(22px + env(safe-area-inset-top))!important;
+  right:14px!important;
+}
+#cover .char-dot.lin,
+#cover .char-dot.lin.active{
+  opacity:1!important;
+  filter:saturate(1.18) brightness(1.12)!important;
+  background:radial-gradient(circle at 35% 25%,#ffd7a6 0%,#b87832 34%,#4b250d 82%)!important;
+  border-color:rgba(255,215,166,.9)!important;
+  box-shadow:0 0 12px #b87832,0 0 30px rgba(184,120,50,.95),0 0 56px rgba(184,120,50,.48)!important;
+}
+#cover .char-dot.trini,
+#cover .char-dot.zack{
+  opacity:.42!important;
+  filter:saturate(.8) brightness(.72)!important;
+}
+#cover .char-dot.trini:hover,
+#cover .char-dot.zack:hover{
+  opacity:.78!important;
+  filter:saturate(1.05) brightness(.95)!important;
+}
+@media (max-width:420px){
+  #cover .cover-ui{width:46vw!important;left:14px!important;top:calc(22px + env(safe-area-inset-top))!important}
+  #cover .btn-main{font-size:.82rem!important;padding:11px 12px!important;letter-spacing:.14em!important}
+}
+@media (max-height:650px){
+  #cover .cover-ui{top:calc(14px + env(safe-area-inset-top))!important}
+}
+
 </style>
 </head>
 <body>
@@ -134,7 +192,6 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
     </div>
   </div>
   <div class="cover-ui">
-    <div class="tagline">EL ECO NUNCA SE FUE</div>
     <button class="btn-main" id="startBtn"><span>▶ INICIAR</span></button>
   </div>
 </section>
