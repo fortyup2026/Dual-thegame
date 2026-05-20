@@ -122,10 +122,10 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
         <b>LIN</b>
         <small>DISPONIBLE</small>
       </button>
-      <button class="campaign locked" id="selTrini" type="button" data-campaign="trini">
+      <button class="campaign available" id="selTrini" type="button" data-campaign="trini">
         <span class="orb trini-orb">T</span>
         <b>TRINI</b>
-        <small>PRÓXIMAMENTE</small>
+        <small>DISPONIBLE</small>
       </button>
       <button class="campaign locked" id="selZack" type="button" data-campaign="zack">
         <span class="orb zack-orb">Z</span>
@@ -409,6 +409,104 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
 .char-dot.selected.trini,.camp-trini .char-dot.trini{opacity:1!important;filter:saturate(1.35) brightness(1.18)!important;box-shadow:0 0 16px #f0c5ff,0 0 38px rgba(157,55,255,.95),0 0 78px rgba(157,55,255,.50)!important;transform:scale(1.08)}
 .char-dot.zack.locked{opacity:.42!important;filter:grayscale(.25) saturate(.75)!important}
 </style>
+
+
+<!-- === FIX DEFINITIVO MENU CAMPAÑAS + SONIDO === -->
+<style id="menu-campaign-final-fix">
+  #cover .campaign-row{position:relative;z-index:20}
+  #cover .campaign{border:1px solid transparent; isolation:isolate;}
+  #cover .campaign.available b,#cover .campaign.available small{opacity:1!important}
+  #cover .campaign.available .orb{opacity:.95!important;filter:saturate(1.1) brightness(1.02)!important}
+  #cover .campaign.locked{opacity:.58!important;filter:saturate(.75) grayscale(.1)}
+  #cover .campaign.locked b{opacity:.55!important}
+  #cover .campaign.locked small{opacity:.62!important}
+  #cover .campaign.selected{background:rgba(255,255,255,.035);border-color:rgba(255,255,255,.10);transform:translateY(-1px)}
+  #cover .campaign.selected small{color:#aef7ff!important;text-shadow:0 0 10px rgba(0,229,255,.55)}
+  #cover .campaign.selected.lin-selected b{color:#d7a167!important;text-shadow:0 0 16px rgba(184,120,50,.95)}
+  #cover .campaign.selected.trini-selected b{color:#d9b7ff!important;text-shadow:0 0 16px rgba(157,55,255,.95)}
+  #cover .campaign.selected.lin-selected .lin-orb{opacity:1!important;filter:saturate(1.45) brightness(1.32)!important;box-shadow:0 0 18px #ffd3a1,0 0 44px rgba(184,120,50,.95),0 0 80px rgba(184,120,50,.55),inset 0 0 20px rgba(255,255,255,.28)!important;animation:linAlive 1.8s ease-in-out infinite!important}
+  #cover .campaign.selected.trini-selected .trini-orb{opacity:1!important;filter:saturate(1.45) brightness(1.25)!important;box-shadow:0 0 18px #efd2ff,0 0 44px rgba(157,55,255,.95),0 0 80px rgba(157,55,255,.5),inset 0 0 20px rgba(255,255,255,.20)!important;animation:triniAlive 1.8s ease-in-out infinite!important}
+  #cover .zack-orb{opacity:.42!important}
+  #cover .campaign.locked .zack-orb{box-shadow:0 0 10px rgba(215,255,69,.45),inset 0 0 18px rgba(255,255,255,.13)!important}
+  #cover .btn-main{position:relative;z-index:25}
+  #cover .btn-main:active{transform:scale(.985)}
+  #toastSoon.show{opacity:1!important;transform:translate(-50%,-50%) scale(1)!important;pointer-events:none!important}
+  @keyframes triniAlive{0%,100%{transform:scale(1);box-shadow:0 0 18px #efd2ff,0 0 44px rgba(157,55,255,.86),0 0 74px rgba(157,55,255,.40)}50%{transform:scale(1.08);box-shadow:0 0 22px #fff,0 0 58px rgba(157,55,255,1),0 0 98px rgba(157,55,255,.55)}}
+</style>
+<script id="menu-campaign-final-fix-script">
+(function(){
+  let selectedCampaignFinal = 'lin';
+  function byId(id){return document.getElementById(id)}
+  function resumeAudio(){try{ if(typeof actx==='function') actx()?.resume?.(); }catch(e){}}
+  function menuSound(kind){
+    resumeAudio();
+    try{ if(typeof sfx==='function') sfx(kind||'mid'); }
+    catch(e){
+      try{
+        const Ctx=window.AudioContext||window.webkitAudioContext; if(!Ctx) return;
+        const ctx=new Ctx(); const o=ctx.createOscillator(); const g=ctx.createGain();
+        o.type='triangle'; o.frequency.value=kind==='win'?620:kind==='sad'?190:420;
+        g.gain.value=.055; o.connect(g); g.connect(ctx.destination); o.start();
+        setTimeout(()=>{try{o.stop();ctx.close()}catch(_e){}},120);
+      }catch(_e){}
+    }
+    try{navigator.vibrate?.(kind==='win'?[18,22,28]:kind==='sad'?[55,25,55]:22)}catch(e){}
+  }
+  function toast(title, sub){
+    const box=byId('toastSoon'), t=byId('toastTitle');
+    if(t) t.textContent=title;
+    const t2=box?box.querySelector('.t2'):null;
+    if(t2) t2.textContent=sub||'';
+    if(box){ box.classList.add('show'); clearTimeout(box._tm); box._tm=setTimeout(()=>box.classList.remove('show'),1650); }
+  }
+  function resetStateForCampaign(c){
+    try{
+      Object.assign(state,{campaign:c,hp:100,eco:0,corr:0,trini:'unknown',zack:'unknown',triniTrust:0,zackTrust:0,alone:false,aer:'',bor:'',mir:'',fer:'',lurnoxBias:0,last:null,resultNext:null});
+      if(typeof bars==='function') bars();
+    }catch(e){}
+  }
+  function setCampaign(c, silent){
+    selectedCampaignFinal=c;
+    try{state.campaign=c}catch(e){}
+    const lin=byId('selLin'), trini=byId('selTrini'), zack=byId('selZack'), start=byId('startBtn');
+    [lin,trini,zack].forEach(el=>{ if(el){ el.classList.remove('active','selected','lin-selected','trini-selected'); }});
+    if(lin){lin.classList.add('available'); lin.classList.remove('locked'); const s=lin.querySelector('small'); if(s) s.textContent='DISPONIBLE';}
+    if(trini){trini.classList.add('available'); trini.classList.remove('locked'); const s=trini.querySelector('small'); if(s) s.textContent='DISPONIBLE';}
+    if(zack){zack.classList.add('locked'); zack.classList.remove('available'); const s=zack.querySelector('small'); if(s) s.textContent='PRÓXIMAMENTE';}
+    if(c==='trini'){
+      trini?.classList.add('active','selected','trini-selected');
+      if(start) start.innerHTML='<span>▶ INICIAR TRINI</span>';
+      if(!silent) toast('TRINI · DISPONIBLE','CAMPAÑA CONECTADA A LIN');
+    } else {
+      lin?.classList.add('active','selected','lin-selected');
+      if(start) start.innerHTML='<span>▶ INICIAR LIN</span>';
+      if(!silent) toast('LIN · DISPONIBLE','CAMPAÑA ACTIVA');
+    }
+  }
+  function startSelected(){
+    menuSound('win');
+    resumeAudio();
+    try{ if(typeof unlockAudio==='function') unlockAudio(); }catch(e){}
+    resetStateForCampaign(selectedCampaignFinal);
+    try{ if(typeof playMusic==='function') playMusic('story'); }catch(e){}
+    if(selectedCampaignFinal==='trini'){
+      try{ if(typeof node==='function') node('triniStart'); else if(typeof show==='function') show('intro'); }
+      catch(e){ try{show('intro')}catch(_e){} }
+    }else{
+      try{ if(typeof show==='function') show('intro'); }catch(e){}
+    }
+  }
+  function bindFinalMenu(){
+    const lin=byId('selLin'), trini=byId('selTrini'), zack=byId('selZack'), start=byId('startBtn');
+    if(lin) lin.onclick=function(e){e.preventDefault(); e.stopPropagation(); menuSound('win'); setCampaign('lin');};
+    if(trini) trini.onclick=function(e){e.preventDefault(); e.stopPropagation(); menuSound('mid'); setCampaign('trini');};
+    if(zack) zack.onclick=function(e){e.preventDefault(); e.stopPropagation(); menuSound('sad'); toast('ZACK · PRÓXIMAMENTE','SU RUTA SE ACTIVARÁ DESPUÉS');};
+    if(start) start.onclick=function(e){e.preventDefault(); e.stopPropagation(); startSelected();};
+    setCampaign('lin', true);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bindFinalMenu); else bindFinalMenu();
+})();
+</script>
 
 </body>
 </html>
