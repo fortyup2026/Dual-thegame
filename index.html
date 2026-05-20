@@ -508,5 +508,141 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
 })();
 </script>
 
+
+
+<!-- === FIX FINAL: sonidos distintos por campaña + campaña disponible/bloqueada === -->
+<style id="dual-menu-sounds-final-css">
+  #cover .campaign-row{position:relative;z-index:40!important;pointer-events:auto!important}
+  #cover .campaign{pointer-events:auto!important;transition:transform .18s ease,opacity .18s ease,filter .18s ease,box-shadow .18s ease!important;border:1px solid transparent!important}
+  #cover .campaign .orb{transition:transform .18s ease,filter .18s ease,box-shadow .18s ease,opacity .18s ease!important}
+  #cover .campaign.available{opacity:1!important;filter:none!important}
+  #cover .campaign.available small{color:rgba(184,244,255,.88)!important;text-shadow:0 0 10px rgba(0,229,255,.35)!important}
+  #cover .campaign.locked{opacity:.48!important;filter:grayscale(.15) saturate(.7)!important}
+  #cover .campaign.locked small{color:rgba(210,220,225,.45)!important;text-shadow:none!important}
+  #cover .campaign.selected{transform:translateY(-2px) scale(1.03)!important;background:rgba(255,255,255,.035)!important;border-color:rgba(255,255,255,.13)!important;border-radius:22px!important}
+  #cover .campaign.selected .orb{transform:scale(1.08)!important}
+  #cover .campaign.selected.lin-selected b{color:#ffd2a0!important;text-shadow:0 0 16px rgba(184,120,50,.95),0 0 32px rgba(184,120,50,.55)!important}
+  #cover .campaign.selected.trini-selected b{color:#ebccff!important;text-shadow:0 0 16px rgba(157,55,255,.95),0 0 32px rgba(157,55,255,.55)!important}
+  #cover .campaign.selected.lin-selected .lin-orb,
+  #cover .campaign.selected .lin-orb{opacity:1!important;filter:saturate(1.5) brightness(1.25)!important;box-shadow:0 0 18px #ffd3a1,0 0 46px rgba(184,120,50,.95),0 0 86px rgba(184,120,50,.55),inset 0 0 22px rgba(255,255,255,.25)!important;animation:linAvailablePulse 1.9s ease-in-out infinite!important}
+  #cover .campaign.selected.trini-selected .trini-orb{opacity:1!important;filter:saturate(1.45) brightness(1.22)!important;box-shadow:0 0 18px #efd2ff,0 0 46px rgba(157,55,255,.95),0 0 86px rgba(157,55,255,.5),inset 0 0 22px rgba(255,255,255,.22)!important;animation:triniAvailablePulse 1.9s ease-in-out infinite!important}
+  #cover .campaign.locked .zack-orb{opacity:.44!important;box-shadow:0 0 10px rgba(215,255,69,.45),inset 0 0 18px rgba(255,255,255,.10)!important}
+  #cover #startBtn{pointer-events:auto!important;position:relative!important;z-index:45!important;transition:transform .16s ease,box-shadow .18s ease,filter .18s ease!important}
+  #cover #startBtn:active{transform:scale(.985)!important;filter:brightness(1.15)!important}
+  #toastSoon.show{opacity:1!important;transform:translate(-50%,-50%) scale(1)!important;pointer-events:none!important}
+  @keyframes linAvailablePulse{0%,100%{box-shadow:0 0 16px #ffd3a1,0 0 42px rgba(184,120,50,.88),0 0 78px rgba(184,120,50,.45)}50%{box-shadow:0 0 24px #fff0d6,0 0 58px rgba(184,120,50,1),0 0 110px rgba(184,120,50,.62)}}
+  @keyframes triniAvailablePulse{0%,100%{box-shadow:0 0 16px #efd2ff,0 0 42px rgba(157,55,255,.88),0 0 78px rgba(157,55,255,.42)}50%{box-shadow:0 0 24px #fff,0 0 58px rgba(157,55,255,1),0 0 110px rgba(157,55,255,.60)}}
+</style>
+<script id="dual-menu-sounds-final-script">
+(function(){
+  'use strict';
+  let selectedCampaign = 'lin';
+  let audioCtx = null;
+  function el(id){ return document.getElementById(id); }
+  function ctx(){
+    try{
+      if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if(audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }catch(e){ return null; }
+  }
+  function vibrate(pattern){ try{ navigator.vibrate && navigator.vibrate(pattern); }catch(e){} }
+  function tone(freq, start, dur, type, gain){
+    const c = ctx(); if(!c) return;
+    const osc = c.createOscillator();
+    const g = c.createGain();
+    osc.type = type || 'sine';
+    osc.frequency.setValueAtTime(freq, c.currentTime + start);
+    g.gain.setValueAtTime(0.0001, c.currentTime + start);
+    g.gain.exponentialRampToValueAtTime(gain || 0.06, c.currentTime + start + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + start + dur);
+    osc.connect(g); g.connect(c.destination);
+    osc.start(c.currentTime + start);
+    osc.stop(c.currentTime + start + dur + 0.02);
+  }
+  function menuSound(kind){
+    try{ ctx(); }catch(e){}
+    if(kind === 'lin'){
+      tone(145,0,.18,'triangle',.065); tone(218,.02,.20,'sine',.045); tone(92,.04,.23,'sine',.035); vibrate([18,20,26]);
+    }else if(kind === 'trini'){
+      tone(410,0,.16,'sine',.045); tone(620,.035,.18,'triangle',.040); tone(315,.08,.22,'sine',.032); vibrate([12,18,12]);
+    }else if(kind === 'locked'){
+      tone(180,0,.055,'square',.045); tone(95,.07,.06,'sawtooth',.038); tone(70,.145,.08,'square',.032); vibrate([45,25,45]);
+    }else if(kind === 'start'){
+      tone(220,0,.14,'triangle',.06); tone(330,.045,.17,'triangle',.055); tone(510,.10,.24,'sine',.045); vibrate([25,25,35]);
+    }else{
+      tone(360,0,.12,'sine',.04); vibrate(18);
+    }
+  }
+  function toast(title, sub){
+    let box = el('toastSoon');
+    if(!box){
+      box = document.createElement('div'); box.id='toastSoon'; box.className='toast-soon';
+      box.innerHTML='<div class="t1" id="toastTitle"></div><div class="t2"></div>';
+      const cover=el('cover')||document.body; cover.appendChild(box);
+    }
+    const t = el('toastTitle') || box.querySelector('.t1');
+    const t2 = box.querySelector('.t2');
+    if(t) t.textContent = title || '';
+    if(t2) t2.textContent = sub || '';
+    box.classList.add('show');
+    clearTimeout(box._hideTimer);
+    box._hideTimer = setTimeout(()=>box.classList.remove('show'), 1650);
+  }
+  function resetGameState(campaign){
+    try{
+      if(window.state){
+        Object.assign(window.state,{campaign:campaign,hp:100,eco:0,corr:0,trini:'unknown',zack:'unknown',triniTrust:0,zackTrust:0,alone:false,aer:'',bor:'',mir:'',fer:'',lurnoxBias:0,last:null,resultNext:null});
+      }
+      if(typeof window.bars === 'function') window.bars();
+    }catch(e){}
+  }
+  function updateCampaignUI(campaign, silent){
+    selectedCampaign = campaign;
+    try{ if(window.state) window.state.campaign = campaign; }catch(e){}
+    const lin = el('selLin'), trini = el('selTrini'), zack = el('selZack'), start = el('startBtn');
+    [lin,trini,zack].forEach(btn=>{ if(btn){ btn.classList.remove('active','selected','lin-selected','trini-selected'); }});
+    if(lin){ lin.classList.add('available'); lin.classList.remove('locked'); const s=lin.querySelector('small'); if(s) s.textContent='DISPONIBLE'; }
+    if(trini){ trini.classList.add('available'); trini.classList.remove('locked'); const s=trini.querySelector('small'); if(s) s.textContent='DISPONIBLE'; }
+    if(zack){ zack.classList.add('locked'); zack.classList.remove('available','selected','active'); const s=zack.querySelector('small'); if(s) s.textContent='PRÓXIMAMENTE'; }
+    if(campaign === 'trini'){
+      if(trini) trini.classList.add('active','selected','trini-selected');
+      if(start) start.innerHTML = '<span>▶ INICIAR TRINI</span>';
+      if(!silent) toast('TRINI · DISPONIBLE','CAMPAÑA LISTA PARA JUGAR');
+    }else{
+      if(lin) lin.classList.add('active','selected','lin-selected');
+      if(start) start.innerHTML = '<span>▶ INICIAR LIN</span>';
+      if(!silent) toast('LIN · DISPONIBLE','CAMPAÑA LISTA PARA JUGAR');
+    }
+  }
+  function startCampaign(){
+    menuSound('start');
+    try{ if(typeof window.unlockAudio === 'function') window.unlockAudio(); }catch(e){}
+    try{ if(typeof window.playMusic === 'function') window.playMusic('story'); }catch(e){}
+    resetGameState(selectedCampaign);
+    if(selectedCampaign === 'trini'){
+      try{ if(typeof window.node === 'function') return window.node('triniStart'); }catch(e){}
+      try{ if(typeof window.show === 'function') return window.show('intro'); }catch(e){}
+    }else{
+      try{ if(typeof window.show === 'function') return window.show('intro'); }catch(e){}
+    }
+  }
+  function bindMenu(){
+    const ids = ['selLin','selTrini','selZack','startBtn'];
+    ids.forEach(id=>{
+      const old = el(id);
+      if(old){ const clone = old.cloneNode(true); old.parentNode.replaceChild(clone, old); }
+    });
+    const lin = el('selLin'), trini = el('selTrini'), zack = el('selZack'), start = el('startBtn');
+    if(lin) lin.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); menuSound('lin'); updateCampaignUI('lin'); }, {passive:false});
+    if(trini) trini.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); menuSound('trini'); updateCampaignUI('trini'); }, {passive:false});
+    if(zack) zack.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); menuSound('locked'); toast('ZACK · PRÓXIMAMENTE','CAMPAÑA EN DESARROLLO'); }, {passive:false});
+    if(start) start.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); startCampaign(); }, {passive:false});
+    updateCampaignUI('lin', true);
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindMenu); else bindMenu();
+})();
+</script>
+
 </body>
 </html>
