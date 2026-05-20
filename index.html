@@ -105,6 +105,9 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 
 .tag{display:none!important}
 .choice{grid-template-columns:auto 1fr!important}
+
+/* Sin spoilers: ocultar indicadores tipo riesgo / bueno / malo */
+.tag{display:none!important}
 </style>
 </head>
 <body>
@@ -205,8 +208,8 @@ setBg($('coverBg'),'cover');
 function sceneBg(key){setBg($('scene'),key||'raincity')}
 function apply(delta){if(!delta)return;for(const [k,v] of Object.entries(delta)){if(typeof state[k]==='number')state[k]+=v;else state[k]=v}bars()}
 function teamCount(){return 1+(state.trini==='alive'?1:0)+(state.zack==='alive'?1:0)}
-function node(id){current=id;const n=S[id];if(!n)return; if(n.end){ending();return} apply(n.delta); if(n.result){result(n.result);return} if(state.hp<=0){ending('collapse');return} playMusic(n.music||(['aer','bor','mir','fer'].some(x=>id.includes(x))?'battle':id.includes('lur')?'boss':'story')); sceneBg(typeof n.img==='function'?n.img():n.img); $('gameScroll').scrollTop=0; $('hudTitle').textContent=n.title||'DUAL'; $('hudSub').textContent=n.sub||'LUSTONIA'; $('sceneTitle').innerHTML=n.big?`<div class="k">${n.k||''}</div><div class="t">${n.big}</div><div class="s">${n.s||''}</div>`:''; const sp=n.spk||'NARRADOR'; const col=COLOR[sp]||COLOR.NARRADOR; $('spName').textContent=sp; $('spName').style.color=col; $('spLine').style.background=col; $('spLine').style.color=col; $('text').textContent=typeof n.txt==='function'?n.txt():n.txt; $('choices').innerHTML=''; $('cont').style.display='none'; if(n.choices){n.choices().forEach((c,idx)=>{const b=document.createElement('button');b.className='choice';b.style.setProperty('--c',c.color||COLOR.NARRADOR);b.innerHTML=`<div class="num">${idx+1}</div><div><div class="ct">${c.t}</div><div class="cd">${c.d||''}</div></div>${c.tag?`<div class="tag">${c.tag}</div>`:''}`;b.onclick=()=>{vib(18);apply(c.delta);node(typeof c.next==='function'?c.next():c.next)};$('choices').appendChild(b)})}else{$('cont').style.display='block';$('contBtn').onclick=()=>node(typeof n.next==='function'?n.next():n.next)} show('game')}
-function miniResult(kind,villain,status,next,img){state.resultNext=next;const cls=status==='dead'?'good':status==='escape'?'mid':'bad';sfx(cls==='good'?'win':cls==='mid'?'mid':'sad');$('resCard').className='res-card '+cls;$('resSmall').textContent='RESULTADO DEL ENCUENTRO';let title='',text=''; if(status==='dead'){title=`${villain} cayó`;text=`El Eco se apaga alrededor de ${villain}.\nGanaste tiempo, pero Lustonia sigue ardiendo.`} if(status==='escape'){title=`${villain} escapó`;text=`No pudiste terminar la pelea.\n${villain} desaparece entre ruinas, y sabés que puede volver.`} if(status==='defeat'){title=`${villain} te venció`;text=`Sobrevivís de milagro.\nPero la derrota deja una marca en el equipo y en tu Eco.`} if(status==='trini_dead'){title='Trini murió';text='La sombra que la rodeaba se rompe como vidrio negro.\nLin sigue respirando, pero ya no está completo.'} if(status==='zack_dead'){title='Zack murió';text='Los celulares se apagan uno por uno.\nLa tecnología queda en silencio.'} if(status==='zack_left'){title='Zack se fue';text='No confió en vos.\nEligió su propio camino, y Lustonia quedó un poco más vacía.'} $('resTitle').textContent=title;$('resText').textContent=text;setBg($('resBg'),img||'raincity');$('resBtn').onclick=()=>node(state.resultNext);show('result')}
+function node(id){current=id;const n=S[id];if(!n)return; if(n.end){ending();return} apply(n.delta); if(n.result){result(n.result);return} if(state.hp<=0){ending('collapse');return} playMusic(n.music||(['aer','bor','mir','fer'].some(x=>id.includes(x))?'battle':id.includes('lur')?'boss':'story')); sceneBg(typeof n.img==='function'?n.img():n.img); $('gameScroll').scrollTop=0; $('hudTitle').textContent=n.title||'DUAL'; $('hudSub').textContent=n.sub||'LUSTONIA'; $('sceneTitle').innerHTML=n.big?`<div class="k">${n.k||''}</div><div class="t">${n.big}</div><div class="s">${n.s||''}</div>`:''; const sp=n.spk||'NARRADOR'; const col=COLOR[sp]||COLOR.NARRADOR; $('spName').textContent=sp; $('spName').style.color=col; $('spLine').style.background=col; $('spLine').style.color=col; $('text').textContent=typeof n.txt==='function'?n.txt():n.txt; $('choices').innerHTML=''; $('cont').style.display='none'; if(n.choices){n.choices().forEach((c,idx)=>{const b=document.createElement('button');b.className='choice';b.style.setProperty('--c',c.color||COLOR.NARRADOR);b.innerHTML=`<div class="num">${idx+1}</div><div><div class="ct">${c.t}</div><div class="cd">${c.d||''}</div></div>`;b.onclick=()=>{try{sfx('mid')}catch(e){};vib(18);apply(c.delta);node(typeof c.next==='function'?c.next():c.next)};$('choices').appendChild(b)})}else{$('cont').style.display='block';$('contBtn').onclick=()=>{try{sfx('mid')}catch(e){};node(typeof n.next==='function'?n.next():n.next)}} show('game')}
+function miniResult(kind,villain,status,next,img){state.resultNext=next;const cls=status==='dead'?'good':status==='escape'?'mid':'bad';sfx(cls==='good'?'win':cls==='mid'?'mid':'sad');$('resCard').className='res-card '+cls;$('resSmall').textContent='RESULTADO DEL ENCUENTRO';let title='',text=''; if(status==='dead'){title=`${villain} cayó`;text=`El Eco se apaga alrededor de ${villain}.\nGanaste tiempo, pero Lustonia sigue ardiendo.`} if(status==='escape'){title=`${villain} escapó`;text=`No pudiste terminar la pelea.\n${villain} desaparece entre ruinas, y sabés que puede volver.`} if(status==='defeat'){title=`${villain} te venció`;text=`Sobrevivís de milagro.\nPero la derrota deja una marca en el equipo y en tu Eco.`} if(status==='trini_dead'){title='Trini murió';text='La sombra que la rodeaba se rompe como vidrio negro.\nLin sigue respirando, pero ya no está completo.'} if(status==='zack_dead'){title='Zack murió';text='Los celulares se apagan uno por uno.\nLa tecnología queda en silencio.'} if(status==='zack_left'){title='Zack se fue';text='No confió en vos.\nEligió su propio camino, y Lustonia quedó un poco más vacía.'} $('resTitle').textContent=title;$('resText').textContent=text;setBg($('resBg'),img||'raincity');$('resBtn').onclick=()=>{try{sfx('mid')}catch(e){};node(state.resultNext)};show('result')}
 function result(r){miniResult(r.kind,r.villain,r.status,r.next,r.img)}
 function finalPick(choice){let score=state.eco+state.hp-state.corr*8 + (teamCount()-1)*15 + (state.aer==='dead'?8:0)+(state.bor==='dead'?8:0)+(state.mir==='dead'?8:0)+(state.fer==='dead'?8:0) - (state.aer==='escape'?6:0)-(state.bor==='escape'?6:0)-(state.mir==='escape'?6:0)-(state.fer==='escape'?6:0); if(choice==='seal')score+=12;if(choice==='mercy')score-=4;if(choice==='dominate')score-=10; if(teamCount()===1)score-=22; if(state.trini==='dead')score-=9;if(state.zack==='dead')score-=9; if(score>=135)return 'trueWin'; if(score>=108)return 'costWin'; if(score>=82)return 'crack'; if(score>=48)return 'badEscape'; return 'corrupt';}
 function ending(force){playMusic('end');const endings={trueWin:['Lustonia respira','Los tres Ecos se sincronizan. Lurnox cae dentro del portal y la grieta se cierra sin romper la ciudad.\nNo todos salen iguales. Pero salen vivos.','final_win','good'],costWin:['Victoria con costo','Lurnox cae, pero el Eco exige algo a cambio.\nLa ciudad sobrevive. El equipo no vuelve a ser el mismo.','final_win','good'],crack:['La grieta queda abierta','Lurnox cruza de regreso. No gana. No pierde.\nEl portal se cierra a medias y una marca turquesa queda latiendo sobre Lustonia.','final_crack','mid'],badEscape:['Lurnox escapa','El equipo logra sobrevivir, pero Lurnox rompe el borde del portal y desaparece.\nLa amenaza sigue viva. Y ahora conoce sus nombres.','lur_portal','bad'],corrupt:['El Eco se rompe','La pelea final los supera. Lurnox no destruye Lustonia de inmediato: la reclama.\nLin sobrevive, pero algo dentro suyo ya no responde igual.','final_fight','bad'],collapse:['Lin cae','La vida de Lin llega al límite antes de enfrentar el final.\nLustonia queda a merced de Lurnox.','final_fight','bad']};const e=endings[force]||endings[finalPick(state.finalChoice||'seal')];$('endCard').className='res-card '+e[3];$('endTitle').textContent=e[0];$('endText').textContent=e[1];sfx(e[3]==='good'?'win':e[3]==='mid'?'mid':'sad');setBg($('endBg'),e[2]);show('ending')}
@@ -333,7 +336,7 @@ function showSoon(name){
 ['selTrini','selZack'].forEach(id=>{const b=$(id); if(b)b.onclick=()=>showSoon(id==='selTrini'?'TRINI':'ZACK')});
 const linBtn=$('selLin'); if(linBtn)linBtn.onclick=()=>sfx('win');
 
-$('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sfx('mid');show('intro')};$('introBtn').onclick=()=>{vib();node('start')};$('againBtn').onclick=()=>location.reload();bars();
+$('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sfx('mid');show('intro')};$('introBtn').onclick=()=>{vib();node('start')};$('againBtn').onclick=()=>{try{sfx('mid')}catch(e){};location.reload()};bars();
 </script>
 
 <script>
@@ -440,7 +443,7 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
   function resumeAudio(){try{ if(typeof actx==='function') actx()?.resume?.(); }catch(e){}}
   function menuSound(kind){
     resumeAudio();
-    try{ if(typeof sfx==='function') sfx(kind||'mid'); }
+    try{ if(kind==='lin'||kind==='trini'||kind==='available'){ sfx('mid'); } else if(kind==='locked'){ sfx('sad'); } else if(kind==='start'){ sfx('win'); } else { sfx(kind||'mid'); } }
     catch(e){
       try{
         const Ctx=window.AudioContext||window.webkitAudioContext; if(!Ctx) return;
@@ -562,10 +565,9 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
   }
   function menuSound(kind){
     try{ ctx(); }catch(e){}
-    if(kind === 'lin'){
-      tone(145,0,.18,'triangle',.065); tone(218,.02,.20,'sine',.045); tone(92,.04,.23,'sine',.035); vibrate([18,20,26]);
-    }else if(kind === 'trini'){
-      tone(410,0,.16,'sine',.045); tone(620,.035,.18,'triangle',.040); tone(315,.08,.22,'sine',.032); vibrate([12,18,12]);
+    if(kind === 'lin' || kind === 'trini' || kind === 'available'){
+      // Sonido único para campañas DISPONIBLES: LIN y TRINI
+      tone(180,0,.13,'triangle',.060); tone(270,.035,.16,'sine',.048); tone(420,.085,.19,'triangle',.040); vibrate([18,18,28]);
     }else if(kind === 'locked'){
       tone(180,0,.055,'square',.045); tone(95,.07,.06,'sawtooth',.038); tone(70,.145,.08,'square',.032); vibrate([45,25,45]);
     }else if(kind === 'start'){
@@ -634,8 +636,8 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
       if(old){ const clone = old.cloneNode(true); old.parentNode.replaceChild(clone, old); }
     });
     const lin = el('selLin'), trini = el('selTrini'), zack = el('selZack'), start = el('startBtn');
-    if(lin) lin.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); menuSound('lin'); updateCampaignUI('lin'); }, {passive:false});
-    if(trini) trini.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); menuSound('trini'); updateCampaignUI('trini'); }, {passive:false});
+    if(lin) lin.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); menuSound('available'); updateCampaignUI('lin'); }, {passive:false});
+    if(trini) trini.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); menuSound('available'); updateCampaignUI('trini'); }, {passive:false});
     if(zack) zack.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); menuSound('locked'); toast('ZACK · PRÓXIMAMENTE','CAMPAÑA EN DESARROLLO'); }, {passive:false});
     if(start) start.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); startCampaign(); }, {passive:false});
     updateCampaignUI('lin', true);
