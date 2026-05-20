@@ -28,12 +28,12 @@ button{font-family:inherit;background:none;border:0;cursor:pointer;color:inherit
 .orb{width:66px;height:66px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-family:var(--ff4);font-size:13px;font-weight:900;transition:transform .18s}
 .orb.lin{background:radial-gradient(circle at 38% 30%,#ffe0b0,#c8872a 38%,#4a1e06 85%);border-color:rgba(255,200,140,.75);box-shadow:0 0 16px #c8872a,0 0 36px rgba(200,135,42,.55),0 0 65px rgba(200,135,42,.2);animation:pulLin 2.3s ease-in-out infinite;color:#3d1a04}
 @keyframes pulLin{0%,100%{box-shadow:0 0 14px #c8872a,0 0 32px rgba(200,135,42,.5),0 0 55px rgba(200,135,42,.18)}50%{box-shadow:0 0 22px #ffe0b0,0 0 50px rgba(200,135,42,.8),0 0 85px rgba(200,135,42,.35)}}
-.orb.trini{background:radial-gradient(circle at 38% 30%,#280f3a,#16082a,#0a0412);border-color:rgba(90,40,130,.35);box-shadow:0 0 8px rgba(155,48,204,.2);opacity:.52;color:#5a2a8a}
-.orb.zak{background:radial-gradient(circle at 38% 30%,#1a1a08,#0e0e04,#080804);border-color:rgba(0,150,180,.25);box-shadow:0 0 8px rgba(0,188,212,.15);opacity:.52;color:#3a5a5a}
+.orb.trini{background:radial-gradient(circle at 38% 30%,#4a1a70,#28104a,#160828);border-color:rgba(155,48,204,.55);box-shadow:0 0 12px rgba(155,48,204,.45),0 0 25px rgba(155,48,204,.2);opacity:.8;color:#cc88ff}
+.orb.zak{background:radial-gradient(circle at 38% 30%,#082830,#041820,#021018);border-color:rgba(0,188,212,.5);box-shadow:0 0 12px rgba(0,188,212,.4),0 0 25px rgba(0,188,212,.18);opacity:.8;color:#88ddee}
 .cname{font-family:var(--ff2);font-size:.82rem;letter-spacing:.18em;font-weight:700}
 .cname.lin{color:var(--earth)}
-.cname.trini{color:rgba(155,48,204,.45)}
-.cname.zak{color:rgba(0,188,212,.35)}
+.cname.trini{color:rgba(180,100,255,.75)}
+.cname.zak{color:rgba(0,210,240,.65)}
 .cst{font-family:var(--ff4);font-size:.48rem;letter-spacing:.1em}
 .cst.on{color:rgba(0,229,255,.65)}
 .cst.off{color:rgba(255,255,255,.18)}
@@ -146,9 +146,9 @@ button{font-family:inherit;background:none;border:0;cursor:pointer;color:inherit
       </div>
     </div>
     <p class="lore">
-      En Lustonia, los custodios cayeron esa noche.<br>
-      Muchos los tienen. Pocos saben usarlos.<br>
-      <strong>Estos tres</strong> no se escondieron.
+      La senal de Tronox llego a todas partes.<br>
+      En Lustonia, el Eco desperto en muchos.<br>
+      La mayoria lo ignoro. Estos tres no.
     </p>
     <button class="btnm" id="btnStart"><span>&#9654;&nbsp; INICIAR</span></button>
   </div>
@@ -237,9 +237,36 @@ var gi=function(i){return document.getElementById(i)};
 function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('on')});gi(id).classList.add('on')}
 
 var AC=null;
-function getAC(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}return AC}
-function tone(f,d,t,v,dl){var a=getAC();if(!a)return;var o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;var s=a.currentTime+(dl||0);g.gain.setValueAtTime(v||.08,s);g.gain.exponentialRampToValueAtTime(.001,s+d);o.start(s);o.stop(s+d)}
-function sfx(k){if(k==='click'){tone(440,.07,'square',.1);setTimeout(function(){tone(600,.09,'sine',.07)},35)}else if(k==='cont'){tone(320,.1,'sine',.09);setTimeout(function(){tone(420,.13,'sine',.07)},70)}else if(k==='win'){tone(330,.09,'sine',.09);setTimeout(function(){tone(440,.12,'sine',.08)},70);setTimeout(function(){tone(550,.18,'sine',.07)},140)}else if(k==='eco'){tone(880,.12,'sine',.07);setTimeout(function(){tone(1100,.18,'sine',.05)},90)}else if(k==='sad'){tone(180,.3,'sawtooth',.07);tone(100,.5,'sine',.06,.08)}}
+function getAC(){
+  if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}}
+  if(AC&&AC.state==='suspended'){try{AC.resume()}catch(e){}}
+  return AC;
+}
+// Unlock audio on first touch
+document.addEventListener('touchstart',function unlock(){
+  getAC();
+  document.removeEventListener('touchstart',unlock);
+},{once:true,passive:true});
+function tone(f,d,t,v,dl){
+  var a=getAC();if(!a)return;
+  try{
+    var o=a.createOscillator(),g=a.createGain();
+    o.connect(g);g.connect(a.destination);
+    o.type=t||'sine';o.frequency.value=f;
+    var s=a.currentTime+(dl||0);
+    g.gain.setValueAtTime(v||.08,s);
+    g.gain.exponentialRampToValueAtTime(.001,s+d);
+    o.start(s);o.stop(s+d);
+  }catch(e){}
+}
+function sfx(k){
+  if(k==='click'){tone(440,.07,'square',.1);setTimeout(function(){tone(600,.09,'sine',.07)},35)}
+  else if(k==='cont'){tone(320,.1,'sine',.09);setTimeout(function(){tone(420,.13,'sine',.07)},70)}
+  else if(k==='win'){tone(330,.09,'sine',.09);setTimeout(function(){tone(440,.12,'sine',.08)},70);setTimeout(function(){tone(550,.18,'sine',.07)},140)}
+  else if(k==='eco'){tone(880,.12,'sine',.07);setTimeout(function(){tone(1100,.18,'sine',.05)},90)}
+  else if(k==='sad'){tone(180,.3,'sawtooth',.07);tone(100,.5,'sine',.06,.08)}
+  else if(k==='door'){tone(220,.12,'sine',.08)}
+}
 function vib(n){try{navigator.vibrate(n||15)}catch(e){}}
 
 var MN=[],curM='';
@@ -510,8 +537,9 @@ gi('ciZak').addEventListener('click',function(){
 gi('soonClose').addEventListener('click',function(){sfx('click');gi('soonOv').classList.remove('on')});
 
 gi('btnStart').addEventListener('click',function(){
-  getAC();try{AC.resume()}catch(e){}
-  sfx('win');vib(20);playMusic('story');
+  getAC();
+  sfx('win');vib(20);
+  playMusic('story');
   show('sInt');
 });
 gi('btnIntro').addEventListener('click',function(){
