@@ -71,32 +71,79 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 .toast-soon{position:absolute;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);min-width:min(86vw,360px);padding:20px 18px;border-radius:22px;background:rgba(0,0,0,.72);border:1px solid rgba(0,229,255,.35);box-shadow:0 0 60px rgba(0,229,255,.18);backdrop-filter:blur(12px);text-align:center;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}.toast-soon.show{opacity:1;transform:translate(-50%,-50%) scale(1)}.toast-soon .t1{font-family:var(--ff2);font-size:1.4rem;letter-spacing:.18em;color:#fff;text-shadow:0 0 16px var(--cyan)}.toast-soon .t2{font-family:var(--ff4);font-size:.72rem;letter-spacing:.25em;color:rgba(0,229,255,.82);margin-top:8px}
 @media (max-height:650px){.cover-ui .tagline{display:none}.character-selector{top:14px;gap:9px}.char-dot{width:29px;height:29px}.btn-main{padding:16px 18px!important}}
 
+
+
+/* ===== MENU MINIMAL DEFINITIVO - NO TOCAR HISTORIA ===== */
+#cover.screen.active{display:flex!important;align-items:center!important;justify-content:center!important;min-height:100dvh!important;background:#020507!important;padding:24px 18px!important;overflow:hidden!important;}
+#cover .cover-bg,#cover .cover-shade,#cover .cover-brand,#cover .cover-ui,#cover .character-selector,#cover .tagline{display:none!important;}
+.minimal-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 28%,rgba(0,229,255,.22),rgba(0,35,43,.12) 30%,rgba(0,0,0,.86) 72%,#000 100%),linear-gradient(145deg,#02070a,#000 55%,#031114);}
+.minimal-bg:before{content:'';position:absolute;inset:-10%;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 5px,rgba(0,229,255,.22) 6px 7px),radial-gradient(circle at 50% 75%,rgba(0,229,255,.28),transparent 35%);animation:menuScan 9s linear infinite;}
+.minimal-bg:after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,.75) 78%);}
+@keyframes menuScan{0%{transform:translateY(-20px)}100%{transform:translateY(20px)}}
+.minimal-card{position:relative;z-index:10;width:min(92vw,640px);min-height:min(82dvh,760px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:34px 24px;border:1px solid rgba(0,229,255,.18);border-radius:28px;background:linear-gradient(180deg,rgba(1,16,24,.62),rgba(0,0,0,.46));box-shadow:0 0 60px rgba(0,229,255,.14),inset 0 0 50px rgba(0,229,255,.045);backdrop-filter:blur(12px);}
+.logo-title{font-family:var(--ff1);font-size:clamp(4.2rem,18vw,8.2rem);line-height:.84;letter-spacing:.075em;color:#fff;text-shadow:0 0 20px rgba(0,229,255,.95),0 0 60px rgba(0,229,255,.38),0 6px 14px #000;}
+.logo-sub{font-family:var(--ff2);font-size:clamp(1.05rem,5vw,2.1rem);letter-spacing:.52em;color:#d7a84a;margin-left:.52em;text-shadow:0 0 12px rgba(215,168,74,.55),0 3px 8px #000;}
+.campaign-row{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0 8px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);}
+.campaign{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 4px 10px;border-radius:18px;transition:transform .18s ease,filter .18s ease,opacity .18s ease;background:rgba(255,255,255,.015);}
+.campaign:active{transform:scale(.96)}
+.orb{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;font-family:var(--ff4);font-weight:900;font-size:1.05rem;color:#070707;border:2px solid currentColor;box-shadow:0 0 18px currentColor,inset 0 0 18px rgba(255,255,255,.22);background:#222;}
+.campaign b{font-family:var(--ff2);font-size:clamp(1.03rem,4.2vw,1.35rem);letter-spacing:.22em;margin-left:.22em;}
+.campaign small{font-family:var(--ff4);font-size:.68rem;letter-spacing:.18em;color:rgba(190,210,220,.62);}
+.campaign.active .orb{animation:linAlive 2s ease-in-out infinite;}
+.lin-orb{color:#b87832;background:radial-gradient(circle at 32% 22%,#ffd7a3 0%,#b87832 35%,#3b1c08 78%);}
+.trini-orb{color:#9d37ff;background:radial-gradient(circle at 32% 22%,#dec0ff 0%,#6b1cc6 38%,#140720 82%);opacity:.46;filter:grayscale(.15);}
+.zack-orb{color:#d7ff45;background:radial-gradient(circle at 32% 22%,#f2ffba 0%,#a4ca2e 34%,#172a05 82%);opacity:.46;filter:grayscale(.15);}
+.campaign.active b{color:#d7a167;text-shadow:0 0 14px rgba(184,120,50,.85)}
+.campaign.locked b{opacity:.45}.campaign.locked small{opacity:.42}
+@keyframes linAlive{0%,100%{box-shadow:0 0 16px #b87832,0 0 34px rgba(184,120,50,.65),inset 0 0 18px rgba(255,255,255,.22)}50%{box-shadow:0 0 24px #ffd19a,0 0 62px rgba(184,120,50,.96),inset 0 0 24px rgba(255,255,255,.32)}}
+.menu-copy{max-width:520px;text-align:center;color:rgba(205,222,230,.72);font-size:clamp(1rem,4vw,1.22rem);line-height:1.55;text-shadow:0 2px 8px #000;}
+.menu-copy strong{color:#d7a84a;text-shadow:0 0 10px rgba(215,168,74,.45)}
+.menu-start{width:min(100%,520px)!important;margin-top:10px!important;padding:20px 22px!important;border-color:var(--cyan)!important;background:linear-gradient(90deg,rgba(0,229,255,.10),rgba(0,229,255,.24),rgba(0,229,255,.10))!important;box-shadow:0 0 30px rgba(0,229,255,.28),inset 0 0 28px rgba(0,229,255,.08)!important;color:#e6fdff!important;}
+.toast-soon{position:absolute;z-index:60;left:50%;top:50%;transform:translate(-50%,-50%) scale(.96);min-width:min(86vw,360px);padding:22px 18px;border-radius:22px;background:rgba(0,0,0,.78);border:1px solid rgba(0,229,255,.42);box-shadow:0 0 60px rgba(0,229,255,.22);backdrop-filter:blur(12px);text-align:center;opacity:0;pointer-events:none;transition:opacity .24s ease,transform .24s ease}.toast-soon.show{opacity:1;transform:translate(-50%,-50%) scale(1)}.toast-soon .t1{font-family:var(--ff2);font-size:1.35rem;letter-spacing:.16em;color:#fff;text-shadow:0 0 16px var(--cyan)}.toast-soon .t2{font-family:var(--ff4);font-size:.72rem;letter-spacing:.22em;color:rgba(0,229,255,.82);margin-top:8px}
+@media(max-width:440px){.minimal-card{width:91vw;min-height:76dvh;padding:28px 18px;gap:18px}.orb{width:58px;height:58px}.campaign-row{gap:8px}.campaign b{font-size:.95rem}.campaign small{font-size:.56rem}.menu-copy{font-size:1rem}.menu-start{padding:18px 18px!important}.logo-title{font-size:clamp(4.1rem,18vw,6rem)}}
+@media(max-height:700px){.minimal-card{min-height:82dvh;gap:14px;padding:22px 18px}.menu-copy{display:none}.orb{width:56px;height:56px}.campaign-row{margin:8px 0}.menu-start{padding:16px 18px!important}.logo-title{font-size:clamp(3.6rem,14vw,5.2rem)}}
+
 </style>
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
 <div id="app">
 <section id="cover" class="screen active">
-  <div class="cover-bg" id="coverBg"></div>
-  <div class="cover-shade"></div>
-  <div class="character-selector" aria-label="Selector de campañas">
-    <button class="char-dot lin" id="selLin" title="Lin disponible" type="button">IN<span class="label">LIN · DISPONIBLE</span></button>
-    <button class="char-dot trini locked" id="selTrini" title="Trini próximamente" type="button">T<span class="label">TRINI · PRÓXIMAMENTE</span></button>
-    <button class="char-dot zack locked" id="selZack" title="Zack próximamente" type="button">Z<span class="label">ZACK · PRÓXIMAMENTE</span></button>
-  </div>
-  <div class="toast-soon" id="toastSoon"><div class="t1" id="toastTitle">PRÓXIMAMENTE</div><div class="t2">NUEVA CAMPAÑA EN DESARROLLO</div></div>
-  <div class="cover-brand" aria-hidden="true">
-    <div class="brand-title">DUAL</div>
-    <div class="brand-sub">LUSTONIA</div>
-    <div class="hero-pills">
-      <div class="hero-pill lin"><span></span><b>LIN</b><small>TIERRA</small></div>
-      <div class="hero-pill trini"><span></span><b>TRINI</b><small>SOMBRAS</small></div>
-      <div class="hero-pill zack"><span></span><b>ZACK</b><small>TECNOLOGÍA</small></div>
+  <div class="minimal-bg"></div>
+  <div class="minimal-card">
+    <div class="logo-title">DUAL</div>
+    <div class="logo-sub">LUSTONIA</div>
+
+    <div class="campaign-row" aria-label="Selector de historias">
+      <button class="campaign active" id="selLin" type="button" data-campaign="lin">
+        <span class="orb lin-orb">L</span>
+        <b>LIN</b>
+        <small>DISPONIBLE</small>
+      </button>
+      <button class="campaign locked" id="selTrini" type="button" data-campaign="trini">
+        <span class="orb trini-orb">T</span>
+        <b>TRINI</b>
+        <small>PRÓXIMAMENTE</small>
+      </button>
+      <button class="campaign locked" id="selZack" type="button" data-campaign="zack">
+        <span class="orb zack-orb">Z</span>
+        <b>ZACK</b>
+        <small>PRÓXIMAMENTE</small>
+      </button>
     </div>
+
+    <div class="menu-copy">
+      En Lustonia, los custodios cayeron esa noche.<br>
+      Muchos los tienen. Pocos saben usarlos.<br>
+      <strong>Estos tres</strong> no se escondieron.
+    </div>
+
+    <button class="btn-main menu-start" id="startBtn" type="button"><span>▶ INICIAR LIN</span></button>
   </div>
-  <div class="cover-ui">
-    <div class="tagline">EL ECO NUNCA SE FUE</div>
-    <button class="btn-main" id="startBtn"><span>▶ INICIAR</span></button>
+
+  <div class="toast-soon" id="toastSoon">
+    <div class="t1" id="toastTitle">PRÓXIMAMENTE</div>
+    <div class="t2">NUEVA HISTORIA EN DESARROLLO</div>
   </div>
 </section>
 <section id="intro" class="screen"><div class="intro-card"><div class="intro-title">DUAL</div><div class="mini">LUSTONIA</div><div class="intro-text">Hace semanas, un meteorito destruyó <em>Valmora</em>. No era roca: era una prisión multiversal de <strong>Aethrion</strong> que se rompió al impactar.<br><br><em>Tronox</em> entró en el cuerpo de un ex convicto llamado <strong>Nebius</strong>. Desde entonces corrompió militares, destruyó la ciudad y mandó una señal al universo.<br><br>En Lustonia cayó otro meteorito. <em>Lurnox</em> y sus guardianes llegaron. Y el Eco eligió a tres jóvenes: <strong>Lin, Trini y Zack</strong>.</div><button class="btn-main" id="introBtn"><span>▶ COMENZAR HISTORIA</span></button></div></section>
@@ -248,107 +295,36 @@ const linBtn=$('selLin'); if(linBtn)linBtn.onclick=()=>sfx('win');
 $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sfx('mid');show('intro')};$('introBtn').onclick=()=>{vib();node('start')};$('againBtn').onclick=()=>location.reload();bars();
 </script>
 
-
-<!-- ===== FIX FINAL SEBAS: menú interactivo, semáforo único, sonidos y botón iniciar ===== -->
-<style id="sebas-final-menu-fix">
-  /* limpio lo que tapa el menú */
-  #cover .tagline{display:none!important;}
-  #cover .cover-brand{display:none!important;}
-  #cover{background:radial-gradient(ellipse at 50% 28%,rgba(0,229,255,.16),transparent 34%),linear-gradient(180deg,#020508 0%,#030914 48%,#000 100%)!important;}
-  #cover .cover-bg{opacity:.28!important;filter:saturate(.95) contrast(1.05) brightness(.55)!important;}
-  #cover .cover-bg:after{background:linear-gradient(to bottom,rgba(0,0,0,.28),rgba(0,0,0,.50) 52%,rgba(0,0,0,.90) 100%)!important;}
-  #cover .cover-shade{background:radial-gradient(ellipse at 50% 26%,rgba(0,229,255,.08),transparent 35%),linear-gradient(to bottom,rgba(0,0,0,.10),transparent 34%,rgba(0,0,0,.55) 78%,#000 100%)!important;}
-
-  /* título limpio: el juego se entiende sin tapar nada */
-  #cover::before{content:'DUAL';position:absolute;z-index:10;left:0;right:0;top:18.5vh;text-align:center;font-family:var(--ff1);font-weight:900;font-size:clamp(4.1rem,20vw,8rem);letter-spacing:.12em;color:#fff;text-shadow:0 0 18px rgba(0,229,255,.95),0 0 54px rgba(0,229,255,.46),0 5px 14px #000;pointer-events:none;}
-  #cover::after{content:'LUSTONIA';position:absolute;z-index:10;left:0;right:0;top:calc(18.5vh + clamp(4.6rem,21vw,8.7rem));text-align:center;font-family:var(--ff2);font-weight:900;font-size:clamp(1rem,5vw,2rem);letter-spacing:.44em;color:#d8a448;text-shadow:0 0 14px rgba(216,164,72,.52),0 3px 9px #000;pointer-events:none;margin-left:.44em;}
-
-  /* semáforo único y pro */
-  #cover .character-selector{position:absolute!important;top:calc(18px + env(safe-area-inset-top))!important;right:16px!important;z-index:80!important;display:flex!important;flex-direction:column!important;gap:13px!important;align-items:center!important;padding:10px 8px!important;border-radius:999px!important;background:rgba(0,0,0,.36)!important;border:1px solid rgba(255,255,255,.15)!important;box-shadow:0 0 24px rgba(0,0,0,.5),inset 0 0 18px rgba(255,255,255,.035)!important;backdrop-filter:blur(12px)!important;}
-  #cover .character-selector.extra-selector{display:none!important;}
-  #cover .char-dot{width:36px!important;height:36px!important;border-radius:50%!important;border:1px solid rgba(255,255,255,.30)!important;display:grid!important;place-items:center!important;font-family:var(--ff4)!important;font-size:9px!important;font-weight:900!important;letter-spacing:.05em!important;transition:transform .18s ease,opacity .18s ease,filter .18s ease,box-shadow .18s ease!important;position:relative!important;overflow:visible!important;color:#fff!important;text-shadow:0 1px 5px #000!important;}
-  #cover .char-dot:active{transform:scale(.92)!important;}
-  #cover .char-dot.lin{background:radial-gradient(circle at 35% 25%,#ffe0ad 0%,#b87832 35%,#4a2209 82%)!important;border-color:rgba(255,220,174,.95)!important;opacity:1!important;filter:saturate(1.25) brightness(1.12)!important;box-shadow:0 0 12px #ffc27b,0 0 30px rgba(184,120,50,.95),0 0 62px rgba(184,120,50,.62)!important;animation:linActivePulse 1.75s ease-in-out infinite!important;color:#2a1206!important;}
-  #cover .char-dot.trini{background:radial-gradient(circle at 35% 25%,#f0c4ff 0%,#9d37ff 38%,#25063f 84%)!important;opacity:.42!important;filter:saturate(.75) brightness(.76) grayscale(.12)!important;box-shadow:0 0 7px rgba(157,55,255,.45)!important;}
-  #cover .char-dot.zack{background:radial-gradient(circle at 35% 25%,#f4ffb8 0%,#d7ff45 33%,#2b4705 82%)!important;opacity:.42!important;filter:saturate(.75) brightness(.76) grayscale(.12)!important;box-shadow:0 0 7px rgba(215,255,69,.45)!important;}
-  #cover .char-dot.trini.preview,#cover .char-dot.zack.preview{opacity:.75!important;filter:saturate(.95) brightness(.95) grayscale(.45)!important;box-shadow:0 0 16px currentColor!important;}
-  #cover .char-dot .label{position:absolute!important;right:48px!important;top:50%!important;transform:translateY(-50%)!important;padding:6px 9px!important;border-radius:10px!important;background:rgba(0,0,0,.60)!important;border:1px solid rgba(255,255,255,.14)!important;font-size:9px!important;letter-spacing:.16em!important;color:#fff!important;opacity:0!important;pointer-events:none!important;white-space:nowrap!important;transition:opacity .18s ease,transform .18s ease!important;backdrop-filter:blur(8px)!important;}
-  #cover .char-dot:hover .label,#cover .char-dot.show-label .label{opacity:1!important;transform:translateY(-50%) translateX(-3px)!important;}
-  @keyframes linActivePulse{0%,100%{transform:scale(1);box-shadow:0 0 12px #ffc27b,0 0 30px rgba(184,120,50,.95),0 0 62px rgba(184,120,50,.56)}50%{transform:scale(1.09);box-shadow:0 0 16px #ffe0ad,0 0 40px rgba(184,120,50,1),0 0 82px rgba(184,120,50,.78)}}
-
-  /* botón iniciar separado, clickeable y arriba de todo */
-  #cover .cover-ui{position:absolute!important;z-index:90!important;left:24px!important;right:24px!important;bottom:calc(26px + env(safe-area-inset-bottom))!important;display:flex!important;flex-direction:column!important;gap:0!important;pointer-events:auto!important;}
-  #cover #startBtn{pointer-events:auto!important;touch-action:manipulation!important;position:relative!important;z-index:91!important;border-radius:18px!important;border:2px solid rgba(0,229,255,.85)!important;background:linear-gradient(90deg,rgba(0,229,255,.12),rgba(0,229,255,.30),rgba(0,229,255,.12))!important;box-shadow:0 0 28px rgba(0,229,255,.34),inset 0 0 30px rgba(0,229,255,.10)!important;}
-  #cover #startBtn:active{transform:scale(.985)!important;box-shadow:0 0 42px rgba(0,229,255,.60),inset 0 0 36px rgba(0,229,255,.17)!important;}
-
-  /* cartel próximamente */
-  #cover #toastSoon{z-index:120!important;}
-  #cover #toastSoon .t1{font-size:clamp(1.25rem,6vw,2rem)!important;}
-  @media(max-height:650px){#cover::before{top:14vh;font-size:clamp(3.4rem,17vw,6rem)}#cover::after{top:calc(14vh + clamp(3.9rem,18vw,6.8rem))}.cover-ui{bottom:calc(16px + env(safe-area-inset-bottom))!important}.char-dot{width:32px!important;height:32px!important}}
-</style>
-<script id="sebas-final-menu-js">
+<script>
 (function(){
-  function byId(id){return document.getElementById(id)}
-  function vibrate(ms){try{ if(navigator.vibrate) navigator.vibrate(ms) }catch(e){}}
-  function safeCtx(){try{ const a = (typeof actx==='function') ? actx() : null; if(a && a.state==='suspended') a.resume().catch(()=>{}); return a }catch(e){return null}}
-  function menuTone(kind){
-    safeCtx();
-    try{
-      if(typeof tone==='function'){
-        if(kind==='lin'){tone(190,.10,'triangle',.10); tone(260,.14,'sine',.08,.07); vibrate(35)}
-        else if(kind==='trini'){tone(360,.10,'sine',.08); tone(155,.20,'triangle',.06,.06); vibrate([25,30,25])}
-        else if(kind==='zack'){tone(740,.06,'square',.06); tone(980,.08,'square',.045,.06); tone(520,.10,'triangle',.04,.12); vibrate([18,20,18])}
-        else {tone(420,.12,'triangle',.07); tone(640,.15,'sine',.06,.07); vibrate(30)}
-      }
-    }catch(e){}
+  function bootMenu(){
+    const start=document.getElementById('startBtn');
+    const lin=document.getElementById('selLin');
+    const trini=document.getElementById('selTrini');
+    const zack=document.getElementById('selZack');
+    const toast=document.getElementById('toastSoon');
+    const title=document.getElementById('toastTitle');
+    const tap=(kind)=>{try{actx()?.resume?.()}catch(e){}; try{sfx(kind||'mid')}catch(e){}; try{vib(25)}catch(e){}};
+    function soon(name){
+      tap('mid');
+      if(title) title.textContent=name+' · PRÓXIMAMENTE';
+      if(toast){toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1500)}
+    }
+    if(lin) lin.onclick=function(){tap('win')};
+    if(trini) trini.onclick=function(){soon('TRINI')};
+    if(zack) zack.onclick=function(){soon('ZACK')};
+    if(start) start.onclick=function(ev){
+      ev.preventDefault();
+      try{actx()?.resume?.()}catch(e){}
+      try{unlockAudio()}catch(e){}
+      try{playMusic('menu')}catch(e){}
+      try{sfx('win')}catch(e){}
+      try{vib([25,25,35])}catch(e){}
+      show('intro');
+    };
   }
-  function hardShow(id){
-    try{
-      document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-      const el=byId(id); if(el) el.classList.add('active');
-    }catch(e){}
-  }
-  function showSoonFixed(name,kind){
-    menuTone(kind || 'locked');
-    const t=byId('toastSoon');
-    const title=byId('toastTitle');
-    if(title) title.textContent=name+' · PRÓXIMAMENTE';
-    if(t){t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1550)}
-  }
-  function startLin(){
-    safeCtx();
-    try{ if(typeof unlockAudio==='function') unlockAudio(); }catch(e){}
-    try{ if(typeof playMusic==='function') playMusic('menu'); }catch(e){}
-    menuTone('start');
-    hardShow('intro');
-  }
-  function replaceAndBind(id, handler){
-    const old=byId(id); if(!old) return null;
-    const fresh=old.cloneNode(true);
-    old.parentNode.replaceChild(fresh, old);
-    fresh.addEventListener('click', function(ev){ev.preventDefault();ev.stopPropagation();handler(ev)}, {passive:false});
-    fresh.addEventListener('touchend', function(ev){ev.preventDefault();ev.stopPropagation();handler(ev)}, {passive:false});
-    return fresh;
-  }
-  function initMenuFinal(){
-    const cover=byId('cover');
-    if(!cover) return;
-    const selectors=[...cover.querySelectorAll('.character-selector')];
-    selectors.forEach((s,i)=>{ if(i>0){s.classList.add('extra-selector'); s.remove();} });
-    const lin=byId('selLin'), trini=byId('selTrini'), zack=byId('selZack');
-    if(lin){lin.innerHTML='LIN<span class="label">LIN · DISPONIBLE</span>';lin.className='char-dot lin';}
-    if(trini){trini.innerHTML='T<span class="label">TRINI · PRÓXIMAMENTE</span>';trini.className='char-dot trini locked';}
-    if(zack){zack.innerHTML='Z<span class="label">ZACK · PRÓXIMAMENTE</span>';zack.className='char-dot zack locked';}
-    replaceAndBind('selLin',()=>{menuTone('lin'); const b=byId('selLin'); if(b){b.classList.add('show-label');setTimeout(()=>b.classList.remove('show-label'),850)}});
-    replaceAndBind('selTrini',()=>{const b=byId('selTrini'); if(b){b.classList.add('preview','show-label');setTimeout(()=>b.classList.remove('preview','show-label'),1200)} showSoonFixed('TRINI','trini')});
-    replaceAndBind('selZack',()=>{const b=byId('selZack'); if(b){b.classList.add('preview','show-label');setTimeout(()=>b.classList.remove('preview','show-label'),1200)} showSoonFixed('ZACK','zack')});
-    replaceAndBind('startBtn',startLin);
-    replaceAndBind('introBtn',()=>{safeCtx(); menuTone('start'); try{ if(typeof node==='function') node('start'); else hardShow('game'); }catch(e){hardShow('game')}});
-    const again=byId('againBtn'); if(again){ again.onclick=()=>location.reload(); }
-  }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',initMenuFinal); else initMenuFinal();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootMenu); else bootMenu();
 })();
 </script>
-
 </body>
 </html>
