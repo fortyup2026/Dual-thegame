@@ -59,8 +59,8 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 .cover-ui{bottom:calc(22px + env(safe-area-inset-bottom))!important;left:22px!important;right:22px!important;gap:10px!important;z-index:12!important}
 .cover-ui .tagline{font-size:10px!important;letter-spacing:.34em!important;color:rgba(210,245,255,.82)!important;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:7px 10px;backdrop-filter:blur(7px);align-self:center;max-width:100%}
 .btn-main{border-radius:18px!important;background:linear-gradient(90deg,rgba(0,229,255,.10),rgba(0,229,255,.25),rgba(0,229,255,.10))!important;box-shadow:0 0 28px rgba(0,229,255,.32),inset 0 0 28px rgba(0,229,255,.10)!important}
-.character-selector{position:absolute;top:calc(20px + env(safe-area-inset-top));right:12px;z-index:30;display:flex;flex-direction:column;align-items:center;gap:22px;padding:10px 8px;border-radius:999px;background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.18);box-shadow:0 0 25px rgba(0,0,0,.5),inset 0 0 20px rgba(255,255,255,.03);backdrop-filter:blur(12px)}
-.char-dot{width:42px;height:42px;border-radius:50%;position:relative;border:2px solid rgba(255,255,255,.3);display:grid;place-items:center;color:#fff;font-family:var(--ff4);font-size:9px;font-weight:900;letter-spacing:.05em;text-shadow:0 1px 4px #000;transition:transform .18s ease,opacity .18s ease,filter .18s ease;background:#333;overflow:visible}
+.character-selector{position:absolute;top:calc(14px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:30;display:flex;flex-direction:row;align-items:center;gap:10px;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.18);box-shadow:0 0 25px rgba(0,0,0,.5);backdrop-filter:blur(12px)}
+.char-dot{width:44px;height:44px;border-radius:50%;position:relative;border:2px solid rgba(255,255,255,.3);display:grid;place-items:center;color:#fff;font-family:var(--ff4);font-size:10px;font-weight:900;text-shadow:0 1px 4px #000;transition:transform .18s ease,opacity .18s ease;overflow:visible;flex-shrink:0}
 .char-dot:active{transform:scale(.92)}
 .char-dot.lin{background:radial-gradient(circle at 35% 25%,#ffd3a1 0%,#b87832 34%,#4b250d 80%);box-shadow:0 0 10px #b87832,0 0 26px rgba(184,120,50,.78),0 0 45px rgba(184,120,50,.38);animation:linPulse 2.2s ease-in-out infinite;border-color:rgba(255,206,151,.75);color:#b87832}
 .char-dot.trini{background:radial-gradient(circle at 35% 25%,#f0c5ff 0%,#9d37ff 38%,#291049 82%);opacity:.72;box-shadow:0 0 10px rgba(157,55,255,.65);filter:saturate(.9);color:#9d37ff}
@@ -102,8 +102,8 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 
 
 .dot-letter{font-family:var(--ff4);font-size:11px;font-weight:900;letter-spacing:.05em;line-height:1}
-.dot-sub{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-family:var(--ff4);font-size:8px;letter-spacing:.1em;color:rgba(255,255,255,.7);white-space:nowrap;text-shadow:0 1px 3px #000}
-.char-dot{overflow:visible!important}
+.dot-sub{position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);font-family:var(--ff4);font-size:7px;letter-spacing:.08em;color:rgba(255,255,255,.65);white-space:nowrap;text-shadow:0 1px 3px #000}
+
 </style>
 </head>
 <body>
