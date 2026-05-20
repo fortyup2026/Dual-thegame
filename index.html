@@ -20,27 +20,27 @@ button{font-family:inherit;background:none;border:0;cursor:pointer;color:inherit
 
 /* ══ MENU ══ */
 #sMenu{background:#000;align-items:center;justify-content:center;padding:24px}
-.menu-card{width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;gap:24px;padding:32px 24px;border-radius:20px;background:linear-gradient(160deg,rgba(0,15,28,.92),rgba(0,4,10,.97));border:1px solid rgba(0,229,255,.2);box-shadow:0 0 60px rgba(0,229,255,.12)}
+.menu-card{width:100%;max-width:460px;display:flex;flex-direction:column;align-items:center;gap:28px;padding:36px 28px;border-radius:24px;background:linear-gradient(160deg,rgba(0,15,28,.92),rgba(0,4,10,.97));border:1px solid rgba(0,229,255,.2);box-shadow:0 0 70px rgba(0,229,255,.14)}
 
 /* LOGO */
 .logo-dual{font-family:var(--ff1);font-size:clamp(4rem,20vw,6rem);font-weight:900;color:#fff;letter-spacing:.1em;line-height:1;text-align:center;text-shadow:0 0 30px var(--c),0 0 70px rgba(0,229,255,.3)}
-.logo-lustonia{font-family:var(--ff2);font-size:clamp(1rem,5vw,1.4rem);color:var(--earth);letter-spacing:.3em;text-align:center;margin-top:4px;font-style:italic}
+.logo-lustonia{font-family:var(--ff2);font-size:clamp(1rem,5vw,1.4rem);color:var(--earth);letter-spacing:.3em;text-align:center;margin-top:6px;font-style:italic;text-shadow:0 0 20px rgba(200,135,42,.4)}
 .logo-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--c),transparent);margin:4px 0}
 
 /* SEMAFORO */
-.semaforo{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:20px;padding:14px 20px;border-radius:999px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.12)}
-.char-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
-.char-orb{width:54px;height:54px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-family:var(--ff4);font-size:10px;font-weight:900;letter-spacing:.05em;transition:transform .2s,box-shadow .2s}
+.semaforo{display:flex;flex-direction:row;align-items:flex-start;justify-content:center;gap:32px;padding:20px 28px;border-radius:24px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1)}
+.char-item{display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer}
+.char-orb{width:64px;height:64px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-family:var(--ff4);font-size:11px;font-weight:900;letter-spacing:.05em;transition:transform .2s,box-shadow .2s}
 .char-orb:active{transform:scale(.9)}
 .char-orb.lin{background:radial-gradient(circle at 35% 30%,#ffd3a1,#c8872a 40%,#4b1e08 85%);border-color:rgba(255,200,140,.8);box-shadow:0 0 14px #c8872a,0 0 30px rgba(200,135,42,.6);animation:orbLin 2.2s ease-in-out infinite;color:#3d1a04}
 @keyframes orbLin{0%,100%{box-shadow:0 0 12px #c8872a,0 0 28px rgba(200,135,42,.55)}50%{box-shadow:0 0 20px #ffd3a1,0 0 45px rgba(200,135,42,.85)}}
 .char-orb.trini{background:radial-gradient(circle at 35% 30%,#3a2050,#1e1030,#0d0818);border-color:rgba(100,60,140,.4);box-shadow:0 0 8px rgba(155,48,204,.3);opacity:.55;color:#7050a0}
 .char-orb.zak{background:radial-gradient(circle at 35% 30%,#2a2a10,#181808,#0e0e04);border-color:rgba(100,100,30,.4);box-shadow:0 0 8px rgba(0,188,212,.3);opacity:.55;color:#507050}
-.char-name{font-family:var(--ff2);font-size:.75rem;letter-spacing:.15em;font-weight:700}
+.char-name{font-family:var(--ff2);font-size:.82rem;letter-spacing:.18em;font-weight:700;margin-top:2px}
 .char-name.lin{color:var(--earth)}
 .char-name.trini{color:rgba(155,48,204,.5)}
 .char-name.zak{color:rgba(0,188,212,.4)}
-.char-status{font-family:var(--ff4);font-size:.5rem;letter-spacing:.12em}
+.char-status{font-family:var(--ff4);font-size:.52rem;letter-spacing:.1em;margin-top:2px}
 .char-status.on{color:rgba(0,229,255,.7)}
 .char-status.off{color:rgba(255,255,255,.2)}
 
@@ -166,10 +166,10 @@ button{font-family:inherit;background:none;border:0;cursor:pointer;color:inherit
     </div>
 
     <p class="menu-lore">
-      Mientras <em>Theo y sus amigos</em> enfrentan a Tronox en Valmora,<br>
-      la senal llego tambien a Lustonia.<br>
-      <strong>Lurnox</strong> y sus guardianes han llegado.<br>
-      El Eco eligio a tres.
+      La senal de <em>Aethrium</em> llego tambien a Lustonia.<br>
+      <strong>Lurnox</strong> y sus guardianes cayeron.<br>
+      Muchos recibieron custodios. Pocos decidieron usarlos.<br>
+      Estos tres eligieron luchar.
     </p>
     <button class="btn-main" id="btnStart"><span>&#9654; INICIAR</span></button>
   </div>
@@ -195,7 +195,8 @@ button{font-family:inherit;background:none;border:0;cursor:pointer;color:inherit
       Cinco jovenes recibieron custodios: <em>Theo, Norrin, Mila, Lucy y Kate</em>. Esa batalla sigue en Valmora.<br><br>
       Pero la senal llego mas lejos.<br><br>
       En Lustonia cayo otro meteorito. <em>Lurnox</em> y sus guardianes llegaron.<br><br>
-      El Eco eligio a tres: <strong>Lin, Trini y Zak</strong>.
+      Docenas de custodios cayeron en la ciudad. La mayoria de sus portadores ni lo saben. Muchos tienen miedo. Muchos se escondieron.<br><br>
+      <strong>Lin, Trini y Zak</strong> son los que eligieron luchar.
     </div>
     <div class="intro-divider"></div>
     <button class="btn-main" id="btnIntro"><span>&#9654; COMENZAR HISTORIA</span></button>
