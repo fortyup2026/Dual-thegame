@@ -159,6 +159,173 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 @media(max-height:760px){.hub-hero{height:38dvh;min-height:250px}.hub-head{margin-bottom:42px}.hub-card{min-height:74px}.hub-footer{display:none}}
 
 </style>
+
+
+<style id="hub-layout-final-fix-v2">
+/* === HUB PRINCIPAL CORREGIDO: fondo dividido + botones que no se cortan === */
+#hub{
+  background:#020407!important;
+  overflow:auto!important;
+  align-items:flex-start!important;
+}
+#hub .hub-wrap{
+  min-height:100dvh!important;
+  padding:22px 14px calc(26px + env(safe-area-inset-bottom))!important;
+  justify-content:flex-start!important;
+}
+#hub .hub-hero{
+  height:50dvh!important;
+  min-height:360px!important;
+  max-height:520px!important;
+  opacity:1!important;
+  background:
+    linear-gradient(90deg,rgba(4,20,39,.96) 0 49.8%,rgba(28,16,6,.96) 50.2% 100%),
+    radial-gradient(circle at 25% 38%,rgba(0,194,255,.35),transparent 34%),
+    radial-gradient(circle at 78% 40%,rgba(255,162,50,.34),transparent 36%)!important;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+#hub .hub-hero:before{
+  opacity:1!important;
+  background:
+    linear-gradient(90deg,rgba(0,19,38,.44),rgba(0,0,0,.20) 47%,rgba(0,0,0,.24) 53%,rgba(58,31,8,.38)),
+    radial-gradient(ellipse at 26% 68%,rgba(0,229,255,.22),transparent 42%),
+    radial-gradient(ellipse at 75% 65%,rgba(255,171,62,.23),transparent 42%),
+    linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.62) 82%,#020407 100%)!important;
+}
+#hub .hub-hero:after{
+  opacity:.75!important;
+  background:
+    linear-gradient(90deg,transparent 49.75%,rgba(120,210,255,.9) 49.92%,rgba(255,170,60,.55) 50.08%,transparent 50.25%),
+    repeating-linear-gradient(90deg,transparent 0 26px,rgba(0,229,255,.035) 27px 28px),
+    repeating-linear-gradient(0deg,transparent 0 18px,rgba(255,190,90,.028) 19px 20px)!important;
+  mix-blend-mode:screen!important;
+}
+#hub .hub-city,
+#hub .hub-castle{
+  display:block!important;
+  opacity:1!important;
+  height:100%!important;
+  bottom:0!important;
+  filter:drop-shadow(0 0 22px rgba(0,0,0,.95))!important;
+}
+#hub .hub-city{
+  left:0!important;
+  width:50%!important;
+  background:
+    /* lluvia y rayos */
+    linear-gradient(135deg,transparent 0 43%,rgba(145,220,255,.45) 43.4%,transparent 44.2%) 18% 12%/45% 55% no-repeat,
+    linear-gradient(150deg,transparent 0 47%,rgba(190,235,255,.65) 47.4%,transparent 48.2%) 3% 4%/38% 48% no-repeat,
+    /* skyline */
+    linear-gradient(to top,#091625 0 45%,transparent 45%) 6% 100%/8% 70% no-repeat,
+    linear-gradient(to top,#0d2134 0 63%,transparent 63%) 18% 100%/7% 86% no-repeat,
+    linear-gradient(to top,#071d2f 0 54%,transparent 54%) 30% 100%/10% 78% no-repeat,
+    linear-gradient(to top,#10283b 0 74%,transparent 74%) 43% 100%/8% 96% no-repeat,
+    linear-gradient(to top,#081827 0 42%,transparent 42%) 56% 100%/9% 65% no-repeat,
+    linear-gradient(to top,#0b1f32 0 56%,transparent 56%) 72% 100%/7% 76% no-repeat,
+    linear-gradient(to top,#061421 0 30%,transparent 30%) 0 100%/100% 100% no-repeat,
+    radial-gradient(circle at 34% 63%,rgba(0,229,255,.22),transparent 3%),
+    linear-gradient(180deg,transparent 0 30%,rgba(0,0,0,.75) 100%)!important;
+}
+#hub .hub-city:before{
+  content:"";position:absolute;inset:auto 0 0 0;height:78%;pointer-events:none;
+  background:
+    repeating-linear-gradient(90deg,rgba(135,218,255,.22) 0 2px,transparent 2px 20px) 12% 48%/80% 16% no-repeat,
+    repeating-linear-gradient(90deg,rgba(190,100,255,.22) 0 4px,transparent 4px 28px) 28% 58%/55% 13% no-repeat;
+  opacity:.55;mix-blend-mode:screen;
+}
+#hub .hub-castle{
+  right:0!important;
+  width:50%!important;
+  background:
+    radial-gradient(ellipse at 56% 71%,rgba(255,175,55,.35),transparent 28%),
+    linear-gradient(to top,#1c1006 0 32%,transparent 32%) 0 100%/100% 100% no-repeat,
+    linear-gradient(to top,transparent 0 22%,#251508 22% 65%,transparent 65%) 50% 100%/28% 86% no-repeat,
+    linear-gradient(to top,transparent 0 18%,#2e1a09 18% 54%,transparent 54%) 36% 100%/14% 70% no-repeat,
+    linear-gradient(to top,transparent 0 17%,#2e1a09 17% 50%,transparent 50%) 66% 100%/15% 66% no-repeat,
+    linear-gradient(162deg,transparent 0 45%,#31200e 45.5% 54%,transparent 54.5%) 49% 6%/30% 56% no-repeat,
+    radial-gradient(ellipse at 58% 90%,rgba(255,165,45,.40),transparent 35%),
+    linear-gradient(180deg,rgba(255,190,80,.10),rgba(0,0,0,.72) 88%)!important;
+}
+#hub .hub-castle:before{
+  content:"";position:absolute;inset:auto 0 0 0;height:88%;pointer-events:none;
+  background:
+    linear-gradient(to top,transparent 0 20%,#3a230b 20% 70%,transparent 70%) 50% 100%/4% 95% no-repeat,
+    linear-gradient(to top,transparent 0 36%,#281607 36% 68%,transparent 68%) 42% 100%/5% 78% no-repeat,
+    linear-gradient(to top,transparent 0 34%,#281607 34% 64%,transparent 64%) 58% 100%/5% 75% no-repeat,
+    repeating-linear-gradient(90deg,rgba(255,175,70,.38) 0 3px,transparent 3px 22px) 10% 66%/82% 20% no-repeat;
+  opacity:.82;mix-blend-mode:screen;
+}
+#hub .hub-split{display:block!important;z-index:1!important;opacity:1!important;box-shadow:0 0 24px rgba(0,229,255,.70),0 0 22px rgba(255,172,58,.42)!important;}
+#hub .hub-head{
+  margin-top:22px!important;
+  margin-bottom:clamp(52px,17dvh,142px)!important;
+}
+#hub .hub-title{font-size:clamp(3.6rem,15vw,7.8rem)!important;}
+#hub .hub-game{font-size:clamp(.82rem,3.5vw,1.35rem)!important;letter-spacing:.50em!important;}
+#hub .hub-tag{font-size:clamp(.56rem,2.25vw,.82rem)!important;letter-spacing:.23em!important;}
+#hub .hub-choose{margin-top:0!important;margin-bottom:17px!important;}
+#hub .hub-list{width:min(92vw,860px)!important;gap:13px!important;}
+#hub .hub-card{
+  grid-template-columns:minmax(0,1fr) 118px!important;
+  min-height:88px!important;
+  padding:15px 12px 15px 17px!important;
+  gap:10px!important;
+  border-radius:4px!important;
+  overflow:hidden!important;
+}
+#hub .hub-card > span:first-child{min-width:0!important;overflow:hidden!important;}
+#hub .hub-name{
+  display:block!important;
+  font-size:clamp(1.55rem,7.2vw,3rem)!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+  max-width:100%!important;
+}
+#hub .hub-sub{
+  display:block!important;
+  font-size:clamp(.60rem,2.45vw,.9rem)!important;
+  letter-spacing:.20em!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+  max-width:100%!important;
+}
+#hub .hub-action{
+  width:118px!important;
+  min-width:118px!important;
+  max-width:118px!important;
+  padding:12px 7px!important;
+  font-size:.64rem!important;
+  line-height:1.12!important;
+  letter-spacing:.13em!important;
+  white-space:normal!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:45px!important;
+}
+#hub .hub-card.available .hub-action{font-size:.78rem!important;letter-spacing:.18em!important;}
+#hub .hub-action .lock{display:none!important;}
+@media(max-width:430px){
+  #hub .hub-wrap{padding-left:12px!important;padding-right:12px!important;}
+  #hub .hub-hero{height:48dvh!important;min-height:335px!important;}
+  #hub .hub-head{margin-bottom:clamp(48px,15dvh,112px)!important;}
+  #hub .hub-list{width:calc(100vw - 24px)!important;gap:12px!important;}
+  #hub .hub-card{grid-template-columns:minmax(0,1fr) 104px!important;min-height:82px!important;padding:13px 10px 13px 14px!important;}
+  #hub .hub-name{font-size:clamp(1.35rem,6.8vw,2.05rem)!important;}
+  #hub .hub-sub{font-size:.56rem!important;letter-spacing:.16em!important;}
+  #hub .hub-action{width:104px!important;min-width:104px!important;max-width:104px!important;font-size:.54rem!important;letter-spacing:.09em!important;padding:10px 5px!important;}
+  #hub .hub-card.available .hub-action{font-size:.66rem!important;letter-spacing:.15em!important;}
+}
+@media(max-height:760px){
+  #hub .hub-hero{height:43dvh!important;min-height:285px!important;}
+  #hub .hub-head{margin-bottom:34px!important;}
+  #hub .hub-card{min-height:74px!important;}
+}
+</style>
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -184,15 +351,15 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
       </button>
       <button class="hub-card locked" type="button" data-soon="AETHRION · EL MUNDO ECO" style="--line:#7dff83">
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL MUNDO ECO</span></span>
-        <span class="hub-action">PRÓXIMAMENTE <span class="lock">🔒</span></span>
+        <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
       <button class="hub-card locked" type="button" data-soon="AETHRION · EL DESPERTAR DE MURMEX" style="--line:#ff7a18">
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL DESPERTAR DE MURMEX</span></span>
-        <span class="hub-action">PRÓXIMAMENTE <span class="lock">🔒</span></span>
+        <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
       <button class="hub-card locked" type="button" data-soon="AETHRION · LA GRAN CONQUISTA" style="--line:#d7a84a">
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
-        <span class="hub-action">PRÓXIMAMENTE <span class="lock">🔒</span></span>
+        <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
     </div>
     <div class="hub-footer">UNIVERSOS CONECTADOS<br>CADA HISTORIA DEJA UNA HUELLA. CADA DECISIÓN, UN ECO.</div>
