@@ -1259,61 +1259,59 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
 
 
 
-<style id="zack-campaign-available-fix">
-/* Zack ya está disponible */
-.campaign#selZack.locked,
-#selZack.locked{opacity:1!important;filter:none!important;}
-#selZack .zack-orb,
-.zack-orb{opacity:1!important;filter:saturate(1.18) brightness(1.04)!important;}
-.campaign#selZack.selected .zack-orb,
-.camp-zack .zack-orb{animation:zackAlive 2.15s ease-in-out infinite!important;box-shadow:0 0 18px #f3ff99,0 0 42px rgba(215,255,69,.82),0 0 75px rgba(215,255,69,.42)!important;}
-.campaign#selZack.selected b,
-.camp-zack #selZack b{color:#d7ff45!important;text-shadow:0 0 16px rgba(215,255,69,.85)!important;opacity:1!important;}
-.campaign#selZack small{opacity:1!important;color:rgba(220,255,130,.86)!important;}
-.campaign:not(.selected) .orb{opacity:.72!important;filter:saturate(.9) brightness(.82)!important;}
-.campaign.selected .orb{opacity:1!important;filter:saturate(1.25) brightness(1.12)!important;}
-@keyframes zackAlive{0%,100%{transform:scale(1);box-shadow:0 0 15px #d7ff45,0 0 34px rgba(215,255,69,.70),inset 0 0 18px rgba(255,255,255,.22)}50%{transform:scale(1.08);box-shadow:0 0 25px #f3ff99,0 0 66px rgba(215,255,69,.96),inset 0 0 24px rgba(255,255,255,.32)}}
+<style id="zack-final-working-css">
+/* === ZACK DISPONIBLE DEFINITIVO === */
+#selZack.locked{opacity:1!important;filter:none!important}
+#selZack{opacity:1!important}
+#selZack .zack-orb{opacity:1!important;filter:saturate(1.16) brightness(1.05)!important}
+body.camp-zack #selZack .zack-orb,
+#selZack.selected .zack-orb,
+#selZack.active .zack-orb{animation:zackReady 2.15s ease-in-out infinite!important;box-shadow:0 0 16px #d7ff45,0 0 42px rgba(215,255,69,.85),0 0 70px rgba(215,255,69,.38)!important}
+body.camp-zack #selZack b,
+#selZack.selected b,
+#selZack.active b{color:#d7ff45!important;text-shadow:0 0 16px rgba(215,255,69,.86)!important;opacity:1!important}
+#selZack small{color:rgba(220,255,130,.88)!important;opacity:1!important}
+@keyframes zackReady{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 </style>
-<script id="zack-campaign-complete-patch">
+<script id="zack-final-working-script">
 (function(){
-  function safe(fn){try{return fn&&fn()}catch(e){}}
-  function tap(kind){safe(()=>actx()?.resume?.()); safe(()=>unlockAudio()); safe(()=>sfx(kind||'mid')); safe(()=>vib(25));}
-  function resetDual(campaign){
-    Object.assign(state,{hp:100,eco:0,corr:0,campaign:campaign||'lin',trini:'unknown',zack:'unknown',triniTrust:0,zackTrust:0,alone:false,aer:'',bor:'',mir:'',fer:'',lurnoxBias:0,last:null,resultNext:null,scorex:'',zackSignal:0,zackCourage:0,zackDoubt:0});
-    safe(()=>bars());
+  function byId(id){return document.getElementById(id)}
+  function safe(fn){try{return fn&&fn()}catch(e){console.warn(e)}}
+  function pulse(kind){safe(function(){ if(typeof unlockAudio==='function') unlockAudio(); }); safe(function(){ if(typeof sfx==='function') sfx(kind||'mid'); }); safe(function(){ if(typeof vib==='function') vib(25); });}
+  function msg(title,sub){
+    var t=byId('toastSoon'), h=byId('toastTitle');
+    if(h) h.textContent=title;
+    var s=t && t.querySelector('.t2'); if(s) s.textContent=sub||'CAMPAÑA DISPONIBLE';
+    if(t){ t.classList.add('show'); clearTimeout(t._z); t._z=setTimeout(function(){t.classList.remove('show')},1500); }
   }
-  function toast(msg,sub){
-    const t=document.getElementById('toastSoon'), title=document.getElementById('toastTitle');
-    if(title) title.textContent=msg;
-    const t2=t?.querySelector('.t2'); if(t2) t2.textContent=sub||'CAMPAÑA DISPONIBLE';
-    if(t){t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1500)}
+  function resetFor(c){
+    Object.assign(state,{campaign:c,hp:100,eco:0,corr:0,trini:'unknown',zack:'unknown',triniTrust:0,zackTrust:0,alone:false,aer:'',bor:'',mir:'',fer:'',lurnoxBias:0,last:null,resultNext:null,scorex:'',zackSignal:0,zackCourage:0,zackDoubt:0,finalChoice:''});
+    safe(function(){bars()});
   }
-  function setSelected(c){
+  function selectCampaign(c){
     state.campaign=c;
     document.body.classList.toggle('camp-lin',c==='lin');
     document.body.classList.toggle('camp-trini',c==='trini');
     document.body.classList.toggle('camp-zack',c==='zack');
-    ['selLin','selTrini','selZack'].forEach(id=>{const el=document.getElementById(id); if(el){el.classList.remove('selected','active','locked'); el.classList.add('available')}});
-    const id=c==='trini'?'selTrini':c==='zack'?'selZack':'selLin';
-    const active=document.getElementById(id); if(active){active.classList.add('selected','active')}
-    const zSmall=document.querySelector('#selZack small'); if(zSmall) zSmall.textContent='DISPONIBLE';
-    const start=document.getElementById('startBtn'); if(start) start.innerHTML='<span>▶ INICIAR '+(c==='trini'?'TRINI':c==='zack'?'ZACK':'LIN')+'</span>';
+    ['selLin','selTrini','selZack'].forEach(function(id){var el=byId(id); if(el){el.classList.remove('active','selected','locked'); el.classList.add('available')}});
+    var active=byId(c==='trini'?'selTrini':c==='zack'?'selZack':'selLin'); if(active){active.classList.add('active','selected')}
+    var z=byId('selZack'); if(z){z.classList.add('available'); z.classList.remove('locked'); var zs=z.querySelector('small'); if(zs) zs.textContent='DISPONIBLE'}
+    var start=byId('startBtn'); if(start){start.innerHTML='<span>▶ INICIAR '+(c==='trini'?'TRINI':c==='zack'?'ZACK':'LIN')+'</span>'}
   }
-  function bootZackMenu(){
-    const lin=document.getElementById('selLin'), trini=document.getElementById('selTrini'), zack=document.getElementById('selZack'), start=document.getElementById('startBtn');
-    if(lin) lin.onclick=function(e){e.preventDefault(); tap('win'); setSelected('lin'); toast('LIN · DISPONIBLE','CAMPAÑA ACTIVA')};
-    if(trini) trini.onclick=function(e){e.preventDefault(); tap('win'); setSelected('trini'); toast('TRINI · DISPONIBLE','CAMPAÑA CONECTADA A LIN')};
-    if(zack) zack.onclick=function(e){e.preventDefault(); tap('win'); setSelected('zack'); toast('ZACK · DISPONIBLE','CAMPAÑA TECNOLÓGICA ACTIVADA')};
+  function bootMenu(){
+    var lin=byId('selLin'), trini=byId('selTrini'), zack=byId('selZack'), start=byId('startBtn');
+    if(lin) lin.onclick=function(e){e.preventDefault(); pulse('win'); selectCampaign('lin'); msg('LIN · DISPONIBLE','CAMPAÑA DE TIERRA ACTIVADA')};
+    if(trini) trini.onclick=function(e){e.preventDefault(); pulse('win'); selectCampaign('trini'); msg('TRINI · DISPONIBLE','CAMPAÑA DE SOMBRAS ACTIVADA')};
+    if(zack) zack.onclick=function(e){e.preventDefault(); pulse('win'); selectCampaign('zack'); msg('ZACK · DISPONIBLE','CAMPAÑA TECNOLÓGICA ACTIVADA')};
     if(start) start.onclick=function(e){
-      e.preventDefault(); tap('win'); playMusic('story');
-      if(state.campaign==='trini'){ resetDual('trini'); node('triniStart'); return; }
-      if(state.campaign==='zack'){ resetDual('zack'); node('zackStart'); return; }
-      resetDual('lin'); show('intro');
+      e.preventDefault(); pulse('win'); safe(function(){playMusic('story')});
+      if(state.campaign==='trini'){resetFor('trini'); node('triniStart'); return;}
+      if(state.campaign==='zack'){resetFor('zack'); node('zackStart'); return;}
+      resetFor('lin'); show('intro');
     };
-    setSelected(state.campaign==='trini'||state.campaign==='zack'?state.campaign:'lin');
+    selectCampaign(state.campaign==='trini'||state.campaign==='zack'?state.campaign:'lin');
   }
 
-  // Nuevas imágenes posibles de Zack: si no existen, usa las que ya estaban.
   if(typeof IMG_ALIASES!=='undefined'){
     Object.assign(IMG_ALIASES,{
       zack_lab:['sc_zack_sotano.png','zack_sotano.png','sc_zak_sotano.png','sc_zack_aparece.png','sc_tres_juntos.png','sc_ciudad_lluvia.png'],
@@ -1328,135 +1326,114 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
     });
   }
 
-  // Campaña completa de Zack. Converge con la historia principal antes de Mirex/Lurnox.
   if(typeof S!=='undefined'){
     Object.assign(S,{
-      zackStart:{img:'zack_lab',music:'story',title:'ZACK',sub:'SÓTANO · LUSTONIA',big:'EL SISTEMA SE ROMPE',s:'Campaña de Zack',spk:'NARRADOR',txt:'Zack era ingeniero en sistemas. Celulares, computadoras, placas quemadas, cables viejos: ese era su mundo.
+      zackStart:{img:'zack_lab',music:'story',title:'ZACK',sub:'SÓTANO · LUSTONIA',big:'EL SISTEMA SE ROMPE',s:'Campaña de Zack',spk:'NARRADOR',txt:`Zack era ingeniero en sistemas. Celulares, computadoras, placas quemadas, cables viejos: ese era su mundo.
 
 Cuando el Eco cayó sobre Lustonia, no llegó como una luz. Llegó como una sobrecarga.
 
-Los celulares del sótano empezaron a vibrar solos. Las pantallas se prendieron sin batería. La televisión mostraba Valmora ardiendo... hasta apagarse de golpe.',next:'zackBasement'},
-      zackBasement:{img:'zack_tv',title:'ZACK',sub:'EL ECO DIGITAL',spk:'ZACK',txt:'"No... no hay red. No hay señal. ¿Entonces qué están recibiendo?"
+Los celulares del sótano empezaron a vibrar solos. Las pantallas se prendieron sin batería. La televisión mostraba Valmora ardiendo... hasta apagarse de golpe.`,next:'zackBasement'},
+      zackBasement:{img:'zack_tv',title:'ZACK',sub:'EL ECO DIGITAL',spk:'ZACK',txt:`"No... no hay red. No hay señal. ¿Entonces qué están recibiendo?"
 
 Afuera, la ciudad grita. Explosiones. Vidrios. Pasos corriendo.
 
-Zack mira sus manos. Chispas amarillas verdosas saltan entre sus dedos y los teléfonos responden como si fueran parte de su cuerpo.',choices:()=>[
-        {t:'Intentar entender la señal',d:'Zack se queda unos segundos más, escuchando lo que los celulares no deberían poder transmitir.',color:C.zak,delta:{eco:12,zackSignal:2,zackDoubt:1},next:'zackSignal'},
+Zack mira sus manos. Chispas amarillas verdosas saltan entre sus dedos y los teléfonos responden como si fueran parte de su cuerpo.`,choices:function(){return[
+        {t:'Escuchar la señal antes de salir',d:'Las pantallas muestran fragmentos imposibles.',color:C.zak,delta:{eco:12,zackSignal:2,zackDoubt:1},next:'zackSignal'},
         {t:'Salir al escuchar los gritos',d:'No entiende el poder, pero entiende el peligro.',color:C.gold,delta:{hp:-2,zackCourage:1},next:'zackStreet'},
         {t:'Apagar todo y esconderse',d:'El sótano parece seguro. Por ahora.',color:C.cyan,delta:{eco:5,zackDoubt:2},next:'zackBasementBreak'}
-      ]},
-      zackSignal:{img:'zack_lab',title:'ZACK',sub:'SEÑALES ROTAS',spk:'NARRADOR',txt:'Entre ruido blanco y pantallas partidas, Zack alcanza a ver fragmentos: militares con ojos extraños, un nombre repetido en archivos corruptos, una palabra imposible: LURNOX.
+      ]}},
+      zackSignal:{img:'zack_lab',title:'ZACK',sub:'SEÑALES ROTAS',spk:'NARRADOR',txt:`Entre ruido blanco y pantallas partidas, Zack alcanza a ver fragmentos: militares con ojos extraños, una ciudad llamada Valmora y un nombre repetido en archivos corruptos: LURNOX.
 
-Después la puerta del sótano tiembla. Alguien golpea desde afuera. O algo.',next:'zackStreet'},
-      zackBasementBreak:{img:'zack_lab',title:'ZACK',sub:'NO HAY REFUGIO',spk:'NARRADOR',txt:'Zack se queda inmóvil. La tele apagada refleja su cara, pero detrás de él aparece un destello naranja cruzando la calle.
+Después la puerta del sótano tiembla. Alguien golpea desde afuera. O algo.`,next:'zackStreet'},
+      zackBasementBreak:{img:'zack_lab',title:'ZACK',sub:'NO HAY REFUGIO',spk:'NARRADOR',txt:`Zack se queda inmóvil. La tele apagada refleja su cara, pero detrás de él aparece un destello naranja cruzando la calle.
 
-El techo del sótano cruje. La ciudad no va a esperar a que entienda su poder.',next:'zackStreet'},
-      zackStreet:{img:'zack_street',title:'ZACK',sub:'CALLES DE LUSTONIA',big:'HUIR',s:'La ciudad ya no obedece',spk:'NARRADOR',txt:'Zack sale al caos.
+El techo del sótano cruje. La ciudad no va a esperar a que entienda su poder.`,next:'zackStreet'},
+      zackStreet:{img:'zack_street',title:'ZACK',sub:'CALLES DE LUSTONIA',big:'HUIR',s:'La ciudad ya no obedece',spk:'NARRADOR',txt:`Zack sale al caos.
 
 Un muchacho choca contra él, casi lo tira al suelo y alcanza a decir: "Huye".
 
-No termina la palabra. Un militar corrupto levanta el arma.',choices:()=>[
+No termina la palabra. Un militar corrupto levanta el arma.`,choices:function(){return[
         {t:'Levantar las manos sin pensar',d:'Los celulares de sus bolsillos se iluminan al mismo tiempo.',color:C.zak,delta:{eco:12,zackCourage:2,hp:-4},next:'zackFirstWave'},
         {t:'Tirarse al suelo',d:'El disparo pasa por encima. Sobrevivir es lo único claro.',color:C.gold,delta:{hp:-1,zackDoubt:1},next:'zackRunCrowd'},
         {t:'Intentar arrastrar al muchacho',d:'Zack todavía cree que puede salvar a alguien.',color:C.green,delta:{hp:-8,zackCourage:3,eco:6},next:'zackFirstWave'}
-      ]},
-      zackFirstWave:{img:'zack_wave',title:'ZACK',sub:'PRIMERA DESCARGA',spk:'NARRADOR',txt:'La onda expansiva sale de los celulares como un golpe invisible.
+      ]}},
+      zackFirstWave:{img:'zack_wave',title:'ZACK',sub:'PRIMERA DESCARGA',spk:'NARRADOR',txt:`La onda expansiva sale de los celulares como un golpe invisible.
 
 El militar sale despedido contra un auto, las luces de media cuadra revientan y Zack cae de rodillas.
 
-No sabe usarlo. Pero el poder está ahí. Y está creciendo.',next:'zackRunCrowd'},
-      zackRunCrowd:{img:'zack_street',title:'ZACK',sub:'ENTRE LA MULTITUD',spk:'ZACK',txt:'Zack se mezcla con un grupo de personas que huyen entre humo y lluvia.
+No sabe usarlo. Pero el poder está ahí. Y está creciendo.`,next:'zackRunCrowd'},
+      zackRunCrowd:{img:'zack_street',title:'ZACK',sub:'ENTRE LA MULTITUD',spk:'ZACK',txt:`Zack se mezcla con un grupo de personas que huyen entre humo y lluvia.
 
 Por un segundo cree que estar rodeado de gente lo protege.
 
-Entonces una ráfaga naranja arrasa la calle.',next:'zackBorinex'},
-      zackBorinex:{img:'zack_borinex',music:'battle',title:'BORINEX',sub:'VELOCIDAD NARANJA',big:'LA VELOCISTA',s:'Nadie la ve llegar',spk:'NARRADOR',txt:'Borinex cruza la avenida como si el tiempo se abriera para ella.
+Entonces una ráfaga naranja arrasa la calle.`,next:'zackBorinex'},
+      zackBorinex:{img:'zack_borinex',music:'battle',title:'BORINEX',sub:'VELOCIDAD NARANJA',big:'LA VELOCISTA',s:'Nadie la ve llegar',spk:'NARRADOR',txt:`Borinex cruza la avenida como si el tiempo se abriera para ella.
 
 La multitud cae. Zack sobrevive porque una descarga involuntaria levanta una barrera de celulares, cables y chispas.
 
-Está temblando. Pero sigue vivo.',choices:()=>[
+Está temblando. Pero sigue vivo.`,choices:function(){return[
         {t:'Usar los celulares como escudo',d:'No sabe hacerlo bien, pero algo responde.',color:C.zak,delta:{hp:-8,eco:15,zackCourage:2},next:'zackAfterBorinex'},
         {t:'Esconderse entre autos volcados',d:'A veces la mejor forma de vivir es no ser visto.',color:C.gold,delta:{hp:-3,zackDoubt:1,eco:4},next:'zackAfterBorinex'},
         {t:'Mandar una descarga hacia la ráfaga',d:'No puede apuntar a algo que casi no existe.',color:C.red,delta:{hp:-14,eco:18,zackCourage:3},next:'zackAfterBorinex'}
-      ]},
-      zackAfterBorinex:{img:'zack_street',title:'ZACK',sub:'DESPUÉS DE LA RÁFAGA',spk:'NARRADOR',txt:'Zack respira como si le hubieran sacado el aire del mundo.
+      ]}},
+      zackAfterBorinex:{img:'zack_street',title:'ZACK',sub:'DESPUÉS DE LA RÁFAGA',spk:'NARRADOR',txt:`Zack respira como si le hubieran sacado el aire del mundo.
 
 A lo lejos, un camión militar avanza entre ruinas. Desde adentro alguien golpea las paredes.
 
-Después: una explosión.',next:'zackTruck'},
-      zackTruck:{img:'zack_truck',title:'ZACK',sub:'EL CAMIÓN',big:'LA EXPLOSIÓN',s:'Algo escapa antes del fuego',spk:'NARRADOR',txt:'El camión explota en una bola de humo y metal.
+Después: una explosión.`,next:'zackTruck'},
+      zackTruck:{img:'zack_truck',title:'ZACK',sub:'EL CAMIÓN',big:'LA EXPLOSIÓN',s:'Algo escapa antes del fuego',spk:'NARRADOR',txt:`El camión explota en una bola de humo y metal.
 
 Por un instante, Zack ve una sombra violeta desaparecer segundos antes del impacto.
 
-No sabe quién era. Pero sabe que no murió ahí.',choices:()=>[
+No sabe quién era. Pero sabe que no murió ahí.`,choices:function(){return[
         {t:'Analizar la interferencia violeta',d:'La sombra dejó una marca en la señal.',color:C.trini,delta:{eco:7,zackSignal:2,trini:'alive',triniTrust:1},next:'zackPinned'},
         {t:'Acercarse al humo',d:'Puede haber sobrevivientes.',color:C.green,delta:{hp:-6,zackCourage:2,trini:'alive'},next:'zackPinned'},
         {t:'Alejarse antes de que lleguen militares',d:'Zack guarda la imagen de la sombra, pero no se detiene.',color:C.gold,delta:{zackDoubt:1,trini:'alive'},next:'zackPinned'}
-      ]},
-      zackPinned:{img:'zack_street',music:'battle',title:'ZACK',sub:'CAPTURA',spk:'NARRADOR',txt:'Dos militares lo derriban contra el asfalto.
+      ]}},
+      zackPinned:{img:'zack_wave',music:'battle',title:'ZACK',sub:'DOS MILITARES',spk:'NARRADOR',txt:`Dos militares lo atrapan y lo tiran al suelo.
 
-Uno le pisa la espalda. El otro le arranca un celular del bolsillo.
+Zack grita. Sus ojos se iluminan amarillo verdoso.
 
-Zack grita. Sus ojos se iluminan de amarillo verdoso.',choices:()=>[
-        {t:'Soltar la descarga completa',d:'La calle entera se queda sin luz.',color:C.zak,delta:{hp:-7,eco:16,zackCourage:2},next:'zackBreakFree'},
-        {t:'Concentrar la energía en los bolsillos',d:'Dos celulares bastan para empujar a dos hombres armados.',color:C.cyan,delta:{hp:-4,eco:10,zackSignal:1},next:'zackBreakFree'},
-        {t:'Esperar a que se acerquen más',d:'Dolor, miedo, distancia exacta.',color:C.red,delta:{hp:-12,eco:18,corr:1},next:'zackBreakFree'}
-      ]},
-      zackBreakFree:{img:'zack_wave',title:'ZACK',sub:'NO TAN INSULSO',spk:'ZACK',txt:'La onda los arranca de encima.
+Los dos celulares de sus bolsillos se cargan hasta quemar la tela.`,choices:function(){return[
+        {t:'Soltar toda la carga',d:'La calle entera se apaga por un segundo.',color:C.zak,delta:{hp:-6,eco:14,zackCourage:2},next:'zackScorex'},
+        {t:'Concentrar el pulso en uno solo',d:'Menos ruido. Más precisión.',color:C.cyan,delta:{hp:-3,eco:10,zackSignal:1},next:'zackScorex'},
+        {t:'Esperar a que se acerquen más',d:'El miedo también puede afilar el instinto.',color:C.gold,delta:{hp:-9,eco:16,zackDoubt:1},next:'zackScorex'}
+      ]}},
+      zackScorex:{img:'zack_scorex',title:'SCOREX',sub:'ECO BLANCO',big:'DOLOR',s:'El poder que inmoviliza',spk:'NARRADOR',txt:`Más adelante, Zack ve a Scorex acechando a un grupo de personas.
 
-Zack se levanta con sangre en la boca y los dedos llenos de luz.
+El Eco blanco del villano cae sobre ellos como una presión invisible. Nadie puede moverse.
 
-"No soy... no soy solo técnico."
+Zack se esconde detrás de una pared partida. Su poder no entiende todavía la valentía, pero sí entiende la electricidad.`,choices:function(){return[
+        {t:'Cegar la zona con una sobrecarga',d:'Luces, pantallas y cables revientan al mismo tiempo.',color:C.zak,delta:{eco:12,zackCourage:2,scorex:'escaped'},next:'zackScorexEscape'},
+        {t:'Cortar la energía sin mostrarse',d:'Ayudar sin ser visto. Sobrevivir sin hacerse héroe.',color:C.cyan,delta:{eco:8,zackSignal:2,scorex:'escaped'},next:'zackScorexEscape'},
+        {t:'Atacar a Scorex de frente',d:'El dolor no se puede bloquear con orgullo.',color:C.red,delta:{hp:-18,eco:15,corr:1,scorex:'angered'},next:'zackScorexEscape'}
+      ]}},
+      zackScorexEscape:{img:'zack_scorex',title:'ZACK',sub:'SCOREX SE ALEJA',spk:'NARRADOR',txt:`La luz blanca se rompe.
 
-Por primera vez, el poder no parece un accidente.',next:'zackScorex'},
-      zackScorex:{img:'zack_scorex',music:'battle',title:'SCOREX',sub:'ECO BLANCO',big:'DOLOR',s:'El enemigo que no toca para destruir',spk:'NARRADOR',txt:'En una esquina, un joven rapado con piercing en la nariz extiende una mano.
+La gente escapa. Scorex gira la cabeza hacia donde Zack estaba escondido, pero no alcanza a verlo.
 
-La gente frente a él cae de rodillas sin que nadie los golpee. Solo dolor. Dolor puro.
+Cuando el villano se va, Zack entiende algo: su poder no es insignificante. Solo está incompleto.`,next:'zackMerge'},
+      zackMerge:{img:'zack_merge',music:'story',title:'ZACK',sub:'LOS OTROS CUSTODIOS',big:'EL CRUCE',s:'Todas las rutas llegan a la misma herida',spk:'NARRADOR',txt:function(){return `Zack sigue la interferencia hasta el centro de Lustonia.
 
-Scorex no necesita perseguirlos. Los inmoviliza desde adentro.',choices:()=>[
-        {t:'Apagar toda la zona',d:'Si nadie ve nada, quizá todos puedan moverse.',color:C.zak,delta:{eco:16,zackCourage:2,scorex:'delayed',trini:'alive'},next:'zackBlackout'},
-        {t:'Sobrecargar las luces sobre Scorex',d:'Un destello puede comprar segundos.',color:C.cyan,delta:{hp:-5,eco:20,zackSignal:2,scorex:'blinded',trini:'alive'},next:'zackBlackout'},
-        {t:'No intervenir todavía',d:'Si Scorex lo detecta, Zack no sabe si puede resistir.',color:C.gold,delta:{zackDoubt:2,scorex:'free'},next:'zackLeaveScorex'}
-      ]},
-      zackBlackout:{img:'zack_scorex',title:'ZACK',sub:'LUZ MUERTA',spk:'NARRADOR',txt:'Las luces revientan una por una.
+Allí encuentra a Lin${state.trini==='alive'?' y a Trini':''}.
 
-Scorex gira, cegado por el pulso. La gente corre. Zack también.
-
-No ganó. Pero retrasó algo terrible.
-
-Más adelante, esa diferencia puede decidir si Trini llega viva al encuentro con Lin.',next:'zackMergeSignal'},
-      zackLeaveScorex:{img:'zack_solo',title:'ZACK',sub:'SUPERVIVENCIA',spk:'NARRADOR',txt:'Zack no se mueve.
-
-Ve a Scorex retirarse entre humo blanco y se odia por no haber hecho más.
-
-Pero sigue vivo. En Lustonia, a veces esa es la única victoria que queda.',next:'zackMergeSignal'},
-      zackMergeSignal:{img:'zack_merge',title:'ZACK',sub:'LA SEÑAL DE TIERRA',big:'EL ENCUENTRO',s:'Los caminos se cruzan',spk:'NARRADOR',txt:()=>`El suelo tiembla a varias cuadras. No es una explosión: es tierra levantándose contra viento imposible.
-
-Zack sigue la interferencia. El Eco de Lin aparece como una vibración pesada en todos los dispositivos.
-
-${state.trini==='alive'?'Y junto a esa señal, otra: una sombra violeta que ya había visto escapar del camión.':'Pero la señal violeta está rota. Débil. Como si alguien no hubiera llegado.'}`,next:'zackMeetTeam'},
-      zackMeetTeam:{img:'zack_merge',title:'ZACK',sub:'LIN'+(state.trini==='alive'?' · TRINI':''),spk:'ZACK',txt:()=> state.trini==='alive' ? 'Zack llega cuando Lin y Trini intentan recuperar aire después de Aeronyx.
-
-"Los estuve siguiendo por la señal. Y antes de que pregunten: sí, suena peor de cerca."' : 'Zack encuentra a Lin solo entre escombros y viento muerto.
-
-No pregunta dónde está la chica de la sombra. La respuesta está en la cara de Lin.',choices:()=>[
-        {t:'Unirse al equipo',d:'Zack entiende que la señal los está llevando al mismo lugar.',color:C.zak,delta:{zack:'alive',zackTrust:4,eco:10},next:'mirexIntro'},
-        {t:'Ayudarlos, pero sin confiar del todo',d:'Zack camina con ellos, pero mantiene una salida abierta.',color:C.gold,delta:{zack:'alive',zackTrust:1,eco:5},next:'mirexIntro'},
+No es confianza lo que siente. Es necesidad. La señal de Lurnox crece, y ninguno de ellos puede enfrentarla solo.`},choices:function(){return[
+        {t:'Unirse al grupo',d:'La tecnología puede ser el tercer punto del Eco.',color:C.zak,delta:{zack:'alive',zackTrust:4,eco:10},next:'mirexIntro'},
+        {t:'Ayudarlos, pero mantener distancia',d:'Zack no confía. Todavía.',color:C.gold,delta:{zack:'alive',zackTrust:1,eco:5},next:'mirexIntro'},
         {t:'Seguir la señal desde lejos',d:'No se une. No todavía.',color:C.red,delta:{zack:'left',zackTrust:-3,corr:1},next:'zackShadowRoute'}
-      ]},
-      zackShadowRoute:{img:'zack_solo',title:'ZACK',sub:'RUTA SOLITARIA',spk:'NARRADOR',txt:'Zack no camina junto a Lin.
+      ]}},
+      zackShadowRoute:{img:'zack_solo',title:'ZACK',sub:'RUTA SOLITARIA',spk:'NARRADOR',txt:`Zack no camina junto a Lin.
 
 Pero tampoco se aleja del todo.
 
-Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo nunca sabrá que existieron.',choices:()=>[
+Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo nunca sabrá que existieron.`,choices:function(){return[
         {t:'Interferir el campo de Mirex a distancia',d:'Una ayuda invisible todavía puede salvar vidas.',color:C.zak,delta:{zack:'alive',zackTrust:0,eco:8},next:'mirexIntro'},
         {t:'Cortar comunicación militar',d:'Lustonia respira unos minutos más.',color:C.cyan,delta:{eco:6,hp:4},next:'mirexIntro'},
         {t:'Ir directo hacia el rayo de Lurnox',d:'Zack cree que la raíz está en el centro.',color:C.red,delta:{zack:'alive',zackTrust:-2,corr:1},next:'ferIntro'}
-      ]}
+      ]}}
     });
   }
-
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootZackMenu); else bootZackMenu();
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootMenu); else bootMenu();
 })();
 </script>
 
