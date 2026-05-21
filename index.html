@@ -158,6 +158,37 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 @media(max-width:560px){#hub{align-items:flex-start}.hub-wrap{padding-top:20px}.hub-hero{height:44dvh}.hub-head{margin-top:16px;margin-bottom:clamp(44px,17dvh,118px)}.hub-card{min-height:82px;padding:14px 12px 14px 16px;grid-template-columns:1fr auto}.hub-action{min-width:104px;padding:12px 10px;font-size:.72rem;letter-spacing:.18em}.hub-card .hub-name{font-size:clamp(1.55rem,7.5vw,2.2rem)}.hub-card .hub-sub{font-size:.67rem}.hub-list{gap:12px}.hub-footer{font-size:.58rem;margin-top:18px}}
 @media(max-height:760px){.hub-hero{height:38dvh;min-height:250px}.hub-head{margin-bottom:42px}.hub-card{min-height:74px}.hub-footer{display:none}}
 
+
+
+/* ===== FIX FINAL HUB + VOLVER A UNIVERSOS ===== */
+#hub{position:relative;align-items:flex-start;justify-content:center;background:#020406!important;overflow:auto!important;min-height:100dvh;padding-bottom:24px;}
+#hub .hub-hero{display:block!important;position:absolute!important;top:0!important;left:0!important;right:0!important;height:52dvh!important;min-height:360px!important;opacity:1!important;overflow:hidden!important;background:#000!important;}
+#hub .hub-hero:before{content:""!important;position:absolute!important;inset:0!important;background:
+  radial-gradient(circle at 50% 45%, rgba(255,255,255,.20), transparent 1px),
+  linear-gradient(90deg, rgba(0,40,80,.96) 0%, rgba(0,10,18,.92) 44%, rgba(10,7,5,.92) 56%, rgba(83,45,10,.94) 100%)!important;filter:contrast(1.08) saturate(1.1);}
+#hub .hub-hero:after{content:""!important;position:absolute!important;inset:0!important;background:
+  linear-gradient(90deg, rgba(0,229,255,.22) 0 1px, transparent 1px) 0 100%/38px 46% repeat-x,
+  linear-gradient(90deg, transparent 49.7%, rgba(130,210,255,.55) 50%, transparent 50.3%),
+  radial-gradient(ellipse at 25% 46%, rgba(65,140,255,.22), transparent 34%),
+  radial-gradient(ellipse at 78% 44%, rgba(255,170,60,.25), transparent 38%),
+  linear-gradient(to bottom, rgba(0,0,0,.08), rgba(0,0,0,.10) 54%, #020406 100%)!important;mix-blend-mode:screen;}
+#hub .hub-city,#hub .hub-castle{display:block!important;position:absolute!important;bottom:0!important;width:50%!important;height:76%!important;opacity:.95!important;filter:drop-shadow(0 0 18px rgba(0,0,0,.8))!important;}
+#hub .hub-city{left:0!important;background:
+  linear-gradient(to top, rgba(0,0,0,.88), rgba(0,0,0,.1)),
+  linear-gradient(90deg, transparent 0 3%, rgba(5,18,32,.96) 3% 9%, transparent 9% 13%, rgba(8,27,44,.96) 13% 19%, transparent 19% 24%, rgba(4,18,34,.96) 24% 34%, transparent 34% 39%, rgba(5,21,38,.98) 39% 48%, transparent 48% 100%)!important;clip-path:polygon(0 100%,0 38%,5% 38%,5% 30%,10% 30%,10% 45%,15% 45%,15% 20%,20% 20%,20% 55%,27% 55%,27% 12%,34% 12%,34% 44%,42% 44%,42% 26%,50% 26%,50% 100%)!important;}
+#hub .hub-city:before{content:""!important;position:absolute!important;inset:0!important;background:repeating-linear-gradient(90deg, transparent 0 16px, rgba(0,229,255,.24) 17px 19px, transparent 20px 34px),repeating-linear-gradient(0deg, transparent 0 28px, rgba(160,80,255,.25) 30px 33px, transparent 34px 54px)!important;opacity:.45!important;}
+#hub .hub-castle{right:0!important;background:
+  linear-gradient(to top, rgba(0,0,0,.86), rgba(0,0,0,.06)),
+  linear-gradient(90deg, transparent 0 8%, rgba(55,32,14,.98) 8% 15%, transparent 15% 22%, rgba(75,45,18,.98) 22% 31%, transparent 31% 38%, rgba(62,36,15,.98) 38% 48%, transparent 48% 56%, rgba(86,51,20,.98) 56% 66%, transparent 66% 100%)!important;clip-path:polygon(100% 100%,100% 48%,95% 48%,95% 36%,91% 48%,88% 48%,88% 28%,83% 28%,83% 52%,78% 52%,78% 16%,72% 16%,72% 44%,66% 44%,66% 23%,60% 23%,60% 56%,53% 56%,53% 100%)!important;}
+#hub .hub-castle:before{content:""!important;position:absolute!important;inset:0!important;background:repeating-linear-gradient(90deg, transparent 0 18px, rgba(255,172,65,.32) 19px 21px, transparent 22px 39px),repeating-linear-gradient(0deg, transparent 0 32px, rgba(255,190,80,.22) 34px 36px, transparent 37px 62px)!important;opacity:.5!important;}
+#hub .hub-wrap{position:relative!important;z-index:3!important;width:min(92vw,900px)!important;margin:0 auto!important;padding-top:clamp(20px,2.8vh,36px)!important;}
+#hub .hub-list{gap:14px!important;}
+#hub .hub-card{grid-template-columns:1fr minmax(104px,128px)!important;overflow:hidden!important;}
+#hub .hub-action{width:auto!important;min-width:104px!important;max-width:128px!important;justify-self:end!important;white-space:normal!important;text-align:center!important;line-height:1.05!important;overflow:hidden!important;text-overflow:clip!important;}
+#cover .back-hub-btn{position:absolute;top:calc(14px + env(safe-area-inset-top));left:14px;z-index:80;padding:9px 12px;border:1px solid rgba(0,229,255,.42);border-radius:12px;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);font-family:var(--ff4);font-size:11px;letter-spacing:.18em;color:#dffcff;text-shadow:0 0 10px rgba(0,229,255,.7);box-shadow:0 0 22px rgba(0,229,255,.14)}
+#cover .back-hub-btn:active{transform:scale(.97);box-shadow:0 0 32px rgba(0,229,255,.28)}
+@media(max-width:560px){#hub .hub-hero{height:48dvh!important;min-height:320px!important}#hub .hub-wrap{padding-top:22px!important}#hub .hub-card{grid-template-columns:1fr 104px!important;padding:13px 12px!important}#hub .hub-action{font-size:.56rem!important;letter-spacing:.09em!important;min-width:98px!important;max-width:104px!important;padding:10px 5px!important}#cover .back-hub-btn{font-size:10px;padding:8px 10px}}
+
 </style>
 
 
@@ -368,6 +399,7 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
 </section>
 
 <section id="cover" class="screen">
+  <button id="backToHub" class="back-hub-btn" type="button">← UNIVERSOS</button>
   <div class="minimal-bg"></div>
   <div class="minimal-card">
     <div class="logo-title">DUAL</div>
@@ -1069,6 +1101,34 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
     document.querySelectorAll('#hub .hub-card.locked').forEach(btn=>btn.addEventListener('click',function(e){ e.preventDefault(); hubSound('locked'); showHubToast(this.dataset.soon || 'PRÓXIMAMENTE'); },{passive:false}));
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bindHub); else bindHub();
+})();
+</script>
+
+
+<script>
+(function(){
+  function $(id){return document.getElementById(id)}
+  function showScreenSafe(id){
+    if(typeof showScreen === 'function'){ showScreen(id); return; }
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
+    var el=$(id); if(el) el.classList.add('active');
+  }
+  function tinyBackSound(){
+    try{
+      var A=window.AudioContext||window.webkitAudioContext; var ac=new A();
+      var o=ac.createOscillator(), g=ac.createGain();
+      o.type='triangle'; o.frequency.value=260; o.connect(g); g.connect(ac.destination);
+      var t=ac.currentTime; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.045,t+.015); g.gain.exponentialRampToValueAtTime(.0001,t+.14); o.start(t); o.stop(t+.17);
+    }catch(e){}
+    if(navigator.vibrate) navigator.vibrate(20);
+  }
+  function bindBack(){
+    var b=$('backToHub');
+    if(!b || b.dataset.bound==='1') return;
+    b.dataset.bound='1';
+    b.addEventListener('click',function(e){e.preventDefault(); tinyBackSound(); showScreenSafe('hub');},{passive:false});
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindBack); else bindBack();
 })();
 </script>
 
