@@ -356,6 +356,15 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
   #hub .hub-head{margin-bottom:34px!important;}
   #hub .hub-card{min-height:74px!important;}
 }
+
+/* ===== AETHRION · EL MUNDO ECO ===== */
+body.aethrion-mode .hud{border-bottom-color:rgba(215,168,74,.26);background:linear-gradient(to bottom,rgba(18,9,2,.90),rgba(0,0,0,.42))}
+body.aethrion-mode .chapter h1{color:#d7a84a;text-shadow:0 0 14px rgba(215,168,74,.55)}
+body.aethrion-mode .ecobar i{background:linear-gradient(90deg,#5d2b0a,#d7a84a,#fff0aa)}
+body.aethrion-mode .panel{border-color:rgba(215,168,74,.35)!important;background:linear-gradient(135deg,rgba(24,13,5,.42),rgba(0,0,0,.30))!important}
+body.aethrion-mode .choice{border-color:rgba(215,168,74,.36)!important;background:linear-gradient(135deg,rgba(28,14,4,.38),rgba(0,0,0,.26))!important}
+body.aethrion-mode .btn-cont{border-color:#d7a84a;color:#fff2c2;background:rgba(215,168,74,.10)}
+
 </style>
 </head>
 <body>
@@ -380,9 +389,9 @@ button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer
         <span><span class="hub-name">DUAL</span><span class="hub-sub">LUSTONIA</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card locked" type="button" data-soon="AETHRION · EL MUNDO ECO" style="--line:#7dff83">
+      <button class="hub-card available" id="openAethrion" type="button" style="--line:#7dff83">
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL MUNDO ECO</span></span>
-        <span class="hub-action">PRÓXIMAMENTE</span>
+        <span class="hub-action">INICIAR ›</span>
       </button>
       <button class="hub-card locked" type="button" data-soon="AETHRION · EL DESPERTAR DE MURMEX" style="--line:#ff7a18">
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL DESPERTAR DE MURMEX</span></span>
@@ -458,6 +467,7 @@ function vib(n=20){if(navigator.vibrate)navigator.vibrate(n)}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
 function bars(){state.hp=Math.max(0,Math.min(100,state.hp));state.eco=Math.max(0,Math.min(100,state.eco));$('hpBar').style.width=state.hp+'%';$('ecoBar').style.width=state.eco+'%';$('hpTxt').textContent=Math.round(state.hp);$('ecoTxt').textContent=Math.round(state.eco)}
 const IMG_ALIASES={
+ aethrion_castle:['aethrion_castle.png','Aethrion_castle.png','castillo_aethrion.png','sc_aethrion_castle.png'], aethrion_council:['aethrion_council.png','consejo_aethrion.png','sc_aethrion_council.png','aethrion_castle.png'], aethrion_fire:['aethrion_fire.png','aethrion_bomb.png','sc_explosion.png','aethrion_castle.png'], aethrion_ruins:['aethrion_ruins.png','aethrion_fire.png','aethrion_castle.png'], aethrion_shadows:['aethrion_shadows.png','aethrion_castle.png'], aethrion_throne:['aethrion_throne.png','trono_aethrion.png','aethrion_council.png','aethrion_castle.png'], 
  cover:['cover.png','cover_dual.png',EMBED_COVER], room:['Lindespertandoconeleco.png'], room2:['Linmirandoventanadestruccion.png'], door:['Linenlapuertadudasisalir.png'], ray:['Linveelrayodeluz.png'], streets:['Linescondidomilitares.png','sc_ciudad_lluvia.png'], raincity:['sc_ciudad_lluvia.png'], linfight:['sc_lin_pelea_militares.png','sc_lin_combate.png'],
  aer_appear:['sc_aeronyx_aparece.png','sc_aeronyx_aparece.jpg','sc_aeronyx_aparece.jpeg'], aer_talk:['sc_aeronyx_habla.png','sc_aeronyx_aparece.png'], aer_attack:['sc_aeronyx_ataca.png','sc_lin_vs_aeronyx.png','sc_aeronyx_aparece.png'], aer_down:['sc_aeronyx_cae.png','sc_aeronyx_ataca.png'],
  trini:['sc_trini_aparece.png'], lintrini:['sc_lin_trini_juntos.png','sc_lin_trini_avanza.png'], parasites:['sc_explosion.png','sc_ciudad_lluvia.png'],
@@ -494,7 +504,7 @@ setBg($('coverBg'),'cover');
 function sceneBg(key){setBg($('scene'),key||'raincity')}
 function apply(delta){if(!delta)return;for(const [k,v] of Object.entries(delta)){if(typeof state[k]==='number')state[k]+=v;else state[k]=v}bars()}
 function teamCount(){return 1+(state.trini==='alive'?1:0)+(state.zack==='alive'?1:0)}
-function node(id){current=id;const n=S[id];if(!n)return; if(n.end){ending();return} apply(n.delta); if(n.result){result(n.result);return} if(state.hp<=0){ending('collapse');return} playMusic(n.music||(['aer','bor','mir','fer'].some(x=>id.includes(x))?'battle':id.includes('lur')?'boss':'story')); sceneBg(typeof n.img==='function'?n.img():n.img); $('gameScroll').scrollTop=0; $('hudTitle').textContent=n.title||'DUAL'; $('hudSub').textContent=n.sub||'LUSTONIA'; $('sceneTitle').innerHTML=n.big?`<div class="k">${n.k||''}</div><div class="t">${n.big}</div><div class="s">${n.s||''}</div>`:''; const sp=n.spk||'NARRADOR'; const col=COLOR[sp]||COLOR.NARRADOR; $('spName').textContent=sp; $('spName').style.color=col; $('spLine').style.background=col; $('spLine').style.color=col; $('text').textContent=typeof n.txt==='function'?n.txt():n.txt; $('choices').innerHTML=''; $('cont').style.display='none'; if(n.choices){n.choices().forEach((c,idx)=>{const b=document.createElement('button');b.className='choice';b.style.setProperty('--c',c.color||COLOR.NARRADOR);b.innerHTML=`<div class="num">${idx+1}</div><div><div class="ct">${c.t}</div><div class="cd">${c.d||''}</div></div>`;b.onclick=()=>{try{sfx('mid')}catch(e){};vib(18);apply(c.delta);node(typeof c.next==='function'?c.next():c.next)};$('choices').appendChild(b)})}else{$('cont').style.display='block';$('contBtn').onclick=()=>{try{sfx('mid')}catch(e){};node(typeof n.next==='function'?n.next():n.next)}} show('game')}
+function node(id){if(id==='aeth_to_hub'){try{document.body.classList.remove('aethrion-mode')}catch(e){};show('hub');return;} if(id&&String(id).startsWith('aeth_')){try{document.body.classList.add('aethrion-mode')}catch(e){}}else{try{document.body.classList.remove('aethrion-mode')}catch(e){}} current=id;const n=S[id];if(!n)return; if(n.end){ending();return} apply(n.delta); if(n.result){result(n.result);return} if(state.hp<=0){ending('collapse');return} playMusic(n.music||(['aer','bor','mir','fer'].some(x=>id.includes(x))?'battle':id.includes('lur')?'boss':'story')); sceneBg(typeof n.img==='function'?n.img():n.img); $('gameScroll').scrollTop=0; $('hudTitle').textContent=n.title||'DUAL'; $('hudSub').textContent=n.sub||'LUSTONIA'; $('sceneTitle').innerHTML=n.big?`<div class="k">${n.k||''}</div><div class="t">${n.big}</div><div class="s">${n.s||''}</div>`:''; const sp=n.spk||'NARRADOR'; const col=COLOR[sp]||COLOR.NARRADOR; $('spName').textContent=sp; $('spName').style.color=col; $('spLine').style.background=col; $('spLine').style.color=col; $('text').textContent=typeof n.txt==='function'?n.txt():n.txt; $('choices').innerHTML=''; $('cont').style.display='none'; if(n.choices){n.choices().forEach((c,idx)=>{const b=document.createElement('button');b.className='choice';b.style.setProperty('--c',c.color||COLOR.NARRADOR);b.innerHTML=`<div class="num">${idx+1}</div><div><div class="ct">${c.t}</div><div class="cd">${c.d||''}</div></div>`;b.onclick=()=>{try{sfx('mid')}catch(e){};vib(18);apply(c.delta);node(typeof c.next==='function'?c.next():c.next)};$('choices').appendChild(b)})}else{$('cont').style.display='block';$('contBtn').onclick=()=>{try{sfx('mid')}catch(e){};node(typeof n.next==='function'?n.next():n.next)}} show('game')}
 function miniResult(kind,villain,status,next,img){state.resultNext=next;const cls=status==='dead'?'good':status==='escape'?'mid':'bad';sfx(cls==='good'?'win':cls==='mid'?'mid':'sad');$('resCard').className='res-card '+cls;$('resSmall').textContent='RESULTADO DEL ENCUENTRO';let title='',text=''; if(status==='dead'){title=`${villain} cayó`;text=`El Eco se apaga alrededor de ${villain}.\nGanaste tiempo, pero Lustonia sigue ardiendo.`} if(status==='escape'){title=`${villain} escapó`;text=`No pudiste terminar la pelea.\n${villain} desaparece entre ruinas, y sabés que puede volver.`} if(status==='defeat'){title=`${villain} te venció`;text=`Sobrevivís de milagro.\nPero la derrota deja una marca en el equipo y en tu Eco.`} if(status==='trini_dead'){title='Trini murió';text='La sombra que la rodeaba se rompe como vidrio negro.\nLin sigue respirando, pero ya no está completo.'} if(status==='zack_dead'){title='Zack murió';text='Los celulares se apagan uno por uno.\nLa tecnología queda en silencio.'} if(status==='zack_left'){title='Zack se fue';text='No confió en vos.\nEligió su propio camino, y Lustonia quedó un poco más vacía.'} $('resTitle').textContent=title;$('resText').textContent=text;setBg($('resBg'),img||'raincity');$('resBtn').onclick=()=>{try{sfx('mid')}catch(e){};node(state.resultNext)};show('result')}
 function result(r){miniResult(r.kind,r.villain,r.status,r.next,r.img)}
 function finalPick(choice){let score=state.eco+state.hp-state.corr*8 + (teamCount()-1)*15 + (state.aer==='dead'?8:0)+(state.bor==='dead'?8:0)+(state.mir==='dead'?8:0)+(state.fer==='dead'?8:0) - (state.aer==='escape'?6:0)-(state.bor==='escape'?6:0)-(state.mir==='escape'?6:0)-(state.fer==='escape'?6:0); if(choice==='seal')score+=12;if(choice==='mercy')score-=4;if(choice==='dominate')score-=10; if(teamCount()===1)score-=22; if(state.trini==='dead')score-=9;if(state.zack==='dead')score-=9; if(score>=135)return 'trueWin'; if(score>=108)return 'costWin'; if(score>=82)return 'crack'; if(score>=48)return 'badEscape'; return 'corrupt';}
@@ -609,7 +619,86 @@ const S={
   {t:'Irse hacia Valmora',d:'Su hermana sigue siendo la razón de todo.',color:C.gold,delta:{trini:'left',corr:1},next:'triniLeavesTeaser'}]},
  triniSavesLin:{img:'lintrini',title:'TRINI',sub:'CRUCE CON LIN',big:'LA SOMBRA DECIDE',s:'Ahora entra en la historia de Lin',spk:'TRINI',txt:'"Mala suerte, viento."\n\nTrini emerge detrás de Aeronyx y rompe el ataque justo antes de que Lin pierda el conocimiento.\n\nLin no sabe de dónde viene. Vos sí.',next:'aerChoice'},
  triniSavesLinLate:{img:'lintrini',title:'TRINI',sub:'CRUCE CON LIN',big:'UN SEGUNDO TARDE',s:'Pero todavía a tiempo',spk:'NARRADOR',txt:'Trini espera demasiado. Lin recibe el golpe, pero sigue vivo.\n\nCuando Aeronyx levanta la mano para terminarlo, ella aparece desde su sombra.',delta:{hp:-6},next:'aerChoice'},
- triniLeavesTeaser:{img:'trini_bridge',title:'TRINI',sub:'RUTA DIVIDIDA',big:'VALMORA PRIMERO',s:'La campaña se separa',spk:'NARRADOR',txt:'Trini se aleja hacia la ruta que conecta Lustonia con Valmora.\n\nAtrás, Lin sigue peleando contra Aeronyx sin saber que alguien pudo salvarlo.\n\nEsta ruta quedará marcada para cuando la historia de Trini continúe completa.',next:'start'}
+ triniLeavesTeaser:{img:'trini_bridge',title:'TRINI',sub:'RUTA DIVIDIDA',big:'VALMORA PRIMERO',s:'La campaña se separa',spk:'NARRADOR',txt:'Trini se aleja hacia la ruta que conecta Lustonia con Valmora.\n\nAtrás, Lin sigue peleando contra Aeronyx sin saber que alguien pudo salvarlo.\n\nEsta ruta quedará marcada para cuando la historia de Trini continúe completa.',next:'start'},
+ aeth_start:{img:'aethrion_castle',music:'story',title:'AETHRION',sub:'EL MUNDO ECO · 2000 AÑOS ANTES',big:'EL MUNDO ECO',s:'Planeta Cetrios',spk:'NARRADOR',delta:{campaign:'aethrion',hp:0,eco:20,corr:0,humanity:55,wrath:0,ednaTrust:0,rebelArmy:0,kingAlert:0,aethPerfect:0},txt:'Mucho antes de Valmora y Lustonia, el planeta Cetrios tenía un país que dominaba casi todo: Aethrion.\n\nAllí nadie nacía vacío. Todos nacían con un Eco.\n\nAlgunos tenían fuego. Otros memoria. Otros podían sanar, borrar recuerdos, endurecer la piel, mover objetos o escuchar pensamientos.\n\nEl Eco no era solo poder: era reflejo del alma. Cambiaba con lo que una persona hacía, sufría y elegía.',next:'aeth_edna_aernos'},
+ aeth_edna_aernos:{img:'aethrion_castle',title:'AETHRION',sub:'EL MUNDO ECO',big:'EDNA Y AERNOS',s:'Antes de la caída',spk:'NARRADOR',txt:'Edna era la princesa heredera de Aethrion.\n\nAernos pertenecía a una familia política opositora al rey. Su casa denunciaba la crueldad del trono, las condenas públicas y el uso del Eco como herramienta de control.\n\nNada de eso impidió que Edna y Aernos se enamoraran como si el reino entero no existiera.',choices:()=>[
+  {t:'Pedirle a Edna que huya con él',d:'Elegir el amor antes que el trono.',color:C.gold,delta:{humanity:6,ednaTrust:3,kingAlert:1,aethPerfect:1},next:'aeth_secret_love'},
+  {t:'Pedirle que enfrente a su padre',d:'Creer que la verdad todavía puede cambiar el reino.',color:C.cyan,delta:{humanity:4,ednaTrust:2,kingAlert:2},next:'aeth_secret_love'},
+  {t:'Guardar silencio por ahora',d:'Esperar. Observar. No exponerla.',color:C.trini,delta:{ednaTrust:1,wrath:1},next:'aeth_secret_love'}
+ ]},
+ aeth_secret_love:{img:'aethrion_council',title:'AETHRION',sub:'EL PALACIO',spk:'EDNA',txt:'"Mi padre no gobierna. Castiga."\n\nEdna lo dice en voz baja, como si las paredes pudieran delatarla.\n\nAernos sabe que si la familia real descubre lo que hay entre ellos, no solo van a separarlos. Van a convertirlos en ejemplo.',next:'aeth_family'},
+ aeth_family:{img:'aethrion_council',title:'AETHRION',sub:'LA FAMILIA OPOSITORA',big:'LA CASA DE AERNOS',s:'La primera grieta',spk:'NARRADOR',txt:'La familia de Aernos prepara una denuncia contra el rey. Tienen nombres, documentos y testimonios.\n\nLa hermana menor de Aernos le pide que no vaya al palacio esa noche. Su madre le dice que el reino cambia cuando alguien decide no tener miedo.',choices:()=>[
+  {t:'Llevar las pruebas a Edna',d:'Confiar en que ella puede mover algo desde dentro.',color:C.gold,delta:{humanity:5,ednaTrust:4,aethPerfect:1},next:'aeth_massacre'},
+  {t:'Ocultar las pruebas y preparar una salida',d:'No confiar en nadie del palacio.',color:C.cyan,delta:{kingAlert:-1,rebelArmy:1},next:'aeth_massacre'},
+  {t:'Usar su Eco para forzar a un guardia a hablar',d:'El control mental funciona. Y asusta lo fácil que resulta.',color:C.red,delta:{wrath:4,corr:1,kingAlert:2},next:'aeth_massacre'}
+ ]},
+ aeth_massacre:{img:'aethrion_fire',title:'AETHRION',sub:'LA NOCHE ROJA',big:'LA ORDEN DEL REY',s:'Nada vuelve a ser igual',spk:'NARRADOR',txt:'Esa noche, el rey manda soldados a la casa de Aernos.\n\nSus padres y su hermana son asesinados delante de él.\n\nAernos cae entre sangre, polvo y fuego. Creen que murió.\n\nPero su Eco late. No como antes. Más profundo. Más oscuro.',choices:()=>[
+  {t:'Arrastrarse hasta las sombras y sobrevivir',d:'Respirar aunque duela.',color:C.cyan,delta:{hp:-12,humanity:2,wrath:4},next:'aeth_survivor'},
+  {t:'Tomar la mente de un soldado herido',d:'Obligarlo a abrir una salida.',color:C.red,delta:{hp:-7,wrath:7,corr:2,kingAlert:1},next:'aeth_survivor'},
+  {t:'Salvar una prueba antes de escapar',d:'Aferrarse a algo que demuestre la verdad.',color:C.gold,delta:{hp:-15,humanity:5,aethPerfect:1},next:'aeth_survivor'}
+ ]},
+ aeth_survivor:{img:'aethrion_ruins',title:'AETHRION',sub:'AERNOS SOBREVIVE',big:'EL MUERTO QUE RESPIRA',s:'Todos creen que cayó',spk:'AERNOS',txt:'Durante semanas, Aernos vive escondido bajo la ciudad.\n\nCada recuerdo de su familia vuelve como un golpe. Y cada vez que usa su Eco, siente una presencia debajo de su rabia.\n\nNo habla. No duerme. Solo repite una promesa:\n\n"Voy a matar al rey."',next:'aeth_first_control'},
+ aeth_first_control:{img:'aethrion_shadows',title:'AETHRION',sub:'ECO DE CONTROL MENTAL',big:'LA PRIMERA ORDEN',s:'El poder obedece',spk:'NARRADOR',txt:'Un guardia del palacio patrulla solo. Aernos podría usarlo para entrar en archivos reales.\n\nSu Eco entra en la mente del hombre como una aguja blanca y negra.',choices:()=>[
+  {t:'Ordenarle que olvide haberlo visto',d:'Usar lo mínimo necesario.',color:C.gold,delta:{humanity:4,wrath:1,aethPerfect:1},next:'aeth_rebels'},
+  {t:'Sacarle información y dejarlo vivo',d:'Romper una parte de su voluntad, pero no su cuerpo.',color:C.cyan,delta:{wrath:3,corr:1,rebelArmy:1},next:'aeth_rebels'},
+  {t:'Convertirlo en mensajero de miedo',d:'Enviar una señal al palacio.',color:C.red,delta:{wrath:7,corr:2,kingAlert:2},next:'aeth_rebels'}
+ ]},
+ aeth_rebels:{img:'aethrion_council',title:'AETHRION',sub:'EL EJÉRCITO OCULTO',big:'LOS ADEPTOS',s:'Nadie sabe que Aernos vive',spk:'NARRADOR',txt:'La noticia corre por túneles, mercados y templos vacíos: alguien está atacando al rey desde las sombras.\n\nAernos reúne personas que perdieron hijos, tierras, nombres y memoria por culpa del trono.\n\nAlgunos quieren justicia. Otros solo quieren sangre.',choices:()=>[
+  {t:'Poner reglas: no matar inocentes',d:'La rebelión no puede convertirse en lo mismo que odia.',color:C.gold,delta:{humanity:8,rebelArmy:2,aethPerfect:1},next:'aeth_first_attack'},
+  {t:'Aceptar a todos los que quieran pelear',d:'Cuantos más sean, más cerca está el trono.',color:C.cyan,delta:{rebelArmy:4,wrath:2},next:'aeth_first_attack'},
+  {t:'Usar control mental para sumar soldados',d:'El ejército crece rápido. Demasiado rápido.',color:C.red,delta:{rebelArmy:5,wrath:6,corr:3,kingAlert:2},next:'aeth_first_attack'}
+ ]},
+ aeth_first_attack:{img:'aethrion_fire',music:'battle',title:'AETHRION',sub:'PRIMER ATAQUE',big:'SANGRE EN EL DISTRITO NORTE',s:'La rebelión aparece',spk:'NARRADOR',txt:'El primer ataque funciona.\n\nUn depósito del rey cae. Los prisioneros salen. El nombre de Aernos vuelve a circular, aunque nadie se atreve a decirlo en voz alta.\n\nPero el Eco de Aernos cambia. Cada victoria alimenta algo que no se siente humano.',choices:()=>[
+  {t:'Liberar prisioneros y retirarse',d:'Golpear al rey sin quedarse a disfrutarlo.',color:C.gold,delta:{humanity:5,rebelArmy:2,aethPerfect:1},next:'aeth_edna_truth'},
+  {t:'Robar armas y preparar el siguiente golpe',d:'El reino no cae con símbolos, cae con fuerza.',color:C.cyan,delta:{rebelArmy:3,wrath:2},next:'aeth_edna_truth'},
+  {t:'Dejar un mensaje grabado en la mente de los guardias',d:'Que el rey empiece a temer mientras duerme.',color:C.red,delta:{wrath:6,corr:2,kingAlert:2},next:'aeth_edna_truth'}
+ ]},
+ aeth_edna_truth:{img:'aethrion_castle',title:'AETHRION',sub:'EDNA DESCUBRE LA VERDAD',big:'EL AMOR Y EL FANTASMA',s:'Ella creía que Aernos había muerto',spk:'EDNA',txt:'Edna encuentra una marca que solo Aernos podía dejar.\n\nLo busca en una cripta abandonada, sin escolta.\n\nCuando lo ve vivo, no corre a abrazarlo. Primero llora. Después pregunta:\n\n"¿Qué estás haciendo con tu Eco?"',choices:()=>[
+  {t:'Contarle todo, incluso lo peor',d:'No esconderle la oscuridad.',color:C.gold,delta:{humanity:8,ednaTrust:7,aethPerfect:2},next:'aeth_three_discoveries'},
+  {t:'Decirle solo lo necesario',d:'Protegerla también es ocultarle partes de la verdad.',color:C.cyan,delta:{ednaTrust:3,wrath:2},next:'aeth_three_discoveries'},
+  {t:'Pedirle que elija entre él y su padre',d:'El amor también puede convertirse en presión.',color:C.red,delta:{ednaTrust:-2,wrath:5,corr:1},next:'aeth_three_discoveries'}
+ ]},
+ aeth_three_discoveries:{img:'aethrion_shadows',title:'AETHRION',sub:'TRES VECES CASI DESCUBIERTO',big:'EL CERCO',s:'El rey empieza a acercarse',spk:'NARRADOR',txt:'Tres veces el palacio está a punto de descubrirlo.\n\nUna por un traidor. Otra por un soldado que recuerda demasiado. Otra por una visión de los gigantes del reino.\n\nAernos sobrevive a cada una, pero el rey aprende algo: el muerto está vivo.',choices:()=>[
+  {t:'Perdonar al traidor y usarlo como doble agente',d:'Arriesgado, pero conserva humanidad.',color:C.gold,delta:{humanity:7,rebelArmy:1,aethPerfect:1},next:'aeth_fourth_discovery'},
+  {t:'Borrar la memoria del soldado',d:'No muere nadie, pero Aernos cruza una línea.',color:C.cyan,delta:{wrath:3,corr:1,kingAlert:-1},next:'aeth_fourth_discovery'},
+  {t:'Ejecutar al traidor frente a todos',d:'Nadie vuelve a dudar. Nadie vuelve a dormir igual.',color:C.red,delta:{wrath:8,corr:3,rebelArmy:2},next:'aeth_fourth_discovery'}
+ ]},
+ aeth_fourth_discovery:{img:'aethrion_council',music:'battle',title:'AETHRION',sub:'LA CUARTA VEZ',big:'DESCUBIERTO',s:'El palacio lo atrapa',spk:'NARRADOR',txt:'La cuarta vez no falla.\n\nAernos es atrapado en los túneles bajo el salón de los tres gigantes. Lo arrastran al palacio con cadenas de Eco.\n\nEl rey sonríe al verlo vivo.\n\n"Ni siquiera la muerte quiso quedarse contigo."',choices:()=>[
+  {t:'Esperar una oportunidad',d:'No mostrar toda la fuerza todavía.',color:C.gold,delta:{humanity:4,aethPerfect:1},next:'aeth_bomb'},
+  {t:'Romper la mente de un carcelero',d:'Una salida rápida, pero costosa.',color:C.cyan,delta:{wrath:4,corr:1},next:'aeth_bomb'},
+  {t:'Intentar controlar a todos en la sala',d:'El Eco grita desde adentro.',color:C.red,delta:{wrath:9,corr:4},next:'aeth_bomb'}
+ ]},
+ aeth_bomb:{img:'aethrion_fire',music:'battle',title:'AETHRION',sub:'EL PALACIO ARDE',big:'LA BOMBA',s:'Todo se desmadra',spk:'NARRADOR',txt:'Entonces ocurre la explosión.\n\nUna bomba de Eco rompe una parte del palacio. Nadie sabe si fue la rebelión, un aliado desesperado o una facción que quería usar a Aernos como chispa.\n\nEl caos le abre el camino al salón del trono.',choices:()=>[
+  {t:'Buscar primero a Edna',d:'Antes del rey. Antes de la venganza.',color:C.gold,delta:{humanity:8,ednaTrust:4,aethPerfect:2},next:'aeth_throne'},
+  {t:'Ir directo por el rey',d:'La promesa de sangre está a metros.',color:C.red,delta:{wrath:8,corr:2},next:'aeth_throne'},
+  {t:'Ordenar a los rebeldes que protejan civiles',d:'El reino también es su gente.',color:C.cyan,delta:{humanity:5,rebelArmy:2,aethPerfect:1},next:'aeth_throne'}
+ ]},
+ aeth_throne:{img:'aethrion_throne',music:'boss',title:'AETHRION',sub:'SALÓN DEL TRONO',big:'EDNA',s:'El evento que cambia todo',spk:'NARRADOR',txt:'Aernos llega al salón del trono.\n\nEl rey está herido, pero de pie. Edna corre hacia Aernos.\n\nPor un instante, todo el ruido del palacio desaparece.\n\nEntonces el rey toma a su propia hija y apoya una hoja de Eco contra su pecho.',choices:()=>[
+  {t:'Controlar la mente del rey sin destruirla',d:'Una precisión imposible en medio del odio.',color:C.gold,delta:{humanity:5,aethPerfect:3},next:()=> (state.humanity>=82 && state.ednaTrust>=13 && state.wrath<=31 && state.corr<=5 && state.aethPerfect>=8) ? 'aeth_final_perfect' : 'aeth_edna_dies'},
+  {t:'Lanzarse hacia Edna',d:'El cuerpo antes que el poder.',color:C.cyan,delta:{humanity:4,ednaTrust:2},next:()=> (state.humanity>=78 && state.ednaTrust>=12 && state.aethPerfect>=7 && state.corr<=6) ? 'aeth_final_perfect' : 'aeth_edna_dies'},
+  {t:'Soltar todo el Eco contra el rey',d:'Ya no queda espacio para medir nada.',color:C.red,delta:{wrath:12,corr:5},next:'aeth_edna_dies'}
+ ]},
+ aeth_edna_dies:{img:'aethrion_fire',music:'boss',title:'AETHRION',sub:'NACIMIENTO',big:'TRONOX',s:'El antes y después',spk:'NARRADOR',txt:'El rey mata a Edna delante de Aernos.\n\nEl mundo se queda sin aire.\n\nTodo el dolor guardado, cada noche bajo tierra, cada mente rota, cada recuerdo de su familia asesinada, cada segundo de amor perdido...\n\nTodo se abre.\n\nAernos grita, pero la voz que responde ya no es suya.',choices:()=>[
+  {t:'Dejar que la furia lo tome',d:'El reino hizo esto. El rey hizo esto.',color:C.red,delta:{wrath:12,corr:8},next:'aeth_final_tronox'},
+  {t:'Aferrarse al recuerdo de Edna',d:'Intentar recordar quién era antes del odio.',color:C.gold,delta:{humanity:10,corr:-2},next:()=> state.humanity>=78 && state.corr<=6 ? 'aeth_final_gray' : 'aeth_final_tronox'},
+  {t:'Matar al rey, pero no al reino',d:'Una última frontera antes del abismo.',color:C.cyan,delta:{humanity:5,wrath:5},next:()=> state.humanity>=70 && state.corr<=7 ? 'aeth_final_gray' : 'aeth_final_tronox'}
+ ]},
+ aeth_final_tronox:{img:'aethrion_fire',music:'end',title:'AETHRION',sub:'FINAL',big:'EL NACIMIENTO DE TRONOX',s:'Final canon oscuro',spk:'NARRADOR',txt:'Tronox sale de Aernos como una forma humana diabólica hecha de furia, control y Eco corrompido.\n\nAsesina al rey.\n\nEl palacio cae. El mundo Eco entiende por primera vez que una persona puede romper el límite de su propia alma.\n\nAernos/Tronox es atrapado y encarcelado durante años.\n\nMucho después, esa prisión se romperá. Y una parte de él llegará a la Tierra.\n\nValmora. Lustonia. Todo empieza acá.',choices:()=>[
+  {t:'Volver al inicio de Aethrion',d:'Intentar cambiar el destino.',color:C.gold,delta:{},next:'aeth_start'},
+  {t:'Volver al HUB de universos',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'aeth_to_hub'}
+ ]},
+ aeth_final_gray:{img:'aethrion_throne',music:'end',title:'AETHRION',sub:'FINAL',big:'EL REY CAE',s:'Final gris',spk:'NARRADOR',txt:'Edna muere. El rey también.\n\nAernos siente a Tronox dentro suyo, pero logra encerrarlo antes de que destruya todo.\n\nNo queda paz. No queda amor. Pero queda una decisión: no dejar que el dolor gobierne por completo.\n\nAethrion entra en guerra. Aernos desaparece entre ruinas, perseguido por quienes temen lo que casi nació.',choices:()=>[
+  {t:'Volver al inicio de Aethrion',d:'Buscar otro final.',color:C.gold,delta:{},next:'aeth_start'},
+  {t:'Volver al HUB de universos',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'aeth_to_hub'}
+ ]},
+ aeth_final_perfect:{img:'aethrion_castle',music:'end',title:'AETHRION',sub:'FINAL SECRETO',big:'EL MUNDO ECO NUNCA CAYÓ',s:'Final ideal',spk:'NARRADOR',txt:'Aernos no deja que el odio decida por él.\n\nControla el Eco con una precisión imposible y detiene al rey antes de que mate a Edna.\n\nEl rey cae. Edna vive.\n\nAernos no se convierte en Tronox. El reino descubre la verdad. Aethrion cambia de manos.\n\nAernos y Edna gobiernan un mundo herido, pero vivo.\n\nSin Tronox, no hay prisión rota. No hay Valmora. No hay Lustonia.\n\nPor primera vez, el Eco no responde al dolor. Responde a la elección.',choices:()=>[
+  {t:'Volver al inicio de Aethrion',d:'Jugar otra ruta.',color:C.gold,delta:{},next:'aeth_start'},
+  {t:'Volver al HUB de universos',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'aeth_to_hub'}
+ ]},
+ aeth_to_hub:{img:'aethrion_castle',title:'AETHRION',sub:'UNIVERSOS',spk:'NARRADOR',txt:'El Eco de Aethrion se apaga por ahora.\n\nVolvés al mapa de historias.',choices:()=>[
+  {t:'Volver al HUB',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'start'}
+ ]}
+
 
 };
 
@@ -1129,6 +1218,42 @@ $('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sf
     b.addEventListener('click',function(e){e.preventDefault(); tinyBackSound(); showScreenSafe('hub');},{passive:false});
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindBack); else bindBack();
+})();
+</script>
+
+
+<script id="aethrion-hub-bind-final">
+(function(){
+  function $(id){return document.getElementById(id)}
+  function beep(kind){
+    try{
+      var A=window.AudioContext||window.webkitAudioContext, ac=new A();
+      var o=ac.createOscillator(), g=ac.createGain();
+      o.type='triangle'; o.frequency.value=kind==='open'?310:150; o.connect(g); g.connect(ac.destination);
+      var t=ac.currentTime; g.gain.setValueAtTime(.0001,t); g.gain.exponentialRampToValueAtTime(.055,t+.02); g.gain.exponentialRampToValueAtTime(.0001,t+.18); o.start(t); o.stop(t+.22);
+      if(kind==='open'){var o2=ac.createOscillator(), g2=ac.createGain(); o2.type='sine'; o2.frequency.value=520; o2.connect(g2); g2.connect(ac.destination); g2.gain.setValueAtTime(.0001,t+.07); g2.gain.exponentialRampToValueAtTime(.04,t+.09); g2.gain.exponentialRampToValueAtTime(.0001,t+.28); o2.start(t+.07); o2.stop(t+.32)}
+    }catch(e){}
+    try{navigator.vibrate && navigator.vibrate(kind==='open'?[20,20,35]:30)}catch(e){}
+  }
+  function bind(){
+    var b=$('openAethrion');
+    if(!b) return;
+    var clone=b.cloneNode(true);
+    b.parentNode.replaceChild(clone,b);
+    clone.addEventListener('click',function(e){
+      e.preventDefault(); e.stopPropagation(); beep('open');
+      try{ if(typeof unlockAudio==='function') unlockAudio(); }catch(_){}
+      try{ if(typeof playMusic==='function') playMusic('story'); }catch(_){}
+      try{
+        if(window.state){
+          Object.assign(window.state,{campaign:'aethrion',hp:100,eco:20,corr:0,humanity:55,wrath:0,ednaTrust:0,rebelArmy:0,kingAlert:0,aethPerfect:0,resultNext:null});
+        }
+        if(typeof bars==='function') bars();
+      }catch(_){}
+      try{ if(typeof node==='function') return node('aeth_start'); }catch(err){ console.error(err); }
+    },{passive:false});
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
 })();
 </script>
 
