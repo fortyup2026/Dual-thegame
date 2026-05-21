@@ -366,6 +366,21 @@ body.aethrion-mode .choice{border-color:rgba(215,168,74,.36)!important;backgroun
 body.aethrion-mode .btn-cont{border-color:#d7a84a;color:#fff2c2;background:rgba(215,168,74,.10)}
 
 </style>
+
+<style id="zerath-demo-style">
+/* ===== DUAL: ZERATH · DEMO ARCADE ===== */
+.zerath-card{--line:#ff2f55!important}.zerath-card .hub-action{color:#ffb8c4!important;border-color:#ff2f55!important;box-shadow:0 0 18px rgba(255,47,85,.24)!important}
+#zerath.screen.active{display:flex!important;position:absolute;inset:0;align-items:center;justify-content:center;background:#060104;overflow:hidden;color:#fff;font-family:var(--ff3);}
+.zerath-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 18%,rgba(255,43,83,.18),transparent 28%),linear-gradient(180deg,#070308,#020104 62%,#090105),repeating-linear-gradient(90deg,rgba(255,47,85,.06) 0 1px,transparent 1px 34px);}
+.zerath-bg:before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(24,3,12,.96) 0 26%,transparent 26%),linear-gradient(to top,transparent 0 15%,rgba(35,7,18,.9) 15% 58%,transparent 58%) 8% 100%/9% 70% no-repeat,linear-gradient(to top,transparent 0 15%,rgba(46,8,22,.88) 15% 72%,transparent 72%) 25% 100%/11% 88% no-repeat,linear-gradient(to top,transparent 0 15%,rgba(28,7,17,.9) 15% 49%,transparent 49%) 44% 100%/8% 65% no-repeat,linear-gradient(to top,transparent 0 15%,rgba(50,8,24,.85) 15% 64%,transparent 64%) 69% 100%/12% 78% no-repeat,radial-gradient(ellipse at 50% 0%,rgba(255,0,55,.38),transparent 45%);opacity:.9;}
+.zerath-bg:after{content:'';position:absolute;left:50%;top:-15%;width:6px;height:62%;background:linear-gradient(to bottom,transparent,#ff2f55,#ffb1bf,#ff2f55,transparent);box-shadow:0 0 25px #ff2f55,0 0 70px rgba(255,47,85,.55);transform:rotate(4deg);}
+.zerath-top{position:absolute;top:calc(12px + env(safe-area-inset-top));left:12px;right:12px;z-index:8;display:flex;align-items:center;gap:12px;pointer-events:auto}.zerath-back{padding:9px 11px;border:1px solid rgba(255,47,85,.58);border-radius:12px;background:rgba(0,0,0,.44);font-family:var(--ff4);font-size:10px;letter-spacing:.16em;color:#ffdce2;box-shadow:0 0 18px rgba(255,47,85,.18)}.zerath-title{font-family:var(--ff2);font-size:clamp(1.15rem,5vw,2rem);letter-spacing:.14em;color:#fff;text-shadow:0 0 14px #ff2f55}.zerath-sub{font-family:var(--ff4);font-size:10px;letter-spacing:.2em;color:#ff9bad;margin-top:2px}
+#zerathCanvas{position:relative;z-index:3;width:100vw;height:56.25vw;max-height:calc(100dvh - 155px);max-width:calc((100dvh - 155px) * 1.777);border:1px solid rgba(255,47,85,.34);border-radius:14px;background:#07030a;box-shadow:0 0 38px rgba(255,47,85,.16),inset 0 0 28px rgba(255,47,85,.06);image-rendering:pixelated}
+.zerath-hud{position:absolute;top:calc(62px + env(safe-area-inset-top));left:14px;right:14px;z-index:8;display:flex;gap:8px;justify-content:center;align-items:center;font-family:var(--ff4);font-size:11px;letter-spacing:.12em;color:#ffdce2;pointer-events:none}.zerath-hud span,.zerath-hud b{padding:6px 8px;border:1px solid rgba(255,47,85,.36);border-radius:8px;background:rgba(0,0,0,.42);box-shadow:0 0 12px rgba(255,47,85,.12)}.zerath-hud span{color:#ff5975}
+.zerath-controls{position:absolute;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:8;display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.zerath-controls button,.zerath-intro button,.zerath-end button{padding:12px 7px;border:1px solid rgba(255,47,85,.55);border-radius:12px;background:rgba(0,0,0,.54);color:#ffdce2;font-family:var(--ff4);font-size:11px;letter-spacing:.08em;box-shadow:0 0 18px rgba(255,47,85,.14)}.zerath-controls button:active,.zerath-intro button:active,.zerath-end button:active,.zerath-back:active{transform:scale(.96);filter:brightness(1.35)}
+.zerath-intro,.zerath-end{position:absolute;z-index:12;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,540px);padding:22px 18px;border:1px solid rgba(255,47,85,.48);border-radius:20px;background:rgba(5,0,4,.82);backdrop-filter:blur(12px);box-shadow:0 0 52px rgba(255,47,85,.22);text-align:center}.zerath-intro h2,.zerath-end h2{font-family:var(--ff2);letter-spacing:.16em;color:#fff;text-shadow:0 0 18px #ff2f55;margin-bottom:10px}.zerath-intro p,.zerath-end p{font-size:clamp(.98rem,3.7vw,1.15rem);line-height:1.45;color:#d6c5ca;margin-bottom:16px}.zerath-end{display:none}.zerath-end.show{display:block}
+@media(max-width:620px){#zerathCanvas{width:100vw;height:62vh;max-height:62vh;max-width:100vw;border-left:0;border-right:0;border-radius:0}.zerath-hud{top:calc(58px + env(safe-area-inset-top));font-size:9px;gap:4px}.zerath-hud span,.zerath-hud b{padding:5px 5px}.zerath-controls{grid-template-columns:repeat(5,1fr);gap:5px}.zerath-controls button{font-size:9px;padding:12px 3px}.zerath-title{font-size:1rem}.zerath-sub{font-size:8px}}
+</style>
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -401,9 +416,9 @@ body.aethrion-mode .btn-cont{border-color:#d7a84a;color:#fff2c2;background:rgba(
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
         <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
-      <button class="hub-card locked" type="button" data-soon="DUAL · ZERATH" style="--line:#ff2f55">
+      <button class="hub-card available zerath-card" id="openZerath" type="button" style="--line:#ff2f55">
         <span><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH</span></span>
-        <span class="hub-action">PRÓXIMAMENTE</span>
+        <span class="hub-action">DEMO ›</span>
       </button>
     </div>
     <div class="hub-footer">UNIVERSOS CONECTADOS<br>CADA HISTORIA DEJA UNA HUELLA. CADA DECISIÓN, UN ECO.</div>
@@ -454,6 +469,39 @@ body.aethrion-mode .btn-cont{border-color:#d7a84a;color:#fff2c2;background:rgba(
 <section id="game" class="screen"><div class="scene" id="scene"></div><div class="hud"><div class="chapter"><h1 id="hudTitle">DUAL</h1><p id="hudSub">LUSTONIA</p></div><div class="bars"><div class="stat"><label><span>VIDA</span><span id="hpTxt">100</span></label><div class="bar hpbar"><i id="hpBar" style="width:100%"></i></div></div><div class="stat"><label><span>ECO</span><span id="ecoTxt">0</span></label><div class="bar ecobar"><i id="ecoBar" style="width:0%"></i></div></div></div></div><div class="game-scroll" id="gameScroll"><div class="content"><div class="scene-title" id="sceneTitle"></div><div class="panel"><div class="speaker"><div class="sp-line" id="spLine"></div><div class="sp-name" id="spName">NARRADOR</div></div><div class="text" id="text"></div></div><div class="choices" id="choices"></div><div class="cont" id="cont"><button class="btn-cont" id="contBtn">CONTINUAR</button></div></div></div></section>
 <section id="result" class="screen"><div class="res-bg" id="resBg"></div><div class="res-card" id="resCard"><div class="res-small" id="resSmall">RESULTADO</div><div class="res-title" id="resTitle"></div><div class="res-text" id="resText"></div><button class="btn-main" id="resBtn" style="margin-top:18px"><span>▶ CONTINUAR</span></button></div></section>
 <section id="ending" class="screen"><div class="res-bg" id="endBg"></div><div class="res-card" id="endCard"><div class="res-small">FINAL DE LUSTONIA</div><div class="res-title" id="endTitle"></div><div class="res-text" id="endText"></div><button class="btn-main" id="againBtn" style="margin-top:18px"><span>↻ VOLVER A JUGAR</span></button></div></section>
+<section id="zerath" class="screen zerath-screen">
+  <div class="zerath-bg"></div>
+  <div class="zerath-top">
+    <button id="zerathBack" class="zerath-back" type="button">← UNIVERSOS</button>
+    <div>
+      <div class="zerath-title">DUAL: ZERATH</div>
+      <div class="zerath-sub">DEMO ARCADE · EL RAYO ROJO</div>
+    </div>
+  </div>
+  <div id="zerathIntro" class="zerath-intro">
+    <h2>LA CIUDAD DE ZERATH</h2>
+    <p>Un rayo rojo cae desde la estratósfera. Después de Valmora y Lustonia, Zerath también siente la consecuencia de Tronox. Los militares corruptos toman las calles. Nya despierta su Eco rojo: aros de energía que nacen de sus puños.</p>
+    <button id="zerathStart" type="button">▶ JUGAR DEMO</button>
+  </div>
+  <canvas id="zerathCanvas" width="960" height="540"></canvas>
+  <div class="zerath-hud">
+    <span>NYA</span><b id="zerathHp">VIDA 100</b><b id="zerathScore">PUNTOS 0</b><b id="zerathWave">ZONA 1</b>
+  </div>
+  <div class="zerath-controls">
+    <button data-key="left">◀</button>
+    <button data-key="right">▶</button>
+    <button data-key="jump">ARO ↑</button>
+    <button data-key="fire">DISPARAR</button>
+    <button data-key="special">ONDA</button>
+  </div>
+  <div id="zerathEnd" class="zerath-end">
+    <h2 id="zerathEndTitle">DEMO COMPLETADA</h2>
+    <p id="zerathEndText">Nya sobrevivió al primer ataque en Zerath.</p>
+    <button id="zerathAgain" type="button">↻ REINTENTAR</button>
+    <button id="zerathHub" type="button">← VOLVER AL HUB</button>
+  </div>
+</section>
+
 </div>
 <script>
 const $=id=>document.getElementById(id);
@@ -1441,5 +1489,96 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
 })();
 </script>
 
+<script id="zerath-arcade-demo-script">
+(function(){
+  const $ = id => document.getElementById(id);
+  const screens = () => document.querySelectorAll('.screen');
+  function showOnly(id){ screens().forEach(s=>s.classList.remove('active')); const el=$(id); if(el) el.classList.add('active'); }
+  function beep(type='ok'){
+    try{
+      const ctx = window._zAudio || (window._zAudio = new (window.AudioContext||window.webkitAudioContext)());
+      if(ctx.state==='suspended') ctx.resume();
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.type = type==='bad'?'square':type==='shot'?'sawtooth':'triangle';
+      o.frequency.value = type==='bad'?95:type==='shot'?360:type==='jump'?520:type==='hit'?150:260;
+      g.gain.value=.0001; o.connect(g); g.connect(ctx.destination); o.start();
+      const now=ctx.currentTime; g.gain.exponentialRampToValueAtTime(type==='shot'?.045:.035, now+.02); g.gain.exponentialRampToValueAtTime(.0001, now+(type==='bad'?.22:.12)); o.stop(now+(type==='bad'?.24:.14));
+    }catch(e){}
+    if(navigator.vibrate) navigator.vibrate(type==='bad'?80:25);
+  }
+  let canvas, ctx, running=false, keys={}, last=0, spawnTimer=0, msgTimer=0;
+  let player, bullets, enemies, rings, score, zone, ended;
+  function reset(){
+    canvas=$('zerathCanvas'); ctx=canvas.getContext('2d');
+    running=true; ended=false; last=performance.now(); spawnTimer=0; msgTimer=220;
+    score=0; zone=1;
+    player={x:120,y:390,w:30,h:54,vx:0,vy:0,hp:100,onGround:false,face:1,cool:0,special:0,inv:0};
+    bullets=[]; enemies=[]; rings=[];
+    for(let i=0;i<3;i++) spawnEnemy(520+i*120);
+    $('zerathIntro').style.display='none'; $('zerathEnd').classList.remove('show');
+    updateHud(); requestAnimationFrame(loop);
+  }
+  function spawnEnemy(x){ enemies.push({x:x||940,y:398,w:34,h:48,vx:-.75-Math.random()*.55,hp:2+Math.floor(score/8),hit:0}); }
+  function updateHud(){ $('zerathHp').textContent='VIDA '+Math.max(0,Math.round(player.hp)); $('zerathScore').textContent='PUNTOS '+score; $('zerathWave').textContent='ZONA '+zone; }
+  function rect(a,b){return a.x<a.w+b.x && a.x+a.w>b.x && a.y<a.h+b.y && a.y+a.h>b.y}
+  function fire(){ if(player.cool>0) return; player.cool=16; beep('shot'); bullets.push({x:player.x+player.w/2+player.face*18,y:player.y+22,r:10,vx:player.face*7,life:80}); rings.push({x:player.x+player.w/2+player.face*22,y:player.y+23,r:10,max:22,life:14}); }
+  function jumpRing(){ if(player.special>0) return; player.special=24; beep('jump'); player.vy=-13.5; player.onGround=false; rings.push({x:player.x+player.w/2,y:player.y+player.h+4,r:12,max:52,life:22,up:true}); }
+  function special(){ if(player.special>0 || score<3) return; player.special=65; score-=3; beep('shot'); rings.push({x:player.x+player.w/2,y:player.y+player.h/2,r:12,max:180,life:36,blast:true}); enemies.forEach(e=>{ if(Math.abs((e.x+e.w/2)-(player.x+player.w/2))<190){ e.hp-=3; e.hit=12; }}); }
+  function loop(t){ if(!running) return; const dt=Math.min(32,t-last); last=t; step(dt/16.67); draw(); requestAnimationFrame(loop); }
+  function step(dt){
+    const W=canvas.width,H=canvas.height, ground=444;
+    player.cool=Math.max(0,player.cool-dt); player.special=Math.max(0,player.special-dt); player.inv=Math.max(0,player.inv-dt);
+    let left=keys.ArrowLeft||keys.a||keys.left, right=keys.ArrowRight||keys.d||keys.right;
+    player.vx=(right?4.2:0)-(left?4.2:0); if(player.vx) player.face=player.vx>0?1:-1;
+    if(keys.fire){fire(); keys.fire=false;} if(keys.jump){jumpRing(); keys.jump=false;} if(keys.special){special(); keys.special=false;}
+    player.vy+=.72*dt; player.x+=player.vx*dt; player.y+=player.vy*dt;
+    if(player.y+player.h>=ground){player.y=ground-player.h; player.vy=0; player.onGround=true;} player.x=Math.max(18,Math.min(W-player.w-18,player.x));
+    bullets.forEach(b=>{b.x+=b.vx*dt; b.life-=dt;}); bullets=bullets.filter(b=>b.life>0&&b.x>-60&&b.x<W+60);
+    rings.forEach(r=>{r.r += (r.max-r.r)*.18; r.life-=dt;}); rings=rings.filter(r=>r.life>0);
+    enemies.forEach(e=>{e.x+=e.vx*dt; e.hit=Math.max(0,e.hit-dt); if(e.x<player.x) e.vx=Math.abs(e.vx)*.75; if(e.x>player.x) e.vx=-Math.abs(e.vx)*.75;});
+    for(const b of bullets){ for(const e of enemies){ if(Math.abs(b.x-(e.x+e.w/2))<e.w/2+b.r && Math.abs(b.y-(e.y+e.h/2))<e.h/2+b.r){ e.hp--; e.hit=10; b.life=0; rings.push({x:e.x+e.w/2,y:e.y+22,r:8,max:34,life:12}); beep('hit'); } } }
+    for(const e of enemies){ if(e.hp<=0){ score++; e.dead=true; rings.push({x:e.x+e.w/2,y:e.y+20,r:10,max:46,life:16}); } else if(rect(player,e) && player.inv<=0){ player.hp-=12; player.inv=32; beep('bad'); rings.push({x:player.x+player.w/2,y:player.y+20,r:8,max:38,life:12}); } }
+    enemies=enemies.filter(e=>!e.dead);
+    spawnTimer-=dt; if(spawnTimer<=0 && enemies.length<4+Math.min(3,zone)){ spawnTimer=55; spawnEnemy(W+40); }
+    if(score>=8 && zone===1){ zone=2; msgTimer=180; }
+    if(score>=18 && !ended){ finish(true); return; }
+    if(player.hp<=0 && !ended){ finish(false); return; }
+    updateHud();
+  }
+  function finish(win){ ended=true; running=false; $('zerathEndTitle').textContent=win?'DEMO COMPLETADA':'NYA CAYÓ'; $('zerathEndText').textContent=win?'Nya resistió el primer ataque en Zerath. El rayo rojo sigue abierto sobre la ciudad.':'Los militares corruptos la rodearon. Reiniciá la demo para probar otra vez.'; $('zerathEnd').classList.add('show'); beep(win?'ok':'bad'); }
+  function draw(){
+    const W=canvas.width,H=canvas.height, ground=444;
+    ctx.clearRect(0,0,W,H);
+    const g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#08020a'); g.addColorStop(.55,'#130414'); g.addColorStop(1,'#050105'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    // city
+    for(let i=0;i<18;i++){ const x=i*62+(i%2)*12, h=130+(i*37)%190; ctx.fillStyle=i%2?'#120715':'#1b0717'; ctx.fillRect(x,ground-h,46,h); ctx.fillStyle='rgba(255,47,85,.35)'; for(let y=ground-h+18;y<ground-10;y+=28) ctx.fillRect(x+8,y,7,3); }
+    // red beam
+    ctx.fillStyle='rgba(255,47,85,.75)'; ctx.fillRect(W/2-3,0,6,ground); ctx.shadowColor='#ff2f55'; ctx.shadowBlur=35; ctx.fillRect(W/2-1,0,2,ground); ctx.shadowBlur=0;
+    ctx.fillStyle='#11070a'; ctx.fillRect(0,ground,W,H-ground); ctx.strokeStyle='rgba(255,47,85,.28)'; ctx.beginPath(); ctx.moveTo(0,ground); ctx.lineTo(W,ground); ctx.stroke();
+    // message
+    if(msgTimer>0){msgTimer--; ctx.font='24px Share Tech Mono'; ctx.fillStyle='rgba(255,190,200,.85)'; ctx.textAlign='center'; ctx.fillText(zone===1?'ZERATH RECIBE EL RAYO ROJO':'ZONA 2 · MÁS MILITARES CORRUPTOS',W/2,92);}
+    // bullets/rings
+    rings.forEach(r=>{ ctx.save(); ctx.globalAlpha=Math.max(.08,r.life/30); ctx.strokeStyle=r.blast?'#ff355e':'#ff2f55'; ctx.lineWidth=r.blast?8:4; ctx.shadowColor='#ff2f55'; ctx.shadowBlur=18; ctx.beginPath(); ctx.arc(r.x,r.y,r.r,0,Math.PI*2); ctx.stroke(); ctx.restore(); });
+    bullets.forEach(b=>{ ctx.save(); ctx.strokeStyle='#ff2f55'; ctx.lineWidth=4; ctx.shadowColor='#ff2f55'; ctx.shadowBlur=18; ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.stroke(); ctx.restore(); });
+    // player Nya
+    ctx.save(); ctx.translate(player.x+player.w/2,player.y+player.h/2); if(player.face<0) ctx.scale(-1,1); if(player.inv>0&&Math.floor(player.inv/4)%2===0) ctx.globalAlpha=.55; ctx.fillStyle='#1b1118'; ctx.fillRect(-15,-23,30,44); ctx.fillStyle='#6b2d1e'; ctx.fillRect(-12,-42,24,21); ctx.fillStyle='#2a1513'; ctx.beginPath(); ctx.arc(0,-45,17,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#13070c'; ctx.fillRect(-17,8,12,26); ctx.fillRect(5,8,12,26); ctx.fillStyle='#ff2f55'; ctx.fillRect(-18,30,14,5); ctx.fillRect(5,30,14,5); ctx.strokeStyle='#ff2f55'; ctx.lineWidth=3; ctx.shadowColor='#ff2f55'; ctx.shadowBlur=12; ctx.beginPath(); ctx.arc(20,-8,11,0,Math.PI*2); ctx.stroke(); ctx.beginPath(); ctx.arc(-20,-8,11,0,Math.PI*2); ctx.stroke(); ctx.restore();
+    // enemies
+    enemies.forEach(e=>{ ctx.save(); ctx.translate(e.x,e.y); ctx.fillStyle=e.hit?'#5d1021':'#20242b'; ctx.fillRect(0,0,e.w,e.h); ctx.fillStyle='#111'; ctx.fillRect(4,8,e.w-8,10); ctx.fillStyle='#ff2f55'; ctx.fillRect(9,13,5,3); ctx.fillRect(21,13,5,3); ctx.fillStyle='#0d0e12'; ctx.fillRect(3,38,11,16); ctx.fillRect(20,38,11,16); ctx.restore(); });
+  }
+  function down(k){ keys[k]=true; }
+  function up(k){ keys[k]=false; }
+  window.addEventListener('keydown',e=>{ if(!document.getElementById('zerath').classList.contains('active')) return; if(['ArrowLeft','ArrowRight','a','d',' '].includes(e.key)) e.preventDefault(); if(e.key==='ArrowLeft'||e.key==='a')down(e.key); if(e.key==='ArrowRight'||e.key==='d')down(e.key); if(e.key===' '||e.key==='ArrowUp'||e.key==='w')keys.jump=true; if(e.key.toLowerCase()==='j')keys.fire=true; if(e.key.toLowerCase()==='k')keys.special=true; });
+  window.addEventListener('keyup',e=>{ up(e.key); });
+  function bindControls(){ document.querySelectorAll('.zerath-controls button').forEach(btn=>{ const k=btn.dataset.key; const on=ev=>{ev.preventDefault(); if(k==='fire') keys.fire=true; else if(k==='jump') keys.jump=true; else if(k==='special') keys.special=true; else keys[k]=true;}; const off=ev=>{ev.preventDefault(); if(k==='left'||k==='right') keys[k]=false;}; btn.addEventListener('pointerdown',on); btn.addEventListener('pointerup',off); btn.addEventListener('pointercancel',off); btn.addEventListener('pointerleave',off); }); }
+  window.addEventListener('load',()=>{
+    bindControls();
+    const open=$('openZerath'); if(open) open.addEventListener('click',e=>{ e.preventDefault(); beep('ok'); showOnly('zerath'); $('zerathIntro').style.display='block'; $('zerathEnd').classList.remove('show'); running=false; },{passive:false});
+    $('zerathBack')?.addEventListener('click',()=>{running=false; beep('ok'); showOnly('hub')});
+    $('zerathHub')?.addEventListener('click',()=>{running=false; beep('ok'); showOnly('hub')});
+    $('zerathStart')?.addEventListener('click',()=>{beep('ok'); reset();});
+    $('zerathAgain')?.addEventListener('click',()=>{beep('ok'); reset();});
+  });
+})();
+</script>
 </body>
 </html>
