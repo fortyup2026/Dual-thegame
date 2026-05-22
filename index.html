@@ -679,22 +679,23 @@ html,body{
 <style id="hub-menu-exacto-final-v6">
 /* ===== MENU PREMIUM FINAL EXACTO - SIN ICONOS, BOTON A LA DERECHA, SCROLL OK ===== */
 html,body{
-  overflow:hidden!important;
-  height:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  height:auto!important;
 }
 #app{
-  position:fixed!important;
-  inset:0!important;
-  overflow:hidden!important;
+  position:relative!important;
+  min-height:100dvh!important;
+  overflow:visible!important;
 }
 .screen{
-  overflow:hidden!important;
+  overflow:visible!important;
 }
 #hub.menu-premium{
-  position:absolute!important;
-  inset:0!important;
+  position:relative!important;
   display:block!important;
-  height:100%!important;
+  min-height:100dvh!important;
+  height:auto!important;
   overflow-y:auto!important;
   overflow-x:hidden!important;
   background:
@@ -1086,6 +1087,14 @@ html,body{
 }
 </style>
 
+<style id="MASTER-SCREEN-FIX">
+/* ===== FIX DEFINITIVO: PANTALLAS NO SE SUPERPONEN ===== */
+html,body{overflow:hidden!important;height:100%!important;width:100%!important;}
+#app{position:fixed!important;inset:0!important;overflow:hidden!important;background:#000!important;}
+.screen{position:absolute!important;inset:0!important;display:none!important;overflow:hidden!important;}
+.screen.active{display:flex!important;}
+#hub.screen.active,#hub.menu-premium.screen.active{display:block!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;}
+</style>
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -1249,7 +1258,7 @@ function unlockAudio(){Object.values(audio).forEach(a=>{a.play().then(()=>{a.pau
 function playMusic(k){if(currentTrack===k)return;Object.values(audio).forEach(a=>{try{a.pause()}catch(e){}});currentTrack=k;audio[k]?.play().catch(()=>{});} 
 function vib(n=20){if(navigator.vibrate)navigator.vibrate(n)}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active')}
-function bars(){state.hp=Math.max(0,Math.min(100,state.hp));state.eco=Math.max(0,Math.min(100,state.eco));$('hpBar').style.width=state.hp+'%';$('ecoBar').style.width=state.eco+'%';$('hpTxt').textContent=Math.round(state.hp);$('ecoTxt').textContent=Math.round(state.eco)}
+function bars(){try{state.hp=Math.max(0,Math.min(100,state.hp));state.eco=Math.max(0,Math.min(100,state.eco));const hb=$('hpBar'),eb=$('ecoBar'),ht=$('hpTxt'),et=$('ecoTxt');if(hb)hb.style.width=state.hp+'%';if(eb)eb.style.width=state.eco+'%';if(ht)ht.textContent=Math.round(state.hp);if(et)et.textContent=Math.round(state.eco);}catch(e){}}
 const IMG_ALIASES={
  aethrion_castle:['aethrion_castle.png','Aethrion_castle.png','castillo_aethrion.png','sc_aethrion_castle.png'], aethrion_council:['aethrion_council.png','consejo_aethrion.png','sc_aethrion_council.png','aethrion_castle.png'], aethrion_fire:['aethrion_fire.png','aethrion_bomb.png','sc_explosion.png','aethrion_castle.png'], aethrion_ruins:['aethrion_ruins.png','aethrion_fire.png','aethrion_castle.png'], aethrion_shadows:['aethrion_shadows.png','aethrion_castle.png'], aethrion_throne:['aethrion_throne.png','trono_aethrion.png','aethrion_council.png','aethrion_castle.png'], 
  cover:['cover.png','cover_dual.png',EMBED_COVER], room:['Lindespertandoconeleco.png'], room2:['Linmirandoventanadestruccion.png'], door:['Linenlapuertadudasisalir.png'], ray:['Linveelrayodeluz.png'], streets:['Linescondidomilitares.png','sc_ciudad_lluvia.png'], raincity:['sc_ciudad_lluvia.png'], linfight:['sc_lin_pelea_militares.png','sc_lin_combate.png'],
@@ -1495,7 +1504,10 @@ function showSoon(name){
 ['selTrini','selZack'].forEach(id=>{const b=$(id); if(b)b.onclick=()=>showSoon(id==='selTrini'?'TRINI':'ZACK')});
 const linBtn=$('selLin'); if(linBtn)linBtn.onclick=()=>sfx('win');
 
-$('startBtn').onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sfx('mid');show('intro')};$('introBtn').onclick=()=>{vib();node('start')};$('againBtn').onclick=()=>{try{sfx('mid')}catch(e){};location.reload()};bars();
+try{const sb=$('startBtn');if(sb)sb.onclick=()=>{actx()?.resume?.();unlockAudio();playMusic('menu');sfx('mid');show('intro')};}catch(e){}
+try{const ib=$('introBtn');if(ib)ib.onclick=()=>{vib();node('start')};}catch(e){}
+try{const ab=$('againBtn');if(ab)ab.onclick=()=>{try{sfx('mid')}catch(e){};location.reload()};}catch(e){}
+try{bars();}catch(e){}
 </script>
 
 <script>
