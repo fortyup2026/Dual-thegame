@@ -1087,6 +1087,104 @@ html,body{
 }
 </style>
 
+
+<style id="screen-stack-fix-v10">
+/* FIX DEFINITIVO: una sola pantalla visible, sin superposición */
+html, body{
+  height:100%!important;
+  overflow:hidden!important;
+}
+#app{
+  position:fixed!important;
+  inset:0!important;
+  overflow:hidden!important;
+}
+.screen{
+  position:absolute!important;
+  inset:0!important;
+  display:none!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  z-index:1!important;
+}
+.screen.active{
+  display:flex!important;
+  opacity:1!important;
+  pointer-events:auto!important;
+  z-index:20!important;
+}
+#hub.screen.active{
+  display:block!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#cover.screen.active,
+#intro.screen.active,
+#game.screen.active,
+#result.screen.active,
+#ending.screen.active,
+#aethrion.screen.active,
+#zerath.screen.active{
+  display:flex!important;
+}
+
+/* click real en el menu */
+#hub .hub-card,
+#hub .premium-card,
+#hub button{
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+}
+#hub .premium-card *{
+  pointer-events:none!important;
+}
+
+/* AETHRION no se corta */
+#hub.menu-premium .premium-card,
+#hub .hub-card.premium-card{
+  grid-template-columns:minmax(0,1fr) 124px!important;
+  gap:10px!important;
+  padding-left:18px!important;
+  padding-right:18px!important;
+}
+#hub.menu-premium .hub-name{
+  font-size:clamp(1.85rem,8.3vw,3.05rem)!important;
+  letter-spacing:0!important;
+  transform:scaleX(.88)!important;
+  transform-origin:left center!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  max-width:none!important;
+}
+#hub.menu-premium .hub-action{
+  width:124px!important;
+  min-width:124px!important;
+  max-width:124px!important;
+  font-size:.50rem!important;
+  letter-spacing:.07em!important;
+  padding:10px 6px!important;
+}
+@media(max-width:390px){
+  #hub.menu-premium .premium-card,
+  #hub .hub-card.premium-card{
+    grid-template-columns:minmax(0,1fr) 106px!important;
+    padding-left:14px!important;
+    padding-right:14px!important;
+  }
+  #hub.menu-premium .hub-name{
+    font-size:2.02rem!important;
+    transform:scaleX(.80)!important;
+  }
+  #hub.menu-premium .hub-action{
+    width:106px!important;
+    min-width:106px!important;
+    max-width:106px!important;
+    font-size:.44rem!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -2388,225 +2486,213 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
 })();
 </script>
 
-<style id="final-menu-and-buttons-fix-v8">
-/* FIX FINAL: Aethrion completo + botones funcionales */
-#hub.menu-premium .premium-card,
-#hub .hub-card.premium-card{
-  grid-template-columns: minmax(0,1fr) 132px !important;
-  gap:10px !important;
-  padding-left:18px !important;
-  padding-right:18px !important;
-}
-#hub.menu-premium .hub-name{
-  font-size:clamp(1.95rem,8.8vw,3.2rem) !important;
-  letter-spacing:0 !important;
-  white-space:nowrap !important;
-  overflow:visible !important;
-  max-width:none !important;
-  transform:scaleX(.90) !important;
-  transform-origin:left center !important;
-}
-#hub.menu-premium .hub-action{
-  width:132px !important;
-  min-width:132px !important;
-  max-width:132px !important;
-  font-size:.54rem !important;
-  letter-spacing:.08em !important;
-  padding:10px 8px !important;
-}
-#hub.menu-premium .premium-card{ touch-action:manipulation !important; }
-#hub.menu-premium .premium-card *{ pointer-events:none !important; }
-@media(max-width:390px){
-  #hub.menu-premium .premium-card,
-  #hub .hub-card.premium-card{
-    grid-template-columns:minmax(0,1fr) 112px !important;
-    padding-left:14px !important;
-    padding-right:14px !important;
-  }
-  #hub.menu-premium .hub-name{
-    font-size:2.08rem !important;
-    transform:scaleX(.82) !important;
-  }
-  #hub.menu-premium .hub-action{
-    width:112px !important;
-    min-width:112px !important;
-    max-width:112px !important;
-    font-size:.46rem !important;
-  }
-}
-#selZack.locked{opacity:1!important;filter:none!important}
-#selZack small{color:rgba(220,255,130,.95)!important}
-</style>
 
-<script id="final-working-navigation-v8">
+
+
+
+
+<script id="navigation-fixed-v10">
 (function(){
-  function byId(id){ return document.getElementById(id); }
+  function el(id){ return document.getElementById(id); }
 
-  function safeSound(kind){
-    try{ if(typeof unlockAudio === 'function') unlockAudio(); }catch(e){}
-    try{ if(typeof sfx === 'function') sfx(kind || 'mid'); }catch(e){}
-    try{ if(navigator.vibrate) navigator.vibrate(kind==='sad' ? [35,25,35] : 25); }catch(e){}
-  }
-
-  function showScreen(id){
-    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
-    var el = byId(id);
-    if(el) el.classList.add('active');
+  function show(id){
+    document.querySelectorAll('.screen').forEach(function(s){
+      s.classList.remove('active');
+      s.style.display = 'none';
+      s.style.pointerEvents = 'none';
+      s.style.opacity = '0';
+    });
+    var target = el(id);
+    if(target){
+      target.classList.add('active');
+      target.style.display = (id === 'hub') ? 'block' : 'flex';
+      target.style.pointerEvents = 'auto';
+      target.style.opacity = '1';
+    }
     try{ window.scrollTo(0,0); }catch(e){}
   }
 
-  function resetStory(campaign){
+  function sound(type){
+    try{ if(typeof unlockAudio === 'function') unlockAudio(); }catch(e){}
+    try{ if(typeof sfx === 'function') sfx(type || 'mid'); }catch(e){}
+    try{ if(navigator.vibrate) navigator.vibrate(18); }catch(e){}
+  }
+
+  function resetState(campaign){
     try{
-      if(!window.state) return;
-      Object.assign(window.state,{
-        campaign:campaign,
-        hp:100,
-        eco:0,
-        corr:0,
-        trini:'unknown',
-        zack:'unknown',
-        triniTrust:0,
-        zackTrust:0,
-        alone:false,
-        aer:'',
-        bor:'',
-        mir:'',
-        fer:'',
-        lurnoxBias:0,
-        last:null,
-        resultNext:null,
-        finalChoice:null
-      });
-      if(campaign === 'aethrion'){
-        Object.assign(window.state,{
-          hp:0,
-          eco:20,
-          humanity:55,
-          wrath:0,
-          ednaTrust:0,
-          rebelArmy:0,
-          kingAlert:0,
-          aethPerfect:0
+      if(typeof state !== 'undefined'){
+        Object.assign(state,{
+          campaign: campaign || 'lin',
+          hp:100, eco:0, corr:0,
+          trini:'unknown', zack:'unknown',
+          triniTrust:0, zackTrust:0,
+          alone:false, aer:'', bor:'', mir:'', fer:'',
+          lurnoxBias:0, last:null, resultNext:null, finalChoice:null
         });
+        if(campaign === 'aethrion'){
+          Object.assign(state,{
+            hp:0, eco:20, humanity:55, wrath:0,
+            ednaTrust:0, rebelArmy:0, kingAlert:0, aethPerfect:0
+          });
+        }
       }
       if(typeof bars === 'function') bars();
     }catch(e){}
   }
 
-  function startNode(id){
-    try{
-      if(typeof node === 'function'){
-        node(id);
+  function startNodeSafe(nodeId){
+    if(typeof node === 'function'){
+      try{
+        node(nodeId);
         return true;
+      }catch(e){
+        console.error('Nodo no encontrado:', nodeId, e);
       }
-    }catch(e){ console.error(e); }
+    }
     return false;
   }
 
-  function toast(title, sub){
-    var t = byId('hubToast') || byId('toastSoon');
-    if(!t){
-      alert(title || 'PRÓXIMAMENTE');
-      return;
+  function toast(name){
+    sound('sad');
+    var t = el('hubToast') || el('toastSoon');
+    if(t){
+      var b = t.querySelector('b') || t.querySelector('.t1');
+      var s = t.querySelector('span') || t.querySelector('.t2');
+      if(b) b.textContent = name || 'PRÓXIMAMENTE';
+      if(s) s.textContent = 'HISTORIA EN DESARROLLO';
+      t.classList.add('show');
+      clearTimeout(t._timer);
+      t._timer = setTimeout(function(){ t.classList.remove('show'); }, 1800);
+    }else{
+      alert((name || 'PRÓXIMAMENTE') + "\\nHistoria en desarrollo");
     }
-    var b = t.querySelector('b') || byId('toastTitle') || t.querySelector('.t1');
-    var s = t.querySelector('span') || t.querySelector('.t2');
-    if(b) b.textContent = title || 'PRÓXIMAMENTE';
-    if(s) s.textContent = sub || 'HISTORIA EN DESARROLLO';
-    t.classList.add('show');
-    clearTimeout(t._h);
-    t._h = setTimeout(function(){ t.classList.remove('show'); }, 1800);
   }
 
   var selectedCampaign = 'lin';
 
-  function setCampaign(camp){
-    selectedCampaign = camp;
-    ['selLin','selTrini','selZack'].forEach(function(id){
-      var el = byId(id);
-      if(el) el.classList.toggle('active', el.dataset.campaign === camp);
-    });
-    var start = byId('startBtn');
+  function setCampaign(campaign){
+    selectedCampaign = campaign || 'lin';
+    document.querySelectorAll('.campaign').forEach(function(c){ c.classList.remove('active'); });
+    var id = campaign === 'trini' ? 'selTrini' : campaign === 'zack' ? 'selZack' : 'selLin';
+    var btn = el(id);
+    if(btn) btn.classList.add('active');
+
+    var start = el('startBtn');
     if(start){
-      var label = camp === 'trini' ? 'TRINI' : camp === 'zack' ? 'ZACK' : 'LIN';
-      start.innerHTML = '<span>▶ INICIAR '+label+'</span>';
+      var label = campaign === 'trini' ? 'TRINI' : campaign === 'zack' ? 'ZACK' : 'LIN';
+      start.innerHTML = '<span>▶ INICIAR ' + label + '</span>';
     }
+    sound('mid');
   }
 
-  function bindClick(id, fn){
-    var el = byId(id);
-    if(!el) return;
-    el.onclick = function(e){
+  window.openDualSafe = function(){
+    sound('open');
+    show('cover');
+  };
+
+  window.openAethrionSafe = function(){
+    sound('open');
+    resetState('aethrion');
+    if(!startNodeSafe('aeth_start')){
+      show('game');
+    }
+  };
+
+  window.soonSafe = function(name){
+    toast(name || 'PRÓXIMAMENTE');
+  };
+
+  window.backHubSafe = function(){
+    sound('mid');
+    show('hub');
+  };
+
+  window.selectCampaignSafe = setCampaign;
+
+  window.startCampaignSafe = function(){
+    sound('open');
+    resetState(selectedCampaign);
+
+    if(selectedCampaign === 'trini'){
+      if(startNodeSafe('triniStart')) return;
+      if(startNodeSafe('trini_start')) return;
+      show('game');
+      return;
+    }
+
+    if(selectedCampaign === 'zack'){
+      if(startNodeSafe('zackStart')) return;
+      if(startNodeSafe('zack_start')) return;
+      show('game');
+      return;
+    }
+
+    show('intro');
+  };
+
+  function bind(){
+    var openDual = el('openDual');
+    if(openDual) openDual.onclick = function(e){ e.preventDefault(); openDualSafe(); return false; };
+
+    var openAethrion = el('openAethrion');
+    if(openAethrion) openAethrion.onclick = function(e){ e.preventDefault(); openAethrionSafe(); return false; };
+
+    var back = el('backToHub');
+    if(back) back.onclick = function(e){ e.preventDefault(); backHubSafe(); return false; };
+
+    var lin = el('selLin');
+    if(lin) lin.onclick = function(e){ e.preventDefault(); setCampaign('lin'); return false; };
+
+    var trini = el('selTrini');
+    if(trini) trini.onclick = function(e){ e.preventDefault(); setCampaign('trini'); return false; };
+
+    var zack = el('selZack');
+    if(zack) zack.onclick = function(e){ e.preventDefault(); setCampaign('zack'); return false; };
+
+    var start = el('startBtn');
+    if(start) start.onclick = function(e){ e.preventDefault(); startCampaignSafe(); return false; };
+
+    var intro = el('introBtn');
+    if(intro) intro.onclick = function(e){
       e.preventDefault();
-      e.stopPropagation();
-      fn(e);
+      sound('open');
+      resetState('lin');
+      if(!startNodeSafe('start')) show('game');
       return false;
     };
-  }
 
-  function bindAll(){
-    bindClick('openDual', function(){
-      safeSound('open');
-      showScreen('cover');
-    });
-
-    bindClick('openAethrion', function(){
-      safeSound('open');
-      resetStory('aethrion');
-      if(!startNode('aeth_start')) showScreen('game');
-    });
-
-    document.querySelectorAll('#hub .hub-card.locked').forEach(function(btn){
-      btn.onclick = function(e){
+    document.querySelectorAll('#hub .locked, #hub [data-soon]').forEach(function(x){
+      if(x.id === 'openAethrion' || x.id === 'openDual') return;
+      x.onclick = function(e){
         e.preventDefault();
-        e.stopPropagation();
-        safeSound('sad');
-        toast(btn.dataset.soon || 'PRÓXIMAMENTE', 'HISTORIA EN DESARROLLO');
+        soonSafe(x.getAttribute('data-soon') || 'PRÓXIMAMENTE');
         return false;
       };
     });
 
-    bindClick('backToHub', function(){
-      safeSound('mid');
-      showScreen('hub');
-    });
+    document.addEventListener('click', function(e){
+      var d = e.target.closest && e.target.closest('#openDual');
+      if(d){ e.preventDefault(); openDualSafe(); return; }
 
-    bindClick('selLin', function(){ safeSound('win'); setCampaign('lin'); });
-    bindClick('selTrini', function(){ safeSound('mid'); setCampaign('trini'); });
-    bindClick('selZack', function(){ safeSound('mid'); setCampaign('zack'); });
+      var a = e.target.closest && e.target.closest('#openAethrion');
+      if(a){ e.preventDefault(); openAethrionSafe(); return; }
 
-    bindClick('startBtn', function(){
-      safeSound('open');
-      resetStory(selectedCampaign);
-      if(selectedCampaign === 'trini'){
-        if(!startNode('triniStart')) showScreen('intro');
+      var locked = e.target.closest && e.target.closest('#hub .locked, #hub [data-soon]');
+      if(locked && locked.id !== 'openAethrion' && locked.id !== 'openDual'){
+        e.preventDefault();
+        soonSafe(locked.getAttribute('data-soon') || 'PRÓXIMAMENTE');
         return;
       }
-      if(selectedCampaign === 'zack'){
-        if(!startNode('zackStart')) showScreen('intro');
-        return;
-      }
-      showScreen('intro');
-    });
-
-    bindClick('introBtn', function(){
-      safeSound('open');
-      resetStory('lin');
-      if(!startNode('start')) showScreen('game');
-    });
-
-    bindClick('againBtn', function(){
-      safeSound('mid');
-      showScreen('hub');
-    });
+    }, true);
 
     setCampaign('lin');
+    show('hub');
   }
 
   if(document.readyState === 'loading'){
-    document.addEventListener('DOMContentLoaded', bindAll);
+    document.addEventListener('DOMContentLoaded', bind);
   }else{
-    bindAll();
+    bind();
   }
 })();
 </script>
