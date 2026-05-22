@@ -675,6 +675,341 @@ html,body{
 }
 </style>
 
+
+<style id="hub-menu-exacto-final-v6">
+/* ===== MENU PREMIUM FINAL EXACTO - SIN ICONOS, BOTON A LA DERECHA, SCROLL OK ===== */
+html,body{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  height:auto!important;
+}
+#app{
+  position:relative!important;
+  min-height:100dvh!important;
+  overflow:visible!important;
+}
+.screen{
+  overflow:visible!important;
+}
+#hub.menu-premium{
+  position:relative!important;
+  display:block!important;
+  min-height:100dvh!important;
+  height:auto!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  background:
+    radial-gradient(circle at 50% 18%,rgba(120,70,180,.16),transparent 34%),
+    radial-gradient(circle at 50% 38%,rgba(90,55,145,.10),transparent 42%),
+    linear-gradient(180deg,#040407 0%,#090911 52%,#040406 100%)!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#hub.menu-premium .premium-bg{
+  position:fixed!important;
+  inset:0!important;
+  background:
+    radial-gradient(circle at 50% 20%,rgba(120,70,190,.18),transparent 36%),
+    radial-gradient(circle at 50% 58%,rgba(255,255,255,.035),transparent 34%),
+    linear-gradient(180deg,#050509 0%,#08080f 50%,#030304 100%)!important;
+}
+#hub.menu-premium .premium-bg:before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  opacity:.22!important;
+  background:
+    radial-gradient(circle at 50% 28%,transparent 0 26%,rgba(255,255,255,.10) 26.3%,transparent 26.8%),
+    linear-gradient(90deg,transparent 0 49.8%,rgba(255,255,255,.06) 50%,transparent 50.2%)!important;
+}
+#hub.menu-premium .premium-bg:after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  background:radial-gradient(ellipse at center,transparent 0 36%,rgba(0,0,0,.45) 75%,#000 100%)!important;
+}
+#hub.menu-premium .premium-noise{
+  position:fixed!important;
+  inset:0!important;
+  pointer-events:none!important;
+  opacity:.08!important;
+  background:
+    repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.10) 4px 5px),
+    radial-gradient(rgba(255,255,255,.10) 1px,transparent 1px)!important;
+  background-size:auto, 6px 6px!important;
+}
+#hub.menu-premium .premium-wrap{
+  position:relative!important;
+  z-index:5!important;
+  width:min(92vw,860px)!important;
+  min-height:auto!important;
+  margin:0 auto!important;
+  padding:34px 0 calc(46px + env(safe-area-inset-bottom))!important;
+  display:block!important;
+}
+#hub.menu-premium .premium-head{
+  text-align:center!important;
+  margin:0 auto!important;
+  padding-top:8px!important;
+}
+#hub.menu-premium .premium-logo{
+  font-family:var(--ff1)!important;
+  font-size:clamp(4.6rem,18vw,8.6rem)!important;
+  line-height:.82!important;
+  letter-spacing:.075em!important;
+  color:#efeee9!important;
+  text-shadow:0 4px 16px #000,0 0 26px rgba(255,255,255,.12)!important;
+}
+#hub.menu-premium .premium-game{
+  font-family:var(--ff2)!important;
+  margin-top:6px!important;
+  font-size:clamp(1rem,4vw,1.7rem)!important;
+  letter-spacing:.54em!important;
+  margin-left:.54em!important;
+  color:#d7d4ce!important;
+}
+#hub.menu-premium .premium-tag{
+  margin-top:34px!important;
+  font-family:var(--ff4)!important;
+  font-size:clamp(.62rem,2.5vw,.9rem)!important;
+  letter-spacing:.33em!important;
+  color:rgba(230,230,225,.56)!important;
+  white-space:nowrap!important;
+}
+#hub.menu-premium .premium-choose{
+  position:relative!important;
+  margin:46px auto 28px!important;
+  text-align:center!important;
+  font-family:var(--ff2)!important;
+  font-size:clamp(1.35rem,5.8vw,2.25rem)!important;
+  letter-spacing:.32em!important;
+  color:#dfdcd6!important;
+  text-shadow:0 2px 12px #000!important;
+}
+#hub.menu-premium .premium-choose:before,
+#hub.menu-premium .premium-choose:after{
+  content:""!important;
+  display:inline-block!important;
+  width:min(15vw,105px)!important;
+  height:1px!important;
+  margin:0 16px .36em!important;
+  background:linear-gradient(90deg,transparent,rgba(230,230,225,.45),transparent)!important;
+}
+#hub.menu-premium .premium-list{
+  width:100%!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:22px!important;
+  margin:0 auto!important;
+}
+#hub.menu-premium .premium-card,
+#hub .hub-card.premium-card{
+  --glow:var(--line)!important;
+  width:100%!important;
+  position:relative!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(150px,190px)!important;
+  align-items:center!important;
+  gap:18px!important;
+  min-height:154px!important;
+  padding:28px 34px!important;
+  border-radius:28px!important;
+  border:2px solid var(--glow)!important;
+  background:
+    linear-gradient(90deg,color-mix(in srgb,var(--glow) 10%,transparent),rgba(7,7,10,.84) 36%,rgba(0,0,0,.74))!important;
+  box-shadow:
+    0 0 26px color-mix(in srgb,var(--glow) 34%,transparent),
+    inset 0 0 30px color-mix(in srgb,var(--glow) 10%,transparent)!important;
+  cursor:pointer!important;
+  text-align:left!important;
+  overflow:hidden!important;
+  opacity:1!important;
+  filter:none!important;
+  transform:none!important;
+}
+#hub.menu-premium .premium-card:before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(circle at 18% 55%,color-mix(in srgb,var(--glow) 16%,transparent),transparent 34%),
+    linear-gradient(110deg,transparent 0 36%,rgba(255,255,255,.06) 49%,transparent 62%)!important;
+  opacity:.75!important;
+}
+#hub.menu-premium .premium-card:after,
+#hub .hub-card.premium-card:after{
+  display:none!important;
+  content:none!important;
+}
+#hub.menu-premium .premium-copy{
+  grid-column:1!important;
+  position:relative!important;
+  z-index:2!important;
+  display:block!important;
+  min-width:0!important;
+  overflow:visible!important;
+  padding-left:0!important;
+}
+#hub.menu-premium .hub-name{
+  display:block!important;
+  font-family:var(--ff1)!important;
+  font-size:clamp(2.65rem,9.5vw,4.75rem)!important;
+  line-height:.9!important;
+  letter-spacing:.06em!important;
+  color:#f0eee8!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  text-shadow:0 5px 16px #000,0 0 18px rgba(255,255,255,.13)!important;
+}
+#hub.menu-premium .hub-sub{
+  display:block!important;
+  margin-top:10px!important;
+  padding-bottom:14px!important;
+  width:min(100%,360px)!important;
+  border-bottom:1px solid color-mix(in srgb,var(--glow) 46%,transparent)!important;
+  font-family:var(--ff2)!important;
+  font-size:clamp(.92rem,3.6vw,1.24rem)!important;
+  line-height:1.1!important;
+  letter-spacing:.30em!important;
+  color:var(--glow)!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-transform:uppercase!important;
+  text-shadow:0 0 14px color-mix(in srgb,var(--glow) 35%,transparent)!important;
+}
+#hub.menu-premium .hub-desc{
+  display:block!important;
+  margin-top:16px!important;
+  font-family:var(--ff3)!important;
+  font-size:clamp(.95rem,3.2vw,1.12rem)!important;
+  line-height:1.4!important;
+  letter-spacing:.04em!important;
+  color:rgba(236,232,224,.76)!important;
+  text-shadow:0 2px 8px #000!important;
+}
+#hub.menu-premium .hub-action{
+  grid-column:2!important;
+  justify-self:end!important;
+  position:relative!important;
+  z-index:2!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  min-height:74px!important;
+  padding:16px 18px!important;
+  border-radius:20px!important;
+  border:2px solid var(--glow)!important;
+  background:rgba(0,0,0,.34)!important;
+  box-shadow:
+    0 0 22px color-mix(in srgb,var(--glow) 33%,transparent),
+    inset 0 0 18px color-mix(in srgb,var(--glow) 10%,transparent)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-family:var(--ff2)!important;
+  font-size:clamp(.78rem,2.8vw,1rem)!important;
+  line-height:1.1!important;
+  letter-spacing:.22em!important;
+  color:color-mix(in srgb,var(--glow) 68%,white)!important;
+  text-align:center!important;
+  white-space:normal!important;
+}
+#hub.menu-premium .purple{--glow:#9d37ff!important;--line:#9d37ff!important;}
+#hub.menu-premium .green{--glow:#55e777!important;--line:#55e777!important;}
+#hub.menu-premium .orange{--glow:#ff7a18!important;--line:#ff7a18!important;}
+#hub.menu-premium .gold{--glow:#d7a84a!important;--line:#d7a84a!important;}
+#hub.menu-premium .red{--glow:#ff2b4f!important;--line:#ff2b4f!important;}
+#hub.menu-premium .premium-footer{
+  margin:28px 0 0!important;
+  text-align:center!important;
+  font-family:var(--ff4)!important;
+  letter-spacing:.23em!important;
+  font-size:.68rem!important;
+  color:rgba(230,230,225,.42)!important;
+}
+@media(max-width:560px){
+  #hub.menu-premium .premium-wrap{
+    width:calc(100vw - 30px)!important;
+    padding-top:30px!important;
+  }
+  #hub.menu-premium .premium-logo{
+    font-size:clamp(4.2rem,18vw,6.2rem)!important;
+  }
+  #hub.menu-premium .premium-game{
+    font-size:clamp(.92rem,3.8vw,1.2rem)!important;
+  }
+  #hub.menu-premium .premium-tag{
+    margin-top:28px!important;
+    font-size:.62rem!important;
+    letter-spacing:.28em!important;
+  }
+  #hub.menu-premium .premium-choose{
+    margin:40px 0 24px!important;
+    font-size:clamp(1.15rem,5.1vw,1.62rem)!important;
+    letter-spacing:.27em!important;
+  }
+  #hub.menu-premium .premium-choose:before,
+  #hub.menu-premium .premium-choose:after{
+    display:none!important;
+  }
+  #hub.menu-premium .premium-list{
+    gap:18px!important;
+  }
+  #hub.menu-premium .premium-card,
+  #hub .hub-card.premium-card{
+    grid-template-columns:minmax(0,1fr) 142px!important;
+    gap:12px!important;
+    min-height:138px!important;
+    padding:24px 20px!important;
+    border-radius:24px!important;
+  }
+  #hub.menu-premium .hub-name{
+    font-size:clamp(2.18rem,11vw,3.55rem)!important;
+  }
+  #hub.menu-premium .hub-sub{
+    margin-top:8px!important;
+    padding-bottom:10px!important;
+    font-size:clamp(.78rem,3.7vw,1rem)!important;
+    letter-spacing:.25em!important;
+    width:min(100%,280px)!important;
+  }
+  #hub.menu-premium .hub-desc{
+    margin-top:12px!important;
+    font-size:.87rem!important;
+    line-height:1.36!important;
+  }
+  #hub.menu-premium .hub-action{
+    min-height:62px!important;
+    border-radius:17px!important;
+    padding:12px 10px!important;
+    font-size:.68rem!important;
+    letter-spacing:.16em!important;
+  }
+}
+@media(max-width:390px){
+  #hub.menu-premium .premium-card,
+  #hub .hub-card.premium-card{
+    grid-template-columns:minmax(0,1fr) 126px!important;
+    padding:21px 16px!important;
+  }
+  #hub.menu-premium .hub-name{
+    font-size:clamp(1.82rem,10.5vw,2.65rem)!important;
+  }
+  #hub.menu-premium .hub-sub{
+    font-size:.70rem!important;
+    letter-spacing:.20em!important;
+  }
+  #hub.menu-premium .hub-desc{
+    font-size:.78rem!important;
+  }
+  #hub.menu-premium .hub-action{
+    font-size:.58rem!important;
+    letter-spacing:.11em!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -698,6 +1033,7 @@ html,body{
         <span class="premium-copy">
           <span class="hub-name">DUAL</span>
           <span class="hub-sub">LUSTONIA</span>
+          <span class="hub-desc">Donde la luz se fragmenta<br>y el destino despierta.</span>
         </span>
         <span class="hub-action">INICIAR ›</span>
       </button>
@@ -706,6 +1042,7 @@ html,body{
         <span class="premium-copy">
           <span class="hub-name">AETHRION</span>
           <span class="hub-sub">EL MUNDO ECO</span>
+          <span class="hub-desc">Un mundo vivo. Equilibrio,<br>decisiones y consecuencias.</span>
         </span>
         <span class="hub-action">INICIAR ›</span>
       </button>
@@ -714,6 +1051,7 @@ html,body{
         <span class="premium-copy">
           <span class="hub-name">AETHRION</span>
           <span class="hub-sub">EL DESPERTAR DE MURMEX</span>
+          <span class="hub-desc">Algo antiguo se mueve<br>bajo la superficie.</span>
         </span>
         <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
@@ -722,6 +1060,7 @@ html,body{
         <span class="premium-copy">
           <span class="hub-name">AETHRION</span>
           <span class="hub-sub">LA GRAN CONQUISTA</span>
+          <span class="hub-desc">Imperios colisionan.<br>El mundo no volverá a ser igual.</span>
         </span>
         <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
@@ -730,6 +1069,7 @@ html,body{
         <span class="premium-copy">
           <span class="hub-name">DUAL</span>
           <span class="hub-sub">ZERATH</span>
+          <span class="hub-desc">El abismo te llama.<br>Lo que encuentres allá, te cambiará.</span>
         </span>
         <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
