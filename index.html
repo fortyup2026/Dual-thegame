@@ -1763,5 +1763,135 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
 })();
 </script>
 
+
+
+<style id="zerath-sprites-assets-final-patch">
+/* === ZERATH SPRITES DESDE /assets - parche visual final === */
+#zerath .z-stage{
+  background-image:url('assets/zerath-stage-bg.png'),url('zerath-stage-bg.png') !important;
+  background-position:center center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+}
+#zerath .z-player{
+  position:absolute!important;
+  left:70px;
+  bottom:88px!important;
+  width:72px!important;
+  height:104px!important;
+  z-index:14!important;
+  background-image:url('assets/nya-spritesheet.png')!important;
+  background-repeat:no-repeat!important;
+  background-size:760px 760px!important;
+  background-position:-34px -63px!important;
+  image-rendering:pixelated!important;
+  border:none!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 0 10px rgba(255,43,79,.65)) drop-shadow(0 12px 9px rgba(0,0,0,.85));
+}
+#zerath .z-player::before,#zerath .z-player::after,
+#zerath .z-player .z-fist,#zerath .z-player .nya-eye,#zerath .z-player .nya-leg{display:none!important;}
+#zerath .z-portrait-img{
+  background-image:url('assets/nya-spritesheet.png')!important;
+  background-repeat:no-repeat!important;
+  background-size:430px 430px!important;
+  background-position:-17px -36px!important;
+  image-rendering:pixelated!important;
+  background-color:#090104!important;
+}
+#zerath .z-portrait-img::before{display:none!important;}
+#zerath .z-enemy{
+  position:absolute!important;
+  bottom:88px!important;
+  width:66px!important;
+  height:82px!important;
+  z-index:13!important;
+  background-image:url('assets/soldier-corrupt-spritesheet.png')!important;
+  background-repeat:no-repeat!important;
+  background-size:850px 570px!important;
+  background-position:-44px -63px!important;
+  image-rendering:pixelated!important;
+  border:none!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:drop-shadow(0 0 9px rgba(255,30,55,.55)) drop-shadow(0 10px 8px rgba(0,0,0,.8));
+}
+#zerath .z-enemy::before,#zerath .z-enemy::after,
+#zerath .z-enemy .z-eyes,#zerath .z-enemy .z-gun,#zerath .z-enemy .e-eye,#zerath .z-enemy .e-gun{display:none!important;}
+#zerath .z-enemy.z-boss{width:96px!important;height:118px!important;transform:none!important;bottom:84px!important;}
+#zerath .z-enemy.z-neriex{
+  width:118px!important;height:132px!important;bottom:78px!important;
+  background-image:url('assets/neriex-spritesheet.png')!important;
+  background-size:920px 614px!important;
+  background-position:-36px -50px!important;
+  filter:drop-shadow(0 0 13px rgba(96,0,24,.9)) drop-shadow(0 16px 10px rgba(0,0,0,.9));
+}
+#zerath .z-enemy.z-priex{
+  width:88px!important;height:118px!important;bottom:82px!important;
+  background-image:url('assets/priex-spritesheet.png')!important;
+  background-size:920px 614px!important;
+  background-position:-32px -54px!important;
+  filter:drop-shadow(0 0 14px rgba(25,85,25,.9)) drop-shadow(0 14px 9px rgba(0,0,0,.9));
+}
+#zerath .z-enemy.z-iurex{
+  width:88px!important;height:118px!important;bottom:82px!important;
+  background-image:url('assets/iurex-spritesheet.png')!important;
+  background-size:920px 614px!important;
+  background-position:-38px -52px!important;
+  filter:drop-shadow(0 0 14px rgba(160,0,20,.8)) drop-shadow(0 14px 9px rgba(0,0,0,.9));
+}
+#zerath .z-enemy.z-griox{
+  width:168px!important;height:155px!important;bottom:68px!important;
+  background-image:url('assets/griox-spritesheet.png')!important;
+  background-size:920px 614px!important;
+  background-position:-32px -48px!important;
+  filter:drop-shadow(0 0 18px rgba(255,255,255,.68)) drop-shadow(0 18px 14px rgba(0,0,0,.94));
+}
+#zerath .z-shot{
+  width:44px!important;height:44px!important;border-radius:50%!important;
+  border:3px solid #ff2b4f!important;
+  background:radial-gradient(circle,rgba(255,255,255,.6) 0 10%,rgba(255,43,79,.95) 12% 20%,transparent 55%)!important;
+  box-shadow:0 0 16px #ff2b4f,0 0 34px rgba(255,0,50,.65)!important;
+  z-index:18!important;
+}
+#zerath .z-shot::after{content:'';position:absolute;left:-12px;top:17px;width:20px;height:6px;background:linear-gradient(90deg,transparent,#ff2b4f);box-shadow:0 0 12px #ff2b4f;}
+#zerath .z-panel{background:rgba(0,0,0,.74)!important;}
+#zerath .z-controls button{font-size:clamp(.68rem,3vw,.9rem)!important;}
+@media(max-width:560px){
+  #zerath .z-player{width:62px!important;height:92px!important;background-size:680px 680px!important;background-position:-30px -56px!important;}
+  #zerath .z-enemy{width:58px!important;height:74px!important;background-size:760px 510px!important;background-position:-39px -56px!important;}
+  #zerath .z-enemy.z-neriex{width:98px!important;height:116px!important;background-size:800px 533px!important;background-position:-31px -44px!important;}
+  #zerath .z-enemy.z-priex,#zerath .z-enemy.z-iurex{width:76px!important;height:104px!important;background-size:800px 533px!important;background-position:-28px -46px!important;}
+  #zerath .z-enemy.z-griox{width:136px!important;height:132px!important;background-size:800px 533px!important;background-position:-27px -41px!important;}
+}
+</style>
+<script id="zerath-sprite-classifier-final-patch">
+(function(){
+  function stage(){return document.getElementById('zStage')}
+  function wave(){var e=document.getElementById('zWaveTxt'); return e?parseInt(e.textContent||'1',10):1;}
+  function classify(enemy){
+    if(!enemy || enemy.dataset.spriteClassified==='1') return;
+    enemy.dataset.spriteClassified='1';
+    if(enemy.classList.contains('z-boss')){
+      var w=wave();
+      if(w<=4) enemy.classList.add('z-neriex');
+      else if(w===5) enemy.classList.add('z-priex');
+      else if(w===6) enemy.classList.add('z-iurex');
+      else enemy.classList.add('z-griox');
+    }
+  }
+  function scan(){document.querySelectorAll('#zerath .z-enemy').forEach(classify)}
+  function boot(){
+    scan();
+    var st=stage();
+    if(st){new MutationObserver(scan).observe(st,{childList:true,subtree:true});}
+    var start=document.getElementById('zStart');
+    if(start) start.addEventListener('click',function(){setTimeout(scan,80);setTimeout(scan,300);});
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
+})();
+</script>
+
 </body>
 </html>
