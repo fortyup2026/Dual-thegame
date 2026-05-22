@@ -367,129 +367,287 @@ body.aethrion-mode .btn-cont{border-color:#d7a84a;color:#fff2c2;background:rgba(
 
 </style>
 
+<style id="zerath-demo-style">
+/* === DUAL: ZERATH ARCADE DEMO PRO === */
+.zerath-card{--line:#ff2f55!important}.zerath-card .hub-action{color:#ffb8c4!important;border-color:#ff2f55!important;box-shadow:0 0 18px rgba(255,47,85,.24)!important}
+#zerath.screen.active{display:flex!important;position:absolute;inset:0;align-items:center;justify-content:center;background:#050104;overflow:hidden;color:#fff;font-family:var(--ff3)}
+.zerath-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 14%,rgba(255,43,83,.22),transparent 30%),linear-gradient(180deg,#080209,#020104 56%,#090105),repeating-linear-gradient(90deg,rgba(255,47,85,.055) 0 1px,transparent 1px 34px)}
+.zerath-bg:before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(25,3,12,.96) 0 24%,transparent 24%),linear-gradient(to top,transparent 0 15%,rgba(35,7,18,.9) 15% 58%,transparent 58%) 8% 100%/9% 70% no-repeat,linear-gradient(to top,transparent 0 15%,rgba(46,8,22,.88) 15% 72%,transparent 72%) 25% 100%/11% 88% no-repeat,linear-gradient(to top,transparent 0 15%,rgba(28,7,17,.9) 15% 49%,transparent 49%) 44% 100%/8% 65% no-repeat,linear-gradient(to top,transparent 0 15%,rgba(50,8,24,.85) 15% 64%,transparent 64%) 69% 100%/12% 78% no-repeat,radial-gradient(ellipse at 50% 0%,rgba(255,0,55,.38),transparent 45%);opacity:.92}
+.zerath-bg:after{content:'';position:absolute;left:50%;top:-16%;width:7px;height:67%;background:linear-gradient(to bottom,transparent,#ff2f55,#ffdae0,#ff2f55,transparent);box-shadow:0 0 28px #ff2f55,0 0 86px rgba(255,47,85,.62);transform:rotate(3deg)}
+.zerath-top{position:absolute;top:calc(12px + env(safe-area-inset-top));left:12px;right:12px;z-index:8;display:flex;align-items:center;gap:12px;pointer-events:auto}.zerath-back{padding:9px 11px;border:1px solid rgba(255,47,85,.58);border-radius:12px;background:rgba(0,0,0,.50);font-family:var(--ff4);font-size:10px;letter-spacing:.16em;color:#ffdce2;box-shadow:0 0 18px rgba(255,47,85,.18)}.zerath-title{font-family:var(--ff2);font-size:clamp(1.15rem,5vw,2rem);letter-spacing:.14em;color:#fff;text-shadow:0 0 14px #ff2f55}.zerath-sub{font-family:var(--ff4);font-size:10px;letter-spacing:.2em;color:#ff9bad;margin-top:2px}
+#zerathCanvas{position:relative;z-index:3;width:100vw;height:58dvh;max-height:calc(100dvh - 145px);max-width:calc((100dvh - 145px) * 1.62);border:1px solid rgba(255,47,85,.34);border-radius:16px;background:#07030a;box-shadow:0 0 44px rgba(255,47,85,.18),inset 0 0 32px rgba(255,47,85,.08);image-rendering:pixelated;touch-action:none}
+.zerath-hud{position:absolute;top:calc(62px + env(safe-area-inset-top));left:14px;right:14px;z-index:8;display:flex;gap:8px;justify-content:center;align-items:center;font-family:var(--ff4);font-size:11px;letter-spacing:.12em;color:#ffdce2;pointer-events:none}.zerath-hud span,.zerath-hud b{padding:6px 8px;border:1px solid rgba(255,47,85,.36);border-radius:8px;background:rgba(0,0,0,.48);box-shadow:0 0 12px rgba(255,47,85,.14)}.zerath-hud span{color:#ff5975}.zerath-controls{position:absolute;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:8;display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.zerath-controls button,.zerath-intro button,.zerath-end button{padding:12px 7px;border:1px solid rgba(255,47,85,.55);border-radius:12px;background:rgba(0,0,0,.56);color:#ffdce2;font-family:var(--ff4);font-size:11px;letter-spacing:.08em;box-shadow:0 0 18px rgba(255,47,85,.14)}.zerath-controls button:active,.zerath-intro button:active,.zerath-end button:active,.zerath-back:active{transform:scale(.96);filter:brightness(1.35)}
+.zerath-intro,.zerath-end,.zerath-cine{position:absolute;z-index:12;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,560px);padding:22px 18px;border:1px solid rgba(255,47,85,.48);border-radius:20px;background:rgba(5,0,4,.84);backdrop-filter:blur(12px);box-shadow:0 0 52px rgba(255,47,85,.22);text-align:center}.zerath-intro h2,.zerath-end h2,.zerath-cine h2{font-family:var(--ff2);letter-spacing:.16em;color:#fff;text-shadow:0 0 18px #ff2f55;margin-bottom:10px}.zerath-intro p,.zerath-end p,.zerath-cine p{font-size:clamp(.98rem,3.7vw,1.15rem);line-height:1.45;color:#d6c5ca;margin-bottom:16px}.zerath-end{display:none}.zerath-end.show{display:block}.zerath-cine{display:none}.zerath-cine.show{display:block}.zerath-cine small{display:block;color:#ff8da0;font-family:var(--ff4);letter-spacing:.22em;margin-top:12px}
+@media(max-width:620px){#zerathCanvas{width:100vw;height:64vh;max-height:64vh;max-width:100vw;border-left:0;border-right:0;border-radius:0}.zerath-hud{top:calc(58px + env(safe-area-inset-top));font-size:9px;gap:4px}.zerath-hud span,.zerath-hud b{padding:5px 5px}.zerath-controls{grid-template-columns:repeat(5,1fr);gap:5px}.zerath-controls button{font-size:9px;padding:12px 3px}.zerath-title{font-size:1rem}.zerath-sub{font-size:8px}}
+</style>
 
-
-
-<style id="premium-narrative-polish-final">
-/* ===== PREMIUM NARRATIVE BUILD — ZERATH SIN ARCADE ===== */
-#hub .hub-list{gap:15px!important;padding-bottom:18px!important}
-#hub .hub-card{
-  border-radius:18px!important;
-  background:linear-gradient(135deg,rgba(4,10,18,.76),rgba(0,0,0,.46))!important;
-  backdrop-filter:blur(12px)!important;
-  box-shadow:0 0 26px color-mix(in srgb,var(--line),transparent 88%), inset 0 0 32px rgba(255,255,255,.025)!important;
+<style id="premium-narrative-menu-final">
+/* ===== DUAL THE GAME · MENÚ PREMIUM INTEGRADO ===== */
+#hub.screen.active{
+  display:flex!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  overflow:auto!important;
+  background:#05060b!important;
+  min-height:100dvh!important;
 }
-#hub .hub-card.locked{opacity:.86!important;filter:saturate(.82) contrast(1.02)!important}
-#hub .hub-card.zerath-card{
-  background:
-    radial-gradient(circle at 90% 20%,rgba(255,47,85,.16),transparent 32%),
-    linear-gradient(135deg,rgba(25,4,12,.78),rgba(0,0,0,.48))!important;
-}
-#hub .hub-card.zerath-card .hub-action{
-  color:#ffdce3!important;
-  border-color:rgba(255,47,85,.62)!important;
-  background:rgba(255,47,85,.07)!important;
-  box-shadow:0 0 20px rgba(255,47,85,.16)!important;
-}
-#hub .hub-card.zerath-card .hub-sub{color:#ff6d88!important}
-#hub .hub-title{text-shadow:0 0 28px rgba(0,229,255,.42),0 4px 18px #000!important}
-#hub .hub-tag{opacity:.9!important}
-
-/* Botones volver prolijos */
-.back-hub-btn,.story-back-hub,.universe-back{
+#hub .hub-city,#hub .hub-castle,#hub .hub-split{display:none!important}
+#hub .premium-hub-bg{
   position:absolute!important;
-  top:calc(12px + env(safe-area-inset-top))!important;
-  left:12px!important;
-  z-index:120!important;
-  padding:9px 11px!important;
-  border-radius:13px!important;
-  border:1px solid rgba(255,255,255,.20)!important;
+  inset:0!important;
+  height:auto!important;
+  min-height:100%!important;
+  max-height:none!important;
+  background:
+    radial-gradient(circle at 50% 4%, rgba(255,255,255,.10), transparent 16%),
+    radial-gradient(circle at 16% 24%, rgba(168,85,255,.24), transparent 30%),
+    radial-gradient(circle at 84% 36%, rgba(255,51,85,.18), transparent 34%),
+    radial-gradient(circle at 50% 92%, rgba(0,229,255,.10), transparent 32%),
+    linear-gradient(180deg,#06070d 0%,#0b0d16 48%,#050306 100%)!important;
+  opacity:1!important;
+  overflow:hidden!important;
+}
+#hub .premium-hub-bg:before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  background:
+    radial-gradient(rgba(255,255,255,.10) 1px, transparent 1px),
+    repeating-linear-gradient(0deg, transparent 0 8px, rgba(255,255,255,.018) 9px 10px)!important;
+  background-size:7px 7px, 100% 10px!important;
+  opacity:.26!important;
+  mix-blend-mode:screen!important;
+}
+#hub .premium-hub-bg:after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  background:
+    linear-gradient(90deg,transparent,rgba(255,255,255,.04),transparent),
+    radial-gradient(ellipse at center, transparent 15%, rgba(0,0,0,.52) 76%, rgba(0,0,0,.85) 100%)!important;
+}
+.hub-pulse{
+  position:absolute;
+  left:50%;
+  top:18%;
+  width:180px;
+  height:180px;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.09);
+  box-shadow:0 0 70px rgba(168,85,255,.13), inset 0 0 40px rgba(255,255,255,.035);
+}
+.hub-orb{position:absolute;border-radius:50%;filter:blur(1px);opacity:.38}
+.hub-orb-a{width:120px;height:120px;left:-28px;top:155px;background:radial-gradient(circle,rgba(168,85,255,.55),transparent 65%)}
+.hub-orb-b{width:160px;height:160px;right:-40px;top:280px;background:radial-gradient(circle,rgba(255,51,85,.45),transparent 65%)}
+
+#hub .premium-hub-wrap{
+  position:relative!important;
+  z-index:5!important;
+  width:min(94vw,920px)!important;
+  min-height:100dvh!important;
+  margin:0 auto!important;
+  padding:36px 16px 80px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+}
+#hub .premium-hub-head{
+  margin:36px 0 46px!important;
+  text-align:center!important;
+}
+#hub .premium-title{
+  font-family:var(--ff1)!important;
+  font-size:clamp(4.6rem,18vw,8.8rem)!important;
+  line-height:.84!important;
+  letter-spacing:.09em!important;
+  color:#f6f6f7!important;
+  text-shadow:
+    0 0 28px rgba(255,255,255,.16),
+    0 0 64px rgba(168,85,255,.18),
+    0 4px 15px rgba(0,0,0,.92)!important;
+}
+#hub .premium-game{
+  font-family:var(--ff2)!important;
+  font-size:clamp(.92rem,4vw,1.55rem)!important;
+  letter-spacing:.58em!important;
+  margin-left:.58em!important;
+  margin-top:2px!important;
+  color:rgba(255,255,255,.82)!important;
+  text-shadow:0 2px 12px #000!important;
+}
+#hub .premium-tag{
+  margin-top:24px!important;
+  font-family:var(--ff4)!important;
+  font-size:clamp(.58rem,2.5vw,.86rem)!important;
+  letter-spacing:.26em!important;
+  color:rgba(232,240,245,.58)!important;
+  text-transform:uppercase!important;
+}
+#hub .premium-choose{
+  font-family:var(--ff2)!important;
+  font-size:clamp(1.15rem,4.7vw,1.75rem)!important;
+  letter-spacing:.28em!important;
+  margin:0 0 26px!important;
+  color:rgba(255,255,255,.90)!important;
+  text-align:center!important;
+  text-shadow:0 0 20px rgba(255,255,255,.06),0 3px 12px #000!important;
+}
+#hub .premium-list{
+  width:min(94vw,840px)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  gap:19px!important;
+}
+#hub .premium-card{
+  --line:#fff;
+  width:100%!important;
+  min-height:118px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(132px,172px)!important;
+  align-items:center!important;
+  gap:14px!important;
+  padding:22px!important;
+  border-radius:26px!important;
+  border:2px solid color-mix(in srgb,var(--line) 78%,transparent)!important;
+  background:
+    linear-gradient(135deg, color-mix(in srgb,var(--line) 18%,transparent), rgba(10,10,18,.62) 38%, rgba(0,0,0,.46)),
+    rgba(8,8,14,.74)!important;
+  box-shadow:
+    0 0 38px color-mix(in srgb,var(--line) 28%,transparent),
+    inset 0 0 28px color-mix(in srgb,var(--line) 12%,transparent),
+    0 12px 38px rgba(0,0,0,.45)!important;
+  backdrop-filter:blur(13px) saturate(1.12)!important;
+  overflow:hidden!important;
+  opacity:1!important;
+  filter:none!important;
+  transform:none!important;
+}
+#hub .premium-card:before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  background:
+    linear-gradient(110deg,transparent 0 34%,rgba(255,255,255,.08) 48%,transparent 63%),
+    radial-gradient(circle at 16% 50%, color-mix(in srgb,var(--line) 25%,transparent), transparent 32%)!important;
+  opacity:.92!important;
+  pointer-events:none!important;
+  transform:translateX(-70%);
+  animation:premiumShine 7.5s linear infinite;
+}
+@keyframes premiumShine{100%{transform:translateX(70%)}}
+#hub .premium-card:active{transform:scale(.988)!important}
+#hub .premium-card-info{
+  position:relative!important;
+  z-index:2!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:18px!important;
+  min-width:0!important;
+}
+#hub .premium-icon{
+  width:64px!important;
+  height:64px!important;
+  flex:0 0 64px!important;
+  border-radius:50%!important;
+  display:grid!important;
+  place-items:center!important;
+  font-size:1.78rem!important;
+  color:color-mix(in srgb,var(--line) 90%,#fff)!important;
+  border:1px solid color-mix(in srgb,var(--line) 55%,transparent)!important;
+  background:color-mix(in srgb,var(--line) 15%,rgba(0,0,0,.36))!important;
+  box-shadow:0 0 25px color-mix(in srgb,var(--line) 38%,transparent), inset 0 0 18px rgba(255,255,255,.055)!important;
+}
+#hub .premium-card .hub-name{
+  display:block!important;
+  font-family:var(--ff1)!important;
+  font-size:clamp(2.05rem,8vw,3.55rem)!important;
+  letter-spacing:.045em!important;
+  line-height:.92!important;
+  color:#fff!important;
+  text-shadow:0 2px 14px #000,0 0 18px color-mix(in srgb,var(--line) 35%,transparent)!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#hub .premium-card .hub-sub{
+  display:block!important;
+  margin-top:7px!important;
+  font-family:var(--ff2)!important;
+  font-size:clamp(.64rem,2.75vw,.95rem)!important;
+  letter-spacing:.18em!important;
+  color:color-mix(in srgb,var(--line) 72%,#fff)!important;
+  text-transform:uppercase!important;
+  white-space:normal!important;
+  overflow:visible!important;
+  line-height:1.18!important;
+}
+#hub .premium-card .hub-action{
+  position:relative!important;
+  z-index:2!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:none!important;
+  min-height:56px!important;
+  padding:13px 12px!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  border-radius:18px!important;
+  border:1.5px solid color-mix(in srgb,var(--line) 78%,transparent)!important;
+  background:color-mix(in srgb,var(--line) 14%,rgba(0,0,0,.45))!important;
+  box-shadow:0 0 20px color-mix(in srgb,var(--line) 28%,transparent), inset 0 0 16px color-mix(in srgb,var(--line) 8%,transparent)!important;
+  font-family:var(--ff2)!important;
+  font-size:clamp(.62rem,2.4vw,.9rem)!important;
+  letter-spacing:.16em!important;
+  color:#fff!important;
+  text-align:center!important;
+  line-height:1.15!important;
+}
+#hub .card-lustonia{--line:#a855ff!important}
+#hub .card-aethrion{--line:#46ff9b!important}
+#hub .card-murmex{--line:#ff9b3d!important}
+#hub .card-conquista{--line:#e5c15d!important}
+#hub .card-zerath{--line:#ff3355!important}
+#hub .premium-footer{
+  margin-top:28px!important;
+  color:rgba(235,240,245,.48)!important;
+  font-family:var(--ff4)!important;
+  letter-spacing:.18em!important;
+  font-size:.68rem!important;
+  line-height:1.65!important;
+}
+#hub .hub-toast{
+  border-radius:22px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  background:rgba(5,5,10,.78)!important;
+  box-shadow:0 0 60px rgba(255,51,85,.16),0 0 40px rgba(168,85,255,.12)!important;
+}
+.back-hub-btn,.universe-back,#zerathBack{
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.18)!important;
   background:rgba(0,0,0,.42)!important;
   backdrop-filter:blur(12px)!important;
-  color:#eafcff!important;
-  font-family:var(--ff4)!important;
-  font-size:10px!important;
-  letter-spacing:.14em!important;
-  box-shadow:0 0 20px rgba(0,229,255,.12)!important;
+  box-shadow:0 0 24px rgba(0,0,0,.34), inset 0 0 15px rgba(255,255,255,.035)!important;
+  color:#fff!important;
 }
-.story-back-hub{display:none}
-body.aethrion-mode #storyBackHub{display:block!important}
-.story-back-hub:active,.back-hub-btn:active,.universe-back:active{transform:scale(.97)!important}
-
-/* Zerath futuro: teaser limpio, sin gameplay */
-#zerath.soon-only{
-  align-items:center!important;
-  justify-content:center!important;
-  padding:22px!important;
-  background:#050104!important;
-}
-#zerath.soon-only .zerath-bg{
-  position:absolute;inset:0;
-  background:
-    radial-gradient(circle at 50% 13%,rgba(255,47,85,.26),transparent 30%),
-    linear-gradient(180deg,rgba(10,1,8,.45),rgba(0,0,0,.86)),
-    url('assets/zerath-stage-bg.png') center/cover no-repeat;
-  filter:saturate(1.08) contrast(1.05) brightness(.78);
-}
-#zerath.soon-only .zerath-bg:after{
-  content:'';position:absolute;inset:0;
-  background:
-    linear-gradient(to bottom,rgba(0,0,0,.20),rgba(0,0,0,.44) 58%,rgba(0,0,0,.88)),
-    radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,.72));
-}
-.zerath-soon-card{
-  position:relative;z-index:20;
-  width:min(92vw,620px);
-  padding:28px 22px;
-  border-radius:26px;
-  border:1px solid rgba(255,47,85,.38);
-  background:linear-gradient(145deg,rgba(20,3,10,.72),rgba(0,0,0,.54));
-  backdrop-filter:blur(14px);
-  text-align:center;
-  box-shadow:0 0 60px rgba(255,47,85,.18), inset 0 0 40px rgba(255,47,85,.035);
-}
-.zerath-soon-card .soon-kicker{
-  font-family:var(--ff4);
-  letter-spacing:.32em;
-  font-size:10px;
-  color:#ff8ca0;
-}
-.zerath-soon-card h2{
-  font-family:var(--ff1);
-  font-size:clamp(2.4rem,11vw,5rem);
-  line-height:.92;
-  margin:13px 0 12px;
-  color:#fff;
-  text-shadow:0 0 26px rgba(255,47,85,.75);
-}
-.zerath-soon-card p{
-  font-size:clamp(1rem,4vw,1.2rem);
-  line-height:1.55;
-  color:rgba(235,245,248,.82);
-  margin:0 auto 18px;
-  max-width:520px;
-}
-.zerath-soon-card strong{
-  display:inline-flex;
-  padding:12px 18px;
-  border:1px solid rgba(255,47,85,.56);
-  border-radius:999px;
-  color:#ffdce3;
-  font-family:var(--ff2);
-  letter-spacing:.22em;
-  background:rgba(255,47,85,.08);
-}
-
-/* Limpieza mobile */
 @media(max-width:560px){
-  .back-hub-btn,.story-back-hub,.universe-back{
-    font-size:9px!important;
-    padding:8px 9px!important;
-    max-width:42vw!important;
-    white-space:nowrap!important;
+  #hub .premium-hub-wrap{padding:28px 12px 60px!important}
+  #hub .premium-hub-head{margin:30px 0 34px!important}
+  #hub .premium-card{
+    grid-template-columns:1fr!important;
+    min-height:0!important;
+    padding:20px!important;
+    gap:16px!important;
   }
-  #hub .hub-card{border-radius:15px!important}
-  #hub .hub-action{border-radius:11px!important}
+  #hub .premium-card-info{gap:14px!important}
+  #hub .premium-icon{width:52px!important;height:52px!important;flex-basis:52px!important;font-size:1.35rem!important}
+  #hub .premium-card .hub-action{
+    min-height:52px!important;
+    font-size:.72rem!important;
+    letter-spacing:.13em!important;
+  }
+  #hub .premium-footer{font-size:.57rem!important}
 }
 </style>
 
@@ -499,42 +657,81 @@ body.aethrion-mode #storyBackHub{display:block!important}
 <div id="app">
 
 <section id="hub" class="screen active">
-  <div class="hub-hero">
-    <div class="hub-city"></div>
-    <div class="hub-castle"></div>
-    <div class="hub-split"></div>
+  <div class="hub-hero premium-hub-bg">
+    <div class="hub-pulse"></div>
+    <div class="hub-orb hub-orb-a"></div>
+    <div class="hub-orb hub-orb-b"></div>
   </div>
-  <div class="hub-wrap">
-    <header class="hub-head">
-      <div class="hub-title">DUAL</div>
-      <div class="hub-game">THE GAME</div>
-      <div class="hub-tag">HISTORIAS. DECISIONES. CONSECUENCIAS.</div>
+
+  <div class="hub-wrap premium-hub-wrap">
+    <header class="hub-head premium-hub-head">
+      <div class="hub-title premium-title">DUAL</div>
+      <div class="hub-game premium-game">THE GAME</div>
+      <div class="hub-tag premium-tag">HISTORIAS · DECISIONES · CONSECUENCIAS</div>
     </header>
-    <div class="hub-choose">ELIGE TU HISTORIA</div>
-    <div class="hub-list">
-      <button class="hub-card available" id="openDual" type="button" style="--line:#9d37ff">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">LUSTONIA</span></span>
+
+    <div class="hub-choose premium-choose">ELIGE TU HISTORIA</div>
+
+    <div class="hub-list premium-list">
+      <button class="hub-card available premium-card card-lustonia" id="openDual" type="button" style="--line:#a855ff">
+        <span class="premium-card-info">
+          <span class="premium-icon">✦</span>
+          <span>
+            <span class="hub-name">DUAL</span>
+            <span class="hub-sub">LUSTONIA</span>
+          </span>
+        </span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card available" id="openAethrion" type="button" style="--line:#7dff83">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL MUNDO ECO</span></span>
+
+      <button class="hub-card available premium-card card-aethrion" id="openAethrion" type="button" style="--line:#46ff9b">
+        <span class="premium-card-info">
+          <span class="premium-icon">☼</span>
+          <span>
+            <span class="hub-name">AETHRION</span>
+            <span class="hub-sub">EL MUNDO ECO</span>
+          </span>
+        </span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card locked" type="button" data-soon="AETHRION · EL DESPERTAR DE MURMEX" style="--line:#ff7a18">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL DESPERTAR DE MURMEX</span></span>
+
+      <button class="hub-card locked premium-card card-murmex" type="button" data-soon="AETHRION · EL DESPERTAR DE MURMEX" style="--line:#ff9b3d">
+        <span class="premium-card-info">
+          <span class="premium-icon">▲</span>
+          <span>
+            <span class="hub-name">AETHRION</span>
+            <span class="hub-sub">EL DESPERTAR DE MURMEX</span>
+          </span>
+        </span>
         <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
-      <button class="hub-card locked" type="button" data-soon="AETHRION · LA GRAN CONQUISTA" style="--line:#d7a84a">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
+
+      <button class="hub-card locked premium-card card-conquista" type="button" data-soon="AETHRION · LA GRAN CONQUISTA" style="--line:#e5c15d">
+        <span class="premium-card-info">
+          <span class="premium-icon">◈</span>
+          <span>
+            <span class="hub-name">AETHRION</span>
+            <span class="hub-sub">LA GRAN CONQUISTA</span>
+          </span>
+        </span>
         <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
-      <button class="hub-card locked zerath-card" type="button" data-soon="DUAL · ZERATH" style="--line:#ff2f55">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH</span></span>
+
+      <button class="hub-card locked premium-card card-zerath" type="button" data-soon="DUAL · ZERATH" style="--line:#ff3355">
+        <span class="premium-card-info">
+          <span class="premium-icon">⬢</span>
+          <span>
+            <span class="hub-name">DUAL</span>
+            <span class="hub-sub">ZERATH</span>
+          </span>
+        </span>
         <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
     </div>
-    <div class="hub-footer">UNIVERSOS CONECTADOS<br>CADA HISTORIA DEJA UNA HUELLA. CADA DECISIÓN, UN ECO.</div>
+
+    <div class="hub-footer premium-footer">UNIVERSOS CONECTADOS<br>CADA HISTORIA DEJA UNA HUELLA. CADA DECISIÓN, UN ECO.</div>
   </div>
+
   <div class="hub-toast" id="hubToast"><b>PRÓXIMAMENTE</b><span>HISTORIA EN DESARROLLO</span></div>
 </section>
 
@@ -578,18 +775,40 @@ body.aethrion-mode #storyBackHub{display:block!important}
   </div>
 </section>
 <section id="intro" class="screen"><div class="intro-card"><div class="intro-title">DUAL</div><div class="mini">LUSTONIA</div><div class="intro-text">Hace semanas, un meteorito destruyó <em>Valmora</em>. No era roca: era una prisión multiversal de <strong>Aethrion</strong> que se rompió al impactar.<br><br><em>Tronox</em> entró en el cuerpo de un ex convicto llamado <strong>Nebius</strong>. Desde entonces corrompió militares, destruyó la ciudad y mandó una señal al universo.<br><br>En Lustonia cayó otro meteorito. <em>Lurnox</em> y sus guardianes llegaron. Y el Eco eligió a tres jóvenes: <strong>Lin, Trini y Zack</strong>.</div><button class="btn-main" id="introBtn"><span>▶ COMENZAR HISTORIA</span></button></div></section>
-<section id="game" class="screen"><button id="storyBackHub" class="story-back-hub" type="button">← UNIVERSOS</button><div class="scene" id="scene"></div><div class="hud"><div class="chapter"><h1 id="hudTitle">DUAL</h1><p id="hudSub">LUSTONIA</p></div><div class="bars"><div class="stat"><label><span>VIDA</span><span id="hpTxt">100</span></label><div class="bar hpbar"><i id="hpBar" style="width:100%"></i></div></div><div class="stat"><label><span>ECO</span><span id="ecoTxt">0</span></label><div class="bar ecobar"><i id="ecoBar" style="width:0%"></i></div></div></div></div><div class="game-scroll" id="gameScroll"><div class="content"><div class="scene-title" id="sceneTitle"></div><div class="panel"><div class="speaker"><div class="sp-line" id="spLine"></div><div class="sp-name" id="spName">NARRADOR</div></div><div class="text" id="text"></div></div><div class="choices" id="choices"></div><div class="cont" id="cont"><button class="btn-cont" id="contBtn">CONTINUAR</button></div></div></div></section>
+<section id="game" class="screen"><div class="scene" id="scene"></div><div class="hud"><div class="chapter"><h1 id="hudTitle">DUAL</h1><p id="hudSub">LUSTONIA</p></div><div class="bars"><div class="stat"><label><span>VIDA</span><span id="hpTxt">100</span></label><div class="bar hpbar"><i id="hpBar" style="width:100%"></i></div></div><div class="stat"><label><span>ECO</span><span id="ecoTxt">0</span></label><div class="bar ecobar"><i id="ecoBar" style="width:0%"></i></div></div></div></div><div class="game-scroll" id="gameScroll"><div class="content"><div class="scene-title" id="sceneTitle"></div><div class="panel"><div class="speaker"><div class="sp-line" id="spLine"></div><div class="sp-name" id="spName">NARRADOR</div></div><div class="text" id="text"></div></div><div class="choices" id="choices"></div><div class="cont" id="cont"><button class="btn-cont" id="contBtn">CONTINUAR</button></div></div></div></section>
 <section id="result" class="screen"><div class="res-bg" id="resBg"></div><div class="res-card" id="resCard"><div class="res-small" id="resSmall">RESULTADO</div><div class="res-title" id="resTitle"></div><div class="res-text" id="resText"></div><button class="btn-main" id="resBtn" style="margin-top:18px"><span>▶ CONTINUAR</span></button></div></section>
 <section id="ending" class="screen"><div class="res-bg" id="endBg"></div><div class="res-card" id="endCard"><div class="res-small">FINAL DE LUSTONIA</div><div class="res-title" id="endTitle"></div><div class="res-text" id="endText"></div><button class="btn-main" id="againBtn" style="margin-top:18px"><span>↻ VOLVER A JUGAR</span></button></div></section>
-
-<section id="zerath" class="screen zerath-screen soon-only">
+<section id="zerath" class="screen zerath-screen">
   <div class="zerath-bg"></div>
-  <button id="zerathBack" class="universe-back zerath-back" type="button">← UNIVERSOS</button>
-  <div class="zerath-soon-card">
-    <div class="soon-kicker">ARCHIVO CLASIFICADO</div>
-    <h2>DUAL: ZERATH</h2>
-    <p>El rayo rojo ya cayó sobre la ciudad. Nya, Neriex, Priex, Iurex y Griox quedan registrados para una futura historia del universo DUAL.</p>
-    <strong>PRÓXIMAMENTE</strong>
+  <div class="zerath-top">
+    <button id="zerathBack" class="zerath-back" type="button">← UNIVERSOS</button>
+    <div>
+      <div class="zerath-title">DUAL: ZERATH</div>
+      <div class="zerath-sub">DEMO ARCADE · EL RAYO ROJO</div>
+    </div>
+  </div>
+  <div id="zerathIntro" class="zerath-intro">
+    <h2>LA CIUDAD DE ZERATH</h2>
+    <p>Un rayo rojo cae desde la estratósfera. Después de Valmora y Lustonia, Zerath también siente la consecuencia de Tronox. Los militares corruptos toman las calles. Nya despierta su Eco rojo: aros de energía que nacen de sus puños.</p>
+    <button id="zerathStart" type="button">▶ JUGAR DEMO</button>
+  </div>
+  <div id="zerathCine" class="zerath-cine"><h2 id="zerathCineTitle">ZERATH</h2><p id="zerathCineText">La ciudad recibe el rayo rojo.</p><small>TOCÁ PARA CONTINUAR</small></div>
+  <canvas id="zerathCanvas" width="960" height="540"></canvas>
+  <div class="zerath-hud">
+    <span>NYA</span><b id="zerathHp">VIDA 100</b><b id="zerathScore">CARGA 0%</b><b id="zerathWave">OLEADA 1</b>
+  </div>
+  <div class="zerath-controls">
+    <button data-key="left">◀</button>
+    <button data-key="right">▶</button>
+    <button data-key="jump">ARO ↑</button>
+    <button data-key="fire">DISPARAR</button>
+    <button data-key="special">ONDA</button>
+  </div>
+  <div id="zerathEnd" class="zerath-end">
+    <h2 id="zerathEndTitle">DEMO COMPLETADA</h2>
+    <p id="zerathEndText">Nya sobrevivió al primer ataque en Zerath.</p>
+    <button id="zerathAgain" type="button">↻ REINTENTAR</button>
+    <button id="zerathHub" type="button">← VOLVER AL HUB</button>
   </div>
 </section>
 
@@ -1581,52 +1800,169 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
 </script>
 
 
+<style id="zerath-arcade-polish-v2">
+#zerathCanvas{image-rendering:pixelated;background:#09030a!important;box-shadow:0 0 34px rgba(255,47,85,.22),0 0 0 1px rgba(255,47,85,.28);}
+.zerath-screen{background:#050105!important;}
+.zerath-hud{top:calc(62px + env(safe-area-inset-top))!important;flex-wrap:wrap!important;}
+.zerath-hud span,.zerath-hud b{background:rgba(0,0,0,.62)!important;border-color:rgba(255,47,85,.48)!important;color:#ffdce2!important;text-shadow:0 0 8px rgba(255,47,85,.8)}
+.zerath-hud #zerathScore{border-color:rgba(255,255,255,.38)!important;color:#fff!important;}
+.zerath-controls button{min-height:48px!important;font-weight:800!important;background:linear-gradient(180deg,rgba(34,4,14,.76),rgba(0,0,0,.72))!important;}
+.zerath-controls button[data-key="special"]{border-color:#ffedf2!important;color:#fff!important;box-shadow:0 0 22px rgba(255,47,85,.28), inset 0 0 18px rgba(255,47,85,.08)!important;}
+.zerath-cine.show{display:flex!important;}
+.zerath-cine{align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:24px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);}
+.zerath-cine h2{font-family:var(--ff1);font-size:clamp(2rem,10vw,5rem);letter-spacing:.12em;color:#fff;text-shadow:0 0 26px #ff2f55;margin-bottom:12px;}
+.zerath-cine p{font-size:clamp(1rem,4vw,1.35rem);line-height:1.5;max-width:640px;color:#ffdce2;}
+.zerath-cine small{margin-top:18px;color:#ff8095;font-family:var(--ff4);letter-spacing:.22em;}
+@media(max-width:620px){#zerathCanvas{height:63vh!important}.zerath-controls{grid-template-columns:repeat(5,1fr)!important}.zerath-controls button{min-height:54px!important}.zerath-hud{font-size:8px!important}.zerath-top{padding-right:6px!important}}
+</style>
 
-
-
-
-
-
-<script id="premium-narrative-js-final">
+<script id="zerath-arcade-demo-script">
 (function(){
-  function $(id){return document.getElementById(id)}
-  function showOnly(id){
-    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});
-    var el=$(id); if(el) el.classList.add('active');
-    if(id==='hub'){try{document.body.classList.remove('aethrion-mode')}catch(e){}}
-  }
-  function softClick(){
-    try{
-      var A=window.AudioContext||window.webkitAudioContext, ac=new A();
-      var o=ac.createOscillator(), g=ac.createGain();
-      o.type='triangle'; o.frequency.value=260; o.connect(g); g.connect(ac.destination);
-      var t=ac.currentTime;
-      g.gain.setValueAtTime(.0001,t);
-      g.gain.exponentialRampToValueAtTime(.04,t+.02);
-      g.gain.exponentialRampToValueAtTime(.0001,t+.18);
-      o.start(t); o.stop(t+.22);
+  const $ = id => document.getElementById(id);
+  const canvas = $('zerathCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height, GROUND = 454;
+  let running=false, ended=false, last=0, camX=0, storyStep=0, msg='', msgTimer=0;
+  let keys={}, bullets=[], rings=[], enemies=[], particles=[], venom=[], floatTexts=[];
+  let wave=1, score=0, kills=0;
+  const story = [
+    ['ZERATH','El rayo rojo cae desde la estratósfera. No trae fuego: trae una orden. Los militares corruptos cierran las calles.'],
+    ['NYA','Nya despierta en medio del caos. Los aros rojos salen de sus puños. Si golpean el suelo, la elevan. Si avanzan, destruyen.'],
+    ['DEMO ARCADE','Derrotá oleadas. Cargá la ONDA con bajas. Cuando llegue al 100%, liberá una expansiva capaz de limpiar la pantalla.']
+  ];
+  const player = {x:80,y:GROUND-96,w:48,h:96,vx:0,vy:0,face:1,hp:100,maxHp:100,charge:0,cool:0,jumpCool:0,specialCool:0,inv:0,onGround:true};
+  const wavePlan = [
+    {name:'CALLE CERO', soldiers:4, text:'Primer contacto. Los militares corruptos no entienden lo que Nya acaba de despertar.'},
+    {name:'AVENIDA ROJA', soldiers:7, text:'Más tropas llegan desde los cruces. El rayo rojo late sobre la ciudad.'},
+    {name:'NERIEX', soldiers:4, boss:'neriex', text:'Neriex bloquea la avenida: enorme, barbado, eco bordó y fuerza brutal.'},
+    {name:'PREAX', soldiers:3, boss:'preax', text:'Preax aparece y se multiplica. Uno, dos, cuatro cuerpos moviéndose al mismo tiempo.'},
+    {name:'IUREX', soldiers:4, boss:'iurex', text:'Iurex deja veneno en la calle. Su sangre negra y roja quema el asfalto.'},
+    {name:'GRIOX', soldiers:5, boss:'griox', text:'El eco blanco de GRiox abre la última barrera de esta demo.'}
+  ];
+  function unlockAudio(){try{ const A=window.AudioContext||window.webkitAudioContext; window._zAudio=window._zAudio||new A(); if(window._zAudio.state==='suspended') window._zAudio.resume(); }catch(e){}}
+  function buzz(ms=30){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
+  function beep(type='ok'){
+    try{unlockAudio(); const ac=window._zAudio; if(!ac) return; const o=ac.createOscillator(), g=ac.createGain(); o.connect(g); g.connect(ac.destination); const now=ac.currentTime;
+      const map={ok:[440,.06,'sine',.08],shot:[900,.045,'square',.06],jump:[260,.09,'triangle',.08],hit:[120,.06,'sawtooth',.08],bad:[70,.16,'sawtooth',.10],wave:[520,.18,'sine',.06],boss:[95,.35,'sawtooth',.10],blast:[60,.12,'sawtooth',.12]};
+      const m=map[type]||map.ok; o.type=m[2]; o.frequency.setValueAtTime(m[0],now); if(type==='shot') o.frequency.exponentialRampToValueAtTime(180,now+m[1]); if(type==='boss') o.frequency.exponentialRampToValueAtTime(45,now+m[1]); g.gain.setValueAtTime(m[3],now); g.gain.exponentialRampToValueAtTime(.001,now+m[1]); o.start(now); o.stop(now+m[1]+.02);
     }catch(e){}
-    try{navigator.vibrate&&navigator.vibrate(18)}catch(e){}
   }
-  function bind(){
-    var sb=$('storyBackHub');
-    if(sb && sb.dataset.bound!=='1'){
-      sb.dataset.bound='1';
-      sb.addEventListener('click',function(e){
-        e.preventDefault(); e.stopPropagation(); softClick(); showOnly('hub');
-      },{passive:false});
-    }
-    var zb=$('zerathBack');
-    if(zb && zb.dataset.bound!=='1'){
-      zb.dataset.bound='1';
-      zb.addEventListener('click',function(e){
-        e.preventDefault(); e.stopPropagation(); softClick(); showOnly('hub');
-      },{passive:false});
-    }
+  function showOnly(id){ if(window.showOnly) return window.showOnly(id); document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); $(id)?.classList.add('active'); }
+  function resizeCanvas(){
+    const ratio=16/9, maxW=Math.min(window.innerWidth,980), maxH=Math.min(window.innerHeight*0.64,560);
+    let w=maxW, h=w/ratio; if(h>maxH){h=maxH; w=h*ratio;} canvas.style.width=w+'px'; canvas.style.height=h+'px';
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bind); else bind();
+  window.addEventListener('resize',resizeCanvas); resizeCanvas();
+  function reset(){
+    running=true; ended=false; last=performance.now(); camX=0; score=0; kills=0; wave=1; bullets=[]; rings=[]; enemies=[]; particles=[]; venom=[]; floatTexts=[];
+    Object.assign(player,{x:80,y:GROUND-96,w:48,h:96,vx:0,vy:0,face:1,hp:100,charge:0,cool:0,jumpCool:0,specialCool:0,inv:0,onGround:true});
+    $('zerathIntro').style.display='none'; $('zerathCine').classList.remove('show'); $('zerathEnd').classList.remove('show');
+    spawnWave(1); updateHud(); requestAnimationFrame(loop);
+  }
+  function startStory(){unlockAudio(); beep('wave'); buzz(28); storyStep=0; $('zerathIntro').style.display='none'; updateCine();}
+  function updateCine(){ const s=story[storyStep]; $('zerathCineTitle').textContent=s[0]; $('zerathCineText').textContent=s[1]; $('zerathCine').classList.add('show');}
+  function spawnWave(n){
+    wave=n; enemies=[]; bullets=[]; rings=[]; venom=[]; const plan=wavePlan[n-1]||wavePlan[wavePlan.length-1];
+    msg=plan.name+' · '+plan.text; msgTimer=210; beep(plan.boss?'boss':'wave'); buzz(plan.boss?55:30);
+    const base=520+(n-1)*420; for(let i=0;i<plan.soldiers;i++) spawnSoldier(base+i*118+Math.random()*60,n);
+    if(plan.boss){ spawnBoss(plan.boss,base+plan.soldiers*118+130); }
+    updateHud();
+  }
+  function spawnSoldier(x,n=1){ enemies.push({kind:'soldier',x,y:GROUND-62,w:40,h:62,vx:-.35-.05*n,hp:2+Math.floor(n/2),maxHp:2+Math.floor(n/2),hit:0,atk:0}); }
+  function spawnBoss(kind,x){
+    const stats={neriex:{hp:20,w:66,h:92,color:'#7b1234'},preax:{hp:10,w:48,h:70,color:'#0e5830'},iurex:{hp:16,w:54,h:78,color:'#050506'},griox:{hp:28,w:72,h:102,color:'#f4f6ff'}}[kind];
+    enemies.push({kind,x,y:GROUND-stats.h,w:stats.w,h:stats.h,vx:-.28,hp:stats.hp,maxHp:stats.hp,hit:0,atk:0,phase:0,color:stats.color,splitDone:false});
+    floatTexts.push({x:x,y:GROUND-stats.h-20,t:kind.toUpperCase(),life:110,c:kind==='griox'?'#fff':stats.color});
+  }
+  function splitPreax(e){
+    if(e.splitDone || e.hp>5) return; e.splitDone=true; beep('bad'); msg='PREAX se duplica. No peleás contra uno: peleás contra varios.'; msgTimer=160;
+    for(let i=0;i<3;i++){ enemies.push({kind:'preaxClone',x:e.x+70+i*52,y:GROUND-60,w:42,h:60,vx:-.55,hp:4,maxHp:4,hit:0,atk:0,color:'#0e5830'}); }
+  }
+  function updateHud(){ $('zerathHp').textContent='VIDA '+Math.max(0,Math.round(player.hp)); $('zerathScore').textContent='ONDA '+Math.round(player.charge)+'%'; $('zerathWave').textContent='OLEADA '+wave; }
+  function rect(a,b){return a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y}
+  function addCharge(v){ player.charge=Math.min(100,player.charge+v); }
+  function fire(){ if(player.cool>0) return; player.cool=10; beep('shot'); buzz(10); bullets.push({x:player.x+player.w/2+player.face*28,y:player.y+31,r:13,vx:player.face*8.8,life:88,dmg:1}); rings.push({x:player.x+player.w/2+player.face*26,y:player.y+31,r:6,max:28,life:16}); }
+  function jumpRing(){ if(player.jumpCool>0) return; player.jumpCool=22; beep('jump'); buzz(14); player.vy=-15.8; player.onGround=false; rings.push({x:player.x+player.w/2,y:player.y+player.h+4,r:12,max:68,life:26,up:true}); enemies.forEach(e=>{ if(Math.abs((e.x+e.w/2)-(player.x+player.w/2))<86 && Math.abs((e.y+e.h/2)-(player.y+player.h))<95){damageEnemy(e,1.2,'ARO');} }); }
+  function special(){ if(player.specialCool>0) return; if(player.charge<100){ floatTexts.push({x:player.x,y:player.y-20,t:'ONDA NO CARGADA',life:48,c:'#ff9aa8'}); beep('bad'); buzz(18); return; }
+    player.specialCool=70; player.charge=0; beep('blast'); buzz(75); rings.push({x:player.x+player.w/2,y:player.y+player.h/2,r:24,max:270,life:45,blast:true});
+    let hit=0; enemies.forEach(e=>{ const d=Math.hypot((e.x+e.w/2)-(player.x+player.w/2),(e.y+e.h/2)-(player.y+player.h/2)); if(d<285){ damageEnemy(e,4,'ONDA'); hit++; }});
+    floatTexts.push({x:player.x-10,y:player.y-34,t:'EXPANSIVA x'+hit,life:70,c:'#fff'});
+  }
+  function damageEnemy(e,dmg,label){ e.hp-=dmg; e.hit=12; rings.push({x:e.x+e.w/2,y:e.y+e.h/2,r:8,max:42,life:16}); for(let i=0;i<9;i++) particles.push({x:e.x+e.w/2,y:e.y+20,vx:(Math.random()-.5)*5,vy:(Math.random()-.5)*5,life:24,c:e.kind==='griox'?'#fff':'#ff2f55'}); }
+  function killEnemy(e){ e.dead=true; kills++; score+= e.kind==='soldier'?10: e.kind==='preaxClone'?12:50; addCharge(e.kind==='soldier'?18:e.kind==='preaxClone'?14:45); floatTexts.push({x:e.x,y:e.y-18,t:e.kind==='soldier'?'+18 ONDA':'JEFE CAE',life:62,c:'#ffdae0'}); beep('hit'); }
+  function loop(t){ if(!running) return; const dt=Math.min(34,t-last)/16.67; last=t; step(dt); draw(); requestAnimationFrame(loop); }
+  function step(dt){
+    player.cool=Math.max(0,player.cool-dt); player.jumpCool=Math.max(0,player.jumpCool-dt); player.specialCool=Math.max(0,player.specialCool-dt); player.inv=Math.max(0,player.inv-dt);
+    let left=keys.left||keys.ArrowLeft||keys.a, right=keys.right||keys.ArrowRight||keys.d;
+    player.vx=(right?4.7:0)-(left?4.7:0); if(player.vx) player.face=player.vx>0?1:-1;
+    if(keys.fire){fire(); keys.fire=false;} if(keys.jump){jumpRing(); keys.jump=false;} if(keys.special){special(); keys.special=false;}
+    player.vy += .70*dt; player.x += player.vx*dt; player.y += player.vy*dt;
+    if(player.y+player.h>=GROUND){player.y=GROUND-player.h; player.vy=0; player.onGround=true;} player.x=Math.max(20,Math.min(2900,player.x));
+    camX += ((player.x-245)-camX)*.08; camX=Math.max(0,Math.min(2200,camX));
+    bullets.forEach(b=>{b.x+=b.vx*dt; b.life-=dt;}); bullets=bullets.filter(b=>b.life>0&&b.x>camX-120&&b.x<camX+W+140);
+    rings.forEach(r=>{r.r += (r.max-r.r)*.18; r.life-=dt;}); rings=rings.filter(r=>r.life>0);
+    particles.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;}); particles=particles.filter(p=>p.life>0);
+    venom.forEach(v=>{v.life-=dt; if(Math.abs((player.x+player.w/2)-v.x)<v.r && player.y+player.h>GROUND-24 && player.inv<=0){player.hp-=.30*dt;}}); venom=venom.filter(v=>v.life>0);
+    floatTexts.forEach(f=>{f.y-=.35*dt; f.life-=dt;}); floatTexts=floatTexts.filter(f=>f.life>0);
+    enemies.forEach(e=>{
+      const dir=e.x<player.x?1:-1; const speed=e.kind==='neriex'?.34:e.kind==='griox'?.26:e.kind==='preax'||e.kind==='preaxClone'?.55:.42+.05*wave;
+      e.vx=dir*speed; e.x+=e.vx*dt; e.hit=Math.max(0,e.hit-dt); e.atk=(e.atk||0)+dt;
+      if(e.kind==='preax') splitPreax(e);
+      if(e.kind==='iurex' && e.atk>55){ e.atk=0; venom.push({x:e.x+e.w/2,y:GROUND-8,r:54,life:160}); floatTexts.push({x:e.x,y:e.y-12,t:'VENENO',life:40,c:'#140000'}); }
+      if(e.kind==='griox' && e.atk>75){ e.atk=0; rings.push({x:e.x+e.w/2,y:e.y+28,r:8,max:118,life:30,white:true}); if(Math.abs((player.x+player.w/2)-(e.x+e.w/2))<145 && player.inv<=0){player.hp-=13;player.inv=28;beep('bad');} }
+    });
+    for(const b of bullets){ for(const e of enemies){ if(b.life>0 && Math.abs(b.x-(e.x+e.w/2))<e.w/2+b.r && Math.abs(b.y-(e.y+e.h/2))<e.h/2+b.r){ damageEnemy(e,b.dmg,'HIT'); b.life=0; } } }
+    enemies.forEach(e=>{ if(e.hp<=0) killEnemy(e); else if(rect(player,e) && player.inv<=0){ const dmg=e.kind==='neriex'?19:e.kind==='griox'?16:e.kind==='preax'||e.kind==='preaxClone'?9:e.kind==='iurex'?13:10; player.hp-=dmg; player.inv=34; beep('bad'); buzz(38); rings.push({x:player.x+player.w/2,y:player.y+28,r:8,max:44,life:13}); } });
+    enemies=enemies.filter(e=>!e.dead);
+    if(enemies.length===0){ if(wave<wavePlan.length) spawnWave(wave+1); else return finish(true); }
+    if(player.hp<=0&&!ended) return finish(false); updateHud();
+  }
+  function finish(win){ ended=true; running=false; $('zerathEndTitle').textContent=win?'DEMO COMPLETADA':'NYA CAYÓ'; $('zerathEndText').textContent=win?'Nya sobrevivió a las oleadas y vio a GRiox retroceder. El rayo rojo sigue abierto sobre Zerath... esto recién empieza.':'Los militares corruptos rodearon a Nya. Reiniciá la demo y cargá la ONDA antes de usarla.'; $('zerathEnd').classList.add('show'); beep(win?'ok':'bad'); buzz(win?80:120); }
+  function hpBar(x,y,w,h,cur,max,col){ ctx.fillStyle='rgba(0,0,0,.55)'; ctx.fillRect(x,y,w,h); ctx.fillStyle=col; ctx.fillRect(x,y,w*Math.max(0,cur/max),h); ctx.strokeStyle='rgba(255,255,255,.28)'; ctx.strokeRect(x,y,w,h); }
+  function drawNya(x,y,face=1,inv=0){
+    ctx.save(); ctx.translate(x,y); if(face<0) ctx.scale(-1,1); if(inv>0&&Math.floor(inv/4)%2===0) ctx.globalAlpha=.55;
+    ctx.fillStyle='rgba(255,47,85,.14)'; ctx.fillRect(-32,42,64,6);
+    ctx.fillStyle='#160e16'; ctx.fillRect(-18,16,13,31); ctx.fillRect(6,16,13,31); ctx.fillStyle='#ff2f55'; ctx.fillRect(-20,43,18,6); ctx.fillRect(4,43,19,6);
+    ctx.fillStyle='#211522'; ctx.fillRect(-24,-20,48,44); ctx.fillStyle='#0a080a'; ctx.fillRect(-17,-17,34,22); ctx.fillStyle='#ff2f55'; ctx.fillRect(-22,5,44,5);
+    ctx.fillStyle='#8d5132'; ctx.fillRect(-12,-45,24,26); ctx.fillStyle='#22100f';
+    for(const c of [[-19,-46,10],[-10,-55,11],[2,-56,11],[14,-48,10],[-19,-36,9],[19,-37,9],[-3,-48,11],[8,-52,8]]){ctx.beginPath();ctx.arc(c[0],c[1],c[2],0,Math.PI*2);ctx.fill();}
+    ctx.fillStyle='#f3d0bf'; ctx.fillRect(-6,-36,4,3); ctx.fillRect(6,-36,4,3); ctx.fillStyle='#ff2f55'; ctx.fillRect(-6,-24,13,3);
+    ctx.fillStyle='#150d15'; ctx.fillRect(-33,-11,13,25); ctx.fillRect(20,-11,13,25); ctx.strokeStyle='#ff2f55'; ctx.lineWidth=4; ctx.shadowColor='#ff2f55'; ctx.shadowBlur=18; ctx.beginPath();ctx.arc(-35,7,14,0,Math.PI*2);ctx.stroke(); ctx.beginPath();ctx.arc(36,7,14,0,Math.PI*2);ctx.stroke(); ctx.restore();
+  }
+  function drawEnemy(e){
+    ctx.save(); ctx.translate(e.x-camX,e.y); const hit=e.hit>0;
+    if(e.kind==='soldier'){ ctx.fillStyle=hit?'#5d1021':'#20242b'; ctx.fillRect(0,0,e.w,e.h); ctx.fillStyle='#0d0e12'; ctx.fillRect(4,8,e.w-8,14); ctx.fillStyle='#ff2f55'; ctx.fillRect(10,15,5,4); ctx.fillRect(25,15,5,4); ctx.fillStyle='#10141a'; ctx.fillRect(5,44,12,18); ctx.fillRect(23,44,12,18); ctx.strokeStyle='rgba(255,47,85,.40)'; ctx.strokeRect(0,0,e.w,e.h); }
+    else { const col=e.kind==='neriex'?'#7b1234':e.kind==='preax'||e.kind==='preaxClone'?'#0e5830':e.kind==='iurex'?'#090206':'#f4f6ff'; ctx.fillStyle=hit?'#ff7a92':col; ctx.fillRect(0,0,e.w,e.h); ctx.strokeStyle=e.kind==='griox'?'#fff':e.kind==='iurex'?'#ff143d':col; ctx.lineWidth=3; ctx.shadowColor=ctx.strokeStyle; ctx.shadowBlur=12; ctx.strokeRect(0,0,e.w,e.h); ctx.shadowBlur=0; ctx.fillStyle=e.kind==='griox'?'#111':'#fff'; ctx.font='12px Share Tech Mono'; ctx.textAlign='center'; ctx.fillText(e.kind.toUpperCase().replace('PREAXCLONE','PREAX'),e.w/2,15); if(e.kind==='neriex'){ctx.fillStyle='#2c130d';ctx.fillRect(18,20,30,12);} if(e.kind==='iurex'){ctx.fillStyle='#ff143d';ctx.fillRect(8,23,e.w-16,5);} }
+    if(e.kind!=='soldier') hpBar(0,-12,e.w,5,e.hp,e.maxHp,e.kind==='griox'?'#fff':e.kind==='neriex'?'#8b1438':e.kind==='preax'||e.kind==='preaxClone'?'#0e7d47':'#ff143d'); ctx.restore();
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H); const g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#08020a'); g.addColorStop(.5,'#170315'); g.addColorStop(1,'#050105'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    for(let i=0;i<34;i++){ const x=i*72-(camX*.33%72), h=110+(i*43)%240; ctx.fillStyle=i%2?'#130715':'#1b0717'; ctx.fillRect(x,GROUND-h,50,h); ctx.fillStyle='rgba(255,47,85,.30)'; for(let y=GROUND-h+18;y<GROUND-12;y+=31) ctx.fillRect(x+8,y,7,3); }
+    const beamX=535-camX*.16; ctx.fillStyle='rgba(255,47,85,.84)'; ctx.fillRect(beamX-5,0,10,GROUND); ctx.shadowColor='#ff2f55'; ctx.shadowBlur=42; ctx.fillRect(beamX-1,0,2,GROUND); ctx.shadowBlur=0;
+    venom.forEach(v=>{ctx.fillStyle='rgba(9,0,0,.72)';ctx.beginPath();ctx.ellipse(v.x-camX,GROUND-3,v.r,12,0,0,Math.PI*2);ctx.fill();ctx.strokeStyle='rgba(255,20,61,.55)';ctx.stroke();});
+    ctx.fillStyle='#11070a'; ctx.fillRect(0,GROUND,W,H-GROUND); ctx.strokeStyle='rgba(255,47,85,.38)'; ctx.beginPath();ctx.moveTo(0,GROUND);ctx.lineTo(W,GROUND);ctx.stroke();
+    if(msgTimer>0){msgTimer--; ctx.save();ctx.font='20px Share Tech Mono';ctx.fillStyle='rgba(255,225,230,.92)';ctx.textAlign='center';wrapText(msg,W/2,82,860,24);ctx.restore();}
+    rings.forEach(r=>{ctx.save(); ctx.globalAlpha=Math.max(.08,r.life/42); ctx.strokeStyle=r.white?'#fff':r.blast?'#ffedf2':'#ff2f55'; ctx.lineWidth=r.blast?9:r.white?5:4; ctx.shadowColor=ctx.strokeStyle; ctx.shadowBlur=r.blast?34:20; ctx.beginPath();ctx.arc(r.x-camX,r.y,r.r,0,Math.PI*2);ctx.stroke();ctx.restore();});
+    bullets.forEach(b=>{ctx.save(); ctx.strokeStyle='#ff2f55'; ctx.lineWidth=4; ctx.shadowColor='#ff2f55'; ctx.shadowBlur=22; ctx.beginPath();ctx.arc(b.x-camX,b.y,b.r,0,Math.PI*2);ctx.stroke();ctx.restore();});
+    enemies.forEach(drawEnemy); particles.forEach(p=>{ctx.fillStyle=p.c||'rgba(255,55,92,.75)';ctx.fillRect(p.x-camX,p.y,3,3);});
+    drawNya(player.x-camX+player.w/2,player.y+player.h/2,player.face,player.inv);
+    // barra de carga
+    hpBar(18,H-37,180,10,player.charge,100,'#ff2f55'); ctx.font='13px Share Tech Mono'; ctx.fillStyle='rgba(255,220,226,.78)'; ctx.textAlign='left'; ctx.fillText('ONDA EXPANSIVA',18,H-44);
+    ctx.font='14px Share Tech Mono'; ctx.fillStyle='rgba(255,185,195,.62)'; ctx.fillText('← → MOVER · ARO ↑ ELEVAR · DISPARAR · ONDA AL 100%',220,H-20);
+    floatTexts.forEach(f=>{ctx.font='15px Share Tech Mono';ctx.fillStyle=f.c||'#fff';ctx.textAlign='center';ctx.fillText(f.t,f.x-camX,f.y);});
+  }
+  function wrapText(text,x,y,maxWidth,lineHeight){ const words=text.split(' '); let line='', yy=y; for(const w of words){ const test=line+w+' '; if(ctx.measureText(test).width>maxWidth && line){ctx.fillText(line,x,yy); line=w+' '; yy+=lineHeight;} else line=test;} ctx.fillText(line,x,yy); }
+  function bindControls(){ document.querySelectorAll('.zerath-controls button').forEach(btn=>{ const k=btn.dataset.key; const on=ev=>{ev.preventDefault(); unlockAudio(); if(k==='fire') keys.fire=true; else if(k==='jump') keys.jump=true; else if(k==='special') keys.special=true; else keys[k]=true;}; const off=ev=>{ev.preventDefault(); if(k==='left'||k==='right') keys[k]=false;}; btn.addEventListener('pointerdown',on,{passive:false}); btn.addEventListener('pointerup',off,{passive:false}); btn.addEventListener('pointercancel',off,{passive:false}); btn.addEventListener('pointerleave',off,{passive:false}); }); }
+  window.addEventListener('keydown',e=>{ if(!document.getElementById('zerath').classList.contains('active')) return; if(['ArrowLeft','ArrowRight','a','d',' ','ArrowUp','w'].includes(e.key)) e.preventDefault(); if(e.key==='ArrowLeft'||e.key==='a')keys.left=true; if(e.key==='ArrowRight'||e.key==='d')keys.right=true; if(e.key===' '||e.key==='ArrowUp'||e.key==='w')keys.jump=true; if(e.key.toLowerCase()==='j')keys.fire=true; if(e.key.toLowerCase()==='k')keys.special=true; });
+  window.addEventListener('keyup',e=>{ if(e.key==='ArrowLeft'||e.key==='a')keys.left=false; if(e.key==='ArrowRight'||e.key==='d')keys.right=false; });
+  window.addEventListener('load',()=>{
+    bindControls(); resizeCanvas();
+    const open=$('openZerath'); if(open) open.addEventListener('click',e=>{e.preventDefault(); unlockAudio(); beep('ok'); buzz(20); showOnly('zerath'); $('zerathIntro').style.display='block'; $('zerathCine').classList.remove('show'); $('zerathEnd').classList.remove('show'); running=false;},{passive:false});
+    $('zerathBack')?.addEventListener('click',()=>{running=false;beep('ok');showOnly('hub')}); $('zerathHub')?.addEventListener('click',()=>{running=false;beep('ok');showOnly('hub')}); $('zerathStart')?.addEventListener('click',()=>startStory());
+    $('zerathCine')?.addEventListener('click',()=>{unlockAudio(); storyStep++; if(storyStep<story.length) updateCine(); else reset();}); $('zerathAgain')?.addEventListener('click',()=>{beep('ok');startStory();});
+  });
 })();
 </script>
-
 </body>
 </html>
