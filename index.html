@@ -1904,6 +1904,8 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
 #zerath .z-stage::after{z-index:12!important;pointer-events:none!important;}
 #zerath .z-panel{z-index:40!important;}
 #zerath .z-controls{z-index:60!important;}
+#zerath .z-controls button{touch-action:none!important;user-select:none!important;}
+#zerath .z-controls button:active{transform:scale(.96)!important;box-shadow:0 0 24px rgba(255,49,94,.35)!important;}
 #zerath .z-controls button.ready{border-color:#ffd45a!important;color:#ffeaa0!important;box-shadow:0 0 18px rgba(255,190,50,.3)!important;background:rgba(255,185,40,.12)!important;}
 #zerath .z-controls button.disabled{opacity:.45!important;filter:grayscale(.5)!important;}
 .z-bossbar{position:absolute;left:18px;right:18px;bottom:10px;z-index:25;border:1px solid rgba(255,255,255,.14);height:10px;background:rgba(0,0,0,.55);box-shadow:0 0 18px rgba(255,43,79,.18);display:none;}
@@ -2133,7 +2135,8 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
   };
   // Coordenadas mejoradas: solo personaje, sin textos de la hoja.
   const frameData={
-    nya:{scale:.82, idle:{y:93,w:78,h:120,xs:[63,165,270,375]}, run:{y:280,w:78,h:120,xs:[65,165,268,370,473,575,678,780]}, jump:{y:455,w:80,h:118,xs:[65,165,270,375]}, shoot:{y:640,w:86,h:120,xs:[64,168,273,377,482]}},
+    // NYA: ajustado para NO agarrar textos de la hoja (IDLE/RUN/SALTO)
+    nya:{scale:.82, idle:{y:108,w:82,h:105,xs:[72,188,300,412]}, run:{y:300,w:92,h:112,xs:[64,180,300,420,535,654,772,895]}, jump:{y:472,w:96,h:108,xs:[66,185,305,428]}, shoot:{y:654,w:100,h:112,xs:[66,185,306,426,545]}},
     soldier:{scale:.78, idle:{y:105,w:86,h:108,xs:[70,225,382,535]}, run:{y:255,w:86,h:108,xs:[70,202,335,468,600,733,865,998]}, shoot:{y:545,w:95,h:112,xs:[75,220,365,510]}},
     neriex:{scale:.98, idle:{y:96,w:105,h:138,xs:[70,230,390,550]}, run:{y:290,w:112,h:136,xs:[70,226,382,538,694]}, attack:{y:455,w:130,h:150,xs:[70,240,410]}},
     priex:{scale:.84, idle:{y:86,w:88,h:130,xs:[55,207,360,515]}, run:{y:260,w:92,h:128,xs:[55,205,355,505,655]}, attack:{y:585,w:96,h:130,xs:[55,210,365,520]}},
@@ -2152,7 +2155,7 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
     {title:'STAGE 3',name:'AVENIDA DEL VENENO',tint:'rgba(90,0,20,.12)',waves:[{type:'soldier',count:12},{type:'iurex',boss:true},{type:'soldier',count:14}]},
     {title:'FINAL STAGE',name:'EL RAYO DE GRIOX',tint:'rgba(255,255,255,.08)',waves:[{type:'soldier',count:10},{type:'soldier',count:14},{type:'griox',boss:true}]}
   ];
-  function load(src){return new Promise(res=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>res(null);im.src=src+'?v=3';});}
+  function load(src){return new Promise(res=>{const im=new Image();im.onload=()=>res(im);im.onerror=()=>res(null);im.src=src+'?v=4';});}
   async function loadAll(){for(const k in AS)imgs[k]=await load(AS[k]);}
   function makeFrame(kind,act,idx){
     const key=kind+'_'+act+'_'+idx;if(frameCache[key])return frameCache[key];
@@ -2187,7 +2190,7 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
   function start(){
     if(!ensure())return; const intro=$('zIntro'); if(intro)intro.style.display='none';
     Object.assign(player,{x:100,y:ground()-88,vx:0,vy:0,w:56,h:88,hp:100,charge:0,face:1,onGround:true,anim:0,shoot:0,inv:0});
-    stageIndex=0;waveIndex=0;kills=0;worldX=0;enemies=[];shots=[];rings=[];particles=[];running=true;last=0;titleCard();spawnWave();requestAnimationFrame(loop);
+    stageIndex=0;waveIndex=0;kills=0;worldX=0;keys.left=false;keys.right=false;enemies=[];shots=[];rings=[];particles=[];running=true;last=0;titleCard();spawnWave();requestAnimationFrame(loop);
   }
   function spawnWave(){
     enemies=[];shots=[];rings=[];particles=[];
@@ -2215,7 +2218,7 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
   function loop(ts){if(!running)return;const dt=Math.min(2,(ts-last)/16.66||1);last=ts;update(dt);draw();requestAnimationFrame(loop);}
   function update(dt){
     const moving=keys.left||keys.right; if(keys.left){player.vx-=.72*dt;player.face=-1;} if(keys.right){player.vx+=.72*dt;player.face=1;worldX+=1.1*dt;}
-    player.vx*=.82; player.x+=player.vx*dt; player.vy+=.58*dt; player.y+=player.vy*dt; player.anim+=dt*(moving?0.38:0.18); if(player.shoot>0)player.shoot-=dt; if(player.inv>0)player.inv-=dt;
+    player.vx*=.82; player.x+=player.vx*dt; player.vy+=.58*dt; player.y+=player.vy*dt; player.anim+=dt*(moving||Math.abs(player.vx)>0.45?0.62:0.22); if(player.shoot>0)player.shoot-=dt; if(player.inv>0)player.inv-=dt;
     if(player.x<18)player.x=18;if(player.x>W-player.w-20)player.x=W-player.w-20;const gy=ground()-player.h;if(player.y>=gy){player.y=gy;player.vy=0;player.onGround=true;}
     shots.forEach(s=>{s.x+=s.vx*dt;s.life-=dt;});shots=shots.filter(s=>s.life>0&&s.x>-60&&s.x<W+80);
     rings.forEach(r=>{r.r+=(r.big?8:2.4)*dt;r.life-=dt;});rings=rings.filter(r=>r.life>0&&r.r<r.max+20);
@@ -2240,7 +2243,28 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
     enemies.forEach(e=>{const act=e.shoot>0?'attack':(Math.abs(e.x-player.x)>e.w*.35+50?'run':'idle');drawActor(e.type,e.x,e.y,e.w,e.h,e.x>player.x?-1:1,act,e.anim,e.flash);});
     const pact=player.shoot>0?'shoot':(!player.onGround?'jump':(Math.abs(player.vx)>0.7?'run':'idle'));drawActor('nya',player.x,player.y,player.w,player.h,player.face,pact,player.anim,player.inv>0&&Math.floor(player.inv)%2?1:0);
     ctx.fillStyle='rgba(255,255,255,.76)';ctx.font='12px Share Tech Mono, monospace';ctx.textAlign='center';ctx.fillText(stages[stageIndex].name,W/2,28); if(toastTimer>0){ctx.font='13px Share Tech Mono, monospace';ctx.fillStyle='#ffdce2';ctx.fillText(toastText,W/2,58);} }
-  function bind(){['zStart','zFire','zUp','zWaveBtn','zLeft','zRight'].forEach(id=>{const b=$(id); if(b){const n=b.cloneNode(true);b.parentNode.replaceChild(n,b);}});const st=$('zStart');if(st)st.onclick=e=>{e.preventDefault();start();};const fi=$('zFire');if(fi)fi.onclick=e=>{e.preventDefault();fire();};const up=$('zUp');if(up)up.onclick=e=>{e.preventDefault();jump();};const wb=$('zWaveBtn');if(wb)wb.onclick=e=>{e.preventDefault();wave();};function hold(id,k){const b=$(id);if(!b)return;['touchstart','mousedown'].forEach(ev=>b.addEventListener(ev,e=>{e.preventDefault();keys[k]=true},{passive:false}));['touchend','touchcancel','mouseup','mouseleave'].forEach(ev=>b.addEventListener(ev,e=>{e.preventDefault();keys[k]=false},{passive:false}));}hold('zLeft','left');hold('zRight','right');}
+  function bind(){
+    ['zStart','zFire','zUp','zWaveBtn','zLeft','zRight'].forEach(id=>{const b=$(id); if(b){const n=b.cloneNode(true);b.parentNode.replaceChild(n,b);}});
+    const st=$('zStart');if(st)st.onclick=e=>{e.preventDefault();start();};
+    const fi=$('zFire');if(fi)fi.onclick=e=>{e.preventDefault();fire();};
+    const up=$('zUp');if(up)up.onclick=e=>{e.preventDefault();jump();};
+    const wb=$('zWaveBtn');if(wb)wb.onclick=e=>{e.preventDefault();wave();};
+    function hold(id,k,dir){
+      const b=$(id); if(!b)return;
+      const down=e=>{e.preventDefault();keys[k]=true; player.face=dir; player.vx += dir*3.6; player.anim += 1.5;};
+      const upf=e=>{e.preventDefault();keys[k]=false;};
+      ['pointerdown','touchstart','mousedown'].forEach(ev=>b.addEventListener(ev,down,{passive:false}));
+      ['pointerup','pointercancel','touchend','touchcancel','mouseup','mouseleave'].forEach(ev=>b.addEventListener(ev,upf,{passive:false}));
+      b.addEventListener('click',e=>{e.preventDefault(); if(running){player.x=Math.max(18,Math.min(W-player.w-20,player.x+dir*34)); player.face=dir; player.anim+=2.5; worldX+=dir>0?18:0;}},{passive:false});
+    }
+    hold('zLeft','left',-1); hold('zRight','right',1);
+    // También se puede tocar el escenario: izquierda/derecha mueve a Nya, arriba salta.
+    if(canvas){
+      canvas.addEventListener('pointerdown',e=>{ if(!running)return; const r=canvas.getBoundingClientRect(); const x=e.clientX-r.left, y=e.clientY-r.top; if(y<r.height*.45){jump(); return;} if(x<r.width*.45){keys.left=true; player.face=-1;} else {keys.right=true; player.face=1;} },{passive:false});
+      canvas.addEventListener('pointerup',()=>{keys.left=false;keys.right=false;},{passive:false});
+      canvas.addEventListener('pointercancel',()=>{keys.left=false;keys.right=false;},{passive:false});
+    }
+  }
   async function boot(){await loadAll();ensure();bind();window.addEventListener('resize',resize);draw();setHud();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
