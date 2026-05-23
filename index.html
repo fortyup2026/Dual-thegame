@@ -2019,5 +2019,517 @@ Esta línea temporal ya la conocía.`,choices:function(){return[{t:'Volver al HU
 })();
 </script>
 
+
+
+<!-- === AETHRION: EL DESPERTAR DE MURMEX · HISTORIA LARGA 5 FINALES === -->
+<script id="murmex-long-story-v2">
+(function(){
+  function byId(id){ return document.getElementById(id); }
+  function safe(fn){ try{return fn&&fn()}catch(e){console.warn(e)} }
+  function resetMurmexFull(){
+    if(typeof state!=='undefined'){
+      Object.assign(state,{
+        campaign:'murmex',hp:100,eco:18,corr:0,
+        clue:0,mercy:0,army:0,answers:0,sanctuary:0,
+        kael:1,nyra:1,darian:1,kingAlive:1,queenAlive:1,
+        civilians:0,monsters:0,credibility:0,wrath:0,truth:0,
+        finalChoice:'',resultNext:null,last:null
+      });
+    }
+    safe(function(){ if(typeof bars==='function') bars(); });
+  }
+  function beginMurmex(){
+    safe(function(){ if(typeof unlockAudio==='function') unlockAudio(); });
+    safe(function(){ if(typeof sfx==='function') sfx('win'); });
+    safe(function(){ if(typeof vib==='function') vib([20,20,35]); });
+    resetMurmexFull();
+    safe(function(){ if(typeof playMusic==='function') playMusic('story'); });
+    safe(function(){ if(typeof node==='function') node('mur_start'); });
+  }
+  function bindOpenMurmex(){
+    var old=byId('openMurmex');
+    if(!old) return;
+    var b=old.cloneNode(true);
+    old.parentNode.replaceChild(b,old);
+    b.classList.remove('locked'); b.classList.add('available');
+    var act=b.querySelector('.hub-action'); if(act) act.textContent='INICIAR ›';
+    b.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation(); beginMurmex(); },{passive:false});
+  }
+
+  if(typeof IMG_ALIASES!=='undefined'){
+    Object.assign(IMG_ALIASES,{
+      mur_palace:['aethrion_castle.png','castillo_aethrion.png','sc_aethrion_castle.png','aethrion_council.png'],
+      mur_council:['aethrion_council.png','consejo_aethrion.png','aethrion_castle.png'],
+      mur_gate:['aethrion_fire.png','aethrion_castle.png','sc_explosion.png'],
+      mur_village:['aethrion_ruins.png','aethrion_fire.png','aethrion_castle.png'],
+      mur_archive:['aethrion_throne.png','aethrion_council.png','aethrion_castle.png'],
+      mur_hunt:['aethrion_shadows.png','aethrion_ruins.png','aethrion_fire.png'],
+      mur_throne:['aethrion_throne.png','trono_aethrion.png','aethrion_council.png'],
+      mur_sanctuary:['aethrion_shadows.png','aethrion_ruins.png','aethrion_castle.png'],
+      mur_final:['aethrion_castle.png','aethrion_fire.png','aethrion_ruins.png'],
+      mur_ruins:['aethrion_ruins.png','aethrion_fire.png']
+    });
+  }
+
+  if(typeof S!=='undefined'){
+    Object.assign(S,{
+      mur_start:{img:'mur_palace',music:'story',title:'AETHRION',sub:'EL DESPERTAR DE MURMEX',big:'CETRIOS ARDE',s:'Después de DUAL: Valmora',spk:'NARRADOR',delta:{campaign:'murmex',hp:0,eco:18,corr:0,clue:0,mercy:0,army:0,answers:0,sanctuary:0,kael:1,nyra:1,darian:1,kingAlive:1,queenAlive:1,civilians:0,monsters:0,credibility:0,wrath:0,truth:0},txt:`La señal que Tronox envió desde Valmora no solo golpeó la Tierra.
+
+En Cetrios, el Portal Central se cerró a la fuerza. Miles de monstruos que debían escapar hacia otros mundos quedaron atrapados dentro del planeta.
+
+Las jaulas antiguas se abrieron. Las aldeas pequeñas cayeron primero. Los caminos se llenaron de rugidos. Aethrion, el reinado principal de Cetrios, intentó mostrarse fuerte.
+
+Pero detrás de las murallas, todos sabían lo mismo: el reino había perdido el control.`,next:'mur_protagonists'},
+
+      mur_protagonists:{img:'mur_council',title:'AETHRION',sub:'TRES PORTADORES',big:'KAEL · NYRA · DARIAN',s:'Tres ecos para una guerra imposible',spk:'NARRADOR',txt:`El consejo elige a tres portadores para una misión que nadie quiere nombrar.
+
+Kael, eco gravitacional azul índigo: puede volver pesado el aire, derribar criaturas sin tocarlas y sostener estructuras que deberían caer.
+
+Nyra, eco temporal violeta: ve segundos futuros, escucha residuos del pasado y puede encontrar grietas donde el tiempo se dobla.
+
+Darian, eco ígneo naranja volcánico: rompe armaduras, quema nidos y arrasa líneas enteras de enemigos, pero su furia empieza a rozar el rojo.
+
+La misión parece simple: defender Aethrion.
+
+La verdad es otra: encontrar a Murmex antes de que el reino desaparezca.`,choices:function(){return[
+        {t:'Aceptar la orden del consejo',d:'El reino necesita estructura, soldados y una respuesta rápida.',color:'#d7a84a',delta:{army:2,credibility:1,clue:1},next:'mur_council_warning'},
+        {t:'Exigir saber qué es Murmex',d:'Nyra sabe que los Sabios ocultan algo.',color:'#9d37ff',delta:{clue:3,truth:1},next:'mur_council_secret'},
+        {t:'Ir primero a las aldeas atacadas',d:'La gente muere mientras los poderosos hablan.',color:'#61ff8b',delta:{mercy:3,civilians:2},next:'mur_village'}
+      ]}},
+
+      mur_council_warning:{img:'mur_council',title:'AETHRION',sub:'LOS TRES SABIOS',big:'LA DECISIÓN QUE ROMPIÓ TODO',s:'No son reyes. Son quienes deciden lo imposible.',spk:'PRIMER SABIO',txt:`Los Tres Sabios no se sientan en tronos. Están de pie, inmensos, envueltos en luz antigua.
+
+El Primero dice que cerrar el portal salvó a la Tierra de una invasión peor.
+
+El Segundo admite lo que nadie quería escuchar: al cerrar el portal, las criaturas quedaron en Cetrios.
+
+El Tercero baja la mirada hacia los tres protagonistas.
+
+"Murmex puede viajar por todas las líneas temporales. Si despierta, no le pidan una victoria. Pídanle una verdad que puedan soportar."`,choices:function(){return[
+        {t:'Pedir soldados para la Puerta Norte',d:'Si Aethrion cae, ninguna verdad servirá.',color:'#d7a84a',delta:{army:3},next:'mur_gate_attack'},
+        {t:'Pedir archivos prohibidos sobre Murmex',d:'Las respuestas dejaron rastros.',color:'#9d37ff',delta:{clue:3,truth:1},next:'mur_archive'},
+        {t:'Acusar a los Sabios de abandonar aldeas',d:'La credibilidad del reino ya está rota.',color:'#ff7a18',delta:{mercy:1,credibility:-1,wrath:1},next:'mur_village'}
+      ]}},
+
+      mur_council_secret:{img:'mur_council',title:'AETHRION',sub:'EL NOMBRE PROHIBIDO',big:'MURMEX',s:'El que existió siempre',spk:'SEGUNDO SABIO',txt:`"Murmex no está perdido", confiesa el Segundo Sabio. "Está dormido fuera del tiempo."
+
+Hace miles de años, Murmex aprendió a caminar por líneas temporales sin límite. Vio Cetrios caer, renacer, traicionarse y salvarse en cientos de futuros distintos.
+
+Después desapareció.
+
+No lo escondieron en un templo.
+
+El templo se escondió alrededor de él.`,choices:function(){return[
+        {t:'Seguir el mapa temporal de Nyra',d:'Buscar pistas antes de que el santuario aparezca.',color:'#9d37ff',delta:{clue:4,sanctuary:1},next:'mur_archive'},
+        {t:'Consultar a testigos de aldeas antiguas',d:'Mucha gente sabe, pero calla por miedo.',color:'#61ff8b',delta:{mercy:2,clue:2},next:'mur_old_woman'},
+        {t:'Usar presión militar para obtener datos',d:'Darian cree que el miedo también sirve.',color:'#ff4d4d',delta:{army:1,wrath:2,corr:1},next:'mur_hunter_path'}
+      ]}},
+
+      mur_gate_attack:{img:'mur_gate',music:'battle',title:'AETHRION',sub:'PUERTA NORTE',big:'PRIMERA OLEADA',s:'Los monstruos no huyen: avanzan',spk:'NARRADOR',txt:`La Puerta Norte tiembla como si una montaña respirara del otro lado.
+
+Criaturas de piedra, insectos enormes con alas transparentes y bestias deformadas por eco rojo se lanzan contra las murallas.
+
+Kael siente el peso de todos los cuerpos. Nyra ve tres futuros donde la puerta cae. Darian ya tiene los puños encendidos.
+
+Este será el primer momento donde el reino sabrá si todavía puede creer en sus defensores.`,choices:function(){return[
+        {t:'Kael sostiene la muralla con gravedad',d:'La defensa aguanta, pero su cuerpo paga el peso.',color:'#243bff',delta:{army:2,credibility:2,eco:7,hp:-8},next:'mur_after_gate'},
+        {t:'Nyra busca el futuro con menos muertes',d:'Cada visión le rompe un segundo de memoria.',color:'#9d37ff',delta:{clue:1,civilians:3,eco:8,hp:-7},next:'mur_after_gate'},
+        {t:'Darian quema la primera línea de criaturas',d:'Eficaz. Brutal. Peligroso.',color:'#ff7a18',delta:{monsters:3,army:1,wrath:2,corr:1,hp:-6},next:'mur_after_gate'}
+      ]}},
+
+      mur_after_gate:{img:'mur_gate',title:'AETHRION',sub:'DESPUÉS DEL ATAQUE',big:'EL SÍMBOLO PARTIDO',s:'La guerra deja una pista',spk:'NYRA',txt:`Entre cadáveres de monstruos, Nyra encuentra una piedra marcada con tres círculos y una línea partida.
+
+No pertenece a las criaturas. No pertenece a Tronox.
+
+Es más antigua que el palacio.
+
+Kael entiende que la invasión y Murmex están conectados. Darian mira las aldeas incendiadas al otro lado de la llanura.
+
+"Mientras desciframos piedras, siguen muriendo personas", dice.`,choices:function(){return[
+        {t:'Ir al archivo del palacio',d:'El símbolo puede revelar el santuario.',color:'#9d37ff',delta:{clue:3,truth:1},next:'mur_archive'},
+        {t:'Ir a Varek, la aldea más cercana',d:'Salvar gente antes que buscar pergaminos.',color:'#61ff8b',delta:{mercy:2,civilians:2},next:'mur_village'},
+        {t:'Organizar una cacería nocturna',d:'Si hay nidos, hay que eliminarlos.',color:'#ff7a18',delta:{monsters:2,army:1,wrath:1},next:'mur_hunter_path'}
+      ]}},
+
+      mur_village:{img:'mur_village',music:'battle',title:'AETHRION',sub:'ALDEA DE VAREK',big:'LOS QUE QUEDARON',s:'El reino no llegó a tiempo',spk:'NARRADOR',txt:`Varek ya no tiene campanas.
+
+Solo humo, madera rota y personas escondidas bajo carros volcados.
+
+Un niño señala un pozo antiguo y dice que las criaturas salieron de abajo después de escuchar una voz roja.
+
+Nyra toca las piedras del pozo y ve una imagen imposible: ellos tres llegando al mismo lugar, pero en otra línea temporal uno de ellos no respira.`,choices:function(){return[
+        {t:'Rescatar sobrevivientes antes de investigar',d:'Cada vida salvada cambia el peso de la historia.',color:'#61ff8b',delta:{mercy:3,civilians:4,hp:-4},next:'mur_old_woman'},
+        {t:'Bajar al pozo por las marcas temporales',d:'La pista puede cerrar la guerra antes.',color:'#9d37ff',delta:{clue:4,sanctuary:1,eco:5},next:'mur_well'},
+        {t:'Perseguir a las criaturas que escaparon',d:'Defender Aethrion también significa eliminarlas.',color:'#ff7a18',delta:{monsters:3,wrath:1,hp:-9},next:'mur_hunter_path'}
+      ]}},
+
+      mur_old_woman:{img:'mur_village',title:'AETHRION',sub:'LA MUJER QUE CALLÓ AÑOS',big:'LA SÉPTIMA PUERTA',s:'Alguien sabe dónde buscar',spk:'ANCIANA',txt:`Una anciana con la cara cubierta por una capucha toma la mano de Nyra.
+
+"Mi padre encontró el santuario. Volvió joven. Después envejeció en tres días."
+
+Les entrega una pieza de metal negro con una inscripción que cambia según quién la mira.
+
+Kael lee una coordenada.
+
+Nyra lee una fecha.
+
+Darian lee una advertencia: NO PIDAS PODER.`,choices:function(){return[
+        {t:'Prometer usar a Murmex para salvar vidas',d:'La anciana revela una ruta secreta.',color:'#61ff8b',delta:{mercy:2,clue:3,sanctuary:2},next:'mur_well'},
+        {t:'Preguntar qué vio su padre',d:'La respuesta puede guiar el final.',color:'#9d37ff',delta:{clue:4,answers:1,truth:1},next:'mur_archive'},
+        {t:'Tomar la pieza y marcharse',d:'No hay tiempo para historias.',color:'#d7a84a',delta:{army:1,clue:2},next:'mur_king_death'}
+      ]}},
+
+      mur_archive:{img:'mur_archive',title:'AETHRION',sub:'ARCHIVO PROHIBIDO',big:'MILES DE AÑOS',s:'Murmex siempre aparece igual',spk:'NARRADOR',txt:`Los pergaminos prohibidos muestran a Murmex en épocas imposibles.
+
+Está junto al primer rey.
+
+Está en ruinas que todavía no existen.
+
+Está en una pintura donde Aethrion aparece destruida casi por completo y, al fondo, tres figuras pequeñas caminan hacia un santuario suspendido.
+
+Nyra encuentra el dato que nadie quería decir: el santuario aparece cuando el reino pierde a su rey.`,choices:function(){return[
+        {t:'Avisar al rey inmediatamente',d:'Si la profecía es cierta, está en peligro.',color:'#d7a84a',delta:{army:1,credibility:1},next:'mur_throne_alarm'},
+        {t:'Ocultar el dato para no causar pánico',d:'La misión a Murmex es más importante.',color:'#9d37ff',delta:{clue:3,sanctuary:2},next:'mur_well'},
+        {t:'Acusar a los Sabios de saberlo todo',d:'La verdad puede romper el reino antes que los monstruos.',color:'#ff4d4d',delta:{truth:2,credibility:-2,wrath:1},next:'mur_betrayal'}
+      ]}},
+
+      mur_well:{img:'mur_sanctuary',title:'AETHRION',sub:'POZO DE LAS HORAS',big:'EL CAMINO QUE NO EXISTE',s:'El santuario se acerca',spk:'NARRADOR',txt:`El pozo no baja.
+
+Gira.
+
+Cada escalón muestra una versión distinta de Aethrion: una ciudad intacta, una ciudad conquistada, una ciudad sin habitantes, una ciudad donde los monstruos nunca escaparon.
+
+Kael empieza a sangrar por la nariz. Nyra escucha su propia voz avisándole que no confíe en todos los finales. Darian ve una versión de sí mismo con eco rojo.
+
+Abajo, una puerta sin pared espera.`,choices:function(){return[
+        {t:'Entrar juntos por la puerta sin pared',d:'Nadie queda atrás.',color:'#61ff8b',delta:{mercy:2,clue:2,sanctuary:3},next:'mur_king_death'},
+        {t:'Enviar a Nyra primero',d:'Su eco temporal puede estabilizar el paso.',color:'#9d37ff',delta:{clue:3,sanctuary:3,hp:-3},next:'mur_sanctuary_first'},
+        {t:'Darian fuerza la puerta con fuego',d:'El santuario se abre, pero algo se quiebra.',color:'#ff7a18',delta:{eco:5,wrath:2,corr:1,sanctuary:2},next:'mur_king_death'}
+      ]}},
+
+      mur_hunter_path:{img:'mur_hunt',music:'battle',title:'AETHRION',sub:'CACERÍA NOCTURNA',big:'NIDOS',s:'Eliminar antes de ser eliminados',spk:'DARIAN',txt:`La cacería encuentra tres nidos bajo una cantera.
+
+No todas las criaturas atacan. Algunas parecen confundidas, atrapadas entre la señal roja de Tronox y su propio eco.
+
+Darian quiere quemar todo. Kael duda. Nyra ve un futuro donde dejar vivo un nido destruye una aldea al amanecer.
+
+No hay decisión limpia.`,choices:function(){return[
+        {t:'Quemar solo los nidos activos',d:'Matar lo que ataca. No todo lo que respira.',color:'#61ff8b',delta:{monsters:3,mercy:2,army:1,hp:-6},next:'mur_king_death'},
+        {t:'Eliminar todos los nidos',d:'Aethrion necesita demostrar fuerza.',color:'#ff4d4d',delta:{monsters:5,wrath:3,corr:2,credibility:1,hp:-7},next:'mur_king_death'},
+        {t:'Capturar una criatura para estudiarla',d:'Quizás no todas estén perdidas.',color:'#9d37ff',delta:{clue:2,answers:1,mercy:1,hp:-10},next:'mur_betrayal'}
+      ]}},
+
+      mur_throne_alarm:{img:'mur_throne',music:'boss',title:'AETHRION',sub:'PALACIO PRINCIPAL',big:'EL ÚLTIMO REY',s:'La corona no alcanza',spk:'NARRADOR',txt:`Llegan al palacio cuando las alarmas ya suenan.
+
+El rey intenta hablar desde el balcón para demostrar que Aethrion sigue en pie.
+
+Entonces una criatura cubierta de eco rojo atraviesa las defensas internas.
+
+Los guardias caen. La reina grita. Los Tres Sabios intentan cerrar una grieta sobre el salón.
+
+El rey mira a los tres protagonistas como si recién entendiera que su reinado termina ahí.`,choices:function(){return[
+        {t:'Kael intenta salvar al rey',d:'Sostener el balcón y detener la criatura.',color:'#243bff',delta:{army:1,credibility:1,hp:-12},next:'mur_king_falls'},
+        {t:'Nyra salva a la reina y al archivo real',d:'El futuro necesitará testigos.',color:'#9d37ff',delta:{queenAlive:1,clue:2,civilians:1,hp:-8},next:'mur_king_falls'},
+        {t:'Darian ataca a la criatura sin medir daños',d:'La furia puede abrir camino.',color:'#ff7a18',delta:{monsters:2,wrath:2,corr:1,hp:-7},next:'mur_king_falls'}
+      ]}},
+
+      mur_betrayal:{img:'mur_throne',music:'boss',title:'AETHRION',sub:'TRAICIÓN EN EL PALACIO',big:'EL REY CAE',s:'La profecía se cumple',spk:'NARRADOR',txt:`La grieta no se abre desde afuera.
+
+Se abre desde el propio palacio.
+
+Un consejero, desesperado por recuperar prestigio, intentó usar restos de eco rojo para controlar criaturas y luego presentarse como salvador.
+
+Falló.
+
+La bestia liberada entra al salón principal. El rey muere frente al trono. La reina sobrevive solo si alguien logra sacarla del humo.
+
+Aethrion ya no tiene líder. Solo ruinas, miedo y tres portadores que todavía pueden llegar a Murmex.`,delta:{kingAlive:0,credibility:-2},choices:function(){return[
+        {t:'Rescatar a la reina entre los escombros',d:'Un símbolo vivo puede unir sobrevivientes.',color:'#d7a84a',delta:{queenAlive:1,credibility:2,civilians:1,hp:-8},next:'mur_sanctuary_first'},
+        {t:'Perseguir al consejero traidor',d:'La verdad necesita un culpable.',color:'#ff7a18',delta:{truth:2,wrath:1,army:1,hp:-5},next:'mur_sanctuary_first'},
+        {t:'Correr directo al santuario',d:'El rey ya murió. Murmex era la llave.',color:'#9d37ff',delta:{clue:3,sanctuary:3},next:'mur_sanctuary_first'}
+      ]}},
+
+      mur_king_death:{img:'mur_throne',music:'boss',title:'AETHRION',sub:'LA CORONA ROTA',big:'MATAN AL REY',s:'El reinado queda sin cabeza',spk:'NARRADOR',txt:`Cuando regresan hacia Aethrion, ven el cielo rojo sobre el palacio.
+
+Llegan tarde.
+
+El rey está muerto. El salón principal quedó partido. La corona rueda por una escalera cubierta de ceniza.
+
+La muerte del rey no destruye solo una vida. Destruye la confianza del pueblo.
+
+Si Aethrion sobrevive esta noche, deberá demostrar que todavía merece ser llamada reino.`,delta:{kingAlive:0,credibility:-2},choices:function(){return[
+        {t:'Reunir al ejército bajo la reina',d:'Sin rey, queda una voz que puede sostener al pueblo.',color:'#d7a84a',delta:{army:3,queenAlive:1,credibility:2},next:'mur_sanctuary_first'},
+        {t:'Revelar al pueblo que buscarán a Murmex',d:'La esperanza también puede ser peligrosa.',color:'#9d37ff',delta:{clue:2,truth:2,credibility:1},next:'mur_sanctuary_first'},
+        {t:'Prometer eliminar a todos los monstruos',d:'La gente quiere seguridad, no misterios.',color:'#ff4d4d',delta:{monsters:2,wrath:2,credibility:2,corr:1},next:'mur_sanctuary_first'}
+      ]}},
+
+      mur_king_falls:{img:'mur_throne',music:'boss',title:'AETHRION',sub:'LA SANGRE DEL TRONO',big:'NO ALCANZÓ',s:'El reino pierde a su rey',spk:'NARRADOR',txt:`Lo intentan.
+
+Pero el ataque ya estaba escrito en demasiadas líneas temporales.
+
+La criatura atraviesa el salón y el rey cae. La reina logra respirar entre humo y piedra rota, pero sus ojos no miran la corona: miran a la ciudad.
+
+Aethrion está casi destruida.
+
+Kael, Nyra y Darian entienden que el santuario de Murmex no aparecerá cuando estén listos.
+
+Aparecerá cuando no quede otra salida.`,delta:{kingAlive:0,credibility:-1},choices:function(){return[
+        {t:'Proteger a la reina y evacuar civiles',d:'Salvar el futuro político de Aethrion.',color:'#61ff8b',delta:{queenAlive:1,civilians:3,credibility:2},next:'mur_sanctuary_first'},
+        {t:'Usar la muerte del rey para unir al ejército',d:'El dolor puede volverse bandera.',color:'#d7a84a',delta:{army:3,credibility:1},next:'mur_sanctuary_first'},
+        {t:'Dejar el palacio y buscar a Murmex ya',d:'Si esperan, no quedará reino que salvar.',color:'#9d37ff',delta:{clue:2,sanctuary:2},next:'mur_sanctuary_first'}
+      ]}},
+
+      mur_sanctuary_first:{img:'mur_sanctuary',music:'story',title:'AETHRION',sub:'EL SANTUARIO SIN HORA',big:'LAS ESTATUAS DE ELLOS',s:'Otras líneas temporales llegaron antes',spk:'NARRADOR',txt:function(){return `El santuario aparece sobre una grieta de luz violeta.
+
+No tiene entrada. Tiene recuerdos.
+
+Adentro, los tres ven estatuas de sí mismos: Kael sin brazo, Nyra con los ojos apagados, Darian cubierto por grietas rojas.
+
+Murmex duerme en el centro, suspendido entre miles de hilos temporales.
+
+Nyra susurra: "No somos los primeros."
+
+Kael responde: "Entonces seamos los que vuelven."`;},choices:function(){return[
+        {t:'Despertar a Murmex con el eco temporal de Nyra',d:'La forma más segura, si tienen suficientes pistas.',color:'#9d37ff',delta:{eco:5,sanctuary:2},next:()=> state.clue>=8 || state.sanctuary>=6 ? 'mur_murmex_wakes':'mur_murmex_silence'},
+        {t:'Unir los tres ecos para despertarlo',d:'Gravedad, tiempo y fuego contra el silencio.',color:'#00e5ff',delta:{eco:8,hp:-5},next:()=> state.mercy>=5 && state.clue>=5 ? 'mur_murmex_wakes':'mur_murmex_trial'},
+        {t:'Exigir que despierte para eliminar monstruos',d:'Darian no vino por filosofía.',color:'#ff7a18',delta:{wrath:2,corr:1},next:()=> state.wrath>=5 || state.monsters>=6 ? 'mur_murmex_war':'mur_murmex_trial'}
+      ]}},
+
+      mur_murmex_silence:{img:'mur_sanctuary',title:'AETHRION',sub:'MURMEX NO RESPONDE',big:'LLEGARON SIN VERDAD',s:'Una oportunidad incompleta',spk:'NARRADOR',txt:`Murmex abre un ojo.
+
+Por un segundo, los tres ven todas sus muertes posibles.
+
+Después, el ojo se cierra.
+
+No llegaron con suficientes pistas. No entendieron el santuario. No trajeron una pregunta real: solo trajeron miedo.
+
+El templo empieza a desaparecer mientras Aethrion arde en la distancia.`,delta:{answers:0},next:'mur_final_decision'},
+
+      mur_murmex_trial:{img:'mur_sanctuary',music:'boss',title:'AETHRION',sub:'LA PRUEBA DE MURMEX',big:'TRES ALMAS',s:'El eco es puesto a prueba',spk:'MURMEX',txt:`"Antes de pedir mi ayuda, miren su Eco."
+
+Kael ve cada persona que no pudo salvar.
+
+Nyra ve futuros donde decir la verdad destruye a todos.
+
+Darian ve lo que desea negar: una línea roja que empieza en su pecho y termina pareciéndose a Tronox.
+
+Murmex no juzga sus poderes.
+
+Juzga lo que hicieron con ellos.`,choices:function(){return[
+        {t:'Kael acepta cargar con el peso del reino',d:'La gravedad no sirve si no se sostiene a nadie.',color:'#243bff',delta:{mercy:2,credibility:1,answers:1,hp:-4},next:'mur_answer_one'},
+        {t:'Nyra pregunta por la verdad del Eco',d:'No quiere poder. Quiere entender.',color:'#9d37ff',delta:{clue:2,answers:2,truth:2},next:'mur_answer_one'},
+        {t:'Darian pide una forma de borrar a las criaturas',d:'Su respuesta puede salvar o manchar todo.',color:'#ff4d4d',delta:{wrath:3,corr:2,monsters:2},next:'mur_murmex_war'}
+      ]}},
+
+      mur_murmex_wakes:{img:'mur_sanctuary',music:'boss',title:'AETHRION',sub:'MURMEX DESPIERTA',big:'EL QUE EXISTIÓ SIEMPRE',s:'Primera gran respuesta',spk:'MURMEX',txt:`Murmex abre los ojos y el santuario cambia de edad mil veces.
+
+"Llegan tarde", dice.
+
+Kael aprieta los dientes.
+
+Murmex continúa: "Pero en esta línea temporal, tarde todavía no significa perdido."
+
+Nyra pregunta qué es realmente el Eco.
+
+Murmex mira los tres colores que rodean sus cuerpos.
+
+"Ustedes lo llaman Eco porque todavía no soportan llamarlo alma."`,delta:{answers:2,murmex:2,truth:2},choices:function(){return[
+        {t:'Preguntar cómo salvar Aethrion',d:'La revelación no basta si la ciudad cae.',color:'#00e5ff',delta:{answers:1,mercy:1},next:'mur_answer_two'},
+        {t:'Preguntar por Tronox y la señal roja',d:'Todo empezó en Valmora, pero la grieta es más vieja.',color:'#ff7a18',delta:{answers:1,truth:1,clue:1},next:'mur_answer_two'},
+        {t:'Pedirle que elimine a los monstruos atrapados',d:'Aethrion necesita recuperar credibilidad.',color:'#d7a84a',delta:{monsters:2,credibility:2},next:'mur_murmex_war'}
+      ]}},
+
+      mur_answer_one:{img:'mur_sanctuary',title:'AETHRION',sub:'MURMEX RESPONDE',big:'EL ECO ES EL ALMA',s:'Respuesta 1',spk:'MURMEX',txt:`"El Eco no es un don externo. Es el alma empujando el mundo."
+
+Murmex muestra a Tronox antes de ser Tronox. No como monstruo, sino como alguien cuyo dolor fue torciendo el alma hasta volverla visible.
+
+"Por eso algunos ecos sanan, otros protegen y otros destruyen. El poder no revela lo que pueden hacer. Revela lo que están dispuestos a ser."`,delta:{answers:1,truth:2},next:'mur_answer_two'},
+
+      mur_answer_two:{img:'mur_sanctuary',title:'AETHRION',sub:'MURMEX RESPONDE',big:'TRONOX NO FUE EL ORIGEN',s:'Respuesta 2',spk:'MURMEX',txt:`"Tronox no inventó la grieta. Solo gritó dentro de ella."
+
+El santuario muestra jaulas antiguas, criaturas encerradas por reyes anteriores, experimentos ocultos y aldeas sacrificadas para sostener la imagen del reinado.
+
+Aethrion no perdió credibilidad por culpa de los monstruos.
+
+La perdió porque durante años fingió que todo estaba bajo control.`,delta:{answers:1,truth:2},choices:function(){return[
+        {t:'Pedir una forma de salvar sin exterminar todo',d:'Separar señal roja de almas recuperables.',color:'#61ff8b',delta:{answers:1,mercy:3},next:'mur_answer_three'},
+        {t:'Pedir una victoria visible para el pueblo',d:'El reino necesita demostrar que todavía puede proteger.',color:'#d7a84a',delta:{credibility:3,army:2},next:'mur_murmex_war'},
+        {t:'Volver sin más respuestas y pelear',d:'Ya saben suficiente. O eso creen.',color:'#ff7a18',delta:{army:2,monsters:2},next:'mur_final_decision'}
+      ]}},
+
+      mur_answer_three:{img:'mur_sanctuary',title:'AETHRION',sub:'MURMEX RESPONDE',big:'LA DEFENSA NO ES EXTERMINIO',s:'Respuesta 3',spk:'MURMEX',txt:`"Defender Aethrion no significa borrar todo lo que temen."
+
+Murmex extiende una mano y une los ecos de los tres.
+
+Gravedad para contener.
+
+Tiempo para encontrar el segundo exacto.
+
+Fuego para quemar solo la corrupción.
+
+"Pero no podré salvar lo que ya eligió devorar."`,delta:{answers:1,murmex:2,mercy:2},next:'mur_final_decision'},
+
+      mur_murmex_war:{img:'mur_sanctuary',title:'AETHRION',sub:'LA RESPUESTA DE GUERRA',big:'ELIMINARLOS',s:'La opción que el reino espera',spk:'MURMEX',txt:`Murmex mira hacia Aethrion, donde el palacio arde y el pueblo ya no cree en nadie.
+
+"Puedo mostrarles dónde cortar la línea temporal de cada monstruo que quedó atado a la señal roja."
+
+Darian sonríe apenas. Kael no.
+
+Nyra entiende el precio: eliminar a las criaturas salvará al reino, pero también les hará cargar con miles de ecos apagados.
+
+"Si lo hacen", advierte Murmex, "Aethrion recuperará su credibilidad. Pero ustedes no volverán iguales."`,delta:{answers:1,murmex:2,monsters:3,credibility:3,corr:1},next:'mur_final_decision'},
+
+      mur_final_decision:{img:'mur_final',music:'boss',title:'AETHRION',sub:'LA NOCHE FINAL',big:'AETHRION CASI DESTRUIDA',s:'Cinco finales posibles',spk:'NARRADOR',txt:`El santuario desaparece.
+
+Aethrion está casi destruida.
+
+El rey ha muerto. La corona ya no ordena. Los Sabios apenas sostienen las últimas torres. La reina, si aún respira, intenta que la gente no se rinda.
+
+Las hordas llegan desde los túneles y las aldeas caídas.
+
+Kael, Nyra y Darian vuelven con respuestas, con silencio o con una sentencia.
+
+Ahora eligen qué clase de reino va a quedar después.`,choices:function(){return[
+        {t:'Usar la sentencia de Murmex para eliminar a los monstruos',d:'Una victoria clara. El reino recupera credibilidad.',color:'#d7a84a',delta:{monsters:5,credibility:4},next:()=> (state.answers>=3 && state.murmex>=2 && state.monsters>=7)?'mur_final_credibility':'mur_final_resistance'},
+        {t:'Unir los tres ecos y purgar solo la señal roja',d:'Salvar a los recuperables. Destruir a los perdidos.',color:'#61ff8b',delta:{mercy:3,eco:-8},next:()=> (state.answers>=4 && state.mercy>=9 && state.clue>=7)?'mur_final_rebirth':'mur_final_resistance'},
+        {t:'Sellar Cetrios y cerrar todos los caminos',d:'Nadie entra. Nadie sale. La paz cuesta futuro.',color:'#00e5ff',delta:{army:1,eco:-10},next:()=> (state.answers>=2 && state.army>=4)?'mur_final_seal':'mur_final_exodus'},
+        {t:'Evacuar Aethrion y abandonar el palacio',d:'Salvar gente aunque el símbolo caiga.',color:'#9d37ff',delta:{civilians:4,mercy:1},next:()=> state.civilians>=8?'mur_final_exodus':'mur_final_fall'},
+        {t:'Convertir la defensa en exterminio total',d:'Darian quema todo lo que se mueva.',color:'#ff4d4d',delta:{wrath:4,corr:3,monsters:4},next:()=> (state.wrath>=8 || state.corr>=6)?'mur_final_red':'mur_final_credibility'}
+      ]}},
+
+      mur_final_credibility:{img:'mur_final',music:'end',title:'AETHRION',sub:'FINAL 1 DE 5',big:'LA CREDIBILIDAD RECUPERADA',s:'Final bueno · Murmex da respuestas',spk:'NARRADOR',txt:`La sentencia de Murmex atraviesa la noche.
+
+Nyra encuentra el segundo exacto donde cada criatura queda separada de la señal roja. Kael hunde los nidos bajo una gravedad imposible. Darian libera un fuego naranja tan preciso que por primera vez no parece furia: parece decisión.
+
+Los monstruos que ya no podían volver son eliminados.
+
+Los que aún tenían alma despiertan confundidos, lejos del control rojo.
+
+Cuando amanece, Aethrion está casi destruida: torres caídas, murallas partidas, el palacio abierto como una herida.
+
+Pero la gente sale de los refugios y ve algo que creía perdido: el reino volvió a protegerlos.
+
+El rey está muerto, pero la credibilidad de Aethrion renace sobre cenizas.
+
+Murmex deja una última respuesta antes de desaparecer:
+
+"Un reino no se sostiene por su corona. Se sostiene por las almas que decide no abandonar."
+
+En el último plano, una sombra enorme se mueve más allá de Cetrios.
+
+La Gran Conquista ya empezó.`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}},
+
+      mur_final_rebirth:{img:'mur_final',music:'end',title:'AETHRION',sub:'FINAL 2 DE 5',big:'EL REINO QUE RESPIRÓ',s:'Final bueno · Murmex da respuestas',spk:'NARRADOR',txt:`Los tres ecos se unen sin borrar todo.
+
+Kael contiene a las hordas. Nyra abre futuros diminutos donde aún existe salvación. Darian quema solo la corrupción que se aferra a las almas.
+
+No hay victoria limpia. Hay gritos, pérdidas y torres que caen.
+
+Pero muchas criaturas dejan de atacar. Algunas huyen. Otras mueren al perder la señal roja que las mantenía deformadas.
+
+La reina reúne a los sobrevivientes frente al palacio destruido y admite la verdad: Aethrion mintió durante años sobre las jaulas, sobre las criaturas y sobre el Eco.
+
+El pueblo no aplaude.
+
+Pero escucha.
+
+Murmex responde por última vez:
+
+"El Eco es el alma. Y un alma también puede sanar después de romperse."
+
+Aethrion no queda fuerte.
+
+Queda honesta.
+
+Y eso, por primera vez, alcanza para reconstruir.`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}},
+
+      mur_final_seal:{img:'mur_final',music:'end',title:'AETHRION',sub:'FINAL 3 DE 5',big:'EL SELLO DE CETRIOS',s:'Final bueno amargo · Murmex da respuestas',spk:'NARRADOR',txt:`Murmex no elimina la guerra.
+
+La encierra.
+
+Las puertas de Cetrios se sellan una por una. Los túneles temporales se cierran. La señal de Tronox queda aislada como un grito dentro de una piedra.
+
+Aethrion sobrevive, pero pierde contacto con rutas, futuros y respuestas que tal vez necesitaba.
+
+Nyra deja de ver algunas líneas temporales. Kael siente que el mundo pesa menos, como si le hubieran quitado caminos. Darian conserva su fuego, pero ya no arde igual.
+
+El reino queda en pie, herido y desconfiado.
+
+Murmex les deja una respuesta amarga:
+
+"A veces salvar un mundo significa dejarlo solo hasta que aprenda a no romperse."`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}},
+
+      mur_final_exodus:{img:'mur_ruins',music:'end',title:'AETHRION',sub:'FINAL 4 DE 5',big:'EL ÉXODO DE AETHRION',s:'Final malo emocional',spk:'NARRADOR',txt:`La ciudad principal cae.
+
+No de golpe. Cae como caen los símbolos: primero una torre, después una plaza, después el silencio de quienes ya no creen.
+
+Kael sostiene una avenida entera para que los civiles escapen y desaparece bajo piedra y polvo. Su muerte se vuelve definitiva: no hay línea temporal que lo devuelva sin romper algo peor.
+
+Nyra conserva un fragmento del mapa hacia Murmex, pero no todas las respuestas.
+
+Darian camina último, quemando puentes para que las criaturas no sigan a los refugiados.
+
+Aethrion pierde su palacio, su rey y su lugar como centro de Cetrios.
+
+La gente vive.
+
+Pero el reino, como reino, termina esa noche.`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}},
+
+      mur_final_red:{img:'mur_fire',music:'end',title:'AETHRION',sub:'FINAL 5 DE 5',big:'EL ECO ROJO DE DARIAN',s:'Final malo oscuro',spk:'NARRADOR',txt:`Darian decide que no habrá otro amanecer con monstruos.
+
+Su fuego naranja se vuelve rojo en los bordes.
+
+Los nidos arden. Los túneles arden. Las criaturas arden. También arden zonas donde todavía había sobrevivientes atrapados.
+
+Aethrion sobrevive, pero no recupera credibilidad: recupera miedo.
+
+Nyra intenta detenerlo y pierde su eco temporal en el choque. Kael queda vivo, pero jamás vuelve a confiar en Darian.
+
+Cuando el humo se limpia, Darian mira sus manos y entiende que ganó la batalla convirtiéndose en una advertencia.
+
+Murmex no habla.
+
+No hacía falta.
+
+Todos ven la línea roja.`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}},
+
+      mur_final_resistance:{img:'mur_fire',music:'end',title:'AETHRION',sub:'FINAL ALTERNATIVO',big:'VICTORIA INCOMPLETA',s:'Final bueno sin todas las respuestas',spk:'NARRADOR',txt:`Aethrion gana la noche por fuerza, estrategia y sacrificio.
+
+Los monstruos retroceden. Los nidos principales son destruidos. El pueblo sobrevive y empieza a recordar los nombres de Kael, Nyra y Darian.
+
+Pero Murmex no entregó todas las respuestas.
+
+Saben que el Eco es más profundo de lo que creían. Saben que Tronox no fue el origen de todo.
+
+Pero no saben qué viene después.
+
+El reino queda casi destruido, aunque vivo.
+
+Y a veces vivir con preguntas es mejor que morir con certezas.`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}},
+
+      mur_final_fall:{img:'mur_fire',music:'end',title:'AETHRION',sub:'FINAL OSCURO',big:'AETHRION CAE',s:'Final malo',spk:'NARRADOR',txt:`La decisión llega tarde.
+
+Las murallas ceden. Los Sabios desaparecen entre grietas. La reina cae protegiendo la última salida del palacio.
+
+Nyra queda atrapada en una visión que se repite: Aethrion cayendo una y otra vez.
+
+Kael muere sosteniendo una puerta imposible.
+
+Darian sobrevive, pero su eco ya no es naranja.
+
+El reino no queda casi destruido.
+
+Queda destruido.
+
+Y muy lejos, Murmex vuelve a cerrar los ojos.
+
+Esta línea temporal ya la conocía.`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}}
+    });
+  }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindOpenMurmex); else bindOpenMurmex();
+})();
+</script>
+
 </body>
 </html>
