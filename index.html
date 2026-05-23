@@ -388,18 +388,18 @@ body.aethrion-mode .btn-cont{border-color:#d7a84a;color:#fff2c2;background:rgba(
   box-shadow:0 0 26px color-mix(in srgb,var(--line),transparent 88%), inset 0 0 32px rgba(255,255,255,.025)!important;
 }
 #hub .hub-card.locked{opacity:.86!important;filter:saturate(.82) contrast(1.02)!important}
-#hub .hub-card.zerath-card{
+#hub .hub-card.ZERATH-card{
   background:
     radial-gradient(circle at 90% 20%,rgba(255,47,85,.16),transparent 32%),
     linear-gradient(135deg,rgba(25,4,12,.78),rgba(0,0,0,.48))!important;
 }
-#hub .hub-card.zerath-card .hub-action{
+#hub .hub-card.ZERATH-card .hub-action{
   color:#ffdce3!important;
   border-color:rgba(255,47,85,.62)!important;
   background:rgba(255,47,85,.07)!important;
   box-shadow:0 0 20px rgba(255,47,85,.16)!important;
 }
-#hub .hub-card.zerath-card .hub-sub{color:#ff6d88!important}
+#hub .hub-card.ZERATH-card .hub-sub{color:#ff6d88!important}
 #hub .hub-title{text-shadow:0 0 28px rgba(0,229,255,.42),0 4px 18px #000!important}
 #hub .hub-tag{opacity:.9!important}
 
@@ -424,28 +424,28 @@ body.aethrion-mode .btn-cont{border-color:#d7a84a;color:#fff2c2;background:rgba(
 body.aethrion-mode #storyBackHub{display:block!important}
 .story-back-hub:active,.back-hub-btn:active,.universe-back:active{transform:scale(.97)!important}
 
-/* Zerath futuro: teaser limpio, sin gameplay */
-#zerath.soon-only{
+/* ZERATH futuro: teaser limpio, sin gameplay */
+#ZERATH.soon-only{
   align-items:center!important;
   justify-content:center!important;
   padding:22px!important;
   background:#050104!important;
 }
-#zerath.soon-only .zerath-bg{
+#ZERATH.soon-only .ZERATH-bg{
   position:absolute;inset:0;
   background:
     radial-gradient(circle at 50% 13%,rgba(255,47,85,.26),transparent 30%),
     linear-gradient(180deg,rgba(10,1,8,.45),rgba(0,0,0,.86)),
-    url('assets/zerath-stage-bg.png') center/cover no-repeat;
+    url('assets/ZERATH-stage-bg.png') center/cover no-repeat;
   filter:saturate(1.08) contrast(1.05) brightness(.78);
 }
-#zerath.soon-only .zerath-bg:after{
+#ZERATH.soon-only .ZERATH-bg:after{
   content:'';position:absolute;inset:0;
   background:
     linear-gradient(to bottom,rgba(0,0,0,.20),rgba(0,0,0,.44) 58%,rgba(0,0,0,.88)),
     radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,.72));
 }
-.zerath-soon-card{
+.ZERATH-soon-card{
   position:relative;z-index:20;
   width:min(92vw,620px);
   padding:28px 22px;
@@ -456,13 +456,13 @@ body.aethrion-mode #storyBackHub{display:block!important}
   text-align:center;
   box-shadow:0 0 60px rgba(255,47,85,.18), inset 0 0 40px rgba(255,47,85,.035);
 }
-.zerath-soon-card .soon-kicker{
+.ZERATH-soon-card .soon-kicker{
   font-family:var(--ff4);
   letter-spacing:.32em;
   font-size:10px;
   color:#ff8ca0;
 }
-.zerath-soon-card h2{
+.ZERATH-soon-card h2{
   font-family:var(--ff1);
   font-size:clamp(2.4rem,11vw,5rem);
   line-height:.92;
@@ -470,14 +470,14 @@ body.aethrion-mode #storyBackHub{display:block!important}
   color:#fff;
   text-shadow:0 0 26px rgba(255,47,85,.75);
 }
-.zerath-soon-card p{
+.ZERATH-soon-card p{
   font-size:clamp(1rem,4vw,1.2rem);
   line-height:1.55;
   color:rgba(235,245,248,.82);
   margin:0 auto 18px;
   max-width:520px;
 }
-.zerath-soon-card strong{
+.ZERATH-soon-card strong{
   display:inline-flex;
   padding:12px 18px;
   border:1px solid rgba(255,47,85,.56);
@@ -540,8 +540,8 @@ body.aethrion-mode #storyBackHub{display:block!important}
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card available zerath-card serat-card" id="openSerat" type="button" style="--line:#ff2f55">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">SERAT · LAS VOCES DE GRIOX</span></span>
+      <button class="hub-card available ZERATH-card serat-card" id="openSerat" type="button" style="--line:#ff2f55">
+        <span><span class="hub-name">DUAL</span><span class="hub-sub">SERAT · EL HORROR DE GRIOX</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
     </div>
@@ -594,10 +594,10 @@ body.aethrion-mode #storyBackHub{display:block!important}
 <section id="result" class="screen"><div class="res-bg" id="resBg"></div><div class="res-card" id="resCard"><div class="res-small" id="resSmall">RESULTADO</div><div class="res-title" id="resTitle"></div><div class="res-text" id="resText"></div><button class="btn-main" id="resBtn" style="margin-top:18px"><span>▶ CONTINUAR</span></button></div></section>
 <section id="ending" class="screen"><div class="res-bg" id="endBg"></div><div class="res-card" id="endCard"><div class="res-small">FINAL DE LUSTONIA</div><div class="res-title" id="endTitle"></div><div class="res-text" id="endText"></div><button class="btn-main" id="againBtn" style="margin-top:18px"><span>↻ VOLVER A JUGAR</span></button></div></section>
 
-<section id="zerath" class="screen zerath-screen soon-only">
-  <div class="zerath-bg"></div>
-  <button id="zerathBack" class="universe-back zerath-back" type="button">← UNIVERSOS</button>
-  <div class="zerath-soon-card">
+<section id="ZERATH" class="screen ZERATH-screen soon-only">
+  <div class="ZERATH-bg"></div>
+  <button id="ZERATHBack" class="universe-back ZERATH-back" type="button">← UNIVERSOS</button>
+  <div class="ZERATH-soon-card">
     <div class="soon-kicker">ARCHIVO CLASIFICADO</div>
     <h2>DUAL: ZERATH</h2>
     <p>El rayo rojo ya cayó sobre la ciudad. Nya, Neriex, Priex, Iurex y Griox quedan registrados para una futura historia del universo DUAL.</p>
@@ -1628,7 +1628,7 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
         e.preventDefault(); e.stopPropagation(); softClick(); showOnly('hub');
       },{passive:false});
     }
-    var zb=$('zerathBack');
+    var zb=$('ZERATHBack');
     if(zb && zb.dataset.bound!=='1'){
       zb.dataset.bound='1';
       zb.addEventListener('click',function(e){
@@ -3894,7 +3894,7 @@ body.story-running .global-story-back{
 </script>
 
 
-<!-- ===== DUAL: SERAT · LAS VOCES DE GRIOX — HISTORIA COMPLETA ===== -->
+<!-- ===== DUAL: SERAT · EL HORROR DE GRIOX — HISTORIA COMPLETA ===== -->
 <style id="dual-serat-griox-style">
 .serat-card{background:radial-gradient(circle at 92% 20%,rgba(255,47,85,.26),transparent 34%),linear-gradient(135deg,rgba(28,2,8,.88),rgba(0,0,0,.56))!important;border-color:rgba(255,47,85,.78)!important}
 .serat-card .hub-sub{color:#ff6d88!important}.serat-card .hub-action{color:#ffdce3!important;border-color:rgba(255,47,85,.70)!important;background:rgba(255,47,85,.08)!important;box-shadow:0 0 22px rgba(255,47,85,.18)!important}
@@ -3917,9 +3917,9 @@ function resetSerat(){
 window.resetSerat=resetSerat;
 function beginSerat(){safe(function(){if(typeof unlockAudio==='function')unlockAudio()});safe(function(){if(typeof sfx==='function')sfx('bad')});resetSerat();safe(function(){if(typeof node==='function')node('serat_start')})}
 function bind(){var b=$('openSerat');if(!b||b.dataset.seratBound)return;b.dataset.seratBound='1';b.classList.remove('locked');b.classList.add('available','serat-card');var a=b.querySelector('.hub-action');if(a)a.textContent='INICIAR ›';b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();beginSerat()},{passive:false})}
-if(typeof IMG_ALIASES!=='undefined')Object.assign(IMG_ALIASES,{serat_fog:['zerath-stage-bg.png','aethrion_shadows.png','aethrion_ruins.png'],serat_house:['aethrion_shadows.png','aethrion_ruins.png'],serat_square:['zerath-stage-bg.png','aethrion_ruins.png'],serat_mines:['aethrion_shadows.png','aethrion_ruins.png'],serat_red:['aethrion_fire.png','aethrion_shadows.png'],serat_final:['aethrion_fire.png','aethrion_shadows.png']});
+if(typeof IMG_ALIASES!=='undefined')Object.assign(IMG_ALIASES,{serat_fog:['ZERATH-stage-bg.png','aethrion_shadows.png','aethrion_ruins.png'],serat_house:['aethrion_shadows.png','aethrion_ruins.png'],serat_square:['ZERATH-stage-bg.png','aethrion_ruins.png'],serat_mines:['aethrion_shadows.png','aethrion_ruins.png'],serat_red:['aethrion_fire.png','aethrion_shadows.png'],serat_final:['aethrion_fire.png','aethrion_shadows.png']});
 if(typeof S!=='undefined')Object.assign(S,{
-serat_start:{img:'serat_fog',music:'dark',title:'DUAL: SERAT',sub:'LAS VOCES DE GRIOX',big:'NO DUERMAS',s:'Terror psicológico del eco',spk:'NARRADOR',txt:`Serat es una aldea pequeña, fría y golpeada por la niebla. No tiene torres enormes ni ejércitos como Aethrion. Tiene casas de piedra, minas viejas y gente que aprendió a vivir con poco.
+serat_start:{img:'serat_fog',music:'dark',title:'DUAL: SERAT',sub:'EL HORROR DE GRIOX',big:'NO DUERMAS',s:'Terror psicológico del eco',spk:'NARRADOR',txt:`Serat es una aldea pequeña, fría y golpeada por la niebla. No tiene torres enormes ni ejércitos como Aethrion. Tiene casas de piedra, minas viejas y gente que aprendió a vivir con poco.
 
 Gala vive ahí. Es morocha, con rulos oscuros hasta los hombros, abultados, siempre algo salvajes. Su eco es rojo con vetas amarillas: dispara círculos desde los puños, los usa para impulsarse y, cuando acumula mucho poder, libera una onda expansiva circular que la deja casi vacía.
 
