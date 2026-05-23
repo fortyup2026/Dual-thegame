@@ -838,7 +838,6 @@ const S={
   {t:'Volver al inicio de Aethrion',d:'Jugar otra ruta.',color:C.gold,delta:{},next:'aeth_start'},
   {t:'Volver al HUB de universos',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'aeth_to_hub'}
  ]},
-
  aeth_mur_start:{img:'aethrion_castle',music:'story',title:'AETHRION',sub:'EL DESPERTAR DE MURMEX',big:'EL PORTAL SELLADO',s:'Cetrios · Después de Valmora',spk:'NARRADOR',delta:{campaign:'murmex',hp:100,eco:24,corr:0,humanity:60,murClues:0,murAnswers:0,murTruth:0,people:0,throne:0,kael:1,nyra:1,varos:1,monsterKills:0,mercy:0,kaelBond:0,nyraBond:0,varosBond:0},txt:'La señal de Tronox llegó desde Valmora como un grito atravesando dimensiones.
 
 Los Tres Sabios cerraron el portal multiversal antes de que todos los monstruos escaparan hacia la Tierra.
@@ -1968,28 +1967,27 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
 
 
 
-<script id="murmex-hub-bind-complete">
+<script id="murmex-hub-bind-fixed-preserve-all">
 (function(){
   function $(id){return document.getElementById(id)}
   function pulse(){
-    try{ if(typeof actx==='function') actx()?.resume?.(); }catch(e){}
     try{ if(typeof unlockAudio==='function') unlockAudio(); }catch(e){}
     try{ if(typeof sfx==='function') sfx('win'); }catch(e){}
     try{ navigator.vibrate && navigator.vibrate([25,20,35]); }catch(e){}
   }
   function bind(){
     var b=$('openMurmex');
-    if(!b || b.dataset.bound==='1') return;
-    b.dataset.bound='1';
+    if(!b || b.dataset.murmexBound==='1') return;
+    b.dataset.murmexBound='1';
     b.addEventListener('click',function(e){
       e.preventDefault(); e.stopPropagation(); pulse();
-      try{ if(typeof playMusic==='function') playMusic('story'); }catch(_){ }
+      try{ if(typeof playMusic==='function') playMusic('story'); }catch(_){}
       try{
         if(window.state){
           Object.assign(window.state,{campaign:'murmex',hp:100,eco:24,corr:0,humanity:60,murClues:0,murAnswers:0,murTruth:0,people:0,throne:0,kael:1,nyra:1,varos:1,monsterKills:0,mercy:0,kaelBond:0,nyraBond:0,varosBond:0,resultNext:null});
         }
         if(typeof bars==='function') bars();
-      }catch(_){ }
+      }catch(_){}
       try{ if(typeof node==='function') return node('aeth_mur_start'); }catch(err){ console.error(err); }
     },{passive:false});
   }
