@@ -501,6 +501,11 @@ body.aethrion-mode #storyBackHub{display:block!important}
 }
 </style>
 
+
+<style id="force-no-login-visible">
+#authOverlay,#userBadge{display:none!important;visibility:hidden!important;pointer-events:none!important}
+</style>
+
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -4744,6 +4749,24 @@ setTimeout(function(){bind();patchNode()},600);
   else init();
 })();
 </script>
+
+
+<!-- ===== LIMPIEZA LOGIN ROTO / CACHE LOCAL ===== -->
+<script id="remove-broken-login-cache">
+(function(){
+  try {
+    localStorage.removeItem("dualUser");
+    sessionStorage.removeItem("dualUser");
+  } catch(e) {}
+  document.addEventListener("DOMContentLoaded", function(){
+    var auth = document.getElementById("authOverlay");
+    if(auth) auth.remove();
+    var badge = document.getElementById("userBadge");
+    if(badge) badge.remove();
+  });
+})();
+</script>
+<!-- build-clean-no-login-1779578825 -->
 
 </body>
 </html>
