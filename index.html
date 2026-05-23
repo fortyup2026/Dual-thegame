@@ -4508,5 +4508,242 @@ setTimeout(function(){bind();patchNode()},600);
 })();
 </script>
 
+
+<!-- ===== SISTEMA DE MUSICA UNIVERSOS ===== -->
+<script>
+(function(){
+  const MUSIC = {
+    hub: "hub_theme.mp3",
+
+    lustonia: {
+      explore: "lustonia_explore.mp3",
+      battle: "lustonia_battle.mp3",
+      sad: "lustonia_sad.mp3"
+    },
+
+    valmora: {
+      mystery: "valmora_mystery.mp3",
+      villain: "tronox_theme.mp3",
+      finale: "valmora_final.mp3"
+    },
+
+    aethrion: {
+      world: "aethrion_world.mp3",
+      sages: "sabios_theme.mp3",
+      monsters: "aethrion_monsters.mp3",
+      journey: "murmex_journey.mp3",
+      murmex: "murmex_theme.mp3",
+      murmexFinal: "murmex_final.mp3",
+      war: "gran_conquista_war.mp3",
+      king: "rey_oscuro.mp3",
+      good: "gran_conquista_good.mp3",
+      bad: "gran_conquista_bad.mp3"
+    },
+
+    zerath: {
+      ambient: "zerath_ambient.mp3",
+      griox: "griox_theme.mp3",
+      chase: "zerath_chase.mp3",
+      sad: "zerath_sad.mp3",
+      good: "zerath_good_end.mp3",
+      bad: "zerath_bad_end.mp3"
+    }
+  };
+
+  window.UNIVERSE_MUSIC = MUSIC;
+
+  let bgm = null;
+  let currentFile = "";
+
+  function ensurePlayer(){
+    if(bgm) return bgm;
+    bgm = document.createElement("audio");
+    bgm.id = "universeMusic";
+    bgm.loop = true;
+    bgm.preload = "auto";
+    bgm.volume = 0.46;
+    bgm.style.display = "none";
+    document.body.appendChild(bgm);
+    return bgm;
+  }
+
+  function play(file, volume){
+    try{
+      if(!file) return;
+      const player = ensurePlayer();
+
+      if(currentFile === file && !player.paused) return;
+
+      currentFile = file;
+      player.src = file;
+      player.volume = typeof volume === "number" ? volume : 0.46;
+
+      const promise = player.play();
+      if(promise && promise.catch) promise.catch(function(){});
+    }catch(err){
+      console.warn("No se pudo reproducir música:", err);
+    }
+  }
+
+  function stop(){
+    try{
+      const player = ensurePlayer();
+      player.pause();
+    }catch(err){}
+  }
+
+  window.playUniverseMusic = play;
+  window.stopUniverseMusic = stop;
+
+  function textOfNode(n){
+    return ((n && (n.innerText || n.textContent)) || "").toLowerCase();
+  }
+
+  function chooseMusicByNodeId(id){
+    id = String(id || "").toLowerCase();
+
+    // ZERATH / terror
+    if(id.includes("zerath") || id.includes("serat") || id.includes("griox")){
+      if(id.includes("end_silence") || id.includes("good")) return [MUSIC.zerath.good, .48];
+      if(id.includes("end_voices") || id.includes("end_never") || id.includes("bad")) return [MUSIC.zerath.bad, .50];
+      if(id.includes("chase") || id.includes("fight") || id.includes("battle") || id.includes("double") || id.includes("wave")) return [MUSIC.zerath.chase, .50];
+      if(id.includes("sad") || id.includes("mother") || id.includes("wound")) return [MUSIC.zerath.sad, .45];
+      if(id.includes("griox") || id.includes("voice") || id.includes("nightmare") || id.includes("core")) return [MUSIC.zerath.griox, .50];
+      return [MUSIC.zerath.ambient, .45];
+    }
+
+    // AETHRION / MURMEX / GRAN CONQUISTA
+    if(id.includes("aeth") || id.includes("murmex") || id.includes("conq")){
+      if(id.includes("murmex") && (id.includes("theme") || id.includes("awake") || id.includes("echo"))) return [MUSIC.aethrion.murmex, .50];
+      if(id.includes("murmex") && (id.includes("journey") || id.includes("mountain"))) return [MUSIC.aethrion.journey, .47];
+      if(id.includes("monster") || id.includes("caos") || id.includes("invasion")) return [MUSIC.aethrion.monsters, .52];
+      if(id.includes("sabio") || id.includes("sages")) return [MUSIC.aethrion.sages, .48];
+      if(id.includes("war") || id.includes("battle") || id.includes("final_battle") || id.includes("conq")) return [MUSIC.aethrion.war, .52];
+      if(id.includes("king") || id.includes("oscuro") || id.includes("dark")) return [MUSIC.aethrion.king, .50];
+      if(id.includes("good") || id.includes("free") || id.includes("new_crown")) return [MUSIC.aethrion.good, .48];
+      if(id.includes("bad") || id.includes("crushed") || id.includes("red_war")) return [MUSIC.aethrion.bad, .50];
+      return [MUSIC.aethrion.world, .46];
+    }
+
+    // LUSTONIA
+    if(id.includes("lust") || id.includes("aeronyx") || id.includes("borinex") || id.includes("mirex") || id.includes("ferronix") || id.includes("lurnox")){
+      if(id.includes("battle") || id.includes("fight") || id.includes("aeronyx") || id.includes("borinex") || id.includes("ferronix") || id.includes("lurnox")) return [MUSIC.lustonia.battle, .52];
+      if(id.includes("sad") || id.includes("death") || id.includes("bad")) return [MUSIC.lustonia.sad, .46];
+      return [MUSIC.lustonia.explore, .45];
+    }
+
+    // VALMORA / BALMORA / DUAL videos
+    if(id.includes("valmora") || id.includes("balmora") || id.includes("tronox") || id.includes("cretox")){
+      if(id.includes("tronox") || id.includes("cretox") || id.includes("villain")) return [MUSIC.valmora.villain, .50];
+      if(id.includes("final") || id.includes("somos")) return [MUSIC.valmora.finale, .50];
+      return [MUSIC.valmora.mystery, .45];
+    }
+
+    return null;
+  }
+
+  function chooseMusicByVisibleText(){
+    const active = document.querySelector(".screen.active") || document.body;
+    const txt = textOfNode(active);
+
+    if(txt.includes("zerath") || txt.includes("griox")){
+      if(txt.includes("final 1") || txt.includes("el silencio")) return [MUSIC.zerath.good, .48];
+      if(txt.includes("final 2") || txt.includes("final 3") || txt.includes("las voces") || txt.includes("no te duermas")) return [MUSIC.zerath.bad, .50];
+      if(txt.includes("griox") || txt.includes("pesadilla") || txt.includes("voz") || txt.includes("voces")) return [MUSIC.zerath.griox, .50];
+      return [MUSIC.zerath.ambient, .45];
+    }
+
+    if(txt.includes("murmex")) return [MUSIC.aethrion.murmex, .50];
+    if(txt.includes("gran conquista") || txt.includes("rey obscuro") || txt.includes("guerra civil")) return [MUSIC.aethrion.war, .52];
+    if(txt.includes("aethrion") || txt.includes("aetrion")) return [MUSIC.aethrion.world, .46];
+
+    if(txt.includes("valmora") || txt.includes("balmora") || txt.includes("tronox") || txt.includes("cretox")) return [MUSIC.valmora.mystery, .45];
+
+    if(txt.includes("lustonia") || txt.includes("lurnox") || txt.includes("aeronyx") || txt.includes("borinex") || txt.includes("ferronix")) return [MUSIC.lustonia.explore, .45];
+
+    return null;
+  }
+
+  function playForCurrentScene(id){
+    const byId = chooseMusicByNodeId(id);
+    if(byId) return play(byId[0], byId[1]);
+
+    const byText = chooseMusicByVisibleText();
+    if(byText) return play(byText[0], byText[1]);
+  }
+
+  function bindHubButtons(){
+    const all = Array.from(document.querySelectorAll("button, a"));
+
+    all.forEach(function(el){
+      if(el.dataset.musicBound === "1") return;
+      el.dataset.musicBound = "1";
+
+      el.addEventListener("click", function(){
+        const txt = textOfNode(el);
+        const id = String(el.id || "").toLowerCase();
+
+        setTimeout(function(){
+          if(txt.includes("elegir otra historia") || txt.includes("volver al hub") || txt.includes("hub")){
+            return play(MUSIC.hub, .38);
+          }
+
+          if(id.includes("zerath") || id.includes("serat") || txt.includes("zerath") || txt.includes("griox")){
+            return play(MUSIC.zerath.ambient, .45);
+          }
+
+          if(txt.includes("valmora") || txt.includes("balmora")){
+            return play(MUSIC.valmora.mystery, .45);
+          }
+
+          if(txt.includes("aethrion") || txt.includes("aetrion") || txt.includes("murmex") || txt.includes("conquista")){
+            return play(MUSIC.aethrion.world, .46);
+          }
+
+          if(txt.includes("lustonia")){
+            return play(MUSIC.lustonia.explore, .45);
+          }
+
+          playForCurrentScene();
+        }, 260);
+      }, {passive:true});
+    });
+  }
+
+  function hookNode(){
+    if(typeof window.node === "function" && !window.node.__musicHooked){
+      const originalNode = window.node;
+      window.node = function(id){
+        const result = originalNode.apply(this, arguments);
+        setTimeout(function(){ playForCurrentScene(id); bindHubButtons(); }, 140);
+        return result;
+      };
+      window.node.__musicHooked = true;
+    }
+  }
+
+  function init(){
+    ensurePlayer();
+
+    document.addEventListener("click", function(){
+      if(!currentFile) play(MUSIC.hub, .38);
+    }, {once:true, passive:true});
+
+    setTimeout(function(){ play(MUSIC.hub, .38); }, 900);
+
+    hookNode();
+    bindHubButtons();
+
+    setInterval(function(){
+      hookNode();
+      bindHubButtons();
+    }, 1200);
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+</script>
+
 </body>
 </html>
