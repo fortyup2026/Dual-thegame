@@ -541,7 +541,7 @@ body.aethrion-mode #storyBackHub{display:block!important}
         <span class="hub-action">INICIAR ›</span>
       </button>
       <button class="hub-card available ZERATH-card serat-card" id="openSerat" type="button" style="--line:#ff2f55">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">SERAT · EL HORROR DE GRIOX</span></span>
+        <span><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH · EL HORROR DE GRIOX</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
     </div>
@@ -3894,7 +3894,7 @@ body.story-running .global-story-back{
 </script>
 
 
-<!-- ===== DUAL: SERAT · EL HORROR DE GRIOX — HISTORIA COMPLETA ===== -->
+<!-- ===== DUAL: ZERATH · EL HORROR DE GRIOX — HISTORIA COMPLETA ===== -->
 <style id="dual-serat-griox-style">
 .serat-card{background:radial-gradient(circle at 92% 20%,rgba(255,47,85,.26),transparent 34%),linear-gradient(135deg,rgba(28,2,8,.88),rgba(0,0,0,.56))!important;border-color:rgba(255,47,85,.78)!important}
 .serat-card .hub-sub{color:#ff6d88!important}.serat-card .hub-action{color:#ffdce3!important;border-color:rgba(255,47,85,.70)!important;background:rgba(255,47,85,.08)!important;box-shadow:0 0 22px rgba(255,47,85,.18)!important}
@@ -3919,7 +3919,7 @@ function beginSerat(){safe(function(){if(typeof unlockAudio==='function')unlockA
 function bind(){var b=$('openSerat');if(!b||b.dataset.seratBound)return;b.dataset.seratBound='1';b.classList.remove('locked');b.classList.add('available','serat-card');var a=b.querySelector('.hub-action');if(a)a.textContent='INICIAR ›';b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();beginSerat()},{passive:false})}
 if(typeof IMG_ALIASES!=='undefined')Object.assign(IMG_ALIASES,{serat_fog:['ZERATH-stage-bg.png','aethrion_shadows.png','aethrion_ruins.png'],serat_house:['aethrion_shadows.png','aethrion_ruins.png'],serat_square:['ZERATH-stage-bg.png','aethrion_ruins.png'],serat_mines:['aethrion_shadows.png','aethrion_ruins.png'],serat_red:['aethrion_fire.png','aethrion_shadows.png'],serat_final:['aethrion_fire.png','aethrion_shadows.png']});
 if(typeof S!=='undefined')Object.assign(S,{
-serat_start:{img:'serat_fog',music:'dark',title:'DUAL: SERAT',sub:'EL HORROR DE GRIOX',big:'NO DUERMAS',s:'Terror psicológico del eco',spk:'NARRADOR',txt:`Serat es una aldea pequeña, fría y golpeada por la niebla. No tiene torres enormes ni ejércitos como Aethrion. Tiene casas de piedra, minas viejas y gente que aprendió a vivir con poco.
+serat_start:{img:'serat_fog',music:'dark',title:'DUAL: ZERATH',sub:'EL HORROR DE GRIOX',big:'NO DUERMAS',s:'Terror psicológico del eco',spk:'NARRADOR',txt:`Serat es una aldea pequeña, fría y golpeada por la niebla. No tiene torres enormes ni ejércitos como Aethrion. Tiene casas de piedra, minas viejas y gente que aprendió a vivir con poco.
 
 Gala vive ahí. Es morocha, con rulos oscuros hasta los hombros, abultados, siempre algo salvajes. Su eco es rojo con vetas amarillas: dispara círculos desde los puños, los usa para impulsarse y, cuando acumula mucho poder, libera una onda expansiva circular que la deja casi vacía.
 
@@ -3929,7 +3929,7 @@ Solo todos sueñan la misma puerta.`,choices:function(){return[
 {t:'Gala intenta dormir igual',d:'El cansancio puede más que el miedo.',color:'#ff2f55',delta:{grioxLink:1,sanity:-8},next:'serat_dream'},
 {t:'Salir a la niebla',d:'Si todos sueñan lo mismo, algo está despierto.',color:'#d7a84a',delta:{awake:2,clues:1},next:'serat_fog'},
 {t:'Practicar los círculos rojos',d:'El eco de Gala será su única defensa.',color:'#ffcf55',delta:{galaPower:2,eco:6},next:'serat_training'}]}},
-serat_dream:{img:'serat_house',music:'dark',title:'SERAT',sub:'NOCHE 1',big:'LA PUERTA',s:'Primer sueño',spk:'GALA',txt:`Gala sueña con una puerta mojada. Del otro lado alguien raspa con uñas lentas.
+serat_dream:{img:'serat_house',music:'dark',title:'ZERATH',sub:'NOCHE 1',big:'LA PUERTA',s:'Primer sueño',spk:'GALA',txt:`Gala sueña con una puerta mojada. Del otro lado alguien raspa con uñas lentas.
 
 Al despertar, hay un círculo rojo quemado en su pared.
 
@@ -3939,7 +3939,7 @@ O eso quiere creer.`,choices:function(){return[
 {t:'Tocar la marca',d:'El eco responde desde la pared.',color:'#ff2f55',delta:{clues:2,grioxLink:2,sanity:-8},next:'serat_mark'},
 {t:'Romper la pared con un disparo circular',d:'Mejor miedo afuera que miedo adentro.',color:'#ffcf55',delta:{galaPower:1,eco:-6,hp:-4},next:'serat_neighbor'},
 {t:'Buscar a Iren, sanadora del eco',d:'Si el alma vibra sola, algo está mal.',color:'#61ff8b',delta:{trust:2,clues:1},next:'serat_iren'}]}},
-serat_fog:{img:'serat_fog',music:'dark',title:'SERAT',sub:'NOCHE 1',big:'NIEBLA ROJA',s:'La aldea respira',spk:'NARRADOR',txt:`La niebla no es blanca. Tiene un rojo débil, como sangre mezclada con agua.
+serat_fog:{img:'serat_fog',music:'dark',title:'ZERATH',sub:'NOCHE 1',big:'NIEBLA ROJA',s:'La aldea respira',spk:'NARRADOR',txt:`La niebla no es blanca. Tiene un rojo débil, como sangre mezclada con agua.
 
 Una mujer aparece bajo un farol apagado. No parpadea.
 
@@ -3949,7 +3949,7 @@ Después empieza a reír sin aire.`,choices:function(){return[
 {t:'Ayudar a la mujer',d:'Quizás sabe qué está pasando.',color:'#61ff8b',delta:{survivors:1,trust:1,sanity:-3},next:'serat_woman'},
 {t:'Seguir los pasos invisibles',d:'Algo camina sin cuerpo.',color:'#ff2f55',delta:{clues:2,grioxLink:1,sanity:-5},next:'serat_well'},
 {t:'Impulsarse a los techos con círculos',d:'Ver Serat desde arriba.',color:'#ffcf55',delta:{galaPower:2,eco:-5,clues:1},next:'serat_roofs'}]}},
-serat_training:{img:'serat_red',music:'story',title:'SERAT',sub:'NOCHE 1',big:'CÍRCULOS ROJOS',s:'El poder de Gala',spk:'NARRADOR',txt:`Gala lanza círculos desde los puños. Rojo intenso, vetas amarillas.
+serat_training:{img:'serat_red',music:'story',title:'ZERATH',sub:'NOCHE 1',big:'CÍRCULOS ROJOS',s:'El poder de Gala',spk:'NARRADOR',txt:`Gala lanza círculos desde los puños. Rojo intenso, vetas amarillas.
 
 Uno golpea. Otro la impulsa hacia atrás. Otro la levanta del suelo.
 
@@ -3961,7 +3961,7 @@ Y algo lo devuelve.`,choices:function(){return[
 {t:'Responder con más círculos',d:'Si algo copia su eco, puede romperlo.',color:'#ffcf55',delta:{galaPower:3,eco:-8,hp:-4},next:'serat_bounce'},
 {t:'Escuchar antes de atacar',d:'La respuesta fue una invitación.',color:'#ff2f55',delta:{clues:2,grioxLink:2,sanity:-5},next:'serat_name'},
 {t:'Despertar a su madre',d:'No enfrentar esto sola.',color:'#61ff8b',delta:{trust:1,survivors:1},next:'serat_mother'}]}},
-serat_mark:{img:'serat_house',music:'dark',title:'SERAT',sub:'NOCHE 2',big:'EL OJO EN LA PARED',s:'La marca se abre',spk:'NARRADOR',txt:`La marca circular late.
+serat_mark:{img:'serat_house',music:'dark',title:'ZERATH',sub:'NOCHE 2',big:'EL OJO EN LA PARED',s:'La marca se abre',spk:'NARRADOR',txt:`La marca circular late.
 
 Uno. Dos. Tres golpes.
 
@@ -3975,7 +3975,7 @@ El círculo de la pared se abre como un ojo rojo.`,choices:function(){return[
 {t:'Cerrar el ojo con un círculo pequeño',d:'Control, no pánico.',color:'#ffcf55',delta:{galaPower:2,eco:-5,clues:1},next:'serat_iren'},
 {t:'Preguntar quién habla',d:'Las respuestas también infectan.',color:'#ff2f55',delta:{grioxLink:3,clues:3,sanity:-10},next:'serat_name'},
 {t:'Correr a la plaza',d:'El pueblo tiene que saberlo.',color:'#61ff8b',delta:{trust:1,fear:1},next:'serat_plaza'}]}},
-serat_neighbor:{img:'serat_house',music:'battle',title:'SERAT',sub:'NOCHE 2',big:'EL VECINO',s:'La voz no era de Gala',spk:'NARRADOR',txt:`La pared cae.
+serat_neighbor:{img:'serat_house',music:'battle',title:'ZERATH',sub:'NOCHE 2',big:'EL VECINO',s:'La voz no era de Gala',spk:'NARRADOR',txt:`La pared cae.
 
 Del otro lado, un hombre está sentado en su cama. Su boca se abre demasiado, pero el grito no parece suyo.
 
@@ -3985,7 +3985,7 @@ Todos los vidrios de la cuadra vibran.`,choices:function(){return[
 {t:'Llevarlo con Iren',d:'Todavía está vivo.',color:'#61ff8b',delta:{survivors:1,trust:2,hp:-2},next:'serat_iren'},
 {t:'Preguntar qué hay abajo',d:'La frase apunta a las minas.',color:'#ff2f55',delta:{clues:3,mines:1,sanity:-6},next:'serat_below'},
 {t:'Usar onda expansiva para cortar la voz',d:'Mucho poder, poca precisión.',color:'#ffcf55',delta:{galaPower:2,eco:-14,hp:-10,fear:2},next:'serat_wave'}]}},
-serat_iren:{img:'serat_square',music:'story',title:'SERAT',sub:'DÍA 2',big:'IREN',s:'Sanadora del eco',spk:'IREN',txt:`Iren examina las manos de Gala.
+serat_iren:{img:'serat_square',music:'story',title:'ZERATH',sub:'DÍA 2',big:'IREN',s:'Sanadora del eco',spk:'IREN',txt:`Iren examina las manos de Gala.
 
 —Tu eco no está enfermo —dice—. Está respondiendo a algo que aprendió tu nombre antes que vos.
 
@@ -3993,7 +3993,7 @@ En sus notas hay veintisiete vecinos con el mismo patrón: puerta, respiración,
 {t:'Sellar un poco el eco de Gala',d:'Menos poder, más silencio.',color:'#00e5ff',delta:{eco:-10,grioxLink:-1,sanity:5,galaPower:-1},next:'serat_silence'},
 {t:'Fortalecer el eco circular',d:'Si Griox la eligió, necesita fuerza.',color:'#ffcf55',delta:{eco:10,galaPower:3,grioxLink:1},next:'serat_power'},
 {t:'Investigar a los pacientes',d:'Hay un patrón bajo la aldea.',color:'#61ff8b',delta:{clues:3,trust:2},next:'serat_patients'}]}},
-serat_woman:{img:'serat_square',music:'dark',title:'SERAT',sub:'NOCHE 2',big:'LA MUJER SIN SUEÑO',s:'No quiere cerrar los ojos',spk:'MARA',txt:`La mujer se llama Mara.
+serat_woman:{img:'serat_square',music:'dark',title:'ZERATH',sub:'NOCHE 2',big:'LA MUJER SIN SUEÑO',s:'No quiere cerrar los ojos',spk:'MARA',txt:`La mujer se llama Mara.
 
 Dice que ve a su hijo muerto junto a la cama.
 
@@ -4003,13 +4003,13 @@ Gala mira sus manos: tiene círculos rojos quemados en las palmas.`,choices:func
 {t:'Preguntar por las minas',d:'Todos los caminos van abajo.',color:'#ff2f55',delta:{mines:2,clues:2,sanity:-4},next:'serat_below'},
 {t:'Crear un círculo protector',d:'Tal vez el eco de Gala bloquee la voz.',color:'#ffcf55',delta:{galaPower:2,eco:-5,survivors:1},next:'serat_shield'},
 {t:'Llevarla a la plaza',d:'El miedo aislado alimenta a Griox.',color:'#61ff8b',delta:{trust:3,survivors:1,fear:1},next:'serat_plaza'}]}},
-serat_well:{img:'serat_fog',music:'dark',title:'SERAT',sub:'NOCHE 2',big:'EL POZO',s:'El reflejo no obedece',spk:'NARRADOR',txt:`El agua del pozo muestra una Gala distinta: cabello mojado, ojos hundidos, sonrisa imposible.
+serat_well:{img:'serat_fog',music:'dark',title:'ZERATH',sub:'NOCHE 2',big:'EL POZO',s:'El reflejo no obedece',spk:'NARRADOR',txt:`El agua del pozo muestra una Gala distinta: cabello mojado, ojos hundidos, sonrisa imposible.
 
 El reflejo levanta una mano y dibuja un círculo rojo desde abajo del agua.`,choices:function(){return[
 {t:'Romper el reflejo',d:'No todo lo que copia merece hablar.',color:'#ffcf55',delta:{galaPower:2,eco:-6,mirror:1},next:'serat_wellbreak'},
 {t:'Dejar que termine el círculo',d:'Puede mostrar una pista.',color:'#ff2f55',delta:{mirror:3,clues:3,grioxLink:2,sanity:-10},next:'serat_mirror'},
 {t:'Marcar el pozo y volver',d:'Sobrevivir también es no mirar.',color:'#61ff8b',delta:{clues:1,sanity:2},next:'serat_plaza'}]}},
-serat_roofs:{img:'serat_fog',music:'dark',title:'SERAT',sub:'NOCHE 2',big:'TECHOS',s:'La forma de la aldea',spk:'NARRADOR',txt:`Desde los techos, Gala ve algo imposible.
+serat_roofs:{img:'serat_fog',music:'dark',title:'ZERATH',sub:'NOCHE 2',big:'TECHOS',s:'La forma de la aldea',spk:'NARRADOR',txt:`Desde los techos, Gala ve algo imposible.
 
 Las calles de Serat forman un círculo enorme, incompleto, con una grieta en dirección a las minas.
 
@@ -4019,7 +4019,7 @@ Fue construida alrededor de algo enterrado.`,choices:function(){return[
 {t:'Seguir la grieta',d:'La respuesta está abajo.',color:'#ff2f55',delta:{mines:3,clues:2,sanity:-4},next:'serat_gate'},
 {t:'Dibujar el mapa para Iren',d:'Ordenar el horror.',color:'#61ff8b',delta:{clues:3,trust:2},next:'serat_iren'},
 {t:'Probar onda expansiva sobre la grieta',d:'Si algo está abajo, que responda.',color:'#ffcf55',delta:{galaPower:2,eco:-15,hp:-10,fear:2},next:'serat_wave'}]}},
-serat_bounce:{img:'serat_red',music:'battle',title:'SERAT',sub:'NOCHE 2',big:'ECO DEVUELTO',s:'Algo aprende',spk:'NARRADOR',txt:`Gala dispara tres círculos.
+serat_bounce:{img:'serat_red',music:'battle',title:'ZERATH',sub:'NOCHE 2',big:'ECO DEVUELTO',s:'Algo aprende',spk:'NARRADOR',txt:`Gala dispara tres círculos.
 
 La niebla devuelve cuatro.
 
@@ -4029,7 +4029,7 @@ NO ES TU PODER.`,choices:function(){return[
 {t:'Entrenar hasta recuperar control',d:'Conocer su eco mejor que Griox.',color:'#ffcf55',delta:{galaPower:4,eco:5},next:'serat_power'},
 {t:'Seguir el círculo devuelto',d:'La trayectoria apunta al pozo.',color:'#ff2f55',delta:{clues:2,mirror:1,sanity:-5},next:'serat_well'},
 {t:'Buscar ayuda',d:'El orgullo también abre puertas.',color:'#61ff8b',delta:{trust:2,corr:-1},next:'serat_iren'}]}},
-serat_name:{img:'serat_red',music:'dark',title:'SERAT',sub:'NOCHE 3',big:'GRIOX',s:'El nombre aparece',spk:'VOZ',txt:`La voz imita a su madre.
+serat_name:{img:'serat_red',music:'dark',title:'ZERATH',sub:'NOCHE 3',big:'GRIOX',s:'El nombre aparece',spk:'VOZ',txt:`La voz imita a su madre.
 
 Después a Gala de niña.
 
@@ -4041,7 +4041,7 @@ En la oscuridad, cientos de respiraciones llenan las paredes.`,choices:function(
 {t:'Repetir el nombre en voz alta',d:'Nombrar al miedo puede liberarlo.',color:'#ff2f55',delta:{truth:2,grioxLink:3,sanity:-12},next:'serat_namespread'},
 {t:'Negarse a escuchar',d:'No darle permiso.',color:'#61ff8b',delta:{sanity:4,grioxLink:-1},next:'serat_silence'},
 {t:'Atacar la oscuridad con onda expansiva',d:'La casa entera tiembla.',color:'#ffcf55',delta:{galaPower:3,eco:-18,hp:-12,fear:2},next:'serat_wave'}]}},
-serat_mother:{img:'serat_house',music:'story',title:'SERAT',sub:'NOCHE 3',big:'LA CAJA DE LA ABUELA',s:'La sangre recuerda',spk:'MADRE',txt:`La madre de Gala escucha todo.
+serat_mother:{img:'serat_house',music:'story',title:'ZERATH',sub:'NOCHE 3',big:'LA CAJA DE LA ABUELA',s:'La sangre recuerda',spk:'MADRE',txt:`La madre de Gala escucha todo.
 
 Después abre una caja vieja.
 
@@ -4053,7 +4053,7 @@ GRIOX.
 {t:'Leer todos los papeles',d:'El pasado familiar puede ser la llave.',color:'#d7a84a',delta:{clues:4,truth:2,sanity:-3},next:'serat_papers'},
 {t:'Quemar la caja',d:'Algunas herencias son trampas.',color:'#ff4d4d',delta:{fear:1,truth:-1,sanity:2},next:'serat_plaza'},
 {t:'Sacar a su madre de Serat',d:'Salvar una persona puede costar respuestas.',color:'#61ff8b',delta:{survivors:1,trust:1},next:'serat_loop'}]}},
-serat_plaza:{img:'serat_square',music:'story',title:'SERAT',sub:'DÍA 3',big:'LA PLAZA',s:'Nadie quiere dormir',spk:'NARRADOR',txt:`La plaza se llena de vecinos con ojos rojos.
+serat_plaza:{img:'serat_square',music:'story',title:'ZERATH',sub:'DÍA 3',big:'LA PLAZA',s:'Nadie quiere dormir',spk:'NARRADOR',txt:`La plaza se llena de vecinos con ojos rojos.
 
 Todos vieron algo distinto: puertas, muertos, reflejos, minas, voces bajo la cama.
 
@@ -4065,7 +4065,7 @@ Antes de decir más, se duerme de pie.`,choices:function(){return[
 {t:'Despertarlo con un impacto suave',d:'Puede hablar antes de quebrarse.',color:'#ffcf55',delta:{galaPower:1,eco:-5,clues:2,hp:-2},next:'serat_old'},
 {t:'Ordenar que nadie duerma',d:'Una aldea despierta contra un monstruo de sueños.',color:'#61ff8b',delta:{awake:4,trust:3,survivors:2,fear:2},next:'serat_awake'},
 {t:'Ir directo a las minas',d:'Cada hora Griox aprende otra voz.',color:'#ff2f55',delta:{mines:3,clues:1},next:'serat_gate'}]}},
-serat_patients:{img:'serat_square',music:'dark',title:'SERAT',sub:'DÍA 3',big:'PACIENTES',s:'El patrón',spk:'IREN',txt:`Iren muestra el mapa.
+serat_patients:{img:'serat_square',music:'dark',title:'ZERATH',sub:'DÍA 3',big:'PACIENTES',s:'El patrón',spk:'IREN',txt:`Iren muestra el mapa.
 
 Todos los casos viven sobre un círculo antiguo. Gala vive en el centro exacto.
 
@@ -4073,7 +4073,7 @@ Todos los casos viven sobre un círculo antiguo. Gala vive en el centro exacto.
 {t:'Evacuar el centro de Serat',d:'Sacar gente del círculo.',color:'#61ff8b',delta:{survivors:3,trust:2,grioxLink:-1},next:'serat_evac'},
 {t:'Usar a Gala como ancla',d:'Atraer a Griox al centro.',color:'#ff2f55',delta:{grioxLink:3,clues:3,galaPower:1,sanity:-8},next:'serat_anchor'},
 {t:'Dormir a un paciente vigilado',d:'Entrar al sueño desde afuera.',color:'#9d37ff',delta:{clues:4,truth:1,sanity:-6},next:'serat_sleep'}]}},
-serat_below:{img:'serat_mines',music:'dark',title:'SERAT',sub:'DÍA 4',big:'ÉL ESTÁ ABAJO',s:'La frase se repite',spk:'NARRADOR',txt:`La entrada de la mina aparece abierta aunque llevaba años sellada.
+serat_below:{img:'serat_mines',music:'dark',title:'ZERATH',sub:'DÍA 4',big:'ÉL ESTÁ ABAJO',s:'La frase se repite',spk:'NARRADOR',txt:`La entrada de la mina aparece abierta aunque llevaba años sellada.
 
 Dentro no hay oscuridad.
 
@@ -4081,7 +4081,7 @@ Hay una luz roja débil, como un párpado cerrado.`,choices:function(){return[
 {t:'Entrar con Iren y Mael',d:'No bajar sola.',color:'#61ff8b',delta:{trust:2,mines:3},next:'serat_mines_group'},
 {t:'Entrar sola',d:'Griox llama a Gala.',color:'#ff2f55',delta:{grioxLink:2,mines:4,sanity:-6},next:'serat_mines_alone'},
 {t:'Sellar con onda expansiva',d:'Intentar enterrarlo otra vez.',color:'#ffcf55',delta:{galaPower:2,eco:-20,hp:-14,fear:2},next:'serat_wave'}]}},
-serat_shield:{img:'serat_red',music:'story',title:'SERAT',sub:'DÍA 4',big:'CÍRCULO PROTECTOR',s:'Defensa',spk:'NARRADOR',txt:`Gala crea un círculo alrededor de Mara.
+serat_shield:{img:'serat_red',music:'story',title:'ZERATH',sub:'DÍA 4',big:'CÍRCULO PROTECTOR',s:'Defensa',spk:'NARRADOR',txt:`Gala crea un círculo alrededor de Mara.
 
 La voz se corta.
 
@@ -4089,7 +4089,7 @@ Pero fuera del círculo, toda la habitación empieza a susurrar con la voz de Ma
 {t:'Ampliar el círculo',d:'Proteger la casa entera.',color:'#ffcf55',delta:{galaPower:3,eco:-15,hp:-8,survivors:2},next:'serat_power'},
 {t:'Interrogar a las paredes',d:'Griox habla cuando cree que asusta.',color:'#ff2f55',delta:{clues:3,truth:2,grioxLink:2,sanity:-8},next:'serat_name'},
 {t:'Sacar a Mara de allí',d:'Salvar vivos, no discutir con paredes.',color:'#61ff8b',delta:{survivors:2,trust:1},next:'serat_evac'}]}},
-serat_wellbreak:{img:'serat_fog',music:'battle',title:'SERAT',sub:'DÍA 4',big:'EL POZO SE ROMPE',s:'El ojo de abajo',spk:'NARRADOR',txt:`El agua se rompe como vidrio.
+serat_wellbreak:{img:'serat_fog',music:'battle',title:'ZERATH',sub:'DÍA 4',big:'EL POZO SE ROMPE',s:'El ojo de abajo',spk:'NARRADOR',txt:`El agua se rompe como vidrio.
 
 Por un segundo, Gala ve túneles rojos bajo Serat.
 
@@ -4099,7 +4099,7 @@ Y ahora sabe que ella miró de vuelta.`,choices:function(){return[
 {t:'Usar la visión como mapa',d:'La primera ventaja real.',color:'#61ff8b',delta:{clues:4,mines:3,galaPower:1},next:'serat_gate'},
 {t:'Tapar el pozo y huir',d:'La ventaja no sirve si pierde la cabeza.',color:'#00e5ff',delta:{sanity:3,grioxLink:-1},next:'serat_plaza'},
 {t:'Volver a mirar',d:'Hay una figura esperando.',color:'#ff2f55',delta:{mirror:3,grioxLink:3,sanity:-12},next:'serat_mirror'}]}},
-serat_mirror:{img:'serat_red',music:'dark',title:'SERAT',sub:'DÍA 4',big:'EL REFLEJO',s:'No es Gala',spk:'REFLEJO',txt:`El reflejo sonríe.
+serat_mirror:{img:'serat_red',music:'dark',title:'ZERATH',sub:'DÍA 4',big:'EL REFLEJO',s:'No es Gala',spk:'REFLEJO',txt:`El reflejo sonríe.
 
 —Vos no disparás círculos. Vos abrís puertas.
 
@@ -4109,7 +4109,7 @@ La eligió porque puede salir por ella.`,choices:function(){return[
 {t:'Entrenar el cierre de círculos',d:'Si abre puertas, también puede cerrarlas.',color:'#61ff8b',delta:{truth:4,galaPower:4,grioxLink:-1},next:'serat_power'},
 {t:'Destruir el pozo',d:'Negar también protege.',color:'#ffcf55',delta:{eco:-12,hp:-6,sanity:1},next:'serat_gate'},
 {t:'Preguntar qué quiere Griox',d:'La respuesta entra como aguja.',color:'#ff2f55',delta:{truth:3,grioxLink:4,sanity:-14},next:'serat_namespread'}]}},
-serat_silence:{img:'serat_house',music:'story',title:'SERAT',sub:'DÍA 5',big:'SIN ECO',s:'Silencio artificial',spk:'NARRADOR',txt:`Sin sus círculos, Gala escucha mejor.
+serat_silence:{img:'serat_house',music:'story',title:'ZERATH',sub:'DÍA 5',big:'SIN ECO',s:'Silencio artificial',spk:'NARRADOR',txt:`Sin sus círculos, Gala escucha mejor.
 
 Hay algo respirando bajo cada casa.
 
@@ -4119,7 +4119,7 @@ Está sobre una boca cerrada.`,choices:function(){return[
 {t:'Mantener el sello y buscar pistas',d:'Menos poder, más claridad.',color:'#61ff8b',delta:{clues:3,sanity:4,eco:-5},next:'serat_papers'},
 {t:'Romper el sello',d:'Sin poder no sobrevivirá a la mina.',color:'#ffcf55',delta:{galaPower:2,eco:12,hp:-3},next:'serat_power'},
 {t:'Escuchar la respiración',d:'La boca puede revelar el corazón.',color:'#ff2f55',delta:{mines:3,grioxLink:2,sanity:-8},next:'serat_gate'}]}},
-serat_power:{img:'serat_red',music:'story',title:'SERAT',sub:'DÍA 5',big:'EL PODER DE GALA',s:'Impacto, impulso, onda',spk:'NARRADOR',txt:`Gala separa tres formas de su eco.
+serat_power:{img:'serat_red',music:'story',title:'ZERATH',sub:'DÍA 5',big:'EL PODER DE GALA',s:'Impacto, impulso, onda',spk:'NARRADOR',txt:`Gala separa tres formas de su eco.
 
 Círculos de impacto: rápidos.
 
@@ -4131,7 +4131,7 @@ Cada vez que mejora, Griox susurra como si estuviera orgulloso.`,choices:functio
 {t:'Entrenar precisión',d:'Menos gasto, más control.',color:'#61ff8b',delta:{galaPower:3,eco:6,corr:-1},next:'serat_gate'},
 {t:'Entrenar impulso',d:'Escapar puede importar más que ganar.',color:'#00e5ff',delta:{galaPower:2,awake:1,hp:4},next:'serat_roofs'},
 {t:'Entrenar onda expansiva',d:'Lo más poderoso y peligroso.',color:'#ff4d4d',delta:{galaPower:4,eco:-10,hp:-6,corr:1},next:'serat_anchor'}]}},
-serat_namespread:{img:'serat_square',music:'dark',title:'SERAT',sub:'DÍA 5',big:'EL NOMBRE SE EXPANDE',s:'Griox ya no es secreto',spk:'NARRADOR',txt:`Alguien pronuncia Griox en la plaza.
+serat_namespread:{img:'serat_square',music:'dark',title:'ZERATH',sub:'DÍA 5',big:'EL NOMBRE SE EXPANDE',s:'Griox ya no es secreto',spk:'NARRADOR',txt:`Alguien pronuncia Griox en la plaza.
 
 Después otro.
 
@@ -4141,7 +4141,7 @@ Esa noche, las casas crujen desde adentro. La gente sueña que sus paredes tiene
 {t:'Prohibir que repitan el nombre',d:'Cortar contagio verbal.',color:'#61ff8b',delta:{trust:1,grioxLink:-1,sanity:2},next:'serat_awake'},
 {t:'Usar el nombre como trampa',d:'Atraerlo a un círculo.',color:'#ffcf55',delta:{galaPower:3,grioxLink:2,clues:2},next:'serat_anchor'},
 {t:'Que todos lo enfrenten juntos',d:'Puede unirlos o quebrarlos.',color:'#ff2f55',delta:{fear:3,trust:2,grioxLink:2,sanity:-8},next:'serat_nightmare'}]}},
-serat_papers:{img:'serat_house',music:'story',title:'SERAT',sub:'DÍA 6',big:'LA ABUELA DE GALA',s:'Círculos incompletos',spk:'NARRADOR',txt:`Los papeles dicen que una portadora circular encerró a Griox décadas atrás.
+serat_papers:{img:'serat_house',music:'story',title:'ZERATH',sub:'DÍA 6',big:'LA ABUELA DE GALA',s:'Círculos incompletos',spk:'NARRADOR',txt:`Los papeles dicen que una portadora circular encerró a Griox décadas atrás.
 
 No lo mató.
 
@@ -4153,7 +4153,7 @@ La última frase dice:
 {t:'Estudiar el círculo incompleto',d:'La clave para no abrir una puerta.',color:'#61ff8b',delta:{truth:4,clues:3},next:'serat_symbols'},
 {t:'Ocultarlo para que no usen a Gala',d:'La aldea podría convertirla en sacrificio.',color:'#00e5ff',delta:{trust:-1,sanity:2},next:'serat_gate'},
 {t:'Contarlo en la plaza',d:'La verdad puede salvar o condenar.',color:'#ff2f55',delta:{trust:3,fear:2,truth:2},next:'serat_plaza'}]}},
-serat_loop:{img:'serat_fog',music:'dark',title:'SERAT',sub:'DÍA 6',big:'LA SALIDA',s:'La ruta vuelve',spk:'NARRADOR',txt:`Gala intenta sacar a su madre por el camino norte.
+serat_loop:{img:'serat_fog',music:'dark',title:'ZERATH',sub:'DÍA 6',big:'LA SALIDA',s:'La ruta vuelve',spk:'NARRADOR',txt:`Gala intenta sacar a su madre por el camino norte.
 
 Caminan una hora.
 
@@ -4167,7 +4167,7 @@ Serat no las deja ir.`,choices:function(){return[
 {t:'Romper el bucle con impulso circular',d:'Saltar más allá del camino repetido.',color:'#ffcf55',delta:{galaPower:2,eco:-8,hp:-4,survivors:1},next:'serat_evac'},
 {t:'Volver y enfrentar lo enterrado',d:'No se huye de una boca cerrada.',color:'#61ff8b',delta:{sanity:2,clues:1},next:'serat_gate'},
 {t:'Preguntar al bucle qué quiere',d:'El camino responde con voz de madre.',color:'#ff2f55',delta:{grioxLink:3,sanity:-10},next:'serat_mother_voice'}]}},
-serat_evac:{img:'serat_fog',music:'story',title:'SERAT',sub:'DÍA 7',big:'EVACUACIÓN IMPOSIBLE',s:'El pueblo se dobla',spk:'NARRADOR',txt:`Algunos vecinos cruzan el límite.
+serat_evac:{img:'serat_fog',music:'story',title:'ZERATH',sub:'DÍA 7',big:'EVACUACIÓN IMPOSIBLE',s:'El pueblo se dobla',spk:'NARRADOR',txt:`Algunos vecinos cruzan el límite.
 
 Otros vuelven caminando dormidos.
 
@@ -4179,7 +4179,7 @@ Cada persona salvada enfurece a Griox. En los vidrios aparecen bocas pequeñas q
 {t:'Seguir evacuando',d:'Cada sobreviviente importa.',color:'#61ff8b',delta:{survivors:4,trust:2,hp:-6,grioxLink:-1},next:'serat_awake'},
 {t:'Detenerse y preparar la mina',d:'No pueden huir de algo bajo todos.',color:'#d7a84a',delta:{mines:3,clues:2},next:'serat_gate'},
 {t:'Usar a los dormidos como guía',d:'Caminan hacia donde respira Griox.',color:'#ff2f55',delta:{mines:4,clues:3,sanity:-10},next:'serat_mines_group'}]}},
-serat_sleep:{img:'serat_house',music:'dark',title:'SERAT',sub:'DÍA 7',big:'SUEÑO VIGILADO',s:'Entrar sin dormir',spk:'NARRADOR',txt:`Iren duerme a un paciente mientras Gala sostiene un círculo.
+serat_sleep:{img:'serat_house',music:'dark',title:'ZERATH',sub:'DÍA 7',big:'SUEÑO VIGILADO',s:'Entrar sin dormir',spk:'NARRADOR',txt:`Iren duerme a un paciente mientras Gala sostiene un círculo.
 
 El cuarto cambia sin moverse.
 
@@ -4189,7 +4189,7 @@ El paciente habla con voz de niño:
 {t:'Preguntar cuándo',d:'La memoria perdida puede ser el origen.',color:'#ff2f55',delta:{truth:3,grioxLink:3,sanity:-8},next:'serat_memorylost'},
 {t:'Romper el sueño',d:'Salir antes de que el cuarto trague.',color:'#ffcf55',delta:{galaPower:2,eco:-7,hp:-4},next:'serat_patients'},
 {t:'Seguir escuchando',d:'Más información, más riesgo.',color:'#61ff8b',delta:{clues:4,truth:2,sanity:-5},next:'serat_gate'}]}},
-serat_anchor:{img:'serat_red',music:'dark',title:'SERAT',sub:'DÍA 8',big:'GALA COMO ANCLA',s:'La trampa respira',spk:'NARRADOR',txt:`Gala se para en el centro exacto de Serat.
+serat_anchor:{img:'serat_red',music:'dark',title:'ZERATH',sub:'DÍA 8',big:'GALA COMO ANCLA',s:'La trampa respira',spk:'NARRADOR',txt:`Gala se para en el centro exacto de Serat.
 
 Dibuja tres círculos.
 
@@ -4203,7 +4203,7 @@ Una hora después, todos los dormidos abren los ojos al mismo tiempo y miran hac
 {t:'Cerrar el círculo antes de tiempo',d:'Sobrevivir con pistas incompletas.',color:'#61ff8b',delta:{clues:2,grioxLink:-1,hp:-4},next:'serat_symbols'},
 {t:'Dejar que Griox entre un poco',d:'Verlo real puede costarle la cordura.',color:'#ff2f55',delta:{truth:4,grioxLink:4,sanity:-16},next:'serat_glimpse'},
 {t:'Soltar onda expansiva desde el centro',d:'Puede limpiar la aldea o abrirla.',color:'#ffcf55',delta:{galaPower:4,eco:-25,hp:-18,corr:1},next:'serat_wave'}]}},
-serat_awake:{img:'serat_square',music:'dark',title:'SERAT',sub:'DÍA 8',big:'LA NOCHE DESPIERTA',s:'Nadie cierra los ojos',spk:'NARRADOR',txt:`Toda Serat intenta no dormir.
+serat_awake:{img:'serat_square',music:'dark',title:'ZERATH',sub:'DÍA 8',big:'LA NOCHE DESPIERTA',s:'Nadie cierra los ojos',spk:'NARRADOR',txt:`Toda Serat intenta no dormir.
 
 A las 3:17, todos escuchan una canción de cuna bajo la tierra.
 
@@ -4213,7 +4213,7 @@ A las 3:19, empiezan a caminar hacia la mina.`,choices:function(){return[
 {t:'Seguir a los dormidos',d:'Conocen el camino aunque no quieran.',color:'#ff2f55',delta:{mines:4,clues:3,sanity:-6},next:'serat_mines_group'},
 {t:'Despertarlos con impactos circulares',d:'Dolor antes que perderlos.',color:'#ffcf55',delta:{galaPower:2,eco:-8,survivors:1,fear:1},next:'serat_gate'},
 {t:'Resistir hasta el amanecer',d:'No toda victoria es atacar.',color:'#61ff8b',delta:{trust:2,survivors:2,awake:2},next:'serat_gate'}]}},
-serat_nightmare:{img:'serat_square',music:'battle',title:'SERAT',sub:'DÍA 8',big:'PESADILLA EN LA PLAZA',s:'Todos ven algo distinto',spk:'NARRADOR',txt:`La plaza se rompe sin romperse.
+serat_nightmare:{img:'serat_square',music:'battle',title:'ZERATH',sub:'DÍA 8',big:'PESADILLA EN LA PLAZA',s:'Todos ven algo distinto',spk:'NARRADOR',txt:`La plaza se rompe sin romperse.
 
 Cada persona ve a Griox con una forma distinta: un muerto, una sombra, un familiar, uno mismo.
 
@@ -4221,7 +4221,7 @@ La multitud empieza a atacarse entre sí.`,choices:function(){return[
 {t:'Separar personas con círculos defensivos',d:'Salvar cuerpos antes que mentes.',color:'#61ff8b',delta:{survivors:3,trust:2,eco:-12,hp:-6},next:'serat_aftermath'},
 {t:'Onda expansiva controlada',d:'Cortar la visión de golpe.',color:'#ffcf55',delta:{galaPower:3,eco:-22,hp:-16,survivors:1},next:'serat_wave'},
 {t:'Entrar en la visión de su doble',d:'Griox la espera.',color:'#ff2f55',delta:{truth:4,grioxLink:4,sanity:-18},next:'serat_glimpse'}]}},
-serat_old:{img:'serat_square',music:'story',title:'SERAT',sub:'DÍA 9',big:'EL ANCIANO',s:'Esto ya pasó',spk:'ANCIANO',txt:`El anciano despierta llorando.
+serat_old:{img:'serat_square',music:'story',title:'ZERATH',sub:'DÍA 9',big:'EL ANCIANO',s:'Esto ya pasó',spk:'ANCIANO',txt:`El anciano despierta llorando.
 
 Cuenta que de niño vio a la abuela de Gala bajar a la mina con seis personas.
 
@@ -4231,7 +4231,7 @@ Dijo que había encerrado algo llamado Griox.`,choices:function(){return[
 {t:'Buscar descendientes de los seis',d:'Quizás guardan partes del sello.',color:'#61ff8b',delta:{clues:4,trust:2,truth:1},next:'serat_symbols'},
 {t:'Bajar acompañada',d:'No repetir el error de la abuela.',color:'#00e5ff',delta:{trust:3,survivors:1},next:'serat_mines_group'},
 {t:'Bajar sola',d:'Menos víctimas cerca de Griox.',color:'#ff2f55',delta:{grioxLink:2,corr:1},next:'serat_mines_alone'}]}},
-serat_symbols:{img:'serat_house',music:'story',title:'SERAT',sub:'DÍA 9',big:'CÍRCULO INCOMPLETO',s:'La clave',spk:'NARRADOR',txt:`Los símbolos no son círculos cerrados.
+serat_symbols:{img:'serat_house',music:'story',title:'ZERATH',sub:'DÍA 9',big:'CÍRCULO INCOMPLETO',s:'La clave',spk:'NARRADOR',txt:`Los símbolos no son círculos cerrados.
 
 Son círculos abiertos.
 
@@ -4243,7 +4243,7 @@ Para derrotarlo, Gala deberá crear una onda expansiva incompleta: suficiente pa
 {t:'Practicar el círculo incompleto',d:'La única técnica que puede salvar Serat.',color:'#61ff8b',delta:{galaPower:4,truth:4,grioxLink:-2,eco:4},next:'serat_gate'},
 {t:'No confiar en símbolos viejos',d:'Griox ya venció un sello antes.',color:'#d7a84a',delta:{galaPower:2,corr:1},next:'serat_gate'},
 {t:'Completar el círculo para probarlo',d:'Mala idea.',color:'#ff2f55',delta:{grioxLink:5,sanity:-20,truth:2},next:'serat_glimpse'}]}},
-serat_memorylost:{img:'serat_red',music:'dark',title:'SERAT',sub:'DÍA 9',big:'MEMORIA PERDIDA',s:'Gala ya estuvo abajo',spk:'NARRADOR',txt:`La memoria vuelve.
+serat_memorylost:{img:'serat_red',music:'dark',title:'ZERATH',sub:'DÍA 9',big:'MEMORIA PERDIDA',s:'Gala ya estuvo abajo',spk:'NARRADOR',txt:`La memoria vuelve.
 
 Gala de niña caminando dormida hacia la mina.
 
@@ -4257,7 +4257,7 @@ Y una voz:
 {t:'Aceptar que Griox la esperó años',d:'La verdad duele, pero ordena.',color:'#61ff8b',delta:{truth:5,sanity:2,grioxLink:-1},next:'serat_symbols'},
 {t:'Culparse y aislarse',d:'Griox ama la culpa.',color:'#ff2f55',delta:{grioxLink:4,sanity:-12,corr:2},next:'serat_mines_alone'},
 {t:'Contárselo a Iren y Mael',d:'La vergüenza pierde poder compartida.',color:'#00e5ff',delta:{trust:3,truth:2,sanity:4},next:'serat_mines_group'}]}},
-serat_mother_voice:{img:'serat_fog',music:'dark',title:'SERAT',sub:'DÍA 10',big:'LA VOZ DE SU MADRE',s:'El bucle aprende',spk:'VOZ',txt:`El camino habla con la voz de su madre.
+serat_mother_voice:{img:'serat_fog',music:'dark',title:'ZERATH',sub:'DÍA 10',big:'LA VOZ DE SU MADRE',s:'El bucle aprende',spk:'VOZ',txt:`El camino habla con la voz de su madre.
 
 —No vuelvas.
 
@@ -4271,7 +4271,7 @@ Gala ve a su madre delante, detrás y dentro de la niebla.`,choices:function(){r
 {t:'Cerrar los ojos y seguir su eco',d:'No confiar en la vista.',color:'#61ff8b',delta:{sanity:4,clues:2,grioxLink:-1},next:'serat_gate'},
 {t:'Atacar a la madre falsa',d:'Puede ser ilusión. Puede no serlo.',color:'#ff4d4d',delta:{fear:2,corr:2,hp:-8},next:'serat_wave'},
 {t:'Hablarle como si fuera Griox',d:'La máscara se puede quebrar.',color:'#ff2f55',delta:{truth:3,grioxLink:3,sanity:-8},next:'serat_glimpse'}]}},
-serat_aftermath:{img:'serat_square',music:'story',title:'SERAT',sub:'DÍA 10',big:'DESPUÉS DE LA PLAZA',s:'No todos vuelven iguales',spk:'NARRADOR',txt:`La pesadilla se corta.
+serat_aftermath:{img:'serat_square',music:'story',title:'ZERATH',sub:'DÍA 10',big:'DESPUÉS DE LA PLAZA',s:'No todos vuelven iguales',spk:'NARRADOR',txt:`La pesadilla se corta.
 
 Algunos culpan a Gala. Otros la siguen. Otros dicen que Griox usa su eco como puerta.
 
@@ -4285,7 +4285,7 @@ La está esperando.`,choices:function(){return[
 {t:'Bajar con quienes confían',d:'Miedo compartido.',color:'#61ff8b',delta:{trust:2,survivors:2,mines:3},next:'serat_mines_group'},
 {t:'Bajar sola',d:'Exactamente lo que Griox quiere. Tal vez.',color:'#ff2f55',delta:{grioxLink:2,corr:1,mines:4},next:'serat_mines_alone'},
 {t:'Preparar el círculo incompleto',d:'La técnica correcta.',color:'#ffcf55',delta:{truth:2,galaPower:3,eco:4},next:'serat_symbols'}]}},
-serat_gate:{img:'serat_mines',music:'dark',title:'SERAT',sub:'NOCHE FINAL',big:'LA BOCA DE LA MINA',s:'Última entrada',spk:'NARRADOR',txt:function(){return `La mina espera abierta.
+serat_gate:{img:'serat_mines',music:'dark',title:'ZERATH',sub:'NOCHE FINAL',big:'LA BOCA DE LA MINA',s:'Última entrada',spk:'NARRADOR',txt:function(){return `La mina espera abierta.
 
 Estado de Gala:
 Poder circular: ${state.galaPower||0}
@@ -4297,7 +4297,7 @@ Sobrevivientes protegidos: ${state.survivors||0}`},choices:function(){return[
 {t:'Bajar con Iren y Mael',d:'No enfrentar el horror sola.',color:'#61ff8b',delta:{mines:3,trust:2},next:'serat_mines_group'},
 {t:'Bajar sola',d:'Si Griox quiere a Gala, Gala va a mirarlo primero.',color:'#ff2f55',delta:{mines:4,grioxLink:2},next:'serat_mines_alone'},
 {t:'Usar onda expansiva desde la entrada',d:'Intentar cerrar todo antes de entrar.',color:'#ffcf55',delta:{galaPower:2,eco:-25,hp:-15,corr:1},next:'serat_wave'}]}},
-serat_mines_group:{img:'serat_mines',music:'dark',title:'SERAT',sub:'MINAS',big:'LOS TÚNELES RESPIRAN',s:'El grupo desciende',spk:'NARRADOR',txt:`Gala baja con Iren y Mael.
+serat_mines_group:{img:'serat_mines',music:'dark',title:'ZERATH',sub:'MINAS',big:'LOS TÚNELES RESPIRAN',s:'El grupo desciende',spk:'NARRADOR',txt:`Gala baja con Iren y Mael.
 
 Las paredes están húmedas, pero no por agua.
 
@@ -4307,7 +4307,7 @@ Mael marca el camino con tiza. Al mirar atrás, las marcas ya están escritas an
 {t:'Seguir las marcas adelantadas',d:'El futuro del camino escribió algo.',color:'#9d37ff',delta:{clues:3,truth:2,sanity:-4},next:'serat_tunnel'},
 {t:'Romper paredes falsas con círculos',d:'Abrir camino a fuerza de eco.',color:'#ffcf55',delta:{galaPower:2,eco:-10,hp:-5},next:'serat_bones'},
 {t:'Mantener al grupo unido',d:'Griox separa antes de devorar.',color:'#61ff8b',delta:{trust:2,survivors:1,sanity:2},next:'serat_split'}]}},
-serat_mines_alone:{img:'serat_mines',music:'dark',title:'SERAT',sub:'MINAS',big:'GALA SOLA',s:'El peor silencio',spk:'NARRADOR',txt:`Gala baja sola.
+serat_mines_alone:{img:'serat_mines',music:'dark',title:'ZERATH',sub:'MINAS',big:'GALA SOLA',s:'El peor silencio',spk:'NARRADOR',txt:`Gala baja sola.
 
 No escucha sus pasos.
 
@@ -4321,7 +4321,7 @@ Pero la cabeza está inclinada en un ángulo imposible.`,choices:function(){retu
 {t:'Atacar a la copia',d:'No dejar que use su forma.',color:'#ffcf55',delta:{galaPower:2,eco:-12,hp:-8,grioxLink:1},next:'serat_double'},
 {t:'Preguntarle qué es',d:'La copia responde con recuerdos.',color:'#ff2f55',delta:{truth:3,grioxLink:4,sanity:-14},next:'serat_memorylost'},
 {t:'Ignorarla y seguir',d:'No darle mirada.',color:'#61ff8b',delta:{sanity:3,grioxLink:-1},next:'serat_tunnel'}]}},
-serat_tunnel:{img:'serat_mines',music:'dark',title:'SERAT',sub:'MINAS',big:'TÚNEL DE RECUERDOS',s:'No todos son propios',spk:'NARRADOR',txt:`La roca muestra recuerdos.
+serat_tunnel:{img:'serat_mines',music:'dark',title:'ZERATH',sub:'MINAS',big:'TÚNEL DE RECUERDOS',s:'No todos son propios',spk:'NARRADOR',txt:`La roca muestra recuerdos.
 
 La abuela de Gala joven.
 
@@ -4335,7 +4335,7 @@ Llegó esperando.`,choices:function(){return[
 {t:'Memorizar el patrón del sello',d:'Cerrar sin abrir.',color:'#61ff8b',delta:{truth:4,clues:3,galaPower:1},next:'serat_core'},
 {t:'Destruir los recuerdos',d:'Cortar alimento mental.',color:'#ffcf55',delta:{galaPower:2,eco:-10,corr:1},next:'serat_bones'},
 {t:'Ver la caída de Griox completa',d:'Su origen puede quebrarla.',color:'#ff2f55',delta:{truth:4,grioxLink:3,sanity:-12},next:'serat_origin'}]}},
-serat_bones:{img:'serat_mines',music:'battle',title:'SERAT',sub:'MINAS',big:'SALA DE HUESOS',s:'Los primeros soñadores',spk:'NARRADOR',txt:`La sala está llena de huesos ordenados en círculos.
+serat_bones:{img:'serat_mines',music:'battle',title:'ZERATH',sub:'MINAS',big:'SALA DE HUESOS',s:'Los primeros soñadores',spk:'NARRADOR',txt:`La sala está llena de huesos ordenados en círculos.
 
 Cada cráneo tiene la boca abierta.
 
@@ -4345,7 +4345,7 @@ De todos sale la misma voz:
 {t:'Romper el círculo de huesos',d:'Que Griox pierda su coro.',color:'#ffcf55',delta:{galaPower:2,eco:-12,hp:-6,grioxLink:-1},next:'serat_core'},
 {t:'Escuchar al coro',d:'Entre las voces hay verdad.',color:'#ff2f55',delta:{clues:4,truth:3,sanity:-16,grioxLink:2},next:'serat_origin'},
 {t:'Usar un hueso como ancla',d:'Macabro, pero útil.',color:'#d7a84a',delta:{clues:2,corr:1},next:'serat_core'}]}},
-serat_split:{img:'serat_mines',music:'dark',title:'SERAT',sub:'MINAS',big:'EL SUSURRO SEPARA',s:'Culpa',spk:'NARRADOR',txt:`Iren escucha a su madre.
+serat_split:{img:'serat_mines',music:'dark',title:'ZERATH',sub:'MINAS',big:'EL SUSURRO SEPARA',s:'Culpa',spk:'NARRADOR',txt:`Iren escucha a su madre.
 
 Mael escucha a su hermano.
 
@@ -4357,7 +4357,7 @@ Arrastra culpas.`,choices:function(){return[
 {t:'Unirlos con círculos de eco',d:'Atar sin encerrar.',color:'#61ff8b',delta:{trust:3,galaPower:2,eco:-10,survivors:1},next:'serat_core'},
 {t:'Seguir la voz de Gala',d:'Quizás hay una parte suya atrapada.',color:'#ff2f55',delta:{grioxLink:3,truth:2,sanity:-10},next:'serat_double'},
 {t:'Salvar a Iren y perder a Mael',d:'Decisión imposible.',color:'#ff4d4d',delta:{survivors:-1,corr:2,trust:-1},next:'serat_core'}]}},
-serat_double:{img:'serat_red',music:'battle',title:'SERAT',sub:'MINAS',big:'GALA CONTRA GALA',s:'La copia aprendió sus círculos',spk:'NARRADOR',txt:`La copia lanza círculos perfectos.
+serat_double:{img:'serat_red',music:'battle',title:'ZERATH',sub:'MINAS',big:'GALA CONTRA GALA',s:'La copia aprendió sus círculos',spk:'NARRADOR',txt:`La copia lanza círculos perfectos.
 
 No se cansa. No duda.
 
@@ -4369,7 +4369,7 @@ Una versión imposible.`,choices:function(){return[
 {t:'Ganar usando círculos imperfectos',d:'Hacer lo que la copia no puede: fallar.',color:'#61ff8b',delta:{truth:3,galaPower:3,grioxLink:-2,hp:-8},next:'serat_core'},
 {t:'Onda expansiva completa',d:'Poder bruto contra perfección.',color:'#ffcf55',delta:{galaPower:4,eco:-24,hp:-18,corr:2},next:'serat_wave'},
 {t:'Aceptar que la copia es parte de ella',d:'Integrar la grieta mental.',color:'#9d37ff',delta:{truth:4,sanity:6,grioxLink:-1},next:'serat_core'}]}},
-serat_origin:{img:'serat_red',music:'dark',title:'SERAT',sub:'ORIGEN',big:'LA CAÍDA DE GRIOX',s:'No todos rompen el suelo',spk:'NARRADOR',txt:`Gala ve otra época.
+serat_origin:{img:'serat_red',music:'dark',title:'ZERATH',sub:'ORIGEN',big:'LA CAÍDA DE GRIOX',s:'No todos rompen el suelo',spk:'NARRADOR',txt:`Gala ve otra época.
 
 Griox cae como una mancha roja sin cuerpo.
 
@@ -4385,7 +4385,7 @@ La mina fue donde la gente dejó lo que no soportaba recordar.`,choices:function
 {t:'Entender que vive del miedo compartido',d:'Cortar la conexión, no el cuerpo.',color:'#61ff8b',delta:{truth:5,clues:3,grioxLink:-2},next:'serat_core'},
 {t:'Creer que Griox es inevitable',d:'Ese pensamiento le abre una puerta.',color:'#ff2f55',delta:{grioxLink:5,sanity:-18,corr:2},next:'serat_core'},
 {t:'Usar el recuerdo para provocarlo',d:'Jugar con fuego mental.',color:'#ffcf55',delta:{galaPower:2,grioxLink:2},next:'serat_core'}]}},
-serat_wave:{img:'serat_red',music:'battle',title:'SERAT',sub:'RUPTURA',big:'ONDA EXPANSIVA',s:'Demasiado poder',spk:'NARRADOR',txt:`Gala acumula todo su eco.
+serat_wave:{img:'serat_red',music:'battle',title:'ZERATH',sub:'RUPTURA',big:'ONDA EXPANSIVA',s:'Demasiado poder',spk:'NARRADOR',txt:`Gala acumula todo su eco.
 
 El círculo se vuelve rojo con vetas amarillas.
 
@@ -4401,7 +4401,7 @@ Y en el silencio, Griox susurra:
 {t:'Seguir sin poder',d:'Solo queda voluntad.',color:'#61ff8b',delta:{eco:-10,hp:-15,sanity:2,galaPower:-2},next:'serat_core'},
 {t:'Forzar otro círculo',d:'Puede romper su cuerpo.',color:'#ff4d4d',delta:{eco:-18,hp:-22,corr:2,galaPower:1},next:'serat_double'},
 {t:'Dejar que Griox se acerque para recuperar eco',d:'Pacto implícito.',color:'#ff2f55',delta:{grioxLink:5,eco:20,sanity:-18,corr:3},next:'serat_core'}]}},
-serat_glimpse:{img:'serat_red',music:'dark',title:'SERAT',sub:'VISIÓN',big:'GRIOX TE MIRA',s:'No tiene una forma',spk:'NARRADOR',txt:`Griox no aparece igual para nadie.
+serat_glimpse:{img:'serat_red',music:'dark',title:'ZERATH',sub:'VISIÓN',big:'GRIOX TE MIRA',s:'No tiene una forma',spk:'NARRADOR',txt:`Griox no aparece igual para nadie.
 
 Para Gala es una figura con su propio pelo, una mandíbula demasiado baja y círculos rojos donde deberían estar los ojos.
 
@@ -4411,7 +4411,7 @@ Para el miedo, es hogar.`,choices:function(){return[
 {t:'No mirar su rostro',d:'Recordar el sello, no la forma.',color:'#61ff8b',delta:{sanity:4,truth:2,grioxLink:-1},next:'serat_core'},
 {t:'Mirarlo completo',d:'Algunas imágenes no se van.',color:'#ff2f55',delta:{truth:3,grioxLink:4,sanity:-20},next:'serat_core'},
 {t:'Atacar antes de entender',d:'Instinto puro.',color:'#ffcf55',delta:{galaPower:2,eco:-12,hp:-8},next:'serat_wave'}]}},
-serat_core:{img:'serat_final',music:'dark',title:'SERAT',sub:'NÚCLEO',big:'LA PUERTA BAJO SERAT',s:'El final respira',spk:'NARRADOR',txt:function(){return `La cámara central es pequeña.
+serat_core:{img:'serat_final',music:'dark',title:'ZERATH',sub:'NÚCLEO',big:'LA PUERTA BAJO ZERATH',s:'El final respira',spk:'NARRADOR',txt:function(){return `La cámara central es pequeña.
 
 En el centro hay una puerta circular incompleta hecha de piedra, hueso y eco rojo.
 
@@ -4430,7 +4430,7 @@ Sobrevivientes: ${state.survivors||0}`},choices:function(){return[
 {t:'Abrir la puerta y enfrentar a Griox',d:'Verlo completo puede ser el error.',color:'#ff2f55',delta:{finalChoice:'open',grioxLink:4},next:function(){return ((state.galaPower||0)>=16&&(state.truth||0)>=12&&(state.sanity||0)>38)?'serat_end_good':'serat_end_voices'}},
 {t:'Onda expansiva completa contra la puerta',d:'Todo o nada.',color:'#ffcf55',delta:{finalChoice:'wave',corr:2,eco:-25,hp:-18},next:function(){return ((state.galaPower||0)+(state.truth||0)>=24&&(state.grioxLink||0)<=10)?'serat_end_never':'serat_end_voices'}}
 ]}},
-serat_end_good:{img:'serat_final',music:'end',title:'DUAL: SERAT',sub:'FINAL 1 DE 3',big:'EL SILENCIO',s:'Único final bueno',spk:'NARRADOR',txt:`Gala no cierra el círculo.
+serat_end_good:{img:'serat_final',music:'end',title:'DUAL: ZERATH',sub:'FINAL 1 DE 3',big:'EL SILENCIO',s:'Único final bueno',spk:'NARRADOR',txt:`Gala no cierra el círculo.
 
 Lo deja incompleto.
 
@@ -4447,7 +4447,7 @@ No todos sobrevivieron. Nadie queda igual. Pero por primera vez en días, la ald
 Griox fue derrotado.`,choices:function(){return[
 {t:'REPETIR HISTORIA',d:'Volver al inicio de Serat.',color:'#ff2f55',next:'serat_start'},
 {t:'ELEGIR OTRA HISTORIA',d:'Volver al HUB.',color:'#00e5ff',next:'aeth_to_hub'}]}},
-serat_end_voices:{img:'serat_final',music:'end',title:'DUAL: SERAT',sub:'FINAL 2 DE 3',big:'LAS VOCES',s:'Final malo',spk:'NARRADOR',txt:`Gala cree que cerró la puerta.
+serat_end_voices:{img:'serat_final',music:'end',title:'DUAL: ZERATH',sub:'FINAL 2 DE 3',big:'LAS VOCES',s:'Final malo',spk:'NARRADOR',txt:`Gala cree que cerró la puerta.
 
 Sube de la mina tambaleándose.
 
@@ -4470,7 +4470,7 @@ Griox.
 —Ahora no necesito que duerman.`,choices:function(){return[
 {t:'REPETIR HISTORIA',d:'Intentar salvar Serat.',color:'#ff2f55',next:'serat_start'},
 {t:'ELEGIR OTRA HISTORIA',d:'Volver al HUB.',color:'#00e5ff',next:'aeth_to_hub'}]}},
-serat_end_never:{img:'serat_final',music:'end',title:'DUAL: SERAT',sub:'FINAL 3 DE 3',big:'NO TE DUERMAS',s:'Final terrorífico',spk:'NARRADOR',txt:`La onda expansiva rompe la forma de Griox.
+serat_end_never:{img:'serat_final',music:'end',title:'DUAL: ZERATH',sub:'FINAL 3 DE 3',big:'NO TE DUERMAS',s:'Final terrorífico',spk:'NARRADOR',txt:`La onda expansiva rompe la forma de Griox.
 
 Todos ven cómo la sombra se deshace en miles de círculos rojos.
 
