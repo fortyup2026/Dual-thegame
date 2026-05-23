@@ -502,9 +502,25 @@ body.aethrion-mode #storyBackHub{display:block!important}
 </style>
 
 
-<style id="force-no-login-visible">
-#authOverlay,#userBadge{display:none!important;visibility:hidden!important;pointer-events:none!important}
+<style id="force-remove-login-ui">
+#authOverlay,#userBadge{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
 </style>
+<script id="force-remove-login-cache">
+(function(){
+  try {
+    localStorage.removeItem("dualUser");
+    sessionStorage.removeItem("dualUser");
+  } catch(e) {}
+  function clean(){
+    var a=document.getElementById("authOverlay"); if(a) a.remove();
+    var b=document.getElementById("userBadge"); if(b) b.remove();
+  }
+  clean();
+  document.addEventListener("DOMContentLoaded", clean);
+  setInterval(clean, 500);
+})();
+</script>
+<!-- CLEAN_INDEX_NO_LOGIN_1779579161 -->
 
 </head>
 <body>
@@ -4749,24 +4765,6 @@ setTimeout(function(){bind();patchNode()},600);
   else init();
 })();
 </script>
-
-
-<!-- ===== LIMPIEZA LOGIN ROTO / CACHE LOCAL ===== -->
-<script id="remove-broken-login-cache">
-(function(){
-  try {
-    localStorage.removeItem("dualUser");
-    sessionStorage.removeItem("dualUser");
-  } catch(e) {}
-  document.addEventListener("DOMContentLoaded", function(){
-    var auth = document.getElementById("authOverlay");
-    if(auth) auth.remove();
-    var badge = document.getElementById("userBadge");
-    if(badge) badge.remove();
-  });
-})();
-</script>
-<!-- build-clean-no-login-1779578825 -->
 
 </body>
 </html>
