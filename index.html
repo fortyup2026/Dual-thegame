@@ -524,9 +524,9 @@ body.aethrion-mode #storyBackHub{display:block!important}
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL DESPERTAR DE MURMEX</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card locked" type="button" data-soon="AETHRION · LA GRAN CONQUISTA" style="--line:#d7a84a">
+      <button class="hub-card available" id="openConquest" type="button" style="--line:#d7a84a">
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
-        <span class="hub-action">PRÓXIMAMENTE</span>
+        <span class="hub-action">INICIAR ›</span>
       </button>
       <button class="hub-card locked zerath-card" type="button" data-soon="DUAL · ZERATH" style="--line:#ff2f55">
         <span><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH</span></span>
@@ -2528,6 +2528,897 @@ Esta línea temporal ya la conocía.`,choices:function(){return[{t:'Volver al HU
   }
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindOpenMurmex); else bindOpenMurmex();
+})();
+</script>
+
+
+<!-- ===== AETHRION: LA GRAN CONQUISTA — HISTORIA COMPLETA ===== -->
+<script id="aethrion-gran-conquista-final">
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function safe(fn){ try{return fn&&fn()}catch(e){console.warn(e)} }
+
+  function resetConquest(){
+    if(typeof state!=='undefined'){
+      Object.assign(state,{
+        campaign:'conquest',
+        hp:100, eco:22, corr:0,
+        month:1,
+        hope:0, rebels:0, fear:0, crown:0, villages:0,
+        kael:1, nyra:1, darian:1,
+        tyrantPower:5, darkKingWound:0,
+        sabios:0, murmexMemory:0, publicTruth:0,
+        weapons:0, prisoners:0, traitor:0, civilWar:0,
+        finalChoice:''
+      });
+    }
+    safe(function(){ if(typeof bars==='function') bars(); });
+  }
+
+  function beginConquest(){
+    safe(function(){ if(typeof unlockAudio==='function') unlockAudio(); });
+    safe(function(){ if(typeof sfx==='function') sfx('win'); });
+    resetConquest();
+    safe(function(){ if(typeof playMusic==='function') playMusic('story'); });
+    safe(function(){ if(typeof node==='function') node('aeth_conq_start'); });
+  }
+
+  function bindOpenConquest(){
+    var old=$('openConquest');
+    if(!old) return;
+    var b=old.cloneNode(true);
+    old.parentNode.replaceChild(b,old);
+    b.classList.remove('locked');
+    b.classList.add('available');
+    var act=b.querySelector('.hub-action');
+    if(act) act.textContent='INICIAR ›';
+    b.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      beginConquest();
+    },{passive:false});
+  }
+
+  if(typeof IMG_ALIASES!=='undefined'){
+    Object.assign(IMG_ALIASES,{
+      conq_palace:['aethrion_castle.png','castillo_aethrion.png','aethrion_council.png','mur_final.png'],
+      conq_ruins:['aethrion_ruins.png','aethrion_fire.png','sc_explosion.png','aethrion_castle.png'],
+      conq_crown:['aethrion_throne.png','trono_aethrion.png','aethrion_council.png','aethrion_castle.png'],
+      conq_war:['aethrion_fire.png','sc_explosion.png','aethrion_ruins.png','aethrion_castle.png'],
+      conq_sanctuary:['aethrion_shadows.png','aethrion_ruins.png','aethrion_council.png'],
+      conq_final:['aethrion_castle.png','aethrion_fire.png','aethrion_ruins.png']
+    });
+  }
+
+  if(typeof S!=='undefined'){
+    Object.assign(S,{
+      aeth_conq_start:{
+        img:'conq_palace',music:'story',title:'AETHRION',sub:'LA GRAN CONQUISTA',big:'UN AÑO DE CENIZA',s:'Después del despertar de Murmex',spk:'NARRADOR',
+        delta:{campaign:'conquest',hp:0,eco:22,corr:0,month:1,hope:0,rebels:0,fear:0,crown:0,villages:0,kael:1,nyra:1,darian:1,tyrantPower:5,darkKingWound:0,sabios:0,murmexMemory:0,publicTruth:0,weapons:0,prisoners:0,traitor:0,civilWar:0},
+        txt:`Murmex despertó, destruyó a los monstruos que no pudieron cruzar el portal y salvó Aethrion.
+
+Después volvió a dormirse.
+
+El reino creyó que la pesadilla había terminado.
+
+Pero cuando Kael, Nyra y Darian bajan de la montaña donde hablaron con Murmex, no encuentran victoria.
+
+Encuentran banderas negras.
+
+El rey y la reina fueron asesinados durante el caos. El palacio fue tomado por un hombre que se hace llamar El Rey Obscuro.
+
+Promete orden.
+
+Y para conseguirlo está dispuesto a destruir aldeas, ecos, rebeldes, Aethrion entero... incluso a Murmex.`,
+        choices:function(){return[
+          {t:'Entrar al reino de frente',d:'Ver con sus propios ojos qué hizo el Rey Obscuro.',color:'#d7a84a',delta:{fear:1,crown:1},next:'aeth_conq_return_gate'},
+          {t:'Rodear las murallas y buscar sobrevivientes',d:'Antes de enfrentar al poder, necesitan saber quién sigue vivo.',color:'#61ff8b',delta:{villages:1,hope:1},next:'aeth_conq_outer_villages'},
+          {t:'Volver al último eco de Murmex',d:'Nyra cree que la montaña todavía guarda respuestas.',color:'#9d37ff',delta:{murmexMemory:2,eco:6},next:'aeth_conq_murmex_echo'}
+        ]}},
+      aeth_conq_return_gate:{
+        img:'conq_crown',music:'story',title:'AETHRION',sub:'MES 1',big:'LA PUERTA NEGRA',s:'El nuevo reino',spk:'NARRADOR',
+        txt:`La antigua puerta de Aethrion ya no tiene los símbolos del rey muerto.
+
+Ahora hay un emblema negro atravesado por una corona dorada.
+
+En la plaza, soldados leen una ley nueva: todo portador de eco debe registrarse. Quien oculte su don será tratado como enemigo del reino.
+
+Una mujer protesta.
+
+No llega a terminar la frase.
+
+Un ejecutor del Rey Obscuro la arrastra frente a todos.`,
+        choices:function(){return[
+          {t:'Kael aplasta las armas contra el suelo',d:'Una demostración rápida, sin matar.',color:'#243bff',delta:{hope:2,rebels:1,crown:1,eco:8},next:'aeth_conq_first_spark'},
+          {t:'Darian ataca a los ejecutores',d:'La plaza verá que el miedo también sangra.',color:'#ff7a18',delta:{fear:2,rebels:1,corr:1,eco:10,hp:-6},next:'aeth_conq_blood_square'},
+          {t:'Nyra memoriza nombres y rutas',d:'Mejor ganar información que morir el primer día.',color:'#9d37ff',delta:{publicTruth:2,crown:1},next:'aeth_conq_spy_route'}
+        ]}},
+      aeth_conq_outer_villages:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 1',big:'ALDEAS ROTAS',s:'El precio de la salvación',spk:'NARRADOR',
+        txt:`Las aldeas menores sobrevivieron a los monstruos, pero no al abandono.
+
+El Rey Obscuro envía comida solo a quienes juran lealtad. Los demás quedan marcados como débiles.
+
+Kael escucha niños hablar de Murmex como si fuera un sueño. Darian escucha otro rumor: algunos monstruos no murieron por completo. Sus restos están siendo usados como armas del nuevo reino.`,
+        choices:function(){return[
+          {t:'Organizar refugios secretos',d:'Salvar gente antes de comenzar la guerra.',color:'#61ff8b',delta:{villages:3,hope:2,rebels:1},next:'aeth_conq_refuge'},
+          {t:'Atacar el convoy de comida del rey',d:'La resistencia necesita recursos.',color:'#d7a84a',delta:{weapons:1,rebels:2,crown:1,hp:-4},next:'aeth_conq_convoy'},
+          {t:'Investigar los restos de monstruos',d:'Si el Rey Obscuro usa eso, la guerra será peor.',color:'#9d37ff',delta:{publicTruth:1,weapons:1,murmexMemory:1},next:'aeth_conq_black_forge'}
+        ]}},
+      aeth_conq_murmex_echo:{
+        img:'conq_sanctuary',music:'story',title:'AETHRION',sub:'MES 1',big:'EL ECO DEL DURMIENTE',s:'Murmex no despierta',spk:'NYRA',
+        txt:`La montaña está callada.
+
+Murmex no responde. Pero su último paso dejó una grieta temporal en la roca.
+
+Nyra toca la piedra y ve tres futuros: en uno el reino es libre, en otro arde por completo, y en el último todos obedecen al Rey Obscuro en silencio.
+
+Una frase aparece en su mente:
+
+"Ya no luchan contra monstruos. Luchan contra lo que el miedo permite."`,
+        choices:function(){return[
+          {t:'Guardar la visión en secreto',d:'No todos soportarían saber que pueden perder.',color:'#9d37ff',delta:{murmexMemory:3,publicTruth:1},next:'aeth_conq_outer_villages'},
+          {t:'Contar la verdad a Kael y Darian',d:'El grupo necesita cargar el mismo peso.',color:'#61ff8b',delta:{hope:1,murmexMemory:2,rebels:1},next:'aeth_conq_return_gate'},
+          {t:'Pedirle a Darian que prometa controlarse',d:'Nyra vio su eco arder demasiado cerca del rojo.',color:'#ff7a18',delta:{darian:1,corr:-1,hope:1},next:'aeth_conq_refuge'}
+        ]}},
+      aeth_conq_first_spark:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 2',big:'LA PRIMERA CHISPA',s:'El pueblo recuerda que puede levantarse',spk:'NARRADOR',
+        txt:`Kael baja una mano y todas las lanzas de la plaza pesan como torres.
+
+Los soldados caen de rodillas. Nadie muere.
+
+Por primera vez en semanas, alguien grita contra el Rey Obscuro.
+
+El grito se contagia.
+
+Pero desde el balcón del palacio aparece el nuevo rey. No parece furioso.
+
+Sonríe.
+
+"Déjenlos escapar", ordena. "Quiero que los desesperados crean que tienen una bandera."`,
+        choices:function(){return[
+          {t:'Huir y convertir el grito en símbolo',d:'La resistencia nace de una escena que todos vieron.',color:'#61ff8b',delta:{rebels:3,hope:3,crown:1},next:'aeth_conq_year_begins'},
+          {t:'Intentar tomar el balcón ahora',d:'Un golpe directo podría terminar todo antes de empezar.',color:'#ff4d4d',delta:{hp:-18,eco:12,fear:2,darkKingWound:1},next:'aeth_conq_failed_takeover_1'},
+          {t:'Nyra marca el futuro del rey',d:'Encontrar el segundo exacto donde su defensa falla.',color:'#9d37ff',delta:{murmexMemory:1,publicTruth:1,eco:8,hp:-5},next:'aeth_conq_spy_route'}
+        ]}},
+      aeth_conq_blood_square:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 2',big:'PLAZA DE SANGRE',s:'La furia también inspira',spk:'DARIAN',
+        txt:`Darian atraviesa la plaza como una llamarada.
+
+Los ejecutores caen. Algunos viven. Otros no.
+
+El pueblo se libera por minutos, pero la respuesta de la Corona Negra es brutal: cierran los accesos, capturan a decenas y anuncian que cada rebelde costará diez vidas.
+
+Darian mira sus manos encendidas.
+
+No sabe si acaba de ayudar... o de darle al rey la excusa perfecta.`,
+        choices:function(){return[
+          {t:'Rescatar a los capturados esa misma noche',d:'No dejar que el Rey Obscuro marque el ritmo.',color:'#61ff8b',delta:{prisoners:2,rebels:2,hp:-8},next:'aeth_conq_prison_break'},
+          {t:'Responder con más fuego',d:'Si el rey quiere miedo, Darian puede darle uno mayor.',color:'#ff7a18',delta:{fear:3,corr:2,weapons:1,hp:-6},next:'aeth_conq_fire_cells'},
+          {t:'Aceptar el error y retirarse',d:'Salvar al grupo para pelear mejor.',color:'#00e5ff',delta:{hope:1,rebels:1},next:'aeth_conq_year_begins'}
+        ]}},
+      aeth_conq_spy_route:{
+        img:'conq_crown',music:'story',title:'AETHRION',sub:'MES 2',big:'RUTAS DEL PALACIO',s:'La guerra también se gana en silencio',spk:'NYRA',
+        txt:`Nyra encuentra algo peor que decretos.
+
+Mapas.
+
+El Rey Obscuro no solo quiere gobernar Aethrion. Quiere dividir Cetrios por pureza de eco: fuertes, útiles, defectuosos, peligrosos.
+
+Los que no sirvan serán enviados a la Forja Negra.
+
+Kael entiende que el nuevo rey no está improvisando.
+
+Está construyendo otro mundo.`,
+        choices:function(){return[
+          {t:'Robar los mapas y exponerlos',d:'Que todos vean el plan completo.',color:'#61ff8b',delta:{publicTruth:3,hope:2,crown:1},next:'aeth_conq_public_truth'},
+          {t:'Seguir la ruta hasta la Forja Negra',d:'Descubrir las armas antes de mostrarse.',color:'#d7a84a',delta:{weapons:2,publicTruth:1},next:'aeth_conq_black_forge'},
+          {t:'Buscar aliados dentro del palacio',d:'Quizás no todos obedecen por fe.',color:'#00e5ff',delta:{traitor:1,rebels:1},next:'aeth_conq_inside_contact'}
+        ]}},
+      aeth_conq_refuge:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 3',big:'LOS REFUGIOS',s:'La resistencia respira',spk:'NARRADOR',
+        txt:`Durante semanas, los tres protagonistas no conquistan nada.
+
+Esconden familias.
+
+Curvan túneles con gravedad. Usan visiones para evitar patrullas. Sellan puertas con fuego naranja.
+
+El pueblo empieza a llamar a esos lugares "casas de eco".
+
+Y el Rey Obscuro responde quemando una aldea que se negó a entregar a sus portadores jóvenes.`,
+        choices:function(){return[
+          {t:'Proteger aldeas aunque retrase la guerra',d:'Sin pueblo no hay reino que recuperar.',color:'#61ff8b',delta:{villages:3,hope:2,rebels:1,hp:-5},next:'aeth_conq_year_begins'},
+          {t:'Entrenar portadores para responder',d:'Miles de dones distintos pueden formar un ejército imposible.',color:'#d7a84a',delta:{rebels:3,weapons:1,eco:5},next:'aeth_conq_training'},
+          {t:'Perseguir al general que quemó la aldea',d:'Un mensaje directo a la Corona Negra.',color:'#ff4d4d',delta:{fear:2,corr:1,crown:1},next:'aeth_conq_general_hunt'}
+        ]}},
+      aeth_conq_convoy:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 3',big:'EL CONVOY DE HIERRO',s:'La primera victoria robada',spk:'NARRADOR',
+        txt:`El convoy avanza escoltado por portadores del rey: una mujer con eco de vidrio, dos hermanos con eco sónico y un capitán que vuelve invisible el metal.
+
+La batalla dura seis minutos.
+
+Parece poco.
+
+Para los que mueren, es una vida entera.`,
+        choices:function(){return[
+          {t:'Kael desarma las ruedas con gravedad',d:'Ganar sin destruir los suministros.',color:'#243bff',delta:{weapons:2,rebels:2,hope:1,hp:-4},next:'aeth_conq_year_begins'},
+          {t:'Nyra salva al capitán capturado',d:'Quizás un enemigo puede hablar.',color:'#9d37ff',delta:{traitor:2,publicTruth:1,hope:1},next:'aeth_conq_inside_contact'},
+          {t:'Darian incendia la escolta',d:'La victoria es total, pero el rumor también.',color:'#ff7a18',delta:{weapons:3,fear:2,corr:1,hp:-6},next:'aeth_conq_fire_cells'}
+        ]}},
+      aeth_conq_black_forge:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 4',big:'LA FORJA NEGRA',s:'Armas hechas con restos de monstruos',spk:'NARRADOR',
+        txt:`La Forja Negra late bajo tierra.
+
+Allí, los restos de monstruos destruidos por Murmex son convertidos en armaduras, lanzas vivas y jaulas de eco.
+
+El Rey Obscuro no adoraba a los monstruos.
+
+Los estaba aprovechando.
+
+Nyra ve una máquina capaz de buscar el Santuario de Murmex cuando despierte otra vez.`,
+        choices:function(){return[
+          {t:'Destruir la Forja Negra',d:'Sin esas armas, el rey pierde su ventaja.',color:'#ff4d4d',delta:{weapons:-1,darkKingWound:2,hp:-14,eco:10},next:'aeth_conq_forge_destroyed'},
+          {t:'Robar planos y retirarse',d:'Más lento, más seguro, más inteligente.',color:'#00e5ff',delta:{weapons:3,publicTruth:2,traitor:1,hp:-4},next:'aeth_conq_public_truth'},
+          {t:'Liberar prisioneros usados como fuente de eco',d:'La guerra se vuelve personal.',color:'#61ff8b',delta:{prisoners:3,rebels:2,hope:2,hp:-10},next:'aeth_conq_prison_break'}
+        ]}},
+      aeth_conq_public_truth:{
+        img:'conq_crown',music:'story',title:'AETHRION',sub:'MES 5',big:'LA VERDAD EN LAS MURALLAS',s:'El reino escucha',spk:'NARRADOR',
+        txt:`Los mapas aparecen proyectados sobre las murallas de Aethrion.
+
+Clasificación de ciudadanos. Castigos por eco. Aldeas que serán vaciadas. Niños marcados para entrenamiento forzado.
+
+Por primera vez, muchos seguidores del Rey Obscuro dudan.
+
+Pero los fanáticos no.
+
+Y esa noche, la ciudad se parte en dos.`,
+        choices:function(){return[
+          {t:'Convocar a las aldeas a una alianza',d:'Convertir la duda en movimiento.',color:'#61ff8b',delta:{rebels:3,hope:3,villages:2,civilWar:1},next:'aeth_conq_alliance'},
+          {t:'Usar la confusión para tomar una torre',d:'La guerra necesita posición.',color:'#d7a84a',delta:{weapons:2,rebels:2,crown:1,civilWar:1},next:'aeth_conq_tower_take'},
+          {t:'Buscar al Rey Obscuro entre el caos',d:'Si cae la cabeza, cae la corona.',color:'#ff4d4d',delta:{hp:-12,eco:8,darkKingWound:1,civilWar:1},next:'aeth_conq_failed_takeover_1'}
+        ]}},
+      aeth_conq_inside_contact:{
+        img:'conq_crown',music:'story',title:'AETHRION',sub:'MES 5',big:'LA TRAIDORA DEL PALACIO',s:'No todos obedecen por fe',spk:'NARRADOR',
+        txt:`La contacto se llama Seria.
+
+Sirvió a la reina asesinada. Ahora sirve vino al Rey Obscuro mientras memoriza rutas de guardias.
+
+Ella confirma la peor noticia: el rey no solo quiere aplastar la resistencia.
+
+Quiere despertar a Murmex y obligarlo a borrar toda oposición temporalmente.
+
+Si no puede gobernar el presente, destruirá las líneas donde pierde.`,
+        choices:function(){return[
+          {t:'Proteger a Seria y sacarla del palacio',d:'Una aliada viva vale más que un secreto muerto.',color:'#61ff8b',delta:{traitor:3,hope:1,hp:-5},next:'aeth_conq_seria_escape'},
+          {t:'Pedirle que robe la llave de la sala del trono',d:'Riesgo enorme, recompensa enorme.',color:'#d7a84a',delta:{traitor:2,weapons:2,crown:1},next:'aeth_conq_throne_key'},
+          {t:'Usarla como señuelo contra el rey',d:'Una decisión fría que puede romper al grupo.',color:'#ff4d4d',delta:{fear:2,corr:2,darkKingWound:1},next:'aeth_conq_betrayal_cost'}
+        ]}},
+      aeth_conq_prison_break:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 6',big:'LA NOCHE DE LOS PRISIONEROS',s:'Ecos encadenados',spk:'NARRADOR',
+        txt:`Las cárceles del Rey Obscuro no tienen barrotes comunes.
+
+Tienen jaulas que obligan al eco a morder hacia adentro.
+
+Kael rompe el peso de las cadenas. Nyra adelanta tres segundos el disparo de una ballesta. Darian funde una puerta completa.
+
+Cientos escapan.
+
+Pero alguien debe quedarse para cerrar el corredor.`,
+        choices:function(){return[
+          {t:'Kael sostiene el techo mientras todos salen',d:'El líder carga el peso literal de la resistencia.',color:'#243bff',delta:{prisoners:4,rebels:3,hope:2,hp:-16,eco:10},next:'aeth_conq_kael_scar'},
+          {t:'Darian cierra el corredor con fuego',d:'Salvarlos puede acercarlo a la corrupción.',color:'#ff7a18',delta:{prisoners:4,rebels:3,corr:1,hp:-12,eco:12},next:'aeth_conq_darian_scar'},
+          {t:'Nyra repite el minuto hasta que todos escapen',d:'El precio temporal puede quebrarla.',color:'#9d37ff',delta:{prisoners:5,murmexMemory:2,hp:-18,eco:14},next:'aeth_conq_nyra_scar'}
+        ]}},
+      aeth_conq_fire_cells:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 6',big:'CELDAS DE FUEGO',s:'El miedo cambia de dueño',spk:'NARRADOR',
+        txt:`Darian lidera ataques rápidos contra cárceles, depósitos y patrullas.
+
+La gente empieza a rezarle a su fuego.
+
+Eso lo asusta.
+
+Porque Tronox también empezó siendo una respuesta al dolor.
+
+Nyra le dice que el eco no se corrompe de golpe. Primero te aplauden por usarlo mal.`,
+        choices:function(){return[
+          {t:'Darian baja la intensidad y entrena control',d:'La fuerza sin control ya ganó demasiadas guerras.',color:'#61ff8b',delta:{corr:-2,hope:2,rebels:2},next:'aeth_conq_training'},
+          {t:'Aceptar el miedo como herramienta',d:'Si el rey gobierna por terror, la resistencia también puede.',color:'#ff4d4d',delta:{fear:4,corr:3,rebels:2},next:'aeth_conq_shadow_rebels'},
+          {t:'Kael enfrenta a Darian',d:'El grupo no puede ganar si se rompe desde adentro.',color:'#243bff',delta:{hope:1,hp:-6,corr:-1},next:'aeth_conq_group_fracture'}
+        ]}},
+      aeth_conq_training:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 7',big:'EL EJÉRCITO DE LOS MIL DONES',s:'Nadie tiene el mismo eco',spk:'NARRADOR',
+        txt:`Llegan portadores de todas partes.
+
+Una anciana con eco de vidrio. Un niño que escucha metales. Gemelas que caminan por sombras cortas. Un panadero que puede endurecer el aire durante un parpadeo.
+
+No son soldados.
+
+Son Cetrios.
+
+Y por eso la resistencia empieza a parecer invencible... hasta que el Rey Obscuro envía a sus campeones.`,
+        choices:function(){return[
+          {t:'Formar escuadrones por tipo de eco',d:'Estrategia antes que heroísmo.',color:'#00e5ff',delta:{rebels:4,weapons:1,hope:2},next:'aeth_conq_champions'},
+          {t:'Dejar que cada aldea conserve su estilo',d:'La libertad también puede ser una táctica.',color:'#61ff8b',delta:{villages:3,hope:3,rebels:2},next:'aeth_conq_alliance'},
+          {t:'Crear una fuerza de choque con Darian al frente',d:'Brutal, rápida, arriesgada.',color:'#ff7a18',delta:{rebels:3,fear:2,corr:1,weapons:2},next:'aeth_conq_champions'}
+        ]}},
+      aeth_conq_general_hunt:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 7',big:'EL GENERAL DE CENIZA',s:'Venganza o justicia',spk:'NARRADOR',
+        txt:`El general que quemó la aldea tiene eco de ceniza: todo lo que toca se vuelve polvo gris.
+
+Cuando lo encuentran, no ruega.
+
+Dice que el Rey Obscuro lo salvó del caos.
+
+Dice que quemar una aldea fue horrible, pero necesario.
+
+Kael entiende por qué este enemigo es peor: cree sinceramente que obedecer lo vuelve inocente.`,
+        choices:function(){return[
+          {t:'Capturarlo vivo para juzgarlo',d:'La resistencia no puede parecerse al rey.',color:'#61ff8b',delta:{publicTruth:2,hope:2,prisoners:1,hp:-8},next:'aeth_conq_public_trial'},
+          {t:'Dejar que Darian lo ejecute',d:'La aldea tendrá justicia inmediata.',color:'#ff4d4d',delta:{fear:3,corr:2,rebels:1},next:'aeth_conq_shadow_rebels'},
+          {t:'Ofrecerle cambiar de bando',d:'Una grieta dentro de la Corona Negra.',color:'#00e5ff',delta:{traitor:2,rebels:1,crown:-1},next:'aeth_conq_inside_contact'}
+        ]}},
+      aeth_conq_forge_destroyed:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 8',big:'LA FORJA CAE',s:'Victoria con humo negro',spk:'NARRADOR',
+        txt:`La Forja Negra explota bajo la montaña.
+
+Durante una noche, Aethrion ve una columna de fuego subir hasta las nubes.
+
+La resistencia celebra.
+
+El Rey Obscuro no.
+
+Al amanecer, responde destruyendo tres refugios y colgando sus banderas negras sobre las ruinas.
+
+"Cada victoria de ellos tendrá un precio", anuncia.`,
+        choices:function(){return[
+          {t:'Evacuar refugios restantes',d:'Salvar vidas antes que territorio.',color:'#61ff8b',delta:{villages:2,hope:1,hp:-4},next:'aeth_conq_alliance'},
+          {t:'Atacar una torre en respuesta',d:'No permitir que el miedo frene la rebelión.',color:'#d7a84a',delta:{rebels:2,weapons:1,hp:-10},next:'aeth_conq_tower_take'},
+          {t:'Buscar a los Tres Sabios desaparecidos',d:'El reino necesita legitimidad antigua.',color:'#9d37ff',delta:{sabios:2,murmexMemory:1},next:'aeth_conq_sages_lost'}
+        ]}},
+      aeth_conq_seria_escape:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 8',big:'SERIA ESCAPA',s:'Una verdad con pulso',spk:'SERIA',
+        txt:`Seria llega al campamento con la ropa llena de sangre que no es suya.
+
+Trae una llave, nombres de generales y una frase que escuchó del Rey Obscuro:
+
+"Murmex mató monstruos. Yo mataré la posibilidad de que vuelvan a necesitarlo."
+
+Nyra comprende.
+
+El rey quiere ser más que rey.
+
+Quiere reemplazar la fe, la historia y el miedo.`,
+        choices:function(){return[
+          {t:'Usar la llave para entrar al archivo real',d:'El origen del golpe puede estar allí.',color:'#9d37ff',delta:{publicTruth:3,traitor:2},next:'aeth_conq_archive_real'},
+          {t:'Proteger a Seria como símbolo público',d:'Una voz del palacio puede quebrar seguidores.',color:'#61ff8b',delta:{hope:3,rebels:2,publicTruth:2},next:'aeth_conq_public_truth'},
+          {t:'Preparar un asesinato contra el Rey Obscuro',d:'Cortar la cabeza de la tiranía.',color:'#ff4d4d',delta:{fear:2,corr:1,darkKingWound:1},next:'aeth_conq_failed_takeover_2'}
+        ]}},
+      aeth_conq_throne_key:{
+        img:'conq_crown',music:'story',title:'AETHRION',sub:'MES 8',big:'LA LLAVE DEL TRONO',s:'El camino al corazón del reino',spk:'NARRADOR',
+        txt:`La llave llega envuelta en tela negra.
+
+Abre una entrada bajo el salón del trono, construida para que la familia real escapara si Aethrion caía.
+
+Ahora puede servir para lo contrario.
+
+Entrar.
+
+Pero Kael sospecha que el Rey Obscuro permitió que la llave saliera.`,
+        choices:function(){return[
+          {t:'Entrar igual con un grupo pequeño',d:'Rápido, silencioso, letal.',color:'#d7a84a',delta:{darkKingWound:1,hp:-10,traitor:1},next:'aeth_conq_failed_takeover_2'},
+          {t:'Usar la llave para meter civiles a salvo',d:'Convertir un arma en rescate.',color:'#61ff8b',delta:{villages:2,hope:2,prisoners:2},next:'aeth_conq_alliance'},
+          {t:'Tender una trampa a los cazadores del rey',d:'Si era cebo, devolverlo con dientes.',color:'#00e5ff',delta:{weapons:2,rebels:2,hp:-5},next:'aeth_conq_champions'}
+        ]}},
+      aeth_conq_betrayal_cost:{
+        img:'conq_crown',music:'battle',title:'AETHRION',sub:'MES 8',big:'EL COSTO DE USAR A ALGUIEN',s:'La resistencia también puede ensuciarse',spk:'NARRADOR',
+        txt:`El plan funciona.
+
+El Rey Obscuro queda expuesto durante segundos.
+
+Pero Seria muere.
+
+Nyra no habla durante horas. Kael no mira a Darian. Darian dice que en una guerra nadie sobrevive limpio.
+
+Esa noche, algunos rebeldes celebran la eficacia.
+
+Otros se van.`,
+        choices:function(){return[
+          {t:'Aceptar la pérdida y seguir endurecidos',d:'Ganar el reino aunque duela.',color:'#ff4d4d',delta:{fear:3,corr:2,darkKingWound:2,hope:-1},next:'aeth_conq_shadow_rebels'},
+          {t:'Confesar lo ocurrido al campamento',d:'Verdad antes que propaganda.',color:'#61ff8b',delta:{publicTruth:2,hope:1,corr:-1},next:'aeth_conq_public_trial'},
+          {t:'Nyra abandona por una noche y busca a Murmex',d:'Necesita saber si esta línea ya se perdió.',color:'#9d37ff',delta:{murmexMemory:3,hp:-4},next:'aeth_conq_murmex_second_echo'}
+        ]}},
+      aeth_conq_kael_scar:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 9',big:'LA CICATRIZ DE KAEL',s:'El peso de liderar',spk:'KAEL',
+        txt:`Kael sobrevive, pero algo cambia.
+
+Su eco gravitacional se vuelve más profundo. Cuando camina, el polvo cae hacia sus pies como si el mundo recordara su cansancio.
+
+Los prisioneros liberados lo llaman "el que sostuvo el techo".
+
+Kael odia el título.
+
+Pero el título une gente.`,
+        choices:function(){return[
+          {t:'Aceptar el liderazgo público',d:'La resistencia necesita una cara.',color:'#243bff',delta:{hope:3,rebels:3,crown:1},next:'aeth_conq_alliance'},
+          {t:'Rechazar símbolos personales',d:'La causa no puede depender de uno solo.',color:'#61ff8b',delta:{villages:2,hope:2,rebels:2},next:'aeth_conq_council_rebels'},
+          {t:'Preparar el primer asalto real',d:'Ya no alcanza resistir.',color:'#d7a84a',delta:{civilWar:2,weapons:1},next:'aeth_conq_failed_takeover_2'}
+        ]}},
+      aeth_conq_darian_scar:{
+        img:'conq_war',music:'story',title:'AETHRION',sub:'MES 9',big:'LA CICATRIZ DE DARIAN',s:'Fuego que salva, fuego que amenaza',spk:'DARIAN',
+        txt:`Darian salva a cientos.
+
+También deja una marca negra en el corredor, una sombra quemada que no se enfría.
+
+El eco naranja de Darian late con bordes rojos durante una hora.
+
+El Rey Obscuro usa el rumor:
+
+"Ellos no quieren libertad. Quieren otro monstruo."`,
+        choices:function(){return[
+          {t:'Darian se somete a entrenamiento de control',d:'Demostrar que el eco puede elegir no corromperse.',color:'#61ff8b',delta:{corr:-2,hope:2,rebels:2},next:'aeth_conq_training'},
+          {t:'Responder al rumor con una victoria limpia',d:'Salvar una torre sin matar guardias.',color:'#00e5ff',delta:{hope:3,publicTruth:1,hp:-6},next:'aeth_conq_tower_take'},
+          {t:'Aceptar el papel de monstruo necesario',d:'El terror puede abrir puertas que la esperanza no.',color:'#ff4d4d',delta:{fear:4,corr:3,rebels:1},next:'aeth_conq_shadow_rebels'}
+        ]}},
+      aeth_conq_nyra_scar:{
+        img:'conq_sanctuary',music:'story',title:'AETHRION',sub:'MES 9',big:'LA CICATRIZ DE NYRA',s:'Un minuto repetido demasiadas veces',spk:'NYRA',
+        txt:`Nyra logra sacar a todos.
+
+Pero durante días responde preguntas antes de que se las hagan.
+
+Vio el mismo minuto catorce veces. En cuatro versiones Kael murió. En dos, Darian se volvió rojo. En una, el Rey Obscuro ganó sin levantar la espada.
+
+Murmex no despierta.
+
+Pero el silencio se parece demasiado a una advertencia.`,
+        choices:function(){return[
+          {t:'Usar las visiones para planear la guerra',d:'Cada futuro visto es una ventaja.',color:'#9d37ff',delta:{murmexMemory:3,weapons:2,hp:-4},next:'aeth_conq_champions'},
+          {t:'Dejar de mirar futuros por un tiempo',d:'La vida no puede vivirse solo evitando muertes.',color:'#61ff8b',delta:{hope:2,corr:-1},next:'aeth_conq_alliance'},
+          {t:'Buscar el segundo eco de Murmex',d:'La respuesta está donde el tiempo se dobla.',color:'#9d37ff',delta:{murmexMemory:4,hp:-8},next:'aeth_conq_murmex_second_echo'}
+        ]}},
+      aeth_conq_champions:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 10',big:'LOS CAMPEONES DEL REY',s:'Poder contra poder',spk:'NARRADOR',
+        txt:`El Rey Obscuro envía a sus campeones.
+
+Una portadora de eco de cadenas que ata sombras. Un hombre con eco de hueso que se arma desde adentro. Una niña entrenada para cortar señales emocionales. Un general con eco de hierro líquido.
+
+La batalla no es una pelea.
+
+Es una demostración de lo que el reino puede fabricar cuando no le importa romper almas.`,
+        choices:function(){return[
+          {t:'Kael lidera defensa gravitacional',d:'Convertir el campo en una trampa de peso.',color:'#243bff',delta:{rebels:2,darkKingWound:1,hp:-12,eco:10},next:'aeth_conq_champions_result'},
+          {t:'Nyra divide el combate en futuros pequeños',d:'Que cada escuadrón vea un segundo de ventaja.',color:'#9d37ff',delta:{murmexMemory:2,rebels:3,hp:-14,eco:12},next:'aeth_conq_champions_result'},
+          {t:'Darian rompe el centro enemigo',d:'Victoria rápida, riesgo alto.',color:'#ff7a18',delta:{fear:2,darkKingWound:2,corr:1,hp:-16,eco:14},next:'aeth_conq_champions_result'}
+        ]}},
+      aeth_conq_champions_result:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 10',big:'CAMPO PARTIDO',s:'La guerra ya no puede ocultarse',spk:'NARRADOR',
+        txt:function(){return `Los campeones caen o retroceden.
+
+Pero la resistencia paga caro.
+
+Aethrion entero entiende que esto ya no es una rebelión.
+
+Es guerra civil.
+
+Rebeldes reunidos: ${state.rebels || 0}
+Esperanza del pueblo: ${state.hope || 0}
+Poder herido del Rey Obscuro: ${state.darkKingWound || 0}
+Miedo instalado: ${state.fear || 0}`;},
+        choices:function(){return[
+          {t:'Marchar hacia las murallas',d:'Primer intento serio de tomar el reino.',color:'#d7a84a',delta:{civilWar:3},next:'aeth_conq_failed_takeover_2'},
+          {t:'Reunir consejo rebelde antes del asalto',d:'No repetir el mismo error del viejo reino.',color:'#61ff8b',delta:{hope:2,villages:2,rebels:1},next:'aeth_conq_council_rebels'},
+          {t:'Buscar a los Tres Sabios',d:'Si viven, pueden quebrar la legitimidad del tirano.',color:'#9d37ff',delta:{sabios:2,murmexMemory:1},next:'aeth_conq_sages_lost'}
+        ]}},
+      aeth_conq_alliance:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 10',big:'ALIANZA DE ALDEAS',s:'La libertad aprende a organizarse',spk:'NARRADOR',
+        txt:`Las aldeas envían representantes.
+
+No todos se aman. Algunos se odian desde antes del portal. Otros culpan a Aethrion por haber concentrado el poder durante generaciones.
+
+Kael pide unidad.
+
+Nyra pide memoria.
+
+Darian pide armas.
+
+La alianza nace discutiendo.
+
+Eso la vuelve real.`,
+        choices:function(){return[
+          {t:'Crear un consejo de aldeas',d:'Si ganan, no habrá otro rey absoluto.',color:'#61ff8b',delta:{hope:4,villages:4,rebels:2},next:'aeth_conq_council_rebels'},
+          {t:'Nombrar a Kael comandante temporal',d:'Orden para ganar primero, reformas después.',color:'#d7a84a',delta:{rebels:4,weapons:2,crown:1},next:'aeth_conq_tower_take'},
+          {t:'Permitir ataques independientes',d:'Más caos, más presión contra el rey.',color:'#ff7a18',delta:{fear:2,rebels:3,corr:1},next:'aeth_conq_shadow_rebels'}
+        ]}},
+      aeth_conq_council_rebels:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 11',big:'EL CONSEJO REBELDE',s:'La conquista no será una corona',spk:'NARRADOR',
+        txt:`El consejo rebelde decide algo que cambia la historia:
+
+si el Rey Obscuro cae, nadie heredará el poder absoluto.
+
+Aethrion será reconstruido con voces de aldeas, portadores, civiles y guardianes.
+
+Algunos celebran.
+
+Otros se van. Querían cambiar de rey, no cambiar el mundo.`,
+        choices:function(){return[
+          {t:'Mantener la promesa aunque divida fuerzas',d:'Ganar menos rápido, pero mejor.',color:'#61ff8b',delta:{hope:4,villages:3,rebels:-1},next:'aeth_conq_final_preparation'},
+          {t:'Ocultar la promesa hasta ganar',d:'La verdad puede esperar a la victoria.',color:'#d7a84a',delta:{rebels:2,crown:1,publicTruth:-1},next:'aeth_conq_final_preparation'},
+          {t:'Dejar que Darian convenza a los impacientes',d:'Fuego y palabras. Mala mezcla, tal vez necesaria.',color:'#ff7a18',delta:{rebels:2,fear:1,corr:1},next:'aeth_conq_final_preparation'}
+        ]}},
+      aeth_conq_tower_take:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 11',big:'LA TORRE DEL ECO',s:'Primer pedazo del reino recuperado',spk:'NARRADOR',
+        txt:`La Torre del Eco alimenta las comunicaciones de la Corona Negra.
+
+Zack, en la Tierra, habría amado romper algo así.
+
+Aquí, Nyra encuentra el pulso. Kael dobla la estructura sin tirarla. Darian sube como un incendio por las escaleras.
+
+Cuando la torre cae en manos rebeldes, miles escuchan una transmisión libre por primera vez.`,
+        choices:function(){return[
+          {t:'Transmitir mensaje de esperanza',d:'El reino debe saber que hay salida.',color:'#61ff8b',delta:{hope:4,rebels:2,publicTruth:2},next:'aeth_conq_final_preparation'},
+          {t:'Transmitir los crímenes del Rey Obscuro',d:'Que sus seguidores escuchen nombres y fechas.',color:'#9d37ff',delta:{publicTruth:4,crown:1,hope:2},next:'aeth_conq_final_preparation'},
+          {t:'Usar la torre para coordinar ataques simultáneos',d:'Una noche, diez golpes.',color:'#d7a84a',delta:{weapons:3,rebels:3,hp:-8,civilWar:2},next:'aeth_conq_final_preparation'}
+        ]}},
+      aeth_conq_shadow_rebels:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 11',big:'REBELS DE SOMBRA',s:'La libertad empieza a parecerse al miedo',spk:'NARRADOR',
+        txt:`Los ataques independientes funcionan.
+
+Demasiado.
+
+La Corona Negra pierde depósitos, puentes y patrullas. Pero algunos rebeldes empiezan a ejecutar rendidos. Otros marcan casas de colaboradores.
+
+El Rey Obscuro sonríe desde el palacio:
+
+"¿Ven? Sin mí solo son caos con banderas."`,
+        choices:function(){return[
+          {t:'Kael impone límites a la resistencia',d:'Perder apoyo radical para salvar el alma del movimiento.',color:'#61ff8b',delta:{corr:-2,hope:3,rebels:-1},next:'aeth_conq_final_preparation'},
+          {t:'Dejar que la sombra siga actuando',d:'La Corona Negra está sangrando.',color:'#ff4d4d',delta:{fear:4,corr:3,darkKingWound:2},next:'aeth_conq_final_preparation'},
+          {t:'Nyra muestra una visión del futuro rojo',d:'Que todos vean en qué pueden convertirse.',color:'#9d37ff',delta:{murmexMemory:3,corr:-1,hope:2,hp:-8},next:'aeth_conq_final_preparation'}
+        ]}},
+      aeth_conq_sages_lost:{
+        img:'conq_sanctuary',music:'story',title:'AETHRION',sub:'MES 11',big:'LOS SABIOS PERDIDOS',s:'Los gigantes no murieron, se ocultaron',spk:'NARRADOR',
+        txt:`Encuentran a uno de los Tres Sabios bajo una ciudad hundida.
+
+Está herido, viejo incluso para algo antiguo.
+
+Confiesa que cerraron el portal por necesidad, pero luego dejaron al reino sin respuestas. Su silencio permitió que el miedo eligiera un tirano.
+
+"El Rey Obscuro no apareció de la nada", dice. "Lo invocamos con nuestra cobardía."`,
+        choices:function(){return[
+          {t:'Llevar al Sabio ante el pueblo',d:'Su confesión puede romper la corona.',color:'#61ff8b',delta:{sabios:4,publicTruth:4,hope:3},next:'aeth_conq_final_preparation'},
+          {t:'Pedirle un arma contra el rey',d:'La verdad no alcanza si el tirano tiene ejército.',color:'#d7a84a',delta:{weapons:4,sabios:2,crown:1},next:'aeth_conq_final_preparation'},
+          {t:'Exigirle que despierte a Murmex',d:'Si Murmex salvó Aethrion una vez, puede hacerlo de nuevo.',color:'#9d37ff',delta:{murmexMemory:4,sabios:2,corr:1},next:'aeth_conq_murmex_second_echo'}
+        ]}},
+      aeth_conq_archive_real:{
+        img:'conq_crown',music:'story',title:'AETHRION',sub:'MES 11',big:'ARCHIVO REAL',s:'El golpe estaba escrito',spk:'NARRADOR',
+        txt:`El archivo revela que el Rey Obscuro preparaba su ascenso antes de que murieran el rey y la reina.
+
+Durante el ataque de los monstruos, retiró guardias de pasillos clave.
+
+No mató a los monstruos.
+
+Los dejó llegar.
+
+No fue solo oportunista.
+
+Fue cómplice del desastre.`,
+        choices:function(){return[
+          {t:'Publicar la prueba completa',d:'Muchos seguidores no podrán negar esto.',color:'#61ff8b',delta:{publicTruth:5,hope:3,crown:2},next:'aeth_conq_final_preparation'},
+          {t:'Guardarla para enfrentar al rey cara a cara',d:'Una verdad usada en el segundo exacto.',color:'#9d37ff',delta:{murmexMemory:1,darkKingWound:2},next:'aeth_conq_final_preparation'},
+          {t:'Usarla para reclutar generales enemigos',d:'Algunos solo necesitan excusa para traicionar.',color:'#d7a84a',delta:{traitor:3,rebels:3,weapons:1},next:'aeth_conq_final_preparation'}
+        ]}},
+      aeth_conq_public_trial:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 11',big:'JUICIO EN RUINAS',s:'La resistencia decide quién quiere ser',spk:'NARRADOR',
+        txt:`El juicio se realiza en una plaza sin techo.
+
+No todos están de acuerdo. Muchos quieren sangre. Otros quieren reglas.
+
+Kael escucha a víctimas. Nyra escucha el pasado del lugar. Darian se queda atrás, con el fuego apagado por primera vez.
+
+El acusado no queda libre.
+
+Pero no muere sin voz.
+
+Esa diferencia se vuelve una bandera.`,
+        choices:function(){return[
+          {t:'Transmitir el juicio a todo Aethrion',d:'Mostrar que hay otra forma de justicia.',color:'#61ff8b',delta:{hope:4,publicTruth:3,rebels:2},next:'aeth_conq_final_preparation'},
+          {t:'Intercambiar al acusado por prisioneros',d:'Salvar vivos aunque duela.',color:'#00e5ff',delta:{prisoners:3,hope:2},next:'aeth_conq_final_preparation'},
+          {t:'Dejar que las víctimas decidan',d:'Justicia popular, impredecible.',color:'#d7a84a',delta:{fear:1,hope:1,corr:1},next:'aeth_conq_final_preparation'}
+        ]}},
+      aeth_conq_group_fracture:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 11',big:'EL GRUPO SE QUIEBRA',s:'La guerra entra en casa',spk:'NARRADOR',
+        txt:`Kael y Darian pelean.
+
+No una discusión.
+
+Una pelea real.
+
+Gravedad contra fuego. Piedras flotando. Aire caliente. Nyra grita que el Rey Obscuro gana cada vez que ellos se parecen a su propaganda.
+
+Al final nadie vence.
+
+Pero todos entienden que sobrevivir no los mantuvo unidos automáticamente.`,
+        choices:function(){return[
+          {t:'Pedir perdón y reorganizar el liderazgo',d:'La unidad también se entrena.',color:'#61ff8b',delta:{hope:3,corr:-2,rebels:1},next:'aeth_conq_council_rebels'},
+          {t:'Separar misiones para evitar otra pelea',d:'Eficiente, pero frío.',color:'#00e5ff',delta:{weapons:2,rebels:1},next:'aeth_conq_final_preparation'},
+          {t:'Dejar que Darian lidere el ataque final',d:'Si quiere cargar con el fuego, que lo haga.',color:'#ff7a18',delta:{fear:2,corr:2,weapons:2},next:'aeth_conq_final_preparation'}
+        ]}},
+      aeth_conq_murmex_second_echo:{
+        img:'conq_sanctuary',music:'story',title:'AETHRION',sub:'MES 12',big:'SEGUNDO ECO DE MURMEX',s:'El durmiente no despierta, pero responde',spk:'MURMEX',
+        txt:`El Santuario no se abre.
+
+Pero el eco de Murmex habla desde una línea temporal vieja.
+
+"Destruí monstruos porque no podían elegir. El Rey Obscuro sí puede."
+
+Nyra pregunta si van a ganar.
+
+Murmex responde:
+
+"Eso no importa tanto como qué serán si ganan."`,
+        choices:function(){return[
+          {t:'Aceptar que Murmex no peleará esta guerra',d:'Esta vez Cetrios debe salvarse a sí mismo.',color:'#61ff8b',delta:{hope:4,murmexMemory:3,corr:-1},next:'aeth_conq_final_preparation'},
+          {t:'Pedirle una sola visión del final',d:'Una respuesta puede costar demasiado.',color:'#9d37ff',delta:{murmexMemory:5,hp:-12},next:'aeth_conq_final_preparation'},
+          {t:'Prometer matar al Rey Obscuro cueste lo que cueste',d:'Murmex guarda silencio. Eso también es respuesta.',color:'#ff4d4d',delta:{fear:2,corr:2,darkKingWound:1},next:'aeth_conq_final_preparation'}
+        ]}},
+      aeth_conq_failed_takeover_1:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 4',big:'PRIMER INTENTO DE TOMAR EL REINO',s:'Demasiado pronto',spk:'NARRADOR',
+        txt:`El primer intento fracasa.
+
+La resistencia todavía no es ejército. El pueblo todavía no sabe si creer. El Rey Obscuro ya esperaba la jugada.
+
+Las puertas se cierran.
+
+Las torres disparan jaulas de eco.
+
+Kael, Nyra y Darian sobreviven, pero cientos no.
+
+El Rey Obscuro aparece en todos los altares de comunicación:
+
+"Les ofrecí orden. Ellos les trajeron muerte."`,
+        choices:function(){return[
+          {t:'Retirarse y reconstruir en secreto',d:'La derrota puede enseñar.',color:'#61ff8b',delta:{hp:-10,rebels:1,hope:1,fear:2},next:'aeth_conq_refuge'},
+          {t:'Culpar al rey públicamente por la masacre',d:'La propaganda también puede sangrar.',color:'#9d37ff',delta:{publicTruth:2,hope:1,crown:1,hp:-8},next:'aeth_conq_public_truth'},
+          {t:'Responder con ataques de sombra',d:'Ya no habrá guerra limpia.',color:'#ff4d4d',delta:{fear:3,corr:2,hp:-6},next:'aeth_conq_shadow_rebels'}
+        ]}},
+      aeth_conq_failed_takeover_2:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'MES 9',big:'SEGUNDO INTENTO DE TOMAR EL REINO',s:'El Rey Obscuro muestra los dientes',spk:'NARRADOR',
+        txt:`Esta vez llegan más lejos.
+
+Cruzan la primera muralla. Toman patios. Liberan prisioneros.
+
+Y entonces el Rey Obscuro revela su verdadera arma: torres alimentadas con restos de monstruos destruidos por Murmex.
+
+Disparan contra ecos, no contra cuerpos.
+
+Decenas de portadores caen sin heridas visibles.`,
+        choices:function(){return[
+          {t:'Kael derrumba una torre sobre sí mismo',d:'Sobrevive si el grupo lo saca a tiempo.',color:'#243bff',delta:{darkKingWound:2,hp:-20,rebels:1},next:'aeth_conq_kael_scar'},
+          {t:'Nyra rebobina once segundos de batalla',d:'Salvar a muchos puede quebrar su mente.',color:'#9d37ff',delta:{murmexMemory:3,hp:-18,darkKingWound:1},next:'aeth_conq_nyra_scar'},
+          {t:'Darian incendia las bases de las torres',d:'Efectivo y aterrador.',color:'#ff7a18',delta:{darkKingWound:3,corr:2,hp:-16},next:'aeth_conq_darian_scar'}
+        ]}},
+      aeth_conq_final_preparation:{
+        img:'conq_ruins',music:'story',title:'AETHRION',sub:'MES 12',big:'ANTES DE LA GRAN CONQUISTA',s:'La última noche',spk:'NARRADOR',
+        txt:function(){return `Pasa casi un año desde que Murmex destruyó a los monstruos.
+
+Un año de hambre, ejecuciones, refugios, torres tomadas, fracasos, victorias y nombres grabados en paredes rotas.
+
+Ahora todo Cetrios mira a Aethrion.
+
+Estado de la resistencia:
+Rebeldes: ${state.rebels || 0}
+Esperanza: ${state.hope || 0}
+Aldeas unidas: ${state.villages || 0}
+Pruebas contra el Rey Obscuro: ${state.publicTruth || 0}
+Poder militar: ${state.weapons || 0}
+Corrupción interna: ${state.corr || 0}
+Miedo: ${state.fear || 0}`;},
+        choices:function(){return[
+          {t:'Asalto popular: abrir todas las puertas',d:'Miles de portadores contra la Corona Negra.',color:'#61ff8b',delta:{finalChoice:'people',civilWar:4},next:'aeth_conq_final_battle'},
+          {t:'Asalto estratégico: cortar torres y capturar al rey',d:'Menos épico, más preciso.',color:'#00e5ff',delta:{finalChoice:'strategy',civilWar:3},next:'aeth_conq_final_battle'},
+          {t:'Asalto brutal: destruir el palacio si hace falta',d:'El Rey Obscuro no dejará el trono vivo.',color:'#ff4d4d',delta:{finalChoice:'brutal',civilWar:5,corr:2},next:'aeth_conq_final_battle'}
+        ]}},
+      aeth_conq_final_battle:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'LA GRAN CONQUISTA',big:'GUERRA CIVIL',s:'Ecos contra ecos',spk:'NARRADOR',
+        txt:`La batalla final empieza antes del amanecer.
+
+Miles de dones se cruzan bajo el cielo de Cetrios.
+
+Ecos de cristal levantan murallas transparentes. Ecos de humo cubren avenidas. Ecos de cadena arrancan balcones. Ecos de canto rompen órdenes militares. Ecos de gravedad hunden tanques negros. Ecos de fuego abren caminos.
+
+El Rey Obscuro observa desde el trono.
+
+No parece derrotado.
+
+Parece preparado para destruir Aethrion antes que perderlo.`,
+        choices:function(){return[
+          {t:'Kael enfrenta al ejército central',d:'Sostener el campo para que el pueblo avance.',color:'#243bff',delta:{hp:-14,eco:12,rebels:2},next:'aeth_conq_final_gate'},
+          {t:'Nyra atraviesa el futuro hasta el salón del trono',d:'Buscar la línea donde el rey cae.',color:'#9d37ff',delta:{hp:-16,eco:14,murmexMemory:2},next:'aeth_conq_final_throne'},
+          {t:'Darian abre una grieta de fuego hacia el palacio',d:'El camino más corto también puede ser el más caro.',color:'#ff7a18',delta:{hp:-18,eco:16,corr:2,darkKingWound:1},next:'aeth_conq_final_fire'}
+        ]}},
+      aeth_conq_final_gate:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'BATALLA FINAL',big:'LA PUERTA DEL PUEBLO',s:'La ciudad decide',spk:'KAEL',
+        txt:`Kael cae de rodillas frente a la puerta principal.
+
+Detrás de él, aldeanos, soldados desertores y portadores jóvenes empujan juntos.
+
+La puerta pesa como una montaña porque el Rey Obscuro la alimentó con eco robado.
+
+Kael no intenta romperla.
+
+Comparte el peso.
+
+Por primera vez, miles sienten la misma gravedad.`,
+        choices:function(){return[
+          {t:'Todos empujan juntos',d:'La conquista no será de tres héroes, sino de un pueblo.',color:'#61ff8b',delta:{hope:4,rebels:3,corr:-1},next:'aeth_conq_final_decider'},
+          {t:'Kael carga solo con la puerta',d:'Un acto heroico puede salvarlos o matarlo.',color:'#243bff',delta:{hp:-22,darkKingWound:1,hope:2},next:'aeth_conq_final_decider'},
+          {t:'Ordenar a Darian destruir la puerta',d:'Abrir paso por fuerza total.',color:'#ff7a18',delta:{corr:2,fear:2,darkKingWound:2},next:'aeth_conq_final_decider'}
+        ]}},
+      aeth_conq_final_throne:{
+        img:'conq_crown',music:'battle',title:'AETHRION',sub:'BATALLA FINAL',big:'EL TRONO OBSCURO',s:'El rey no tiembla',spk:'REY OBSCURO',
+        txt:`Nyra llega al salón del trono antes que su propio cuerpo.
+
+Ve futuros encima de futuros.
+
+En uno el rey muere. En otro gana. En otro Aethrion queda libre pero vacío.
+
+El Rey Obscuro la mira como si supiera que ella está viendo.
+
+"El futuro no se negocia", dice. "Se conquista."`,
+        choices:function(){return[
+          {t:'Mostrarle al pueblo la verdad del archivo real',d:'Que su poder se rompa delante de todos.',color:'#61ff8b',delta:{publicTruth:4,hope:3,darkKingWound:1},next:'aeth_conq_final_decider'},
+          {t:'Encerrarlo en un bucle de once segundos',d:'Peligroso, pero puede detenerlo sin matarlo.',color:'#9d37ff',delta:{murmexMemory:3,hp:-12,darkKingWound:2},next:'aeth_conq_final_decider'},
+          {t:'Cortar la línea donde sobrevive',d:'Nyra cruza un límite temporal.',color:'#ff4d4d',delta:{corr:3,darkKingWound:3,hp:-10},next:'aeth_conq_final_decider'}
+        ]}},
+      aeth_conq_final_fire:{
+        img:'conq_war',music:'battle',title:'AETHRION',sub:'BATALLA FINAL',big:'EL CAMINO DE FUEGO',s:'Darian frente al rojo',spk:'DARIAN',
+        txt:`Darian abre el palacio con una línea de fuego naranja.
+
+Por un instante, los bordes se vuelven rojos.
+
+El Rey Obscuro activa las torres restantes y apunta contra barrios enteros.
+
+"Si Aethrion no aprende a obedecer", dice, "Aethrion desaparecerá."`,
+        choices:function(){return[
+          {t:'Darian apaga su propio fuego y salva los barrios',d:'Renunciar a la victoria fácil para no volverse Tronox.',color:'#61ff8b',delta:{corr:-3,hope:4,hp:-12},next:'aeth_conq_final_decider'},
+          {t:'Darian destruye las torres sin medir daños',d:'Puede terminar la guerra y condenar su alma.',color:'#ff4d4d',delta:{corr:4,darkKingWound:3,fear:3,hp:-10},next:'aeth_conq_final_decider'},
+          {t:'Kael y Nyra contienen el fuego de Darian juntos',d:'El grupo elige salvarse antes de ganar.',color:'#00e5ff',delta:{hope:2,corr:-1,rebels:2,hp:-8},next:'aeth_conq_final_decider'}
+        ]}},
+      aeth_conq_final_decider:{
+        img:'conq_final',music:'end',title:'AETHRION',sub:'FINAL',big:'EL ÚLTIMO ECO DEL REINO',s:'La conquista decide qué nace después',spk:'NARRADOR',
+        txt:function(){return `El Rey Obscuro queda frente a los tres protagonistas.
+
+Detrás de él, el trono.
+
+Detrás de ellos, un año de muertos, refugios, aldeas y promesas.
+
+El tirano levanta la mano.
+
+"Si no puedo poseer Aethrion, lo borraré."
+
+Los ecos de todo el campo tiemblan.
+
+Rebeldes: ${state.rebels || 0}
+Esperanza: ${state.hope || 0}
+Aldeas: ${state.villages || 0}
+Verdad pública: ${state.publicTruth || 0}
+Armas: ${state.weapons || 0}
+Heridas al Rey Obscuro: ${state.darkKingWound || 0}
+Corrupción: ${state.corr || 0}
+Miedo: ${state.fear || 0}`;},
+        choices:function(){return[
+          {t:'Derrotarlo y formar un consejo libre',d:'Final bueno: el poder vuelve al pueblo.',color:'#61ff8b',delta:{finalChoice:'free'},next:function(){return ((state.hope||0)+(state.villages||0)+(state.publicTruth||0)+(state.rebels||0) >= 21 && (state.corr||0) <= 6) ? 'aeth_conq_end_free' : 'aeth_conq_end_dark_king';}},
+          {t:'Tomar el palacio y coronar un mando temporal',d:'Final bueno amargo: ganan, pero el peligro del poder sigue.',color:'#d7a84a',delta:{finalChoice:'crown'},next:function(){return ((state.weapons||0)+(state.rebels||0)+(state.darkKingWound||0)+(state.traitor||0) >= 16) ? 'aeth_conq_end_new_crown' : 'aeth_conq_end_crushed';}},
+          {t:'Destruir al Rey Obscuro a cualquier precio',d:'Final malo posible: vencer puede parecerse demasiado a perder.',color:'#ff4d4d',delta:{finalChoice:'ash',corr:3},next:function(){return ((state.corr||0)+(state.fear||0) >= 10) ? 'aeth_conq_end_red_war' : 'aeth_conq_end_new_crown';}}
+        ]}},
+      aeth_conq_end_free:{
+        img:'conq_final',music:'end',title:'AETHRION',sub:'FINAL 1 DE 4',big:'EL REINO LIBRE',s:'Final bueno',spk:'NARRADOR',
+        txt:`La puerta del palacio se abre desde adentro.
+
+No por un héroe.
+
+Por cientos.
+
+El Rey Obscuro cae, no bajo una espada, sino bajo la verdad de todos los que dejó sin nombre.
+
+Kael no acepta corona. Nyra destruye el registro de ecos. Darian apaga las últimas llamas antes de que toquen los barrios.
+
+Aethrion no vuelve a ser como antes.
+
+Ese es el milagro.
+
+Las aldeas forman un consejo. Los portadores dejan de registrarse como armas. Los muertos reciben nombres en las murallas.
+
+En la montaña, Murmex duerme.
+
+Pero por un segundo, las rocas vibran como si aprobara el silencio nuevo de Cetrios.`,
+        choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}
+      },
+      aeth_conq_end_new_crown:{
+        img:'conq_final',music:'end',title:'AETHRION',sub:'FINAL 2 DE 4',big:'LA NUEVA CORONA',s:'Final bueno amargo',spk:'NARRADOR',
+        txt:`El Rey Obscuro muere en el salón del trono.
+
+La guerra termina.
+
+Pero el reino no sabe vivir sin alguien arriba.
+
+Kael acepta un mando temporal para evitar que las facciones se maten entre sí. Nyra vigila que el poder no vuelva a cerrarse como una jaula. Darian se aleja de la capital, temiendo que su fuego haya disfrutado demasiado la victoria.
+
+Aethrion se reconstruye.
+
+Hay pan. Hay patrullas. Hay escuelas de eco libres.
+
+Pero también hay sombras que preguntan cuándo una emergencia deja de ser emergencia.
+
+La conquista fue real.
+
+La libertad todavía debe ganarse cada día.`,
+        choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}
+      },
+      aeth_conq_end_dark_king:{
+        img:'conq_final',music:'end',title:'AETHRION',sub:'FINAL 3 DE 4',big:'EL REY OBSCURO PERMANECE',s:'Final malo',spk:'NARRADOR',
+        txt:`La resistencia llega al palacio.
+
+Pero llega dividida.
+
+Algunos querían libertad. Otros venganza. Otros una corona distinta. El Rey Obscuro solo necesitaba esperar a que esas grietas se abrieran.
+
+Las torres disparan.
+
+Kael cae sosteniendo una avenida para que otros escapen. Nyra desaparece en una línea temporal que nadie puede seguir. Darian sobrevive, pero su fuego ya no ilumina: amenaza.
+
+El Rey Obscuro habla al reino al amanecer:
+
+"Les mostré el caos. Ahora aceptarán el orden."
+
+Aethrion sigue de pie.
+
+Eso es lo peor.
+
+Porque el tirano también.`,
+        choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}
+      },
+      aeth_conq_end_crushed:{
+        img:'conq_final',music:'end',title:'AETHRION',sub:'FINAL 4 DE 4',big:'LA CONQUISTA FALLIDA',s:'Final malo',spk:'NARRADOR',
+        txt:`El segundo antes de la victoria, el Rey Obscuro destruye los cimientos del palacio.
+
+No para escapar.
+
+Para demostrar que Aethrion le pertenece incluso cayendo.
+
+La ciudad se parte. Torres enteras se hunden. Barrios completos quedan bajo polvo dorado y negro.
+
+Los tres protagonistas sobreviven apenas.
+
+Pero la resistencia queda rota. Las aldeas vuelven a esconderse. Los seguidores del rey convierten la derrota rebelde en religión.
+
+En algún lugar bajo la montaña, Murmex sigue dormido.
+
+Y por primera vez, Nyra teme que no despierte porque ya vio este final demasiadas veces.`,
+        choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}
+      },
+      aeth_conq_end_red_war:{
+        img:'conq_final',music:'end',title:'AETHRION',sub:'FINAL OCULTO',big:'LA GUERRA ROJA',s:'Final malo oculto',spk:'NARRADOR',
+        txt:`El Rey Obscuro cae.
+
+Pero cae dentro de un incendio que no se apaga.
+
+Darian cruza el límite. No se convierte en Tronox. Eso sería demasiado simple.
+
+Se convierte en una advertencia nueva.
+
+La resistencia gana el palacio y pierde el alma. Los enemigos son ejecutados. Los colaboradores marcados. Las aldeas obligadas a obedecer a quienes acaban de liberarlas.
+
+Nyra llora frente al trono vacío.
+
+Kael entiende tarde que no todos los monstruos venían del portal.
+
+Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
+        choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}
+      }
+    });
+  }
+
+  setTimeout(bindOpenConquest,0);
 })();
 </script>
 
