@@ -540,7 +540,7 @@ body.aethrion-mode #storyBackHub{display:block!important}
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card available ZERATH-card serat-card" id="openSerat" type="button" style="--line:#ff2f55">
+      <button class="hub-card available ZERATH-card zerath-card" id="openSerat" type="button" style="--line:#ff2f55">
         <span><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH · EL HORROR DE GRIOX</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
@@ -738,7 +738,7 @@ const S={
   {t:'Dominar su Eco corrupto',d:'Usar la corrupción contra él.',tag:'RIESGO',color:C.red,delta:{corr:2,eco:6},next:()=>{state.finalChoice='dominate';ending()}},
   {t:'Proteger al equipo que queda',d:'Tal vez ganar no sea lo único.',tag:'SACRIFICIO',color:C.green,delta:{hp:-8,triniTrust:2,zackTrust:2},next:()=>{state.finalChoice='protect';ending()}}]}
 ,
- triniStart:{img:'trini_plane',music:'story',title:'TRINI',sub:'CAMPAÑA · SOMBRAS',big:'TRINI',s:'El vuelo que cayó',spk:'NARRADOR',delta:{campaign:'trini',trini:'alive',triniTrust:2,hp:0,eco:0},txt:'Trini piloteaba un avión cuando la señal de Aethrion atravesó las nubes.\n\nEn la radio se hablaba de Valmora: Theo, Mila, Lucy, Norryn y Kate; custodios, monstruos, una ciudad rota.\n\nElla pensó que podía mantener el control. Entonces su sombra se despegó del asiento.',next:'triniFlightChoice'},
+ triniStart:{img:'trini_plane',music:'story',title:'TRINI',sub:'CAMPAÑA · SOMBRAS',big:'TRINI',s:'El vuelo que cayó',spk:'NARRADOR',delta:{campaign:'trini',trini:'alive',triniTrust:2,hp:0,eco:0},txt:'Trini piloteaba un avión cuando la señal de la Tierra atravesó las nubes.\n\nEn la radio se hablaba de Valmora: Theo, Mila, Lucy, Norryn y Kate; custodios, monstruos, una ciudad rota.\n\nElla pensó que podía mantener el control. Entonces su sombra se despegó del asiento.',next:'triniFlightChoice'},
  triniFlightChoice:{img:'trini_plane',title:'TRINI',sub:'EN PLENO VUELO',big:'EL CUSTODIO DESPIERTA',s:'El cielo se parte',spk:'TRINI',txt:'La cabina parpadea. La torre grita por radio. Trini siente algo oscuro y frío respirando debajo de su piel.\n\nSus manos siguen en los controles, pero por un segundo ella ya no está ahí.',choices:()=>[
   {t:'Aferrarse a los controles',d:'Respirar. Volver al asiento. No soltar el avión.',color:C.trini,delta:{hp:-8,eco:8,triniTrust:1},next:'triniCrash'},
   {t:'Responder por radio',d:'Pedir coordenadas, aunque la voz le tiemble.',color:C.cyan,delta:{hp:-4,eco:5},next:'triniCrash'},
@@ -776,7 +776,7 @@ const S={
  triniSavesLinLate:{img:'lintrini',title:'TRINI',sub:'CRUCE CON LIN',big:'UN SEGUNDO TARDE',s:'Pero todavía a tiempo',spk:'NARRADOR',txt:'Trini espera demasiado. Lin recibe el golpe, pero sigue vivo.\n\nCuando Aeronyx levanta la mano para terminarlo, ella aparece desde su sombra.',delta:{hp:-6},next:'aerChoice'},
  triniLeavesTeaser:{img:'trini_bridge',title:'TRINI',sub:'RUTA DIVIDIDA',big:'VALMORA PRIMERO',s:'La campaña se separa',spk:'NARRADOR',txt:'Trini se aleja hacia la ruta que conecta Lustonia con Valmora.\n\nAtrás, Lin sigue peleando contra Aeronyx sin saber que alguien pudo salvarlo.\n\nEsta ruta quedará marcada para cuando la historia de Trini continúe completa.',next:'start'},
  aeth_start:{img:'aethrion_castle',music:'story',title:'AETHRION',sub:'EL MUNDO ECO · 2000 AÑOS ANTES',big:'EL MUNDO ECO',s:'Planeta Cetrios',spk:'NARRADOR',delta:{campaign:'aethrion',hp:0,eco:20,corr:0,humanity:55,wrath:0,ednaTrust:0,rebelArmy:0,kingAlert:0,aethPerfect:0},txt:'Mucho antes de Valmora y Lustonia, el planeta Cetrios tenía un país que dominaba casi todo: Aethrion.\n\nAllí nadie nacía vacío. Todos nacían con un Eco.\n\nAlgunos tenían fuego. Otros memoria. Otros podían sanar, borrar recuerdos, endurecer la piel, mover objetos o escuchar pensamientos.\n\nEl Eco no era solo poder: era reflejo del alma. Cambiaba con lo que una persona hacía, sufría y elegía.',next:'aeth_edna_aernos'},
- aeth_edna_aernos:{img:'aethrion_castle',title:'AETHRION',sub:'EL MUNDO ECO',big:'EDNA Y AERNOS',s:'Antes de la caída',spk:'NARRADOR',txt:'Edna era la princesa heredera de Aethrion.\n\nAernos pertenecía a una familia política opositora al rey. Su casa denunciaba la crueldad del trono, las condenas públicas y el uso del Eco como herramienta de control.\n\nNada de eso impidió que Edna y Aernos se enamoraran como si el reino entero no existiera.',choices:()=>[
+ aeth_edna_aernos:{img:'aethrion_castle',title:'AETHRION',sub:'EL MUNDO ECO',big:'EDNA Y AERNOS',s:'Antes de la caída',spk:'NARRADOR',txt:'Edna era la princesa heredera de la Tierra.\n\nAernos pertenecía a una familia política opositora al rey. Su casa denunciaba la crueldad del trono, las condenas públicas y el uso del Eco como herramienta de control.\n\nNada de eso impidió que Edna y Aernos se enamoraran como si el reino entero no existiera.',choices:()=>[
   {t:'Pedirle a Edna que huya con él',d:'Elegir el amor antes que el trono.',color:C.gold,delta:{humanity:6,ednaTrust:3,kingAlert:1,aethPerfect:1},next:'aeth_secret_love'},
   {t:'Pedirle que enfrente a su padre',d:'Creer que la verdad todavía puede cambiar el reino.',color:C.cyan,delta:{humanity:4,ednaTrust:2,kingAlert:2},next:'aeth_secret_love'},
   {t:'Guardar silencio por ahora',d:'Esperar. Observar. No exponerla.',color:C.trini,delta:{ednaTrust:1,wrath:1},next:'aeth_secret_love'}
@@ -839,18 +839,18 @@ const S={
   {t:'Matar al rey, pero no al reino',d:'Una última frontera antes del abismo.',color:C.cyan,delta:{humanity:5,wrath:5},next:()=> state.humanity>=70 && state.corr<=7 ? 'aeth_final_gray' : 'aeth_final_tronox'}
  ]},
  aeth_final_tronox:{img:'aethrion_fire',music:'end',title:'AETHRION',sub:'FINAL',big:'EL NACIMIENTO DE TRONOX',s:'Final canon oscuro',spk:'NARRADOR',txt:'Tronox sale de Aernos como una forma humana diabólica hecha de furia, control y Eco corrompido.\n\nAsesina al rey.\n\nEl palacio cae. El mundo Eco entiende por primera vez que una persona puede romper el límite de su propia alma.\n\nAernos/Tronox es atrapado y encarcelado durante años.\n\nMucho después, esa prisión se romperá. Y una parte de él llegará a la Tierra.\n\nValmora. Lustonia. Todo empieza acá.',choices:()=>[
-  {t:'Volver al inicio de Aethrion',d:'Intentar cambiar el destino.',color:C.gold,delta:{},next:'aeth_start'},
+  {t:'Volver al inicio de la Tierra',d:'Intentar cambiar el destino.',color:C.gold,delta:{},next:'aeth_start'},
   {t:'Volver al HUB de universos',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'aeth_to_hub'}
  ]},
  aeth_final_gray:{img:'aethrion_throne',music:'end',title:'AETHRION',sub:'FINAL',big:'EL REY CAE',s:'Final gris',spk:'NARRADOR',txt:'Edna muere. El rey también.\n\nAernos siente a Tronox dentro suyo, pero logra encerrarlo antes de que destruya todo.\n\nNo queda paz. No queda amor. Pero queda una decisión: no dejar que el dolor gobierne por completo.\n\nAethrion entra en guerra. Aernos desaparece entre ruinas, perseguido por quienes temen lo que casi nació.',choices:()=>[
-  {t:'Volver al inicio de Aethrion',d:'Buscar otro final.',color:C.gold,delta:{},next:'aeth_start'},
+  {t:'Volver al inicio de la Tierra',d:'Buscar otro final.',color:C.gold,delta:{},next:'aeth_start'},
   {t:'Volver al HUB de universos',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'aeth_to_hub'}
  ]},
  aeth_final_perfect:{img:'aethrion_castle',music:'end',title:'AETHRION',sub:'FINAL SECRETO',big:'EL MUNDO ECO NUNCA CAYÓ',s:'Final ideal',spk:'NARRADOR',txt:'Aernos no deja que el odio decida por él.\n\nControla el Eco con una precisión imposible y detiene al rey antes de que mate a Edna.\n\nEl rey cae. Edna vive.\n\nAernos no se convierte en Tronox. El reino descubre la verdad. Aethrion cambia de manos.\n\nAernos y Edna gobiernan un mundo herido, pero vivo.\n\nSin Tronox, no hay prisión rota. No hay Valmora. No hay Lustonia.\n\nPor primera vez, el Eco no responde al dolor. Responde a la elección.',choices:()=>[
-  {t:'Volver al inicio de Aethrion',d:'Jugar otra ruta.',color:C.gold,delta:{},next:'aeth_start'},
+  {t:'Volver al inicio de la Tierra',d:'Jugar otra ruta.',color:C.gold,delta:{},next:'aeth_start'},
   {t:'Volver al HUB de universos',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'aeth_to_hub'}
  ]},
- aeth_to_hub:{img:'aethrion_castle',title:'AETHRION',sub:'UNIVERSOS',spk:'NARRADOR',txt:'El Eco de Aethrion se apaga por ahora.\n\nVolvés al mapa de historias.',choices:()=>[
+ aeth_to_hub:{img:'aethrion_castle',title:'AETHRION',sub:'UNIVERSOS',spk:'NARRADOR',txt:'El Eco de la Tierra se apaga por ahora.\n\nVolvés al mapa de historias.',choices:()=>[
   {t:'Volver al HUB',d:'Elegir otra historia.',color:C.cyan,delta:{},next:'start'}
  ]}
 
@@ -1686,13 +1686,13 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
     Object.assign(S,{
       mur_start:{img:'mur_palace',music:'story',title:'AETHRION',sub:'EL DESPERTAR DE MURMEX',big:'CETRIOS ARDE',s:'Después de DUAL: Valmora',spk:'NARRADOR',
         delta:{campaign:'murmex',hp:0,eco:15,corr:0,clue:0,mercy:0,army:0,murmex:0,kael:1,nyra:1,darian:1,kingAlive:1,queenAlive:1,monsters:0,civilians:0,answers:0,sanctuary:0},
-        txt:`Cuando Tronox envió la señal multiversal desde Valmora, los Tres Sabios de Cetrios cerraron el portal.
+        txt:`Cuando Tronox envió la señal multiversal desde Valmora, los Tres Sabios de la Tierra cerraron el portal.
 
 La Tierra quedó herida.
 
-Pero en Cetrios ocurrió algo peor: miles de monstruos que no alcanzaron a escapar quedaron encerrados dentro del mundo. Las jaulas ancestrales se abrieron. Las aldeas pequeñas cayeron primero.
+Pero en la Tierra ocurrió algo peor: miles de monstruos que no alcanzaron a escapar quedaron encerrados dentro del mundo. Las jaulas ancestrales se abrieron. Las aldeas pequeñas cayeron primero.
 
-Ahora el reinado de Aethrion mira sus murallas y entiende que el enemigo ya no intenta entrar.
+Ahora el reinado de la Tierra mira sus murallas y entiende que el enemigo ya no intenta entrar.
 
 El enemigo está adentro.`,next:'mur_three'},
       mur_three:{img:'mur_council',title:'AETHRION',sub:'LOS TRES PORTADORES',big:'KAEL · NYRA · DARIAN',s:'Tres ecos, una misión',spk:'NARRADOR',txt:`El consejo no manda a héroes perfectos.
@@ -1787,7 +1787,7 @@ Kael ve su propia tumba.`,choices:function(){return[
         {t:'Nyra rompe la visión',d:'Forzar el tiempo puede traer respuestas.',color:'#9d37ff',delta:{clue:3,nyraBond:2,hp:-8},next:'mur_three_losses'},
         {t:'Darian quema la pared',d:'No quiere que el futuro le dé órdenes.',color:'#ff7a18',delta:{darianWrath:2,corr:1,eco:7},next:'mur_three_losses'}
       ]}},
-      mur_hunter_path:{img:'mur_fire',music:'battle',title:'AETHRION',sub:'NIDO DE CRIATURAS',big:'ELIMINAR O CONTENER',s:'La defensa de Aethrion empieza aquí',spk:'NARRADOR',txt:`El nido está bajo una torre caída.
+      mur_hunter_path:{img:'mur_fire',music:'battle',title:'AETHRION',sub:'NIDO DE CRIATURAS',big:'ELIMINAR O CONTENER',s:'La defensa de la Tierra empieza aquí',spk:'NARRADOR',txt:`El nido está bajo una torre caída.
 
 Las criaturas no duermen. Se agrupan alrededor de un pulso rojo, como si una orden de Tronox siguiera viva dentro de ellas.
 
@@ -1925,7 +1925,7 @@ El santuario muestra nombres de aldeas que caerán si dudan.
 "A veces salvar un mundo exige cerrar una puerta con sangre. Pero recuerden: cada muerte que celebren dejará forma en su Eco."`,delta:{answers:1,murmex:1},next:'mur_final_check'},
       mur_ash_answer:{img:'mur_sanctuary',title:'AETHRION',sub:'MURMEX RESPONDE',big:'EL PRECIO DEL EXTERMINIO',s:'La respuesta más oscura',spk:'MURMEX',txt:`Murmex mira a Darian.
 
-"Puedo enseñarles a eliminar cada criatura que quedó atrapada. Puedo hacer que el cielo de Cetrios arda una sola noche y amanezca limpio."
+"Puedo enseñarles a eliminar cada criatura que quedó atrapada. Puedo hacer que el cielo de la Tierra arda una sola noche y amanezca limpio."
 
 Pausa.
 
@@ -1947,7 +1947,7 @@ Ahora no alcanza con saber.
 
 Hay que elegir cómo defender el reino.`,choices:function(){return[
         {t:'Unir los tres ecos y purgar la señal roja',d:'Salvar a quienes todavía tengan alma propia.',color:'#61ff8b',delta:{eco:-10},next:()=> (state.answers>=3 && state.mercy>=8 && state.clue>=7)?'mur_final_rebirth':'mur_final_resistance'},
-        {t:'Sellar las puertas de Cetrios con Murmex',d:'Ninguna criatura saldrá. Ninguna señal entrará.',color:'#00e5ff',delta:{eco:-12},next:()=> (state.answers>=2 && state.army>=4)?'mur_final_seal':'mur_final_silence'},
+        {t:'Sellar las puertas de la Tierra con Murmex',d:'Ninguna criatura saldrá. Ninguna señal entrará.',color:'#00e5ff',delta:{eco:-12},next:()=> (state.answers>=2 && state.army>=4)?'mur_final_seal':'mur_final_silence'},
         {t:'Lanzar al ejército contra los nidos',d:'Defender el reino eliminando amenazas.',color:'#d7a84a',delta:{hp:-8},next:()=> (state.army>=6 || state.monsters>=7)?'mur_final_resistance':'mur_final_fall'},
         {t:'Aceptar el exterminio temporal de Murmex',d:'Una noche para borrar a todos los monstruos.',color:'#ff4d4d',delta:{corr:3},next:()=> (state.darianWrath>=6 || state.corr>=6)?'mur_final_ash':'mur_final_seal'},
         {t:'Evacuar Aethrion y abandonar el palacio',d:'El reino no son sus piedras.',color:'#9d37ff',delta:{civilians:4},next:()=> state.civilians>=8?'mur_final_exodus':'mur_final_fall'}
@@ -1965,7 +1965,7 @@ Aethrion sobrevive. Y ahora sabe la verdad: el Eco es el alma.
 Pero en la última escena, Murmex mira una línea temporal que nadie más ve.
 
 "La Gran Conquista ya empezó", susurra.`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}},
-      mur_final_seal:{img:'mur_final',music:'end',title:'AETHRION',sub:'FINAL 2 DE 5',big:'EL SELLO DE MURMEX',s:'Murmex responde, pero el precio es alto',spk:'NARRADOR',txt:`Murmex levanta una mano y todas las puertas de Cetrios se cierran.
+      mur_final_seal:{img:'mur_final',music:'end',title:'AETHRION',sub:'FINAL 2 DE 5',big:'EL SELLO DE MURMEX',s:'Murmex responde, pero el precio es alto',spk:'NARRADOR',txt:`Murmex levanta una mano y todas las puertas de la Tierra se cierran.
 
 Las criaturas atrapadas quedan dentro. La Tierra queda lejos. Aethrion gana tiempo.
 
@@ -2089,7 +2089,7 @@ Esta línea temporal ya la conocía.`,choices:function(){return[{t:'Volver al HU
 
 En Cetrios, el Portal Central se cerró a la fuerza. Miles de monstruos que debían escapar hacia otros mundos quedaron atrapados dentro del planeta.
 
-Las jaulas antiguas se abrieron. Las aldeas pequeñas cayeron primero. Los caminos se llenaron de rugidos. Aethrion, el reinado principal de Cetrios, intentó mostrarse fuerte.
+Las jaulas antiguas se abrieron. Las aldeas pequeñas cayeron primero. Los caminos se llenaron de rugidos. Aethrion, el reinado principal de la Tierra, intentó mostrarse fuerte.
 
 Pero detrás de las murallas, todos sabían lo mismo: el reino había perdido el control.`,next:'mur_protagonists'},
 
@@ -2113,7 +2113,7 @@ La verdad es otra: encontrar a Murmex antes de que el reino desaparezca.`,choice
 
 El Primero dice que cerrar el portal salvó a la Tierra de una invasión peor.
 
-El Segundo admite lo que nadie quería escuchar: al cerrar el portal, las criaturas quedaron en Cetrios.
+El Segundo admite lo que nadie quería escuchar: al cerrar el portal, las criaturas quedaron en la Tierra.
 
 El Tercero baja la mirada hacia los tres protagonistas.
 
@@ -2197,7 +2197,7 @@ Está junto al primer rey.
 
 Está en ruinas que todavía no existen.
 
-Está en una pintura donde Aethrion aparece destruida casi por completo y, al fondo, tres figuras pequeñas caminan hacia un santuario suspendido.
+Está en una pintura donde la Tierra aparece destruida casi por completo y, al fondo, tres figuras pequeñas caminan hacia un santuario suspendido.
 
 Nyra encuentra el dato que nadie quería decir: el santuario aparece cuando el reino pierde a su rey.`,choices:function(){return[
         {t:'Avisar al rey inmediatamente',d:'Si la profecía es cierta, está en peligro.',color:'#d7a84a',delta:{army:1,credibility:1},next:'mur_throne_alarm'},
@@ -2209,7 +2209,7 @@ Nyra encuentra el dato que nadie quería decir: el santuario aparece cuando el r
 
 Gira.
 
-Cada escalón muestra una versión distinta de Aethrion: una ciudad intacta, una ciudad conquistada, una ciudad sin habitantes, una ciudad donde los monstruos nunca escaparon.
+Cada escalón muestra una versión distinta de la Tierra: una ciudad intacta, una ciudad conquistada, una ciudad sin habitantes, una ciudad donde los monstruos nunca escaparon.
 
 Kael empieza a sangrar por la nariz. Nyra escucha su propia voz avisándole que no confíe en todos los finales. Darian ve una versión de sí mismo con eco rojo.
 
@@ -2286,7 +2286,7 @@ Aethrion está casi destruida.
 Kael, Nyra y Darian entienden que el santuario de Murmex no aparecerá cuando estén listos.
 
 Aparecerá cuando no quede otra salida.`,delta:{kingAlive:0,credibility:-1},choices:function(){return[
-        {t:'Proteger a la reina y evacuar civiles',d:'Salvar el futuro político de Aethrion.',color:'#61ff8b',delta:{queenAlive:1,civilians:3,credibility:2},next:'mur_sanctuary_first'},
+        {t:'Proteger a la reina y evacuar civiles',d:'Salvar el futuro político de la Tierra.',color:'#61ff8b',delta:{queenAlive:1,civilians:3,credibility:2},next:'mur_sanctuary_first'},
         {t:'Usar la muerte del rey para unir al ejército',d:'El dolor puede volverse bandera.',color:'#d7a84a',delta:{army:3,credibility:1},next:'mur_sanctuary_first'},
         {t:'Dejar el palacio y buscar a Murmex ya',d:'Si esperan, no quedará reino que salvar.',color:'#9d37ff',delta:{clue:2,sanctuary:2},next:'mur_sanctuary_first'}
       ]}},
@@ -2421,13 +2421,13 @@ Cuando amanece, Aethrion está casi destruida: torres caídas, murallas partidas
 
 Pero la gente sale de los refugios y ve algo que creía perdido: el reino volvió a protegerlos.
 
-El rey está muerto, pero la credibilidad de Aethrion renace sobre cenizas.
+El rey está muerto, pero la credibilidad de la Tierra renace sobre cenizas.
 
 Murmex deja una última respuesta antes de desaparecer:
 
 "Un reino no se sostiene por su corona. Se sostiene por las almas que decide no abandonar."
 
-En el último plano, una sombra enorme se mueve más allá de Cetrios.
+En el último plano, una sombra enorme se mueve más allá de la Tierra.
 
 La Gran Conquista ya empezó.`,choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}},
 
@@ -2459,7 +2459,7 @@ Y eso, por primera vez, alcanza para reconstruir.`,choices:function(){return[{t:
 
 La encierra.
 
-Las puertas de Cetrios se sellan una por una. Los túneles temporales se cierran. La señal de Tronox queda aislada como un grito dentro de una piedra.
+Las puertas de la Tierra se sellan una por una. Los túneles temporales se cierran. La señal de Tronox queda aislada como un grito dentro de una piedra.
 
 Aethrion sobrevive, pero pierde contacto con rutas, futuros y respuestas que tal vez necesitaba.
 
@@ -2481,7 +2481,7 @@ Nyra conserva un fragmento del mapa hacia Murmex, pero no todas las respuestas.
 
 Darian camina último, quemando puentes para que las criaturas no sigan a los refugiados.
 
-Aethrion pierde su palacio, su rey y su lugar como centro de Cetrios.
+Aethrion pierde su palacio, su rey y su lugar como centro de la Tierra.
 
 La gente vive.
 
@@ -2629,7 +2629,7 @@ Y para conseguirlo está dispuesto a destruir aldeas, ecos, rebeldes, Aethrion e
         ]}},
       aeth_conq_return_gate:{
         img:'conq_crown',music:'story',title:'AETHRION',sub:'MES 1',big:'LA PUERTA NEGRA',s:'El nuevo reino',spk:'NARRADOR',
-        txt:`La antigua puerta de Aethrion ya no tiene los símbolos del rey muerto.
+        txt:`La antigua puerta de la Tierra ya no tiene los símbolos del rey muerto.
 
 Ahora hay un emblema negro atravesado por una corona dorada.
 
@@ -2775,7 +2775,7 @@ Nyra ve una máquina capaz de buscar el Santuario de Murmex cuando despierte otr
         ]}},
       aeth_conq_public_truth:{
         img:'conq_crown',music:'story',title:'AETHRION',sub:'MES 5',big:'LA VERDAD EN LAS MURALLAS',s:'El reino escucha',spk:'NARRADOR',
-        txt:`Los mapas aparecen proyectados sobre las murallas de Aethrion.
+        txt:`Los mapas aparecen proyectados sobre las murallas de la Tierra.
 
 Clasificación de ciudadanos. Castigos por eco. Aldeas que serán vaciadas. Niños marcados para entrenamiento forzado.
 
@@ -3233,7 +3233,7 @@ Miedo: ${state.fear || 0}`;},
         img:'conq_war',music:'battle',title:'AETHRION',sub:'LA GRAN CONQUISTA',big:'GUERRA CIVIL',s:'Ecos contra ecos',spk:'NARRADOR',
         txt:`La batalla final empieza antes del amanecer.
 
-Miles de dones se cruzan bajo el cielo de Cetrios.
+Miles de dones se cruzan bajo el cielo de la Tierra.
 
 Ecos de cristal levantan murallas transparentes. Ecos de humo cubren avenidas. Ecos de cadena arrancan balcones. Ecos de canto rompen órdenes militares. Ecos de gravedad hunden tanques negros. Ecos de fuego abren caminos.
 
@@ -3342,7 +3342,7 @@ Las aldeas forman un consejo. Los portadores dejan de registrarse como armas. Lo
 
 En la montaña, Murmex duerme.
 
-Pero por un segundo, las rocas vibran como si aprobara el silencio nuevo de Cetrios.`,
+Pero por un segundo, las rocas vibran como si aprobara el silencio nuevo de la Tierra.`,
         choices:function(){return[{t:'Volver al HUB',d:'Elegir otra historia.',color:'#00e5ff',next:'aeth_to_hub'}]}
       },
       aeth_conq_end_new_crown:{
@@ -3895,35 +3895,35 @@ body.story-running .global-story-back{
 
 
 <!-- ===== DUAL: ZERATH · EL HORROR DE GRIOX — HISTORIA COMPLETA ===== -->
-<style id="dual-serat-griox-style">
-.serat-card{background:radial-gradient(circle at 92% 20%,rgba(255,47,85,.26),transparent 34%),linear-gradient(135deg,rgba(28,2,8,.88),rgba(0,0,0,.56))!important;border-color:rgba(255,47,85,.78)!important}
-.serat-card .hub-sub{color:#ff6d88!important}.serat-card .hub-action{color:#ffdce3!important;border-color:rgba(255,47,85,.70)!important;background:rgba(255,47,85,.08)!important;box-shadow:0 0 22px rgba(255,47,85,.18)!important}
-body.serat-mode .hud{border-bottom-color:rgba(255,47,85,.30)!important;background:linear-gradient(to bottom,rgba(20,0,6,.92),rgba(0,0,0,.50))!important}
-body.serat-mode .chapter h1{color:#ff6d88!important;text-shadow:0 0 16px rgba(255,47,85,.70)!important}
-body.serat-mode .ecobar i{background:linear-gradient(90deg,#6d0714,#ff2f55,#ffcf55)!important}
-body.serat-mode .panel{border-color:rgba(255,47,85,.42)!important;background:linear-gradient(135deg,rgba(27,2,9,.48),rgba(0,0,0,.35))!important}
-body.serat-mode .choice{border-color:rgba(255,47,85,.38)!important;background:linear-gradient(135deg,rgba(28,2,9,.42),rgba(0,0,0,.30))!important}
-body.serat-mode .sp-line{background:#ff2f55!important;box-shadow:0 0 14px rgba(255,47,85,.95)!important}body.serat-mode .sp-name{color:#ff6d88!important}
+<style id="dual-zerath-griox-style">
+.zerath-card{background:radial-gradient(circle at 92% 20%,rgba(255,47,85,.26),transparent 34%),linear-gradient(135deg,rgba(28,2,8,.88),rgba(0,0,0,.56))!important;border-color:rgba(255,47,85,.78)!important}
+.zerath-card .hub-sub{color:#ff6d88!important}.zerath-card .hub-action{color:#ffdce3!important;border-color:rgba(255,47,85,.70)!important;background:rgba(255,47,85,.08)!important;box-shadow:0 0 22px rgba(255,47,85,.18)!important}
+body.zerath-mode .hud{border-bottom-color:rgba(255,47,85,.30)!important;background:linear-gradient(to bottom,rgba(20,0,6,.92),rgba(0,0,0,.50))!important}
+body.zerath-mode .chapter h1{color:#ff6d88!important;text-shadow:0 0 16px rgba(255,47,85,.70)!important}
+body.zerath-mode .ecobar i{background:linear-gradient(90deg,#6d0714,#ff2f55,#ffcf55)!important}
+body.zerath-mode .panel{border-color:rgba(255,47,85,.42)!important;background:linear-gradient(135deg,rgba(27,2,9,.48),rgba(0,0,0,.35))!important}
+body.zerath-mode .choice{border-color:rgba(255,47,85,.38)!important;background:linear-gradient(135deg,rgba(28,2,9,.42),rgba(0,0,0,.30))!important}
+body.zerath-mode .sp-line{background:#ff2f55!important;box-shadow:0 0 14px rgba(255,47,85,.95)!important}body.zerath-mode .sp-name{color:#ff6d88!important}
 </style>
-<script id="dual-serat-griox-script">
+<script id="dual-zerath-griox-script">
 (function(){
 function $(id){return document.getElementById(id)}
 function safe(fn){try{return fn&&fn()}catch(e){console.warn(e)}}
 function resetSerat(){
- document.body.classList.remove('aethrion-mode');document.body.classList.add('serat-mode','story-running');
- if(typeof state!=='undefined')Object.assign(state,{campaign:'serat',hp:100,eco:42,corr:0,fear:1,sanity:80,trust:0,clues:0,truth:0,galaPower:1,grioxLink:0,survivors:0,mines:0,mirror:0,awake:0,finalChoice:''});
+ document.body.classList.remove('aethrion-mode');document.body.classList.add('zerath-mode','story-running');
+ if(typeof state!=='undefined')Object.assign(state,{campaign:'zerath',hp:100,eco:42,corr:0,fear:1,sanity:80,trust:0,clues:0,truth:0,galaPower:1,grioxLink:0,survivors:0,mines:0,mirror:0,awake:0,finalChoice:''});
  safe(function(){if(typeof bars==='function')bars()})
 }
 window.resetSerat=resetSerat;
 function beginSerat(){safe(function(){if(typeof unlockAudio==='function')unlockAudio()});safe(function(){if(typeof sfx==='function')sfx('bad')});resetSerat();safe(function(){if(typeof node==='function')node('serat_start')})}
-function bind(){var b=$('openSerat');if(!b||b.dataset.seratBound)return;b.dataset.seratBound='1';b.classList.remove('locked');b.classList.add('available','serat-card');var a=b.querySelector('.hub-action');if(a)a.textContent='INICIAR ›';b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();beginSerat()},{passive:false})}
+function bind(){var b=$('openSerat');if(!b||b.dataset.seratBound)return;b.dataset.seratBound='1';b.classList.remove('locked');b.classList.add('available','zerath-card');var a=b.querySelector('.hub-action');if(a)a.textContent='INICIAR ›';b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();beginSerat()},{passive:false})}
 if(typeof IMG_ALIASES!=='undefined')Object.assign(IMG_ALIASES,{serat_fog:['ZERATH-stage-bg.png','aethrion_shadows.png','aethrion_ruins.png'],serat_house:['aethrion_shadows.png','aethrion_ruins.png'],serat_square:['ZERATH-stage-bg.png','aethrion_ruins.png'],serat_mines:['aethrion_shadows.png','aethrion_ruins.png'],serat_red:['aethrion_fire.png','aethrion_shadows.png'],serat_final:['aethrion_fire.png','aethrion_shadows.png']});
 if(typeof S!=='undefined')Object.assign(S,{
-serat_start:{img:'serat_fog',music:'dark',title:'DUAL: ZERATH',sub:'EL HORROR DE GRIOX',big:'NO DUERMAS',s:'Terror psicológico del eco',spk:'NARRADOR',txt:`Serat es una aldea pequeña, fría y golpeada por la niebla. No tiene torres enormes ni ejércitos como Aethrion. Tiene casas de piedra, minas viejas y gente que aprendió a vivir con poco.
+serat_start:{img:'serat_fog',music:'dark',title:'DUAL: ZERATH',sub:'EL HORROR DE GRIOX',big:'NO DUERMAS',s:'Terror psicológico del eco',spk:'NARRADOR',txt:`Zerath es una ciudad de la Tierra, igual que Valmora y Lustonia. No tiene torres enormes ni ejércitos como Valmora y Lustonia. Tiene casas de piedra, minas viejas y gente que aprendió a vivir con poco.
 
 Gala vive ahí. Es morocha, con rulos oscuros hasta los hombros, abultados, siempre algo salvajes. Su eco es rojo con vetas amarillas: dispara círculos desde los puños, los usa para impulsarse y, cuando acumula mucho poder, libera una onda expansiva circular que la deja casi vacía.
 
-La noche en que Griox cae en Serat, nadie ve una explosión.
+La noche en que Griox cae en Zerath, nadie ve una explosión.
 
 Solo todos sueñan la misma puerta.`,choices:function(){return[
 {t:'Gala intenta dormir igual',d:'El cansancio puede más que el miedo.',color:'#ff2f55',delta:{grioxLink:1,sanity:-8},next:'serat_dream'},
@@ -3948,7 +3948,7 @@ Una mujer aparece bajo un farol apagado. No parpadea.
 Después empieza a reír sin aire.`,choices:function(){return[
 {t:'Ayudar a la mujer',d:'Quizás sabe qué está pasando.',color:'#61ff8b',delta:{survivors:1,trust:1,sanity:-3},next:'serat_woman'},
 {t:'Seguir los pasos invisibles',d:'Algo camina sin cuerpo.',color:'#ff2f55',delta:{clues:2,grioxLink:1,sanity:-5},next:'serat_well'},
-{t:'Impulsarse a los techos con círculos',d:'Ver Serat desde arriba.',color:'#ffcf55',delta:{galaPower:2,eco:-5,clues:1},next:'serat_roofs'}]}},
+{t:'Impulsarse a los techos con círculos',d:'Ver Zerath desde arriba.',color:'#ffcf55',delta:{galaPower:2,eco:-5,clues:1},next:'serat_roofs'}]}},
 serat_training:{img:'serat_red',music:'story',title:'ZERATH',sub:'NOCHE 1',big:'CÍRCULOS ROJOS',s:'El poder de Gala',spk:'NARRADOR',txt:`Gala lanza círculos desde los puños. Rojo intenso, vetas amarillas.
 
 Uno golpea. Otro la impulsa hacia atrás. Otro la levanta del suelo.
@@ -4011,9 +4011,9 @@ El reflejo levanta una mano y dibuja un círculo rojo desde abajo del agua.`,cho
 {t:'Marcar el pozo y volver',d:'Sobrevivir también es no mirar.',color:'#61ff8b',delta:{clues:1,sanity:2},next:'serat_plaza'}]}},
 serat_roofs:{img:'serat_fog',music:'dark',title:'ZERATH',sub:'NOCHE 2',big:'TECHOS',s:'La forma de la aldea',spk:'NARRADOR',txt:`Desde los techos, Gala ve algo imposible.
 
-Las calles de Serat forman un círculo enorme, incompleto, con una grieta en dirección a las minas.
+Las calles de Zerath forman un círculo enorme, incompleto, con una grieta en dirección a las minas.
 
-Serat no fue construida alrededor de una plaza.
+Zerath no fue construida alrededor de una plaza.
 
 Fue construida alrededor de algo enterrado.`,choices:function(){return[
 {t:'Seguir la grieta',d:'La respuesta está abajo.',color:'#ff2f55',delta:{mines:3,clues:2,sanity:-4},next:'serat_gate'},
@@ -4052,7 +4052,7 @@ GRIOX.
 —Tu abuela también dibujaba círculos dormida —dice.`,choices:function(){return[
 {t:'Leer todos los papeles',d:'El pasado familiar puede ser la llave.',color:'#d7a84a',delta:{clues:4,truth:2,sanity:-3},next:'serat_papers'},
 {t:'Quemar la caja',d:'Algunas herencias son trampas.',color:'#ff4d4d',delta:{fear:1,truth:-1,sanity:2},next:'serat_plaza'},
-{t:'Sacar a su madre de Serat',d:'Salvar una persona puede costar respuestas.',color:'#61ff8b',delta:{survivors:1,trust:1},next:'serat_loop'}]}},
+{t:'Sacar a su madre de Zerath',d:'Salvar una persona puede costar respuestas.',color:'#61ff8b',delta:{survivors:1,trust:1},next:'serat_loop'}]}},
 serat_plaza:{img:'serat_square',music:'story',title:'ZERATH',sub:'DÍA 3',big:'LA PLAZA',s:'Nadie quiere dormir',spk:'NARRADOR',txt:`La plaza se llena de vecinos con ojos rojos.
 
 Todos vieron algo distinto: puertas, muertos, reflejos, minas, voces bajo la cama.
@@ -4070,7 +4070,7 @@ serat_patients:{img:'serat_square',music:'dark',title:'ZERATH',sub:'DÍA 3',big:
 Todos los casos viven sobre un círculo antiguo. Gala vive en el centro exacto.
 
 —No te persigue por fuerte —dice Iren—. Te persigue porque tu eco abre bordes.`,choices:function(){return[
-{t:'Evacuar el centro de Serat',d:'Sacar gente del círculo.',color:'#61ff8b',delta:{survivors:3,trust:2,grioxLink:-1},next:'serat_evac'},
+{t:'Evacuar el centro de Zerath',d:'Sacar gente del círculo.',color:'#61ff8b',delta:{survivors:3,trust:2,grioxLink:-1},next:'serat_evac'},
 {t:'Usar a Gala como ancla',d:'Atraer a Griox al centro.',color:'#ff2f55',delta:{grioxLink:3,clues:3,galaPower:1,sanity:-8},next:'serat_anchor'},
 {t:'Dormir a un paciente vigilado',d:'Entrar al sueño desde afuera.',color:'#9d37ff',delta:{clues:4,truth:1,sanity:-6},next:'serat_sleep'}]}},
 serat_below:{img:'serat_mines',music:'dark',title:'ZERATH',sub:'DÍA 4',big:'ÉL ESTÁ ABAJO',s:'La frase se repite',spk:'NARRADOR',txt:`La entrada de la mina aparece abierta aunque llevaba años sellada.
@@ -4091,7 +4091,7 @@ Pero fuera del círculo, toda la habitación empieza a susurrar con la voz de Ma
 {t:'Sacar a Mara de allí',d:'Salvar vivos, no discutir con paredes.',color:'#61ff8b',delta:{survivors:2,trust:1},next:'serat_evac'}]}},
 serat_wellbreak:{img:'serat_fog',music:'battle',title:'ZERATH',sub:'DÍA 4',big:'EL POZO SE ROMPE',s:'El ojo de abajo',spk:'NARRADOR',txt:`El agua se rompe como vidrio.
 
-Por un segundo, Gala ve túneles rojos bajo Serat.
+Por un segundo, Gala ve túneles rojos bajo Zerath.
 
 Griox estaba mirando desde abajo.
 
@@ -4113,7 +4113,7 @@ serat_silence:{img:'serat_house',music:'story',title:'ZERATH',sub:'DÍA 5',big:'
 
 Hay algo respirando bajo cada casa.
 
-Serat no está sobre tierra.
+Zerath no está sobre tierra.
 
 Está sobre una boca cerrada.`,choices:function(){return[
 {t:'Mantener el sello y buscar pistas',d:'Menos poder, más claridad.',color:'#61ff8b',delta:{clues:3,sanity:4,eco:-5},next:'serat_papers'},
@@ -4145,7 +4145,7 @@ serat_papers:{img:'serat_house',music:'story',title:'ZERATH',sub:'DÍA 6',big:'L
 
 No lo mató.
 
-Lo dejó dormido bajo Serat.
+Lo dejó dormido bajo Zerath.
 
 La última frase dice:
 
@@ -4163,7 +4163,7 @@ La misma casa.
 
 La misma piedra rota.
 
-Serat no las deja ir.`,choices:function(){return[
+Zerath no las deja ir.`,choices:function(){return[
 {t:'Romper el bucle con impulso circular',d:'Saltar más allá del camino repetido.',color:'#ffcf55',delta:{galaPower:2,eco:-8,hp:-4,survivors:1},next:'serat_evac'},
 {t:'Volver y enfrentar lo enterrado',d:'No se huye de una boca cerrada.',color:'#61ff8b',delta:{sanity:2,clues:1},next:'serat_gate'},
 {t:'Preguntar al bucle qué quiere',d:'El camino responde con voz de madre.',color:'#ff2f55',delta:{grioxLink:3,sanity:-10},next:'serat_mother_voice'}]}},
@@ -4189,7 +4189,7 @@ El paciente habla con voz de niño:
 {t:'Preguntar cuándo',d:'La memoria perdida puede ser el origen.',color:'#ff2f55',delta:{truth:3,grioxLink:3,sanity:-8},next:'serat_memorylost'},
 {t:'Romper el sueño',d:'Salir antes de que el cuarto trague.',color:'#ffcf55',delta:{galaPower:2,eco:-7,hp:-4},next:'serat_patients'},
 {t:'Seguir escuchando',d:'Más información, más riesgo.',color:'#61ff8b',delta:{clues:4,truth:2,sanity:-5},next:'serat_gate'}]}},
-serat_anchor:{img:'serat_red',music:'dark',title:'ZERATH',sub:'DÍA 8',big:'GALA COMO ANCLA',s:'La trampa respira',spk:'NARRADOR',txt:`Gala se para en el centro exacto de Serat.
+serat_anchor:{img:'serat_red',music:'dark',title:'ZERATH',sub:'DÍA 8',big:'GALA COMO ANCLA',s:'La trampa respira',spk:'NARRADOR',txt:`Gala se para en el centro exacto de Zerath.
 
 Dibuja tres círculos.
 
@@ -4203,7 +4203,7 @@ Una hora después, todos los dormidos abren los ojos al mismo tiempo y miran hac
 {t:'Cerrar el círculo antes de tiempo',d:'Sobrevivir con pistas incompletas.',color:'#61ff8b',delta:{clues:2,grioxLink:-1,hp:-4},next:'serat_symbols'},
 {t:'Dejar que Griox entre un poco',d:'Verlo real puede costarle la cordura.',color:'#ff2f55',delta:{truth:4,grioxLink:4,sanity:-16},next:'serat_glimpse'},
 {t:'Soltar onda expansiva desde el centro',d:'Puede limpiar la aldea o abrirla.',color:'#ffcf55',delta:{galaPower:4,eco:-25,hp:-18,corr:1},next:'serat_wave'}]}},
-serat_awake:{img:'serat_square',music:'dark',title:'ZERATH',sub:'DÍA 8',big:'LA NOCHE DESPIERTA',s:'Nadie cierra los ojos',spk:'NARRADOR',txt:`Toda Serat intenta no dormir.
+serat_awake:{img:'serat_square',music:'dark',title:'ZERATH',sub:'DÍA 8',big:'LA NOCHE DESPIERTA',s:'Nadie cierra los ojos',spk:'NARRADOR',txt:`Toda Zerath intenta no dormir.
 
 A las 3:17, todos escuchan una canción de cuna bajo la tierra.
 
@@ -4240,7 +4240,7 @@ Cerrar un círculo completo no encierra a Griox.
 Le da una puerta perfecta.
 
 Para derrotarlo, Gala deberá crear una onda expansiva incompleta: suficiente para cortar el vínculo, no para abrirlo.`,choices:function(){return[
-{t:'Practicar el círculo incompleto',d:'La única técnica que puede salvar Serat.',color:'#61ff8b',delta:{galaPower:4,truth:4,grioxLink:-2,eco:4},next:'serat_gate'},
+{t:'Practicar el círculo incompleto',d:'La única técnica que puede salvar Zerath.',color:'#61ff8b',delta:{galaPower:4,truth:4,grioxLink:-2,eco:4},next:'serat_gate'},
 {t:'No confiar en símbolos viejos',d:'Griox ya venció un sello antes.',color:'#d7a84a',delta:{galaPower:2,corr:1},next:'serat_gate'},
 {t:'Completar el círculo para probarlo',d:'Mala idea.',color:'#ff2f55',delta:{grioxLink:5,sanity:-20,truth:2},next:'serat_glimpse'}]}},
 serat_memorylost:{img:'serat_red',music:'dark',title:'ZERATH',sub:'DÍA 9',big:'MEMORIA PERDIDA',s:'Gala ya estuvo abajo',spk:'NARRADOR',txt:`La memoria vuelve.
@@ -4325,7 +4325,7 @@ serat_tunnel:{img:'serat_mines',music:'dark',title:'ZERATH',sub:'MINAS',big:'TÚ
 
 La abuela de Gala joven.
 
-Serat construyéndose alrededor del sello.
+Zerath construyéndose alrededor del sello.
 
 Una mancha roja cayendo del cielo y escondiéndose en los sueños.
 
@@ -4373,9 +4373,9 @@ serat_origin:{img:'serat_red',music:'dark',title:'ZERATH',sub:'ORIGEN',big:'LA C
 
 Griox cae como una mancha roja sin cuerpo.
 
-No aterriza en Serat.
+No aterriza en Zerath.
 
-Aterriza en el miedo de Serat.
+Aterriza en el miedo de Zerath.
 
 Primero se alimentó de pesadillas. Después de culpas. Después de nombres no dichos.
 
@@ -4405,7 +4405,7 @@ serat_glimpse:{img:'serat_red',music:'dark',title:'ZERATH',sub:'VISIÓN',big:'GR
 
 Para Gala es una figura con su propio pelo, una mandíbula demasiado baja y círculos rojos donde deberían estar los ojos.
 
-Para Serat es una puerta.
+Para Zerath es una puerta.
 
 Para el miedo, es hogar.`,choices:function(){return[
 {t:'No mirar su rostro',d:'Recordar el sello, no la forma.',color:'#61ff8b',delta:{sanity:4,truth:2,grioxLink:-1},next:'serat_core'},
@@ -4440,18 +4440,18 @@ Gala libera una onda expansiva imperfecta, roja con vetas amarillas, que no dest
 
 Las voces se cortan una por una.
 
-Serat despierta llorando.
+Zerath despierta llorando.
 
 No todos sobrevivieron. Nadie queda igual. Pero por primera vez en días, la aldea duerme sin soñar la puerta.
 
 Griox fue derrotado.`,choices:function(){return[
-{t:'REPETIR HISTORIA',d:'Volver al inicio de Serat.',color:'#ff2f55',next:'serat_start'},
+{t:'REPETIR HISTORIA',d:'Volver al inicio de Zerath.',color:'#ff2f55',next:'serat_start'},
 {t:'ELEGIR OTRA HISTORIA',d:'Volver al HUB.',color:'#00e5ff',next:'aeth_to_hub'}]}},
 serat_end_voices:{img:'serat_final',music:'end',title:'DUAL: ZERATH',sub:'FINAL 2 DE 3',big:'LAS VOCES',s:'Final malo',spk:'NARRADOR',txt:`Gala cree que cerró la puerta.
 
 Sube de la mina tambaleándose.
 
-Serat la espera en silencio.
+Zerath la espera en silencio.
 
 Iren pregunta si terminó.
 
@@ -4468,13 +4468,13 @@ Y debajo de todas, una voz nueva:
 Griox.
 
 —Ahora no necesito que duerman.`,choices:function(){return[
-{t:'REPETIR HISTORIA',d:'Intentar salvar Serat.',color:'#ff2f55',next:'serat_start'},
+{t:'REPETIR HISTORIA',d:'Intentar salvar Zerath.',color:'#ff2f55',next:'serat_start'},
 {t:'ELEGIR OTRA HISTORIA',d:'Volver al HUB.',color:'#00e5ff',next:'aeth_to_hub'}]}},
 serat_end_never:{img:'serat_final',music:'end',title:'DUAL: ZERATH',sub:'FINAL 3 DE 3',big:'NO TE DUERMAS',s:'Final terrorífico',spk:'NARRADOR',txt:`La onda expansiva rompe la forma de Griox.
 
 Todos ven cómo la sombra se deshace en miles de círculos rojos.
 
-Durante semanas, Serat parece libre.
+Durante semanas, Zerath parece libre.
 
 Tres meses después, en otra aldea, una niña dibuja círculos rojos en la pared de su cuarto.
 
@@ -4489,7 +4489,7 @@ Después sonríe dormida.
 Griox no murió.
 
 Solo aprendió otra forma de viajar.`,choices:function(){return[
-{t:'REPETIR HISTORIA',d:'Buscar el único final donde Serat se salva.',color:'#ff2f55',next:'serat_start'},
+{t:'REPETIR HISTORIA',d:'Buscar el único final donde Zerath se salva.',color:'#ff2f55',next:'serat_start'},
 {t:'ELEGIR OTRA HISTORIA',d:'Volver al HUB.',color:'#00e5ff',next:'aeth_to_hub'}]}}
 });
 var originalNode=null;
@@ -4497,8 +4497,8 @@ function patchNode(){
  if(typeof window.node!=='function'||window.node._seratPatched)return;
  originalNode=window.node;
  window.node=function(id){
-   if(id==='aeth_to_hub'){document.body.classList.remove('serat-mode','story-running')}
-   if(String(id).startsWith('serat_')){document.body.classList.remove('aethrion-mode');document.body.classList.add('serat-mode','story-running'); if(id==='serat_start')resetSerat();}
+   if(id==='aeth_to_hub'){document.body.classList.remove('zerath-mode','story-running')}
+   if(String(id).startsWith('serat_')){document.body.classList.remove('aethrion-mode');document.body.classList.add('zerath-mode','story-running'); if(id==='serat_start')resetSerat();}
    return originalNode.apply(this,arguments);
  };
  window.node._seratPatched=true;
