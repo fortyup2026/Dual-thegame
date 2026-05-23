@@ -502,95 +502,103 @@ body.aethrion-mode #storyBackHub{display:block!important}
 </style>
 
 
-<style id="simple-auth-style">
+<style id="dual-simple-auth-style">
 #authOverlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.82);
-backdrop-filter:blur(10px);
-z-index:99999;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
+  position:fixed; inset:0; z-index:99999;
+  background:rgba(0,0,0,.82);
+  backdrop-filter:blur(12px);
+  display:flex; align-items:center; justify-content:center;
+  padding:20px;
 }
 #authCard{
-width:min(92vw,420px);
-border-radius:28px;
-padding:26px;
-background:linear-gradient(135deg,rgba(18,18,30,.96),rgba(5,5,10,.92));
-border:1px solid rgba(255,255,255,.08);
-box-shadow:0 20px 80px rgba(0,0,0,.5);
-color:white;
-font-family:Inter,system-ui,sans-serif;
+  width:min(92vw,430px);
+  border-radius:28px;
+  padding:26px 22px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(0,229,255,.16),transparent 36%),
+    linear-gradient(135deg,rgba(8,14,26,.96),rgba(3,3,9,.94));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 20px 80px rgba(0,0,0,.55);
+  color:white;
+  font-family:var(--ff3, system-ui, sans-serif);
 }
 #authCard h1{
-margin:0 0 8px;
-font-size:30px;
+  margin:0 0 8px;
+  font-family:var(--ff1, serif);
+  font-size:clamp(2rem,9vw,3.2rem);
+  letter-spacing:.08em;
+  text-align:center;
+  text-shadow:0 0 18px rgba(0,229,255,.55);
 }
 #authCard p{
-opacity:.7;
-line-height:1.5;
-margin-bottom:20px;
+  margin:0 0 18px;
+  opacity:.75;
+  line-height:1.45;
+  text-align:center;
+  font-size:1rem;
 }
 .authInput{
-width:100%;
-padding:14px 16px;
-margin-bottom:12px;
-border-radius:14px;
-border:1px solid rgba(255,255,255,.08);
-background:rgba(255,255,255,.05);
-color:white;
-font-size:15px;
-box-sizing:border-box;
+  width:100%;
+  padding:14px 16px;
+  margin-bottom:12px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  color:white;
+  font-size:15px;
+  outline:none;
 }
+.authInput::placeholder{color:rgba(255,255,255,.48)}
 .authBtn{
-width:100%;
-padding:14px;
-border:none;
-border-radius:14px;
-font-weight:700;
-cursor:pointer;
-margin-top:6px;
-font-size:15px;
-background:linear-gradient(90deg,#5f8cff,#9d5cff);
-color:white;
+  width:100%;
+  padding:14px;
+  border:1px solid rgba(0,229,255,.35);
+  border-radius:15px;
+  font-weight:800;
+  cursor:pointer;
+  margin-top:6px;
+  font-size:15px;
+  letter-spacing:.12em;
+  font-family:var(--ff2, serif);
+  background:linear-gradient(90deg,rgba(0,229,255,.20),rgba(157,55,255,.22));
+  color:#eaffff;
+  box-shadow:0 0 22px rgba(0,229,255,.14);
 }
 .authGhost{
-background:rgba(255,255,255,.05);
-margin-top:10px;
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.14);
+  color:rgba(255,255,255,.82);
 }
 #userBadge{
-position:fixed;
-top:14px;
-right:14px;
-z-index:9999;
-padding:10px 14px;
-border-radius:999px;
-background:rgba(0,0,0,.45);
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,.08);
-color:white;
-font-size:13px;
-display:none;
+  position:fixed;
+  top:calc(12px + env(safe-area-inset-top));
+  right:12px;
+  z-index:9999;
+  padding:9px 13px;
+  border-radius:999px;
+  background:rgba(0,0,0,.50);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.12);
+  color:white;
+  font-size:13px;
+  display:none;
+  box-shadow:0 0 20px rgba(0,0,0,.35);
 }
 </style>
 
 
-<style id="hub-back-fix">
-.back-btn,
-.btn-back,
-.return-btn{
-position:fixed !important;
-top:12px !important;
-left:12px !important;
-z-index:9999 !important;
+<style id="dual-back-button-safe-fix">
+.global-story-back,
+.story-back-hub,
+#storyBackHub{
+  position:fixed!important;
+  top:auto!important;
+  bottom:calc(14px + env(safe-area-inset-bottom))!important;
+  left:14px!important;
+  z-index:99999!important;
 }
-
-.chapter h1,
-.story-title,
-.screen h1{
-padding-top:58px !important;
+#userBadge{
+  right:12px!important;
 }
 </style>
 
@@ -613,35 +621,30 @@ padding-top:58px !important;
     </header>
     <div class="hub-choose">ELIGE TU HISTORIA</div>
     <div class="hub-list">
-<button class="hub-card available valmora-card" id="openValmora" type="button" style="--line:#4db7ff">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">VALMORA · SERIE ORIGINAL</span></span>
+      <button class="hub-card available valmora-card" id="openValmora<span><span class="hub-name">DUAL</span><span class="hub-sub">BALMORA · SERIE</span></span>
         <span class="hub-action">VER SERIE ›</span>
       </button>
-
-<button class="hub-card available" id="openAethrion" type="button" style="--line:#7dff83">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL MUNDO ECO</span></span>
+      <button class="hub-card available" id="openDual<span><span class="hub-name">DUAL</span><span class="hub-sub">LUSTONIA</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-<button class="hub-card available" id="openMurmex
-
-<button class="hub-card available ZERATH-card zerath-card" id="openSerat" type="button" style="--line:#ff2f55">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH · EL HORROR DE GRIOX</span></span>
+      <button class="hub-card available" id="openAethrion<span><span class="hub-name">AETHRION</span><span class="hub-sub">EL MUNDO ECO</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card available" id="openDual" type="button" style="--line:#9d37ff">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">LUSTONIA</span></span>
+      <button class="hub-card available" id="openMurmex<span><span class="hub-name">AETHRION</span><span class="hub-sub">EL DESPERTAR DE MURMEX</span></span>
+        <span class="hub-action">INICIAR ›</span>
+      </button>
+      <button class="hub-card available" id="openConquest<span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
+        <span class="hub-action">INICIAR ›</span>
+      </button>
+      <button class="hub-card available ZERATH-card zerath-card" id="openSerat<span><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH · EL HORROR DE GRIOX</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
       
       
-      " type="button" style="--line:#ff7a18">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL DESPERTAR DE MURMEX</span></span>
-        <span class="hub-action">INICIAR ›</span>
-      </button>
-      <button class="hub-card available" id="openConquest" type="button" style="--line:#d7a84a">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
-        <span class="hub-action">INICIAR ›</span>
-      </button>
+      
+      
+      
+      
       
     </div>
     <div class="hub-footer">UNIVERSOS CONECTADOS<br>CADA HISTORIA DEJA UNA HUELLA. CADA DECISIÓN, UN ECO.</div>
@@ -688,7 +691,7 @@ padding-top:58px !important;
     <div class="t2">NUEVA HISTORIA EN DESARROLLO</div>
   </div>
 </section>
-<section id="intro" class="screen"><div class="intro-card"><div class="intro-title">DUAL</div><div class="mini">LUSTONIA</div><div class="intro-text">Hace semanas, un meteorito destruyó <em>Valmora</em>. No era roca: era una prisión multiversal de <strong>Aethrion</strong> que se rompió al impactar.<br><br><em>Tronox</em> entró en el cuerpo de un ex convicto llamado <strong>Nebius</strong>. Desde entonces corrompió militares, destruyó la ciudad y mandó una señal al universo.<br><br>En Lustonia cayó otro meteorito. <em>Lurnox</em> y sus guardianes llegaron. Y el Eco eligió a tres jóvenes: <strong>Lin, Trini y Zack</strong>.</div><button class="btn-main" id="introBtn"><span>▶ COMENZAR HISTORIA</span></button></div></section>
+<section id="intro" class="screen"><div class="intro-card"><div class="intro-title">DUAL</div><div class="mini">LUSTONIA</div><div class="intro-text">Hace semanas, un meteorito destruyó <em>BALMORA</em>. No era roca: era una prisión multiversal de <strong>Aethrion</strong> que se rompió al impactar.<br><br><em>Tronox</em> entró en el cuerpo de un ex convicto llamado <strong>Nebius</strong>. Desde entonces corrompió militares, destruyó la ciudad y mandó una señal al universo.<br><br>En Lustonia cayó otro meteorito. <em>Lurnox</em> y sus guardianes llegaron. Y el Eco eligió a tres jóvenes: <strong>Lin, Trini y Zack</strong>.</div><button class="btn-main" id="introBtn"><span>▶ COMENZAR HISTORIA</span></button></div></section>
 <section id="game" class="screen"><button id="storyBackHub" class="story-back-hub" type="button">← UNIVERSOS</button><div class="scene" id="scene"></div><div class="hud"><div class="chapter"><h1 id="hudTitle">DUAL</h1><p id="hudSub">LUSTONIA</p></div><div class="bars"><div class="stat"><label><span>VIDA</span><span id="hpTxt">100</span></label><div class="bar hpbar"><i id="hpBar" style="width:100%"></i></div></div><div class="stat"><label><span>ECO</span><span id="ecoTxt">0</span></label><div class="bar ecobar"><i id="ecoBar" style="width:0%"></i></div></div></div></div><div class="game-scroll" id="gameScroll"><div class="content"><div class="scene-title" id="sceneTitle"></div><div class="panel"><div class="speaker"><div class="sp-line" id="spLine"></div><div class="sp-name" id="spName">NARRADOR</div></div><div class="text" id="text"></div></div><div class="choices" id="choices"></div><div class="cont" id="cont"><button class="btn-cont" id="contBtn">CONTINUAR</button></div></div></div></section>
 <section id="result" class="screen"><div class="res-bg" id="resBg"></div><div class="res-card" id="resCard"><div class="res-small" id="resSmall">RESULTADO</div><div class="res-title" id="resTitle"></div><div class="res-text" id="resText"></div><button class="btn-main" id="resBtn" style="margin-top:18px"><span>▶ CONTINUAR</span></button></div></section>
 <section id="ending" class="screen"><div class="res-bg" id="endBg"></div><div class="res-card" id="endCard"><div class="res-small">FINAL DE LUSTONIA</div><div class="res-title" id="endTitle"></div><div class="res-text" id="endText"></div><button class="btn-main" id="againBtn" style="margin-top:18px"><span>↻ VOLVER A JUGAR</span></button></div></section>
@@ -1783,7 +1786,7 @@ Desde tejados, sótanos y pantallas rotas, empieza a abrir caminos que el equipo
 
   if(typeof S!=='undefined'){
     Object.assign(S,{
-      mur_start:{img:'mur_palace',music:'story',title:'AETHRION',sub:'EL DESPERTAR DE MURMEX',big:'CETRIOS ARDE',s:'Después de DUAL: Valmora',spk:'NARRADOR',
+      mur_start:{img:'mur_palace',music:'story',title:'AETHRION',sub:'EL DESPERTAR DE MURMEX',big:'CETRIOS ARDE',s:'Después de DUAL: BALMORA',spk:'NARRADOR',
         delta:{campaign:'murmex',hp:0,eco:15,corr:0,clue:0,mercy:0,army:0,murmex:0,kael:1,nyra:1,darian:1,kingAlive:1,queenAlive:1,monsters:0,civilians:0,answers:0,sanctuary:0},
         txt:`Cuando Tronox envió la señal multiversal desde Valmora, los Tres Sabios de la Tierra cerraron el portal.
 
@@ -2184,7 +2187,7 @@ Esta línea temporal ya la conocía.`,choices:function(){return[{t:'Volver al HU
 
   if(typeof S!=='undefined'){
     Object.assign(S,{
-      mur_start:{img:'mur_palace',music:'story',title:'AETHRION',sub:'EL DESPERTAR DE MURMEX',big:'CETRIOS ARDE',s:'Después de DUAL: Valmora',spk:'NARRADOR',delta:{campaign:'murmex',hp:0,eco:18,corr:0,clue:0,mercy:0,army:0,answers:0,sanctuary:0,kael:1,nyra:1,darian:1,kingAlive:1,queenAlive:1,civilians:0,monsters:0,credibility:0,wrath:0,truth:0},txt:`La señal que Tronox envió desde Valmora no solo golpeó la Tierra.
+      mur_start:{img:'mur_palace',music:'story',title:'AETHRION',sub:'EL DESPERTAR DE MURMEX',big:'CETRIOS ARDE',s:'Después de DUAL: BALMORA',spk:'NARRADOR',delta:{campaign:'murmex',hp:0,eco:18,corr:0,clue:0,mercy:0,army:0,answers:0,sanctuary:0,kael:1,nyra:1,darian:1,kingAlive:1,queenAlive:1,civilians:0,monsters:0,credibility:0,wrath:0,truth:0},txt:`La señal que Tronox envió desde Valmora no solo golpeó la Tierra.
 
 En Cetrios, el Portal Central se cerró a la fuerza. Miles de monstruos que debían escapar hacia otros mundos quedaron atrapados dentro del planeta.
 
@@ -3534,7 +3537,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
 </script>
 
 
-<!-- ===== DUAL: VALMORA · SECCIÓN YOUTUBE ===== -->
+<!-- ===== DUAL: BALMORA · SECCIÓN YOUTUBE ===== -->
 <section id="valmoraScreen" class="screen valmora-screen">
   <div class="valmora-bg"></div>
   <button class="universe-back" id="valmoraBack" type="button">‹ HUB</button>
@@ -3542,7 +3545,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
     <div class="valmora-head">
       <div class="valmora-kicker">SERIE ORIGINAL</div>
       <h1>DUAL</h1>
-      <h2>VALMORA</h2>
+      <h2>BALMORA</h2>
       <p>La historia que inició el universo DUAL. Tocá un capítulo para verlo en YouTube.</p>
       <a class="valmora-playlist" href="https://youtube.com/playlist?list=PLaOf9uV2BcqtMCih2kNQJrvu5Bw6COmee&si=eNNUUE9l1A3h2Szr" target="_blank" rel="noopener">VER PLAYLIST COMPLETA EN YOUTUBE</a>
     </div>
@@ -4847,87 +4850,60 @@ setTimeout(function(){bind();patchNode()},600);
 
 <div id="authOverlay">
   <div id="authCard">
-    <h1>DUAL UNIVERSE</h1>
-    <p>Guardá tus finales, decisiones y progreso.</p>
-
+    <h1>DUAL</h1>
+    <p>Entrá para guardar tu nombre y vivir las historias de forma más personal.</p>
     <input id="authName" class="authInput" placeholder="Nombre">
     <input id="authMail" class="authInput" placeholder="Mail">
     <input id="authPass" class="authInput" type="password" placeholder="Contraseña">
-
-    <button class="authBtn" id="registerBtn">Entrar</button>
-    <button class="authBtn authGhost" id="guestBtn">Continuar como invitado</button>
+    <button class="authBtn" id="registerBtn" type="button">ENTRAR</button>
+    <button class="authBtn authGhost" id="guestBtn" type="button">CONTINUAR COMO INVITADO</button>
   </div>
 </div>
-
 <div id="userBadge"></div>
 
-<script id="simple-auth-script">
+<script id="dual-simple-auth-script">
 (function(){
-  function qs(id){ return document.getElementById(id); }
-
-  function showUser(name){
-    const badge = qs('userBadge');
-    if(!badge) return;
-    badge.style.display='block';
-    badge.innerHTML='👤 '+name;
-  }
-
-  function closeAuth(name){
-    const ov = qs('authOverlay');
-    if(ov) ov.style.display='none';
-    if(name) showUser(name);
-  }
-
-  function saveUser(data){
-    localStorage.setItem('dualUser', JSON.stringify(data));
-  }
-
+  function $(id){return document.getElementById(id);}
+  function saveUser(data){localStorage.setItem("dualUser", JSON.stringify(data));}
   function loadUser(){
-    try{
-      return JSON.parse(localStorage.getItem('dualUser')||'null');
-    }catch(e){
-      return null;
-    }
+    try{return JSON.parse(localStorage.getItem("dualUser") || "null");}
+    catch(e){return null;}
   }
+  function showBadge(name){
+    var b=$("userBadge");
+    if(!b) return;
+    b.style.display="block";
+    b.textContent="👤 " + (name || "Jugador");
+  }
+  function closeAuth(name){
+    var ov=$("authOverlay");
+    if(ov) ov.style.display="none";
+    showBadge(name || "Jugador");
+  }
+  document.addEventListener("DOMContentLoaded", function(){
+    var existing=loadUser();
+    if(existing && existing.name){ closeAuth(existing.name); }
 
-  document.addEventListener('DOMContentLoaded', function(){
-
-    const existing = loadUser();
-
-    if(existing){
-      closeAuth(existing.name || 'Jugador');
-    }
-
-    const reg = qs('registerBtn');
-    const guest = qs('guestBtn');
+    var reg=$("registerBtn");
+    var guest=$("guestBtn");
 
     if(reg){
-      reg.onclick = function(){
-        const name = (qs('authName').value || '').trim();
-        const mail = (qs('authMail').value || '').trim();
-        const pass = (qs('authPass').value || '').trim();
-
+      reg.addEventListener("click", function(){
+        var name=($("authName").value || "").trim();
+        var mail=($("authMail").value || "").trim();
+        var pass=($("authPass").value || "").trim();
         if(!name || !mail || !pass){
-          alert('Completá nombre, mail y contraseña.');
+          alert("Completá nombre, mail y contraseña.");
           return;
         }
-
-        const data = {
-          name,
-          mail,
-          pass,
-          createdAt: Date.now()
-        };
-
-        saveUser(data);
+        saveUser({name:name, mail:mail, createdAt:Date.now()});
         closeAuth(name);
-      };
+      });
     }
-
     if(guest){
-      guest.onclick = function(){
-        closeAuth('Invitado');
-      };
+      guest.addEventListener("click", function(){
+        closeAuth("Invitado");
+      });
     }
   });
 })();
