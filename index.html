@@ -3436,7 +3436,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
       <div class="valmora-kicker">SERIE ORIGINAL</div>
       <h1>DUAL</h1>
       <h2>VALMORA</h2>
-      <p>La historia que inició el universo DUAL. Tocá un capítulo para verlo en YouTube y sumar reproducciones al canal.</p>
+      <p>La historia que inició el universo DUAL. Tocá un capítulo para verlo en YouTube.</p>
       <a class="valmora-playlist" href="https://youtube.com/playlist?list=PLaOf9uV2BcqtMCih2kNQJrvu5Bw6COmee&si=eNNUUE9l1A3h2Szr" target="_blank" rel="noopener">VER PLAYLIST COMPLETA EN YOUTUBE</a>
     </div>
     <div class="valmora-list">
@@ -3444,7 +3444,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
           <span class="ep-thumb"><span>EP 1</span></span>
           <span class="ep-info">
             <b>1. La Caída</b>
-            <small>Ver en YouTube</small>
+            <small>Reproducir capítulo</small>
           </span>
           <span class="ep-play">▶</span>
         </a>
@@ -3452,7 +3452,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
           <span class="ep-thumb"><span>EP 2</span></span>
           <span class="ep-info">
             <b>2. El Despertar</b>
-            <small>Ver en YouTube</small>
+            <small>Reproducir capítulo</small>
           </span>
           <span class="ep-play">▶</span>
         </a>
@@ -3460,7 +3460,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
           <span class="ep-thumb"><span>EP 3</span></span>
           <span class="ep-info">
             <b>3. El Otro Mundo</b>
-            <small>Ver en YouTube</small>
+            <small>Reproducir capítulo</small>
           </span>
           <span class="ep-play">▶</span>
         </a>
@@ -3468,7 +3468,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
           <span class="ep-thumb"><span>EP 4</span></span>
           <span class="ep-info">
             <b>4. El Encuentro</b>
-            <small>Ver en YouTube</small>
+            <small>Reproducir capítulo</small>
           </span>
           <span class="ep-play">▶</span>
         </a>
@@ -3476,7 +3476,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
           <span class="ep-thumb"><span>EP 5</span></span>
           <span class="ep-info">
             <b>5. Primer Enfrentamiento</b>
-            <small>Ver en YouTube</small>
+            <small>Reproducir capítulo</small>
           </span>
           <span class="ep-play">▶</span>
         </a>
@@ -3484,7 +3484,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
           <span class="ep-thumb"><span>EP 6</span></span>
           <span class="ep-info">
             <b>6. Cretox</b>
-            <small>Ver en YouTube</small>
+            <small>Reproducir capítulo</small>
           </span>
           <span class="ep-play">▶</span>
         </a>
@@ -3492,7 +3492,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
           <span class="ep-thumb"><span>EP 7</span></span>
           <span class="ep-info">
             <b>7. Somos Uno</b>
-            <small>Ver en YouTube</small>
+            <small>Reproducir capítulo</small>
           </span>
           <span class="ep-play">▶</span>
         </a>
@@ -3500,7 +3500,7 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
           <span class="ep-thumb"><span>EP 8</span></span>
           <span class="ep-info">
             <b>8. El Principio del Final</b>
-            <small>Ver en YouTube</small>
+            <small>Reproducir capítulo</small>
           </span>
           <span class="ep-play">▶</span>
         </a>
@@ -3705,6 +3705,183 @@ Algunos nacen cuando una causa justa decide que ya no necesita límites.`,
     bindValmora();
   }
   setTimeout(bindValmora,500);
+})();
+</script>
+
+
+<!-- ===== FIX FINAL: HUB SCROLL + VOLVER + BOTONES DE FINAL ===== -->
+<style id="hub-scroll-back-ending-fix">
+/* HUB siempre scrolleable */
+#hub{
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
+  align-items:flex-start!important;
+}
+#hub .hub-wrap{
+  min-height:auto!important;
+  height:auto!important;
+  padding-bottom:calc(90px + env(safe-area-inset-bottom))!important;
+}
+#hub .hub-list{
+  padding-bottom:calc(80px + env(safe-area-inset-bottom))!important;
+}
+#hub .hub-footer{
+  display:block!important;
+  padding-bottom:24px!important;
+}
+@media(max-height:760px){
+  #hub .hub-footer{display:block!important}
+}
+
+/* Botón claro para volver al HUB dentro de historias */
+.global-story-back{
+  position:fixed!important;
+  top:calc(12px + env(safe-area-inset-top))!important;
+  left:12px!important;
+  z-index:9999!important;
+  padding:10px 12px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.22)!important;
+  background:rgba(0,0,0,.52)!important;
+  color:#eaffff!important;
+  font-family:var(--ff4)!important;
+  font-size:10px!important;
+  letter-spacing:.14em!important;
+  box-shadow:0 0 24px rgba(0,229,255,.18)!important;
+  backdrop-filter:blur(12px)!important;
+  text-shadow:0 0 12px rgba(0,229,255,.8)!important;
+  display:none;
+}
+.screen.active#game ~ .global-story-back,
+body.story-running .global-story-back{
+  display:block!important;
+}
+.global-story-back:active{transform:scale(.97)!important}
+
+/* Botones al finalizar */
+.ending-actions-final{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:18px;
+}
+.ending-actions-final button{
+  width:100%;
+  padding:14px 16px;
+  border-radius:15px;
+  border:1px solid rgba(0,229,255,.48);
+  background:rgba(0,229,255,.10);
+  color:#eaffff;
+  font-family:var(--ff2);
+  letter-spacing:.16em;
+  font-size:.88rem;
+  box-shadow:0 0 20px rgba(0,229,255,.13);
+}
+.ending-actions-final button.secondary{
+  border-color:rgba(215,168,74,.48);
+  background:rgba(215,168,74,.10);
+  color:#fff1c7;
+}
+.ending-actions-final button:active{transform:scale(.985)}
+</style>
+
+<button class="global-story-back" id="globalStoryBack" type="button">‹ VOLVER AL HUB</button>
+
+<script id="hub-scroll-back-ending-script">
+(function(){
+  function $(id){return document.getElementById(id);}
+  function showScreen(id){
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+    var el=$(id);
+    if(el) el.classList.add('active');
+    document.body.classList.remove('story-running');
+  }
+  function goHub(){
+    try{ if(typeof stopMusic==='function') stopMusic(); }catch(e){}
+    showScreen('hub');
+  }
+  function repeatCurrent(){
+    try{
+      if(typeof state!=='undefined' && state.campaign==='conquest' && typeof node==='function'){
+        if(typeof resetConquest==='function') resetConquest();
+        node('aeth_conq_start');
+        document.body.classList.add('story-running');
+        return;
+      }
+      if(typeof state!=='undefined' && state.campaign==='murmex' && typeof node==='function'){
+        if(typeof resetMurmex==='function') resetMurmex();
+        node('aeth_murmex_start');
+        document.body.classList.add('story-running');
+        return;
+      }
+      if(typeof startGame==='function'){
+        startGame();
+        document.body.classList.add('story-running');
+        return;
+      }
+    }catch(e){}
+    goHub();
+  }
+  function bindBack(){
+    var b=$('globalStoryBack');
+    if(b && !b.dataset.bound){
+      b.dataset.bound='1';
+      b.addEventListener('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        goHub();
+      },{passive:false});
+    }
+  }
+  function markStory(){
+    var game=$('game');
+    if(game && game.classList.contains('active')) document.body.classList.add('story-running');
+  }
+  function addEndingButtons(){
+    var activeEnding = document.querySelector('#ending.active .res-card, #result.active .res-card');
+    if(!activeEnding) return;
+    if(activeEnding.querySelector('.ending-actions-final')) return;
+    var box=document.createElement('div');
+    box.className='ending-actions-final';
+    box.innerHTML='<button type="button" class="repeat-story-final">REPETIR HISTORIA</button><button type="button" class="hub-story-final secondary">ELEGIR OTRA HISTORIA</button>';
+    activeEnding.appendChild(box);
+    var r=box.querySelector('.repeat-story-final');
+    var h=box.querySelector('.hub-story-final');
+    if(r) r.addEventListener('click',function(e){e.preventDefault();repeatCurrent();},{passive:false});
+    if(h) h.addEventListener('click',function(e){e.preventDefault();goHub();},{passive:false});
+  }
+  function hookNode(){
+    if(typeof window.node==='function' && !window.node._hubFinalFix){
+      var original=window.node;
+      window.node=function(){
+        document.body.classList.add('story-running');
+        var out=original.apply(this,arguments);
+        setTimeout(function(){bindBack();markStory();addEndingButtons();},80);
+        setTimeout(addEndingButtons,350);
+        return out;
+      };
+      window.node._hubFinalFix=true;
+    }
+  }
+  function init(){
+    bindBack();
+    hookNode();
+    markStory();
+    addEndingButtons();
+    setInterval(function(){
+      bindBack();
+      hookNode();
+      markStory();
+      addEndingButtons();
+      var hub=$('hub');
+      if(hub) hub.style.overflowY='auto';
+    },900);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
+  else init();
 })();
 </script>
 
