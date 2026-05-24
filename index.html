@@ -720,6 +720,27 @@ body:not(.is-on-hub) #floatingBackHub{display:flex!important}
 }
 </style>
 
+
+<style id="GEMELOS_SCREEN_TEXT_FIX_CSS">
+#game .panel{
+  min-height:auto!important;
+}
+#game #text{
+  display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
+  min-height:80px!important;
+}
+#game #choices,
+#game #cont{
+  display:flex;
+  flex-direction:column;
+}
+#game #cont[style*="display: block"]{
+  display:block!important;
+}
+</style>
+
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -5015,6 +5036,41 @@ setTimeout(function(){bind();patchNode()},600);
     <div class="t2">ECO DE REGENERACIÓN · NORTE DE LA CIUDAD</div>
   </div>
 </section>
+
+
+<script id="GEMELOS_EMPTY_TEXT_FIX">
+(function(){
+  window.$ = window.$ || function(id){ return document.getElementById(id); };
+
+  // Refuerzo visual por si algún nodo entra sin texto por timing.
+  function fixGemelosBlank(){
+    var active = document.querySelector('.screen.active');
+    if(!active || active.id !== 'game') return;
+
+    var title = document.getElementById('hudTitle');
+    var sub = document.getElementById('hudSub');
+    var text = document.getElementById('text');
+    var sp = document.getElementById('spName');
+
+    // Si la historia entró vacía, mostramos una guía mínima en vez de pantalla en blanco.
+    // Después, al tocar iniciar otra vez o avanzar, los nodos ya cargan bien.
+    if(text && !text.textContent.trim() && title && title.textContent.trim()==='DUAL' && sub && sub.textContent.trim()==='LUSTONIA'){
+      title.textContent = 'DUAL';
+      sub.textContent = 'LA CRUZADA DE LOS GEMELOS';
+      if(sp) sp.textContent = 'NARRADOR';
+      text.textContent = 'La Cruzada de los Gemelos ya está cargada. Volvé al HUB y entrá nuevamente en la historia para iniciar con Rafa o Rama.';
+    }
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', fixGemelosBlank);
+  }else{
+    fixGemelosBlank();
+  }
+
+  setTimeout(fixGemelosBlank, 500);
+})();
+</script>
 
 <script id="definitive-twins-script">
 (function(){
