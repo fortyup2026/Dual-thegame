@@ -783,6 +783,115 @@ body.aethrion-mode #storyBackHub{display:flex!important}
 }
 </style>
 
+
+<style id="FIX_BACK_HUB_ABSOLUTO_FINAL">
+/* ===== ARREGLO ABSOLUTO DEL BOTÓN VOLVER ===== */
+
+/* En el HUB principal NO debe aparecer ningún botón de volver */
+body.is-hub #backToHub,
+body.is-hub #storyBackHub,
+body.is-hub .back-hub-btn,
+body.is-hub .story-back-hub,
+body.is-hub .global-story-back,
+body.is-hub .universe-back{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+/* Cuando estamos dentro de una historia, el botón va abajo a la derecha */
+body:not(.is-hub) #storyBackHub,
+body:not(.is-hub) .story-back-hub{
+  position:fixed!important;
+  top:auto!important;
+  left:auto!important;
+  right:12px!important;
+  bottom:calc(14px + env(safe-area-inset-bottom))!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:76px!important;
+  height:34px!important;
+  padding:0 9px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:10px!important;
+  border:1px solid rgba(0,229,255,.35)!important;
+  background:rgba(0,0,0,.76)!important;
+  color:#dffcff!important;
+  font-family:var(--ff4)!important;
+  font-size:9px!important;
+  line-height:1!important;
+  letter-spacing:.08em!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:clip!important;
+  box-shadow:0 0 18px rgba(0,229,255,.18)!important;
+  backdrop-filter:blur(10px)!important;
+  z-index:999999!important;
+}
+
+/* El botón de volver del cover también va abajo a la derecha y no arriba */
+body:not(.is-hub) #backToHub.back-hub-btn,
+body:not(.is-hub) .back-hub-btn{
+  position:fixed!important;
+  top:auto!important;
+  left:auto!important;
+  right:12px!important;
+  bottom:calc(14px + env(safe-area-inset-bottom))!important;
+  width:auto!important;
+  min-width:0!important;
+  max-width:76px!important;
+  height:34px!important;
+  padding:0 9px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:10px!important;
+  border:1px solid rgba(0,229,255,.35)!important;
+  background:rgba(0,0,0,.76)!important;
+  color:#dffcff!important;
+  font-family:var(--ff4)!important;
+  font-size:9px!important;
+  line-height:1!important;
+  letter-spacing:.08em!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  box-shadow:0 0 18px rgba(0,229,255,.18)!important;
+  backdrop-filter:blur(10px)!important;
+  z-index:999999!important;
+}
+
+/* Si el cover NO está activo, su botón no existe visualmente */
+#cover:not(.active) #backToHub{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+/* Si el game NO está activo, el botón de historia no existe visualmente */
+#game:not(.active) #storyBackHub{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+/* El HUD recupera espacio: ya no queda botón ocupando la izquierda */
+#game .hud{
+  padding-left:10px!important;
+}
+#game .chapter{
+  margin-left:0!important;
+  padding-left:0!important;
+  max-width:calc(100vw - 185px)!important;
+}
+#game .chapter h1,
+#game .chapter p{
+  padding-left:0!important;
+}
+</style>
+
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -5132,6 +5241,79 @@ setTimeout(function(){bind();patchNode()},600);
 
   setTimeout(run,300);
   setTimeout(run,1000);
+})();
+</script>
+
+
+<script id="FIX_BACK_HUB_ABSOLUTO_FINAL_JS">
+(function(){
+  function activeId(){
+    var active = document.querySelector('.screen.active');
+    return active ? active.id : '';
+  }
+
+  function applyBackFix(){
+    var id = activeId();
+    var isHub = id === 'hub';
+    document.body.classList.toggle('is-hub', isHub);
+
+    var backCover = document.getElementById('backToHub');
+    var backStory = document.getElementById('storyBackHub');
+
+    if(backCover){
+      backCover.textContent = '‹ HUB';
+      backCover.setAttribute('aria-label','Volver al hub');
+      backCover.style.display = (!isHub && id === 'cover') ? 'flex' : 'none';
+    }
+
+    if(backStory){
+      backStory.textContent = '‹ HUB';
+      backStory.setAttribute('aria-label','Volver al hub');
+      backStory.style.display = (!isHub && id === 'game') ? 'flex' : 'none';
+    }
+  }
+
+  // Si existe showScreen, lo envolvemos para corregir al cambiar de pantalla
+  function hookShowScreen(){
+    if(typeof window.showScreen === 'function' && !window.showScreen.__backFixHooked){
+      var original = window.showScreen;
+      window.showScreen = function(){
+        var r = original.apply(this, arguments);
+        setTimeout(applyBackFix, 30);
+        setTimeout(applyBackFix, 160);
+        return r;
+      };
+      window.showScreen.__backFixHooked = true;
+    }
+  }
+
+  function init(){
+    applyBackFix();
+    hookShowScreen();
+
+    document.addEventListener('click', function(){
+      setTimeout(function(){
+        hookShowScreen();
+        applyBackFix();
+      }, 80);
+    }, true);
+
+    var app = document.getElementById('app') || document.body;
+    if(window.MutationObserver && app){
+      var obs = new MutationObserver(function(){
+        applyBackFix();
+      });
+      obs.observe(app, {attributes:true, subtree:true, attributeFilter:['class','style']});
+    }
+
+    setInterval(function(){
+      hookShowScreen();
+      applyBackFix();
+    }, 700);
+  }
+
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
 </script>
 
