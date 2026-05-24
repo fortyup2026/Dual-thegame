@@ -502,74 +502,98 @@ body.aethrion-mode #storyBackHub{display:block!important}
 </style>
 
 
-<style id="force-remove-login-ui">
-#authOverlay,#userBadge{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+<style id="cinematic-hub-replica-style">
+#hub.screen.active{display:flex!important;align-items:flex-start!important;justify-content:center!important;overflow-y:auto!important;background:#020304!important}
+#hub .hub-cinematic-bg{position:fixed;inset:0;pointer-events:none;background:radial-gradient(circle at 18% 8%,rgba(0,229,255,.18),transparent 30%),radial-gradient(circle at 82% 12%,rgba(255,150,50,.16),transparent 34%),linear-gradient(90deg,rgba(0,38,66,.46),rgba(0,0,0,.90) 50%,rgba(44,20,5,.45)),#020304}
+#hub .hub-cinematic-bg:before{content:"";position:absolute;inset:0;opacity:.17;background:repeating-linear-gradient(90deg,transparent 0 28px,rgba(0,229,255,.16) 29px 30px),repeating-linear-gradient(0deg,transparent 0 18px,rgba(255,255,255,.08) 19px 20px);mix-blend-mode:screen}
+#hub .hub-cinematic-bg:after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,.78) 86%)}
+#hub .cinematic-hub{width:min(94vw,980px)!important;min-height:100dvh!important;padding:calc(28px + env(safe-area-inset-top)) 0 calc(32px + env(safe-area-inset-bottom))!important;position:relative!important;z-index:5!important;display:flex!important;flex-direction:column!important}
+#hub .hub-head{margin:0 0 20px!important;text-align:center!important}
+#hub .cinematic-choose{font-family:var(--ff2)!important;letter-spacing:.56em!important;margin-left:.56em!important;color:rgba(232,220,196,.86)!important;text-shadow:0 0 18px rgba(215,193,138,.18),0 2px 8px #000!important;font-size:clamp(.9rem,3.2vw,1.25rem)!important}
+#hub .cinematic-list{width:100%!important;display:flex!important;flex-direction:column!important;gap:14px!important}
+#hub .cinematic-card{position:relative!important;width:100%!important;min-height:104px!important;display:grid!important;grid-template-columns:92px minmax(0,1fr) 210px!important;align-items:center!important;gap:18px!important;padding:16px 28px 16px 18px!important;border:1px solid color-mix(in srgb,var(--line),transparent 24%)!important;border-radius:18px!important;overflow:hidden!important;background:linear-gradient(90deg,rgba(0,0,0,.76),rgba(0,0,0,.44))!important;box-shadow:0 0 28px color-mix(in srgb,var(--line),transparent 86%),inset 0 0 46px rgba(255,255,255,.025)!important}
+#hub .cinematic-card:before{content:""!important;position:absolute!important;inset:0!important;background:radial-gradient(circle at 12% 50%,color-mix(in srgb,var(--line),transparent 78%),transparent 26%),linear-gradient(90deg,color-mix(in srgb,var(--line),transparent 94%),transparent 58%,rgba(0,0,0,.55))!important;pointer-events:none!important}
+#hub .hub-emblem{position:relative!important;z-index:3!important;width:70px!important;height:70px!important;border-radius:50%!important;border:1px solid color-mix(in srgb,var(--line),white 10%)!important;box-shadow:0 0 20px color-mix(in srgb,var(--line),transparent 62%),inset 0 0 22px rgba(255,255,255,.04)!important;display:grid!important;place-items:center!important;color:var(--line)!important;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--line),transparent 80%),rgba(0,0,0,.72) 72%)!important}
+#hub .hub-emblem:before{font-size:36px;filter:drop-shadow(0 0 8px currentColor)}
+#hub .emblem-valmora:before{content:"☾"} #hub .emblem-lustonia:before{content:"◆"} #hub .emblem-eco:before{content:"♧"} #hub .emblem-murmex:before{content:"▲"} #hub .emblem-conquest:before{content:"♛"} #hub .emblem-zerath:before{content:"☠"}
+#hub .hub-copy{position:relative!important;z-index:3!important;min-width:0!important;display:flex!important;flex-direction:column!important;align-items:flex-start!important}
+#hub .hub-name{display:block!important;font-family:var(--ff1)!important;color:#eee8dc!important;font-size:clamp(2.2rem,8.6vw,4rem)!important;line-height:.9!important;letter-spacing:.06em!important;text-shadow:0 3px 12px #000,0 0 18px color-mix(in srgb,var(--line),transparent 68%)!important;white-space:nowrap!important}
+#hub .hub-sub{display:block!important;margin-top:8px!important;color:var(--line)!important;font-family:var(--ff2)!important;font-size:clamp(.78rem,2.6vw,1.18rem)!important;letter-spacing:.23em!important;text-transform:uppercase!important;text-shadow:0 2px 8px #000,0 0 12px color-mix(in srgb,var(--line),transparent 62%)!important;white-space:nowrap!important;overflow:hidden!important;max-width:100%!important}
+#hub .hub-action{position:relative!important;z-index:3!important;justify-self:end!important;width:180px!important;min-width:180px!important;min-height:58px!important;display:flex!important;align-items:center!important;justify-content:center!important;border:1px solid color-mix(in srgb,var(--line),white 5%)!important;border-radius:15px!important;background:rgba(0,0,0,.42)!important;color:color-mix(in srgb,var(--line),white 35%)!important;font-family:var(--ff2)!important;letter-spacing:.24em!important;font-size:clamp(.82rem,2.7vw,1.1rem)!important;white-space:nowrap!important}
+#hub .twin-card{min-height:176px!important;grid-template-columns:230px minmax(0,1fr)!important;padding:22px 30px!important;border-color:rgba(215,193,138,.42)!important;background:radial-gradient(circle at 12% 50%,rgba(215,193,138,.14),transparent 30%),linear-gradient(100deg,rgba(10,10,8,.92),rgba(0,0,0,.78))!important}
+#hub .twin-card .hub-name{font-size:clamp(3.2rem,12vw,5.4rem)!important;color:#d7c18a!important}
+#hub .twin-card .hub-sub{color:#d7c18a!important;letter-spacing:.18em!important;font-size:clamp(.92rem,3vw,1.36rem)!important}
+#hub .twin-copy{position:relative!important;z-index:3!important;display:flex!important;flex-direction:column!important;align-items:center!important;text-align:center!important}
+#hub .twin-soon{margin-top:18px!important;padding-top:12px!important;border-top:1px solid rgba(215,193,138,.28)!important;color:rgba(215,193,138,.82)!important;font-family:var(--ff2)!important;letter-spacing:.48em!important;margin-left:.48em!important}
+#hub .twin-art{position:relative!important;z-index:3!important;width:210px!important;height:130px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+#hub .twin-sword{width:5px!important;height:126px!important;background:linear-gradient(#f0e6c8,#8d7a4a,#f0e6c8)!important;box-shadow:0 0 10px rgba(215,193,138,.55)!important;position:relative!important}
+#hub .twin-sword:before{content:""!important;position:absolute!important;top:-12px!important;left:50%!important;transform:translateX(-50%) rotate(45deg)!important;width:18px!important;height:18px!important;background:#d7c18a!important}
+#hub .twin-sword:after{content:""!important;position:absolute!important;bottom:23px!important;left:50%!important;transform:translateX(-50%)!important;width:58px!important;height:5px!important;border-radius:99px!important;background:#d7c18a!important}
+#hub .twin-wing{width:86px!important;height:112px!important;border:2px solid rgba(215,193,138,.42)!important;background:repeating-linear-gradient(135deg,rgba(215,193,138,.34) 0 4px,transparent 5px 10px)!important;opacity:.72!important}
+#hub .twin-wing.left{border-radius:90% 10% 70% 30%!important;transform:skewY(-12deg)!important} #hub .twin-wing.right{border-radius:10% 90% 30% 70%!important;transform:skewY(12deg)!important}
+@media(max-width:720px){#hub .cinematic-hub{width:calc(100vw - 26px)!important}#hub .cinematic-card{min-height:96px!important;grid-template-columns:76px minmax(0,1fr) 138px!important;gap:12px!important;padding:14px!important}#hub .hub-emblem{width:60px!important;height:60px!important}#hub .hub-emblem:before{font-size:30px!important}#hub .hub-action{width:126px!important;min-width:126px!important;letter-spacing:.18em!important;font-size:.78rem!important}#hub .twin-card{min-height:170px!important;grid-template-columns:120px minmax(0,1fr)!important;padding:18px 14px!important}#hub .twin-art{width:112px!important;height:118px!important}#hub .twin-wing{width:48px!important;height:94px!important}#hub .twin-sword{height:108px!important}}
+@media(max-width:470px){#hub .cinematic-card{grid-template-columns:minmax(0,1fr) 106px!important;min-height:104px!important;padding:15px 12px 15px 18px!important}#hub .hub-emblem{display:none!important}#hub .hub-action{width:104px!important;min-width:104px!important;font-size:.66rem!important;letter-spacing:.13em!important}#hub .hub-name{font-size:clamp(1.75rem,10vw,2.95rem)!important}#hub .hub-sub{font-size:.63rem!important;letter-spacing:.14em!important}#hub .twin-card{grid-template-columns:1fr!important;gap:10px!important;text-align:center!important}#hub .twin-art{margin:0 auto!important;width:150px!important;height:92px!important}#hub .twin-wing{width:56px!important;height:76px!important}#hub .twin-sword{height:92px!important}}
 </style>
-<script id="force-remove-login-cache">
-(function(){
-  try {
-    localStorage.removeItem("dualUser");
-    sessionStorage.removeItem("dualUser");
-  } catch(e) {}
-  function clean(){
-    var a=document.getElementById("authOverlay"); if(a) a.remove();
-    var b=document.getElementById("userBadge"); if(b) b.remove();
-  }
-  clean();
-  document.addEventListener("DOMContentLoaded", clean);
-  setInterval(clean, 500);
-})();
-</script>
-<!-- CLEAN_INDEX_NO_LOGIN_1779579161 -->
 
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
 <div id="app">
 
+
 <section id="hub" class="screen active">
-  <div class="hub-hero">
-    <div class="hub-city"></div>
-    <div class="hub-castle"></div>
-    <div class="hub-split"></div>
-  </div>
-  <div class="hub-wrap">
+  <div class="hub-cinematic-bg"></div>
+  <div class="hub-wrap cinematic-hub">
     <header class="hub-head">
-      <div class="hub-title">DUAL</div>
-      <div class="hub-game">THE GAME</div>
-      <div class="hub-tag">HISTORIAS. DECISIONES. CONSECUENCIAS.</div>
+      <div class="hub-choose cinematic-choose">ELIGE TU HISTORIA</div>
     </header>
-    <div class="hub-choose">ELIGE TU HISTORIA</div>
-    <div class="hub-list">
-      <button class="hub-card available" id="openDual" type="button" style="--line:#9d37ff">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">LUSTONIA</span></span>
-        <span class="hub-action">INICIAR ›</span>
-      </button>
-      <button class="hub-card available valmora-card" id="openValmora" type="button" style="--line:#4db7ff">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">VALMORA · SERIE ORIGINAL</span></span>
+
+    <div class="hub-list cinematic-list">
+      <button class="hub-card cinematic-card available valmora-card" id="openValmora" type="button" style="--line:#4db7ff">
+        <span class="hub-emblem emblem-valmora"></span>
+        <span class="hub-copy"><span class="hub-name">DUAL</span><span class="hub-sub">VALMORA · SERIE ORIGINAL</span></span>
         <span class="hub-action">VER SERIE ›</span>
       </button>
-      <button class="hub-card available" id="openAethrion" type="button" style="--line:#7dff83">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL MUNDO ECO</span></span>
+
+      <button class="hub-card cinematic-card available" id="openDual" type="button" style="--line:#9d37ff">
+        <span class="hub-emblem emblem-lustonia"></span>
+        <span class="hub-copy"><span class="hub-name">DUAL</span><span class="hub-sub">LUSTONIA</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card available" id="openMurmex" type="button" style="--line:#ff7a18">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL DESPERTAR DE MURMEX</span></span>
+
+      <button class="hub-card cinematic-card available" id="openAethrion" type="button" style="--line:#55ff72">
+        <span class="hub-emblem emblem-eco"></span>
+        <span class="hub-copy"><span class="hub-name">AETHRION</span><span class="hub-sub">EL MUNDO ECO</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card available" id="openConquest" type="button" style="--line:#d7a84a">
-        <span><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
+
+      <button class="hub-card cinematic-card available" id="openMurmex" type="button" style="--line:#ff7a18">
+        <span class="hub-emblem emblem-murmex"></span>
+        <span class="hub-copy"><span class="hub-name">AETHRION</span><span class="hub-sub">EL DESPERTAR DE MURMEX</span></span>
         <span class="hub-action">INICIAR ›</span>
       </button>
-      <button class="hub-card available ZERATH-card zerath-card" id="openSerat" type="button" style="--line:#ff2f55">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH · EL HORROR DE GRIOX</span></span>
+
+      <button class="hub-card cinematic-card available" id="openConquest" type="button" style="--line:#d7a84a">
+        <span class="hub-emblem emblem-conquest"></span>
+        <span class="hub-copy"><span class="hub-name">AETHRION</span><span class="hub-sub">LA GRAN CONQUISTA</span></span>
         <span class="hub-action">INICIAR ›</span>
+      </button>
+
+      <button class="hub-card cinematic-card available zerath-card" id="openSerat" type="button" style="--line:#ff2f55">
+        <span class="hub-emblem emblem-zerath"></span>
+        <span class="hub-copy"><span class="hub-name">DUAL</span><span class="hub-sub">ZERATH · EL HORROR DE GRIOX</span></span>
+        <span class="hub-action">INICIAR ›</span>
+      </button>
+
+      <button class="hub-card cinematic-card twin-card locked" id="openTwins" type="button" style="--line:#d7c18a">
+        <span class="twin-art"><span class="twin-wing left"></span><span class="twin-sword"></span><span class="twin-wing right"></span></span>
+        <span class="twin-copy"><span class="hub-name">DUAL</span><span class="hub-sub">LA CRUZADA DE LOS GEMELOS</span><span class="twin-soon">PRÓXIMAMENTE</span></span>
       </button>
     </div>
-    <div class="hub-footer">UNIVERSOS CONECTADOS<br>CADA HISTORIA DEJA UNA HUELLA. CADA DECISIÓN, UN ECO.</div>
   </div>
   <div class="hub-toast" id="hubToast"><b>PRÓXIMAMENTE</b><span>HISTORIA EN DESARROLLO</span></div>
 </section>
+
 
 <section id="cover" class="screen">
   <button id="backToHub" class="back-hub-btn" type="button">← UNIVERSOS</button>
@@ -4763,6 +4787,28 @@ setTimeout(function(){bind();patchNode()},600);
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
+})();
+</script>
+
+
+<script id="twins-soon-script">
+(function(){
+ function bind(){
+  var b=document.getElementById('openTwins');
+  if(!b||b.dataset.boundTwins)return;
+  b.dataset.boundTwins='1';
+  b.addEventListener('click',function(e){
+   e.preventDefault();e.stopPropagation();
+   var t=document.getElementById('hubToast');
+   if(t){
+    var bb=t.querySelector('b'); if(bb)bb.textContent='PRÓXIMAMENTE';
+    var s=t.querySelector('span'); if(s)s.textContent='DUAL · LA CRUZADA DE LOS GEMELOS';
+    t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(function(){t.classList.remove('show')},1800);
+   }
+  },{passive:false});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind); else bind();
+ setTimeout(bind,600);
 })();
 </script>
 
