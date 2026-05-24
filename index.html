@@ -502,258 +502,83 @@ body.aethrion-mode #storyBackHub{display:block!important}
 </style>
 
 
-<style id="force-remove-login-ui">
-#authOverlay,#userBadge{display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
-</style>
-<script id="force-remove-login-cache">
-(function(){
-  try {
-    localStorage.removeItem("dualUser");
-    sessionStorage.removeItem("dualUser");
-  } catch(e) {}
-  function clean(){
-    var a=document.getElementById("authOverlay"); if(a) a.remove();
-    var b=document.getElementById("userBadge"); if(b) b.remove();
-  }
-  clean();
-  document.addEventListener("DOMContentLoaded", clean);
-  setInterval(clean, 500);
-})();
-</script>
-<!-- CLEAN_INDEX_NO_LOGIN_1779579161 -->
-
-
-<style id="hub-clean-fix">
-#hub .cinematic-list{
-  gap:18px!important;
+<style id="definitive-final-fix">
+/* HUB compacto y estable */
+#hub .hub-list{
+  gap:14px!important;
+  padding-bottom:calc(32px + env(safe-area-inset-bottom))!important;
 }
-
-#hub .cinematic-card{
-  min-height:92px!important;
-  grid-template-columns:minmax(0,1fr) 140px!important;
-  padding:18px 18px!important;
-  align-items:center!important;
+#hub .hub-card{
+  min-height:82px!important;
+  grid-template-columns:minmax(0,1fr) 116px!important;
+  padding:13px 12px 13px 16px!important;
 }
-
-#hub .hub-emblem{
-  display:none!important;
-}
-
-#hub .hub-copy{
-  overflow:hidden!important;
-}
-
 #hub .hub-name{
-  font-size:clamp(2rem,8vw,3.2rem)!important;
+  font-size:clamp(1.7rem,8vw,3rem)!important;
   line-height:.95!important;
   white-space:nowrap!important;
+  overflow:visible!important;
 }
-
 #hub .hub-sub{
-  margin-top:6px!important;
-  font-size:clamp(.62rem,2.4vw,.95rem)!important;
+  font-size:clamp(.62rem,2.6vw,.92rem)!important;
   letter-spacing:.16em!important;
   white-space:normal!important;
   overflow:visible!important;
-  text-overflow:unset!important;
 }
-
 #hub .hub-action{
-  width:118px!important;
-  min-width:118px!important;
-  max-width:118px!important;
-  min-height:50px!important;
-  font-size:.72rem!important;
-  letter-spacing:.13em!important;
-}
-
-#hub .twin-card{
-  min-height:120px!important;
-  grid-template-columns:1fr!important;
-  text-align:center!important;
-  padding:22px 18px!important;
-}
-
-#hub .twin-art{
-  display:none!important;
-}
-
-#hub .twin-card .hub-name{
-  font-size:clamp(2.4rem,10vw,4rem)!important;
-}
-
-#hub .twin-card .hub-sub{
-  font-size:clamp(.8rem,2.8vw,1.1rem)!important;
-  letter-spacing:.14em!important;
-}
-
-#hub .twin-soon{
-  margin-top:10px!important;
-  font-size:.75rem!important;
-  letter-spacing:.35em!important;
-}
-
-@media(max-width:520px){
-  #hub .cinematic-card{
-    grid-template-columns:minmax(0,1fr) 100px!important;
-    padding:16px 14px!important;
-  }
-
-  #hub .hub-name{
-    font-size:clamp(1.8rem,9vw,2.8rem)!important;
-  }
-
-  #hub .hub-sub{
-    font-size:.62rem!important;
-    letter-spacing:.12em!important;
-  }
-
-  #hub .hub-action{
-    width:96px!important;
-    min-width:96px!important;
-    min-height:44px!important;
-    font-size:.64rem!important;
-  }
-}
-</style>
-
-
-<style id="twins-and-back-fix">
-
-#hub .twin-card{
-  border-color:rgba(215,193,138,.42)!important;
-  background:
-    radial-gradient(circle at 50% 50%,rgba(215,193,138,.10),transparent 60%),
-    linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.55))!important;
-}
-
-#hub .twin-card .hub-name{
-  color:#d7c18a!important;
-}
-
-#hub .twin-card .hub-sub,
-#hub .twin-card .twin-soon{
-  color:#d7c18a!important;
-}
-
-.story-back,
-.story-back-hub,
-.global-story-back,
-#storyBackHub{
-  position:fixed!important;
-  top:auto!important;
-  bottom:18px!important;
-  left:16px!important;
-  z-index:99999!important;
-}
-
-.story-header,
-.story-title,
-.chapter-title,
-.universe-title{
-  padding-top:44px!important;
-}
-</style>
-
-
-<style id="ultimate-overlay-fix">
-.story-back,
-.story-back-hub,
-.global-story-back,
-#storyBackHub{
- position:fixed!important;
- top:12px!important;
- left:12px!important;
- bottom:auto!important;
- width:auto!important;
- max-width:160px!important;
- padding:10px 14px!important;
- border-radius:12px!important;
- background:rgba(0,0,0,.75)!important;
- backdrop-filter:blur(8px)!important;
- z-index:999999!important;
- font-size:.72rem!important;
- letter-spacing:.14em!important;
-}
-
-.story-header,
-.story-title,
-.chapter-title,
-.universe-title{
- padding-top:72px!important;
-}
-
-#openTwins{
- display:grid!important;
-}
-</style>
-
-
-<style id="twins-final-visible-fix">
-#hub #openTwins.twins-final-card{
-  display:grid!important;
-  visibility:visible!important;
-  opacity:1!important;
-  min-height:92px!important;
-  grid-template-columns:minmax(0,1fr) 118px!important;
-  padding:16px 18px!important;
-  margin-top:0!important;
-  border:1px solid rgba(215,193,138,.55)!important;
-  border-radius:18px!important;
-  background:
-    radial-gradient(circle at 88% 18%,rgba(215,193,138,.15),transparent 34%),
-    linear-gradient(135deg,rgba(24,19,9,.82),rgba(0,0,0,.55))!important;
-  box-shadow:0 0 24px rgba(215,193,138,.16), inset 0 0 32px rgba(255,255,255,.025)!important;
-}
-#hub #openTwins .hub-name{
-  color:#eee8dc!important;
-  font-family:var(--ff1)!important;
-  font-size:clamp(2rem,8vw,3.2rem)!important;
-  line-height:.95!important;
-  letter-spacing:.06em!important;
-  display:block!important;
-}
-#hub #openTwins .hub-sub{
-  color:#d7c18a!important;
-  font-family:var(--ff2)!important;
-  font-size:clamp(.62rem,2.4vw,.95rem)!important;
-  letter-spacing:.14em!important;
-  display:block!important;
-  margin-top:6px!important;
+  width:106px!important;
+  min-width:106px!important;
+  max-width:116px!important;
+  min-height:46px!important;
+  font-size:.66rem!important;
+  letter-spacing:.12em!important;
+  padding:10px 6px!important;
   white-space:normal!important;
 }
-#hub #openTwins .twins-soon-label{
-  color:rgba(215,193,138,.78)!important;
-  font-family:var(--ff4)!important;
-  font-size:.66rem!important;
-  letter-spacing:.24em!important;
-  display:block!important;
-  margin-top:7px!important;
+#hub .twins-card{
+  border-color:rgba(215,193,138,.55)!important;
+  background:
+    radial-gradient(circle at 92% 22%,rgba(215,193,138,.14),transparent 34%),
+    linear-gradient(135deg,rgba(24,19,9,.78),rgba(0,0,0,.50))!important;
 }
-#hub #openTwins .hub-action{
-  width:118px!important;
-  min-width:118px!important;
-  max-width:118px!important;
-  min-height:50px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
+#hub .twins-card .hub-sub,
+#hub .twins-card .hub-action{
   color:#d7c18a!important;
   border-color:rgba(215,193,138,.55)!important;
-  font-size:.58rem!important;
-  letter-spacing:.08em!important;
 }
-@media(max-width:520px){
-  #hub #openTwins.twins-final-card{
-    grid-template-columns:minmax(0,1fr) 96px!important;
-    padding:16px 14px!important;
-  }
-  #hub #openTwins .hub-action{
-    width:96px!important;
-    min-width:96px!important;
-    max-width:96px!important;
-    font-size:.48rem!important;
-  }
+#hub .twins-card .hub-action{
+  font-size:.52rem!important;
+}
+
+/* Flecha volver: abajo, chica, sin panel gigante */
+.global-story-back,
+.story-back-hub,
+#storyBackHub,
+.back-hub-btn,
+.universe-back{
+  position:fixed!important;
+  top:auto!important;
+  bottom:calc(14px + env(safe-area-inset-bottom))!important;
+  left:14px!important;
+  width:auto!important;
+  min-width:auto!important;
+  max-width:170px!important;
+  height:auto!important;
+  padding:9px 11px!important;
+  border-radius:12px!important;
+  background:rgba(0,0,0,.72)!important;
+  backdrop-filter:blur(10px)!important;
+  z-index:999999!important;
+  font-size:10px!important;
+  letter-spacing:.12em!important;
+  box-shadow:0 0 18px rgba(0,229,255,.14)!important;
+}
+
+/* Oculta cualquier overlay/panel roto de vuelta */
+#authOverlay,#userBadge{
+  display:none!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
 }
 </style>
 
@@ -776,13 +601,13 @@ body.aethrion-mode #storyBackHub{display:block!important}
     </header>
     <div class="hub-choose">ELIGE TU HISTORIA</div>
     <div class="hub-list">
-      <button class="hub-card available" id="openDual" type="button" style="--line:#9d37ff">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">LUSTONIA</span></span>
-        <span class="hub-action">INICIAR ›</span>
-      </button>
       <button class="hub-card available valmora-card" id="openValmora" type="button" style="--line:#4db7ff">
         <span><span class="hub-name">DUAL</span><span class="hub-sub">VALMORA · SERIE</span></span>
         <span class="hub-action">VER SERIE ›</span>
+      </button>
+      <button class="hub-card available" id="openDual" type="button" style="--line:#9d37ff">
+        <span><span class="hub-name">DUAL</span><span class="hub-sub">LUSTONIA</span></span>
+        <span class="hub-action">INICIAR ›</span>
       </button>
       <button class="hub-card available" id="openAethrion" type="button" style="--line:#7dff83">
         <span><span class="hub-name">AETHRION</span><span class="hub-sub">EL MUNDO ECO</span></span>
@@ -801,15 +626,20 @@ body.aethrion-mode #storyBackHub{display:block!important}
         <span class="hub-action">INICIAR ›</span>
       </button>
 
-      <button class="hub-card cinematic-card twins-final-card available" id="openTwins" type="button" style="--line:#d7c18a">
+      <button class="hub-card available twins-card" id="openTwins" type="button" style="--line:#d7c18a">
         <span>
           <span class="hub-name">DUAL</span>
           <span class="hub-sub">LA CRUZADA DE LOS GEMELOS</span>
-          <span class="twins-soon-label">PRÓXIMAMENTE</span>
         </span>
         <span class="hub-action">PRÓXIMAMENTE</span>
       </button>
 
+      
+      
+      
+      
+      
+      
     </div>
     <div class="hub-footer">UNIVERSOS CONECTADOS<br>CADA HISTORIA DEJA UNA HUELLA. CADA DECISIÓN, UN ECO.</div>
   </div>
@@ -4898,7 +4728,7 @@ setTimeout(function(){bind();patchNode()},600);
       return [MUSIC.lustonia.explore, .45];
     }
 
-    // VALMORA / VALMORA / DUAL videos
+    // VALMORA / BALMORA / DUAL videos
     if(id.includes("valmora") || id.includes("balmora") || id.includes("tronox") || id.includes("cretox")){
       if(id.includes("tronox") || id.includes("cretox") || id.includes("villain")) return [MUSIC.valmora.villain, .50];
       if(id.includes("final") || id.includes("somos")) return [MUSIC.valmora.finale, .50];
@@ -5012,73 +4842,32 @@ setTimeout(function(){bind();patchNode()},600);
 </script>
 
 
-<script id="twins-button-script">
+<script id="definitive-twins-script">
 (function(){
-  function bind(){
-    const btn=document.getElementById('openTwins');
-    if(!btn || btn.dataset.ready) return;
-    btn.dataset.ready='1';
-
-    btn.addEventListener('click',function(e){
-      e.preventDefault();
-
-      const toast=document.getElementById('hubToast');
-
-      if(toast){
-        const b=toast.querySelector('b');
-        const s=toast.querySelector('span');
-
-        if(b) b.textContent='PRÓXIMAMENTE';
-        if(s) s.textContent='DUAL · LA CRUZADA DE LOS GEMELOS';
-
-        toast.classList.add('show');
-
-        clearTimeout(window.__twinsToast);
-
-        window.__twinsToast=setTimeout(()=>{
-          toast.classList.remove('show');
-        },2200);
-      } else {
-        alert('DUAL · LA CRUZADA DE LOS GEMELOS — PRÓXIMAMENTE');
-      }
-    });
-  }
-
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded',bind);
-  } else {
-    bind();
-  }
-
-  setTimeout(bind,500);
-})();
-</script>
-
-
-<script id="twins-final-click">
-(function(){
-  function bindTwinsFinal(){
-    var btn=document.getElementById('openTwins');
-    if(!btn || btn.dataset.twinsFinalBound) return;
-    btn.dataset.twinsFinalBound='1';
-    btn.addEventListener('click',function(e){
+  function bindTwins(){
+    var b=document.getElementById('openTwins');
+    if(!b || b.dataset.twinsReady) return;
+    b.dataset.twinsReady='1';
+    b.addEventListener('click',function(e){
       e.preventDefault();
       e.stopPropagation();
-      var toast=document.getElementById('hubToast');
-      if(toast){
-        var b=toast.querySelector('b'); if(b) b.textContent='PRÓXIMAMENTE';
-        var s=toast.querySelector('span'); if(s) s.textContent='DUAL · LA CRUZADA DE LOS GEMELOS';
-        toast.classList.add('show');
-        clearTimeout(toast._tw);
-        toast._tw=setTimeout(function(){toast.classList.remove('show')},2000);
-      } else {
+      var t=document.getElementById('hubToast');
+      if(t){
+        var title=t.querySelector('b');
+        var msg=t.querySelector('span');
+        if(title) title.textContent='PRÓXIMAMENTE';
+        if(msg) msg.textContent='DUAL · LA CRUZADA DE LOS GEMELOS';
+        t.classList.add('show');
+        clearTimeout(t._twinsTimer);
+        t._twinsTimer=setTimeout(function(){t.classList.remove('show');},2000);
+      }else{
         alert('DUAL · LA CRUZADA DE LOS GEMELOS — PRÓXIMAMENTE');
       }
     },{passive:false});
   }
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindTwinsFinal);
-  else bindTwinsFinal();
-  setTimeout(bindTwinsFinal,600);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bindTwins);
+  else bindTwins();
+  setTimeout(bindTwins,800);
 })();
 </script>
 
