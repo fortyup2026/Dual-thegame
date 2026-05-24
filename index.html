@@ -708,6 +708,18 @@ body:not(.is-on-hub) #floatingBackHub{display:flex!important}
 #game .game-scroll{padding-bottom:calc(70px + env(safe-area-inset-bottom))!important}
 </style>
 
+
+<style id="GEMELOS_BUTTON_FINAL_FIX_CSS">
+#hub #openTwins{
+  display:grid!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+#gemelos-cover.screen.active{
+  display:flex!important;
+}
+</style>
+
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -5007,8 +5019,6 @@ setTimeout(function(){bind();patchNode()},600);
 <script id="definitive-twins-script">
 (function(){
 
-(function(){
-
 // ===================== GEMELOS STORY DATA =====================
 var GC = {
   rafa: '#8de87a',
@@ -5852,6 +5862,93 @@ setTimeout(bindGemelos, 2000);
 
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
   else init();
+})();
+</script>
+
+
+<script id="GEMELOS_BUTTON_FINAL_FIX">
+(function(){
+  function showScreenForce(id){
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    var el=document.getElementById(id);
+    if(el) el.classList.add('active');
+  }
+
+  function bindGemelosFinal(){
+    var btn=document.getElementById('openTwins');
+    if(btn && !btn.dataset.gemelosFinalFixed){
+      btn.dataset.gemelosFinalFixed='1';
+
+      // Clonar para borrar listeners viejos de "próximamente"
+      var clone=btn.cloneNode(true);
+      btn.parentNode.replaceChild(clone, btn);
+      btn=clone;
+      btn.dataset.gemelosFinalFixed='1';
+
+      btn.addEventListener('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        try{ if(typeof sfx==='function') sfx('mid'); }catch(err){}
+        try{ if(navigator.vibrate) navigator.vibrate([18,20,24]); }catch(err){}
+
+        showScreenForce('gemelos-cover');
+
+        try{
+          if(typeof gSetTwin==='function') gSetTwin('rafa', true);
+        }catch(err){}
+
+        try{
+          if(typeof playMusic==='function') playMusic('story');
+        }catch(err){}
+      },{passive:false});
+    }
+
+    var start=document.getElementById('gemelosStartBtn');
+    if(start && !start.dataset.gemelosStartFinalFixed){
+      start.dataset.gemelosStartFinalFixed='1';
+
+      start.addEventListener('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+
+        if(typeof gStartTwin==='function'){
+          gStartTwin();
+          return;
+        }
+
+        // Fallback por si alguna función no cargó
+        if(typeof gReset==='function') gReset('rafa');
+        if(typeof gNode==='function') gNode('rafa_start');
+      },{passive:false});
+    }
+
+    var back=document.getElementById('gemelosBackToHub');
+    if(back && !back.dataset.gemelosBackFinalFixed){
+      back.dataset.gemelosBackFinalFixed='1';
+      back.addEventListener('click',function(e){
+        e.preventDefault();
+        e.stopPropagation();
+        showScreenForce('hub');
+        try{ if(typeof playMusic==='function') playMusic('menu'); }catch(err){}
+        try{
+          if(typeof playUniverseMusic==='function'){
+            playUniverseMusic((window.UNIVERSE_MUSIC&&window.UNIVERSE_MUSIC.hub)||'hub_theme.mp3',.38);
+          }
+        }catch(err){}
+      },{passive:false});
+    }
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',bindGemelosFinal);
+  }else{
+    bindGemelosFinal();
+  }
+
+  setTimeout(bindGemelosFinal,300);
+  setTimeout(bindGemelosFinal,1000);
+  setInterval(bindGemelosFinal,2000);
 })();
 </script>
 
