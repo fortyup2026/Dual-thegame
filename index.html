@@ -643,252 +643,70 @@ body.aethrion-mode #storyBackHub{display:flex!important}
 </style>
 
 
-<style id="FINAL_BACK_AND_TWINS_FIX_LOCKED">
-/* ===== AJUSTE DEFINITIVO: botón volver NO tapa títulos ===== */
 
-/* El botón de volver dentro de historias sale del HUD y queda chiquito abajo */
-#game #storyBackHub,
-#storyBackHub.story-back-hub{
-  position:fixed!important;
-  top:auto!important;
-  right:auto!important;
-  bottom:calc(12px + env(safe-area-inset-bottom))!important;
-  left:12px!important;
-  width:auto!important;
-  min-width:0!important;
-  max-width:92px!important;
-  height:34px!important;
-  padding:0 10px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  border-radius:10px!important;
-  border:1px solid rgba(0,229,255,.34)!important;
-  background:rgba(0,0,0,.72)!important;
-  color:#dffcff!important;
-  font-family:var(--ff4)!important;
-  font-size:10px!important;
-  line-height:1!important;
-  letter-spacing:.10em!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:clip!important;
-  box-shadow:0 0 18px rgba(0,229,255,.16)!important;
-  backdrop-filter:blur(10px)!important;
-  z-index:999999!important;
-}
 
-/* El HUD vuelve a respirar: el título ya no queda tapado por el botón */
-#game .hud{
-  padding-left:12px!important;
-}
-#game .chapter{
-  padding-left:0!important;
-  margin-left:0!important;
-  min-width:0!important;
-}
 
-/* El botón de portada/universos también queda chico y no como panel gigante */
-#backToHub.back-hub-btn,
+
+
+
+<style id="BACK_FLOATING_FINAL_REAL_FIX">
+/* Ocultar TODOS los botones viejos de volver que se meten arriba y tapan títulos */
+#storyBackHub,
+#backToHub,
+.story-back-hub,
 .back-hub-btn,
 .global-story-back,
 .universe-back{
-  position:fixed!important;
-  top:auto!important;
-  bottom:calc(12px + env(safe-area-inset-bottom))!important;
-  left:12px!important;
-  width:auto!important;
-  min-width:0!important;
-  max-width:112px!important;
-  height:34px!important;
-  padding:0 10px!important;
-  display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  border-radius:10px!important;
-  border:1px solid rgba(0,229,255,.34)!important;
-  background:rgba(0,0,0,.72)!important;
-  color:#dffcff!important;
-  font-family:var(--ff4)!important;
-  font-size:10px!important;
-  line-height:1!important;
-  letter-spacing:.10em!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  box-shadow:0 0 18px rgba(0,229,255,.16)!important;
-  backdrop-filter:blur(10px)!important;
-  z-index:999999!important;
-}
-
-/* Si el HUB está abierto, no puede flotar ningún botón de volver encima */
-#hub.screen.active ~ #cover #backToHub,
-#hub.screen.active ~ #game #storyBackHub{
-  display:none!important;
-}
-
-/* Gemelos: una sola tarjeta clara. Izquierda título, derecha próximamente */
-#hub #openTwins{
-  display:grid!important;
-  visibility:visible!important;
-  opacity:1!important;
-  grid-template-columns:minmax(0,1fr) 116px!important;
-  min-height:82px!important;
-  padding:13px 12px 13px 16px!important;
-  border-color:rgba(215,193,138,.55)!important;
-  background:
-    radial-gradient(circle at 92% 22%,rgba(215,193,138,.14),transparent 34%),
-    linear-gradient(135deg,rgba(24,19,9,.78),rgba(0,0,0,.50))!important;
-}
-#hub #openTwins .hub-name{
-  color:#f7f7f2!important;
-}
-#hub #openTwins .hub-sub{
-  color:#d7c18a!important;
-  white-space:normal!important;
-}
-#hub #openTwins .hub-action{
-  color:#d7c18a!important;
-  border-color:rgba(215,193,138,.55)!important;
-  font-size:.48rem!important;
-  letter-spacing:.055em!important;
-  white-space:nowrap!important;
-  padding:8px 4px!important;
-}
-
-@media(max-width:430px){
-  #game #storyBackHub,
-  #storyBackHub.story-back-hub,
-  #backToHub.back-hub-btn,
-  .back-hub-btn,
-  .global-story-back,
-  .universe-back{
-    max-width:84px!important;
-    height:32px!important;
-    font-size:9px!important;
-    padding:0 8px!important;
-  }
-  #hub #openTwins{
-    grid-template-columns:minmax(0,1fr) 104px!important;
-  }
-  #hub #openTwins .hub-action{
-    font-size:.43rem!important;
-  }
-}
-
-/* Borra cualquier vestigio de login */
-#authOverlay,#userBadge{
-  display:none!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-}
-</style>
-
-
-<style id="FIX_BACK_HUB_ABSOLUTO_FINAL">
-/* ===== ARREGLO ABSOLUTO DEL BOTÓN VOLVER ===== */
-
-/* En el HUB principal NO debe aparecer ningún botón de volver */
-body.is-hub #backToHub,
-body.is-hub #storyBackHub,
-body.is-hub .back-hub-btn,
-body.is-hub .story-back-hub,
-body.is-hub .global-story-back,
-body.is-hub .universe-back{
   display:none!important;
   visibility:hidden!important;
   opacity:0!important;
   pointer-events:none!important;
 }
 
-/* Cuando estamos dentro de una historia, el botón va abajo a la derecha */
-body:not(.is-hub) #storyBackHub,
-body:not(.is-hub) .story-back-hub{
+/* Botón nuevo único, abajo a la derecha */
+#floatingBackHub{
   position:fixed!important;
-  top:auto!important;
-  left:auto!important;
-  right:12px!important;
+  right:14px!important;
   bottom:calc(14px + env(safe-area-inset-bottom))!important;
-  width:auto!important;
-  min-width:0!important;
-  max-width:76px!important;
-  height:34px!important;
-  padding:0 9px!important;
-  display:flex!important;
+  z-index:9999999!important;
+  display:none;
   align-items:center!important;
   justify-content:center!important;
-  border-radius:10px!important;
-  border:1px solid rgba(0,229,255,.35)!important;
-  background:rgba(0,0,0,.76)!important;
+  width:auto!important;
+  min-width:74px!important;
+  max-width:96px!important;
+  height:34px!important;
+  padding:0 10px!important;
+  border-radius:12px!important;
+  border:1px solid rgba(0,229,255,.36)!important;
+  background:rgba(0,0,0,.78)!important;
   color:#dffcff!important;
   font-family:var(--ff4)!important;
   font-size:9px!important;
+  letter-spacing:.10em!important;
   line-height:1!important;
-  letter-spacing:.08em!important;
   white-space:nowrap!important;
   overflow:hidden!important;
-  text-overflow:clip!important;
-  box-shadow:0 0 18px rgba(0,229,255,.18)!important;
+  box-shadow:0 0 18px rgba(0,229,255,.20)!important;
   backdrop-filter:blur(10px)!important;
-  z-index:999999!important;
 }
 
-/* El botón de volver del cover también va abajo a la derecha y no arriba */
-body:not(.is-hub) #backToHub.back-hub-btn,
-body:not(.is-hub) .back-hub-btn{
-  position:fixed!important;
-  top:auto!important;
-  left:auto!important;
-  right:12px!important;
-  bottom:calc(14px + env(safe-area-inset-bottom))!important;
-  width:auto!important;
-  min-width:0!important;
-  max-width:76px!important;
-  height:34px!important;
-  padding:0 9px!important;
+/* En el HUB no aparece */
+body.is-on-hub #floatingBackHub{
+  display:none!important;
+}
+
+/* En historia / portada / serie sí aparece */
+body:not(.is-on-hub) #floatingBackHub{
   display:flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  border-radius:10px!important;
-  border:1px solid rgba(0,229,255,.35)!important;
-  background:rgba(0,0,0,.76)!important;
-  color:#dffcff!important;
-  font-family:var(--ff4)!important;
-  font-size:9px!important;
-  line-height:1!important;
-  letter-spacing:.08em!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  box-shadow:0 0 18px rgba(0,229,255,.18)!important;
-  backdrop-filter:blur(10px)!important;
-  z-index:999999!important;
 }
 
-/* Si el cover NO está activo, su botón no existe visualmente */
-#cover:not(.active) #backToHub{
-  display:none!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-}
-
-/* Si el game NO está activo, el botón de historia no existe visualmente */
-#game:not(.active) #storyBackHub{
-  display:none!important;
-  visibility:hidden!important;
-  pointer-events:none!important;
-}
-
-/* El HUD recupera espacio: ya no queda botón ocupando la izquierda */
-#game .hud{
-  padding-left:10px!important;
-}
-#game .chapter{
-  margin-left:0!important;
-  padding-left:0!important;
-  max-width:calc(100vw - 185px)!important;
-}
-#game .chapter h1,
-#game .chapter p{
-  padding-left:0!important;
+/* Para que el contenido no choque con el botón abajo */
+#game .game-scroll,
+#cover,
+#valmoraScreen,
+.screen.active{
+  padding-bottom:calc(54px + env(safe-area-inset-bottom))!important;
 }
 </style>
 
@@ -5182,137 +5000,127 @@ setTimeout(function(){bind();patchNode()},600);
 </script>
 
 
-<script id="FINAL_BACK_AND_TWINS_FIX_LOCKED_JS">
+
+
+
+
+
+
+<script id="BACK_FLOATING_FINAL_REAL_FIX_JS">
 (function(){
-  function fixBackButtons(){
-    var story = document.getElementById('storyBackHub');
-    if(story){
-      story.textContent = '‹ HUB';
-      story.setAttribute('aria-label','Volver al hub');
-    }
-    var cover = document.getElementById('backToHub');
-    if(cover){
-      cover.textContent = '‹ HUB';
-      cover.setAttribute('aria-label','Volver al hub');
-    }
+  function getActiveScreen(){
+    return document.querySelector('.screen.active');
   }
 
-  function fixTwins(){
-    var btn = document.getElementById('openTwins');
-    if(!btn) return;
-
-    // Estructura definitiva pedida: DUAL / LA CRUZADA... + botón PRÓXIMAMENTE
-    btn.innerHTML =
-      '<span><span class="hub-name">DUAL</span><span class="hub-sub">LA CRUZADA DE LOS GEMELOS</span></span>' +
-      '<span class="hub-action">PRÓXIMAMENTE</span>';
-
-    if(!btn.dataset.finalTwinsBound){
-      btn.dataset.finalTwinsBound='1';
-      btn.addEventListener('click',function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        var toast=document.getElementById('hubToast');
-        if(toast){
-          var b=toast.querySelector('b');
-          var s=toast.querySelector('span');
-          if(b) b.textContent='PRÓXIMAMENTE';
-          if(s) s.textContent='DUAL · LA CRUZADA DE LOS GEMELOS';
-          toast.classList.add('show');
-          clearTimeout(toast._finalTwins);
-          toast._finalTwins=setTimeout(function(){toast.classList.remove('show')},2000);
-        }else{
-          alert('DUAL · LA CRUZADA DE LOS GEMELOS — PRÓXIMAMENTE');
-        }
-      },{passive:false});
-    }
-  }
-
-  function run(){
-    fixBackButtons();
-    fixTwins();
+  function showHub(){
     try{
-      localStorage.removeItem('dualUser');
-      sessionStorage.removeItem('dualUser');
+      if(typeof showScreen === 'function'){
+        showScreen('hub');
+      }else{
+        document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+        var hub=document.getElementById('hub');
+        if(hub) hub.classList.add('active');
+      }
+    }catch(e){
+      document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+      var hub=document.getElementById('hub');
+      if(hub) hub.classList.add('active');
+    }
+
+    try{
+      if(typeof playUniverseMusic === 'function' && window.UNIVERSE_MUSIC){
+        playUniverseMusic(window.UNIVERSE_MUSIC.hub || 'hub_theme.mp3', .38);
+      }
     }catch(e){}
+
+    updateFloatingBack();
   }
 
-  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);
-  else run();
+  function ensureButton(){
+    var btn=document.getElementById('floatingBackHub');
+    if(btn) return btn;
 
-  setTimeout(run,300);
-  setTimeout(run,1000);
-})();
-</script>
+    btn=document.createElement('button');
+    btn.id='floatingBackHub';
+    btn.type='button';
+    btn.textContent='‹ HUB';
+    btn.setAttribute('aria-label','Volver al hub');
+    document.body.appendChild(btn);
 
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      showHub();
+    },{passive:false});
 
-<script id="FIX_BACK_HUB_ABSOLUTO_FINAL_JS">
-(function(){
-  function activeId(){
-    var active = document.querySelector('.screen.active');
-    return active ? active.id : '';
+    return btn;
   }
 
-  function applyBackFix(){
-    var id = activeId();
-    var isHub = id === 'hub';
-    document.body.classList.toggle('is-hub', isHub);
+  function updateFloatingBack(){
+    var btn=ensureButton();
+    var active=getActiveScreen();
+    var id=active ? active.id : '';
 
-    var backCover = document.getElementById('backToHub');
-    var backStory = document.getElementById('storyBackHub');
+    var isHub = id === 'hub' || !id;
 
-    if(backCover){
-      backCover.textContent = '‹ HUB';
-      backCover.setAttribute('aria-label','Volver al hub');
-      backCover.style.display = (!isHub && id === 'cover') ? 'flex' : 'none';
+    document.body.classList.toggle('is-on-hub', isHub);
+
+    if(isHub){
+      btn.style.display='none';
+    }else{
+      btn.style.display='flex';
     }
 
-    if(backStory){
-      backStory.textContent = '‹ HUB';
-      backStory.setAttribute('aria-label','Volver al hub');
-      backStory.style.display = (!isHub && id === 'game') ? 'flex' : 'none';
-    }
+    // Re-oculta los botones viejos por si otro script los vuelve a mostrar
+    ['storyBackHub','backToHub'].forEach(function(id){
+      var old=document.getElementById(id);
+      if(old){
+        old.style.display='none';
+        old.style.visibility='hidden';
+        old.style.pointerEvents='none';
+      }
+    });
   }
 
-  // Si existe showScreen, lo envolvemos para corregir al cambiar de pantalla
   function hookShowScreen(){
-    if(typeof window.showScreen === 'function' && !window.showScreen.__backFixHooked){
-      var original = window.showScreen;
-      window.showScreen = function(){
-        var r = original.apply(this, arguments);
-        setTimeout(applyBackFix, 30);
-        setTimeout(applyBackFix, 160);
+    if(typeof window.showScreen === 'function' && !window.showScreen.__floatingBackHooked){
+      var original=window.showScreen;
+      window.showScreen=function(){
+        var r=original.apply(this, arguments);
+        setTimeout(updateFloatingBack, 30);
+        setTimeout(updateFloatingBack, 180);
         return r;
       };
-      window.showScreen.__backFixHooked = true;
+      window.showScreen.__floatingBackHooked=true;
     }
   }
 
   function init(){
-    applyBackFix();
+    ensureButton();
     hookShowScreen();
+    updateFloatingBack();
 
-    document.addEventListener('click', function(){
+    document.addEventListener('click',function(){
       setTimeout(function(){
         hookShowScreen();
-        applyBackFix();
-      }, 80);
-    }, true);
+        updateFloatingBack();
+      },80);
+    },true);
 
-    var app = document.getElementById('app') || document.body;
-    if(window.MutationObserver && app){
-      var obs = new MutationObserver(function(){
-        applyBackFix();
+    if(window.MutationObserver){
+      var obs=new MutationObserver(function(){
+        updateFloatingBack();
       });
-      obs.observe(app, {attributes:true, subtree:true, attributeFilter:['class','style']});
+      obs.observe(document.body,{attributes:true,subtree:true,attributeFilter:['class','style']});
     }
 
     setInterval(function(){
       hookShowScreen();
-      applyBackFix();
-    }, 700);
+      updateFloatingBack();
+    },700);
   }
 
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
   else init();
 })();
 </script>
