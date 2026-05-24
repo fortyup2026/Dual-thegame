@@ -649,21 +649,16 @@ body.aethrion-mode #storyBackHub{display:flex!important}
 
 
 
+
+
+
 <style id="BACK_FLOATING_FINAL_REAL_FIX">
-/* Ocultar TODOS los botones viejos de volver que se meten arriba y tapan títulos */
-#storyBackHub,
-#backToHub,
-.story-back-hub,
-.back-hub-btn,
-.global-story-back,
-.universe-back{
+#storyBackHub,#backToHub,.story-back-hub,.back-hub-btn,.global-story-back,.universe-back{
   display:none!important;
   visibility:hidden!important;
   opacity:0!important;
   pointer-events:none!important;
 }
-
-/* Botón nuevo único, abajo a la derecha */
 #floatingBackHub{
   position:fixed!important;
   right:14px!important;
@@ -672,7 +667,6 @@ body.aethrion-mode #storyBackHub{display:flex!important}
   display:none;
   align-items:center!important;
   justify-content:center!important;
-  width:auto!important;
   min-width:74px!important;
   max-width:96px!important;
   height:34px!important;
@@ -690,24 +684,9 @@ body.aethrion-mode #storyBackHub{display:flex!important}
   box-shadow:0 0 18px rgba(0,229,255,.20)!important;
   backdrop-filter:blur(10px)!important;
 }
-
-/* En el HUB no aparece */
-body.is-on-hub #floatingBackHub{
-  display:none!important;
-}
-
-/* En historia / portada / serie sí aparece */
-body:not(.is-on-hub) #floatingBackHub{
-  display:flex!important;
-}
-
-/* Para que el contenido no choque con el botón abajo */
-#game .game-scroll,
-#cover,
-#valmoraScreen,
-.screen.active{
-  padding-bottom:calc(54px + env(safe-area-inset-bottom))!important;
-}
+body.is-on-hub #floatingBackHub{display:none!important}
+body:not(.is-on-hub) #floatingBackHub{display:flex!important}
+#game .game-scroll{padding-bottom:calc(70px + env(safe-area-inset-bottom))!important}
 </style>
 
 </head>
@@ -884,7 +863,7 @@ function sceneBg(key){setBg($('scene'),key||'raincity')}
 function apply(delta){if(!delta)return;for(const [k,v] of Object.entries(delta)){if(typeof state[k]==='number')state[k]+=v;else state[k]=v}bars()}
 function teamCount(){return 1+(state.trini==='alive'?1:0)+(state.zack==='alive'?1:0)}
 function node(id){if(id==='aeth_to_hub'){try{document.body.classList.remove('aethrion-mode')}catch(e){};show('hub');return;} if(id&&String(id).startsWith('aeth_')){try{document.body.classList.add('aethrion-mode')}catch(e){}}else{try{document.body.classList.remove('aethrion-mode')}catch(e){}} current=id;const n=S[id];if(!n)return; if(n.end){ending();return} apply(n.delta); if(n.result){result(n.result);return} if(state.hp<=0){ending('collapse');return} playMusic(n.music||(['aer','bor','mir','fer'].some(x=>id.includes(x))?'battle':id.includes('lur')?'boss':'story')); sceneBg(typeof n.img==='function'?n.img():n.img); $('gameScroll').scrollTop=0; $('hudTitle').textContent=n.title||'DUAL'; $('hudSub').textContent=n.sub||'LUSTONIA'; $('sceneTitle').innerHTML=n.big?`<div class="k">${n.k||''}</div><div class="t">${n.big}</div><div class="s">${n.s||''}</div>`:''; const sp=n.spk||'NARRADOR'; const col=COLOR[sp]||COLOR.NARRADOR; $('spName').textContent=sp; $('spName').style.color=col; $('spLine').style.background=col; $('spLine').style.color=col; $('text').textContent=typeof n.txt==='function'?n.txt():n.txt; $('choices').innerHTML=''; $('cont').style.display='none'; if(n.choices){n.choices().forEach((c,idx)=>{const b=document.createElement('button');b.className='choice';b.style.setProperty('--c',c.color||COLOR.NARRADOR);b.innerHTML=`<div class="num">${idx+1}</div><div><div class="ct">${c.t}</div><div class="cd">${c.d||''}</div></div>`;b.onclick=()=>{try{sfx('mid')}catch(e){};vib(18);apply(c.delta);node(typeof c.next==='function'?c.next():c.next)};$('choices').appendChild(b)})}else{$('cont').style.display='block';$('contBtn').onclick=()=>{try{sfx('mid')}catch(e){};node(typeof n.next==='function'?n.next():n.next)}} show('game')}
-function miniResult(kind,villain,status,next,img){state.resultNext=next;const cls=status==='dead'?'good':status==='escape'?'mid':'bad';sfx(cls==='good'?'win':cls==='mid'?'mid':'sad');$('resCard').className='res-card '+cls;$('resSmall').textContent='RESULTADO DEL ENCUENTRO';let title='',text=''; if(status==='dead'){title=`${villain} cayó`;text=`El Eco se apaga alrededor de ${villain}.\nGanaste tiempo, pero Lustonia sigue ardiendo.`} if(status==='escape'){title=`${villain} escapó`;text=`No pudiste terminar la pelea.\n${villain} desaparece entre ruinas, y sabés que puede volver.`} if(status==='defeat'){title=`${villain} te venció`;text=`Sobrevivís de milagro.\nPero la derrota deja una marca en el equipo y en tu Eco.`} if(status==='trini_dead'){title='Trini murió';text='La sombra que la rodeaba se rompe como vidrio negro.\nLin sigue respirando, pero ya no está completo.'} if(status==='zack_dead'){title='Zack murió';text='Los celulares se apagan uno por uno.\nLa tecnología queda en silencio.'} if(status==='zack_left'){title='Zack se fue';text='No confió en vos.\nEligió su propio camino, y Lustonia quedó un poco más vacía.'} $('resTitle').textContent=title;$('resText').textContent=text;setBg($('resBg'),img||'raincity');$('resBtn').onclick=()=>{try{sfx('mid')}catch(e){};node(state.resultNext)};show('result')}
+function miniResult(kind,villain,status,next,img){state.resultNext=next;const cls=status==='dead'?'good':status==='escape'?'mid':'bad';sfx(cls==='good'?'win':cls==='mid'?'mid':'sad');$('resCard').className='res-card '+cls;$('resSmall').textContent='RESULTADO DEL ENCUENTRO';let title='',text=''; if(status==='dead'){title=`${villain} cayó`;text=`El Eco se apaga alrededor de ${villain}.\nGanaste tiempo, pero Lustonia sigue ardiendo.`} if(status==='escape'){title=`${villain} escapó`;text=`No pudiste terminar la pelea.\n${villain} desaparece entre ruinas, y sabés que puede volver.`} if(status==='defeat'){title=`${villain} te venció`;text=`Sobrevivís de milagro.\nPero la derrota deja una marca en el equipo y en tu Eco.`} if(status==='trini_dead'){title='Trini murió';text='La sombra que la rodeaba se rompe como vidrio negro.\nLin sigue respirando, pero ya no está completo.'} if(status==='zack_dead'){title='Zack murió';text='Los celulares se apagan uno por uno.\nLa tecnología queda en silencio.'} if(status==='zack_left'){title='Zack se fue';text='No confió en vos.\nEligió su propio camino, y Lustonia quedó un poco más vacía.'} $('resTitle').textContent=title;$('resText').textContent=text;setBg($('resBg'),img||'raincity');$('resBtn').onclick=()=>{try{sfx('mid')}catch(e){};const nx=(typeof state.resultNext==='function'?state.resultNext():state.resultNext);node(nx)};show('result')}
 function result(r){miniResult(r.kind,r.villain,r.status,r.next,r.img)}
 function finalPick(choice){let score=state.eco+state.hp-state.corr*8 + (teamCount()-1)*15 + (state.aer==='dead'?8:0)+(state.bor==='dead'?8:0)+(state.mir==='dead'?8:0)+(state.fer==='dead'?8:0) - (state.aer==='escape'?6:0)-(state.bor==='escape'?6:0)-(state.mir==='escape'?6:0)-(state.fer==='escape'?6:0); if(choice==='seal')score+=12;if(choice==='mercy')score-=4;if(choice==='dominate')score-=10; if(teamCount()===1)score-=22; if(state.trini==='dead')score-=9;if(state.zack==='dead')score-=9; if(score>=135)return 'trueWin'; if(score>=108)return 'costWin'; if(score>=82)return 'crack'; if(score>=48)return 'badEscape'; return 'corrupt';}
 function ending(force){playMusic('end');const endings={trueWin:['Lustonia respira','Los tres Ecos se sincronizan. Lurnox cae dentro del portal y la grieta se cierra sin romper la ciudad.\nNo todos salen iguales. Pero salen vivos.','final_win','good'],costWin:['Victoria con costo','Lurnox cae, pero el Eco exige algo a cambio.\nLa ciudad sobrevive. El equipo no vuelve a ser el mismo.','final_win','good'],crack:['La grieta queda abierta','Lurnox cruza de regreso. No gana. No pierde.\nEl portal se cierra a medias y una marca turquesa queda latiendo sobre Lustonia.','final_crack','mid'],badEscape:['Lurnox escapa','El equipo logra sobrevivir, pero Lurnox rompe el borde del portal y desaparece.\nLa amenaza sigue viva. Y ahora conoce sus nombres.','lur_portal','bad'],corrupt:['El Eco se rompe','La pelea final los supera. Lurnox no destruye Lustonia de inmediato: la reclama.\nLin sobrevive, pero algo dentro suyo ya no responde igual.','final_fight','bad'],collapse:['Lin cae','La vida de Lin llega al límite antes de enfrentar el final.\nLustonia queda a merced de Lurnox.','final_fight','bad']};const e=endings[force]||endings[finalPick(state.finalChoice||'seal')];$('endCard').className='res-card '+e[3];$('endTitle').textContent=e[0];$('endText').textContent=e[1];sfx(e[3]==='good'?'win':e[3]==='mid'?'mid':'sad');setBg($('endBg'),e[2]);show('ending')}
@@ -5006,16 +4985,48 @@ setTimeout(function(){bind();patchNode()},600);
 
 
 
-<script id="BACK_FLOATING_FINAL_REAL_FIX_JS">
+
+
+
+<script id="MUSIC_AND_CONTINUE_FINAL_FIX">
 (function(){
-  function getActiveScreen(){
-    return document.querySelector('.screen.active');
+  function activeScreenId(){
+    var active=document.querySelector('.screen.active');
+    return active ? active.id : '';
+  }
+
+  function stopStoryMusicAndPlayHub(){
+    // Música vieja interna del juego: fuerza volver a menú y corta battle/boss/story/end.
+    try{
+      if(typeof window.playMusic === 'function'){
+        window.playMusic('menu');
+      }
+    }catch(e){}
+
+    // Música nueva por universos: vuelve al tema del hub.
+    try{
+      if(typeof window.playUniverseMusic === 'function'){
+        var hubFile = (window.UNIVERSE_MUSIC && window.UNIVERSE_MUSIC.hub) ? window.UNIVERSE_MUSIC.hub : 'hub_theme.mp3';
+        window.playUniverseMusic(hubFile, .38);
+      }
+    }catch(e){}
+
+    // Fallback salvaje: pausa audios que no sean menu/hub.
+    try{
+      document.querySelectorAll('audio').forEach(function(a){
+        var src=(a.currentSrc || a.src || '').toLowerCase();
+        if(src && !src.includes('music_menu') && !src.includes('hub_theme')){
+          a.pause();
+          a.currentTime = 0;
+        }
+      });
+    }catch(e){}
   }
 
   function showHub(){
     try{
-      if(typeof showScreen === 'function'){
-        showScreen('hub');
+      if(typeof window.showScreen === 'function'){
+        window.showScreen('hub');
       }else{
         document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
         var hub=document.getElementById('hub');
@@ -5027,12 +5038,7 @@ setTimeout(function(){bind();patchNode()},600);
       if(hub) hub.classList.add('active');
     }
 
-    try{
-      if(typeof playUniverseMusic === 'function' && window.UNIVERSE_MUSIC){
-        playUniverseMusic(window.UNIVERSE_MUSIC.hub || 'hub_theme.mp3', .38);
-      }
-    }catch(e){}
-
+    stopStoryMusicAndPlayHub();
     updateFloatingBack();
   }
 
@@ -5058,20 +5064,11 @@ setTimeout(function(){bind();patchNode()},600);
 
   function updateFloatingBack(){
     var btn=ensureButton();
-    var active=getActiveScreen();
-    var id=active ? active.id : '';
-
+    var id=activeScreenId();
     var isHub = id === 'hub' || !id;
-
     document.body.classList.toggle('is-on-hub', isHub);
+    btn.style.display = isHub ? 'none' : 'flex';
 
-    if(isHub){
-      btn.style.display='none';
-    }else{
-      btn.style.display='flex';
-    }
-
-    // Re-oculta los botones viejos por si otro script los vuelve a mostrar
     ['storyBackHub','backToHub'].forEach(function(id){
       var old=document.getElementById(id);
       if(old){
@@ -5083,15 +5080,17 @@ setTimeout(function(){bind();patchNode()},600);
   }
 
   function hookShowScreen(){
-    if(typeof window.showScreen === 'function' && !window.showScreen.__floatingBackHooked){
+    if(typeof window.showScreen === 'function' && !window.showScreen.__musicHubHooked){
       var original=window.showScreen;
-      window.showScreen=function(){
+      window.showScreen=function(id){
         var r=original.apply(this, arguments);
-        setTimeout(updateFloatingBack, 30);
-        setTimeout(updateFloatingBack, 180);
+        setTimeout(function(){
+          if(id === 'hub') stopStoryMusicAndPlayHub();
+          updateFloatingBack();
+        }, 40);
         return r;
       };
-      window.showScreen.__floatingBackHooked=true;
+      window.showScreen.__musicHubHooked=true;
     }
   }
 
@@ -5108,9 +5107,7 @@ setTimeout(function(){bind();patchNode()},600);
     },true);
 
     if(window.MutationObserver){
-      var obs=new MutationObserver(function(){
-        updateFloatingBack();
-      });
+      var obs=new MutationObserver(function(){ updateFloatingBack(); });
       obs.observe(document.body,{attributes:true,subtree:true,attributeFilter:['class','style']});
     }
 
