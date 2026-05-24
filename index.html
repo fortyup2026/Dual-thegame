@@ -617,6 +617,44 @@ body.aethrion-mode #storyBackHub{display:block!important}
 }
 </style>
 
+
+<style id="twins-and-back-fix">
+
+#hub .twin-card{
+  border-color:rgba(215,193,138,.42)!important;
+  background:
+    radial-gradient(circle at 50% 50%,rgba(215,193,138,.10),transparent 60%),
+    linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.55))!important;
+}
+
+#hub .twin-card .hub-name{
+  color:#d7c18a!important;
+}
+
+#hub .twin-card .hub-sub,
+#hub .twin-card .twin-soon{
+  color:#d7c18a!important;
+}
+
+.story-back,
+.story-back-hub,
+.global-story-back,
+#storyBackHub{
+  position:fixed!important;
+  top:auto!important;
+  bottom:18px!important;
+  left:16px!important;
+  z-index:99999!important;
+}
+
+.story-header,
+.story-title,
+.chapter-title,
+.universe-title{
+  padding-top:44px!important;
+}
+</style>
+
 </head>
 <body>
 <div class="fx-rain"></div><div class="fx-vign"></div><div class="fx-scan"></div>
@@ -641,7 +679,7 @@ body.aethrion-mode #storyBackHub{display:block!important}
         <span class="hub-action">INICIAR ›</span>
       </button>
       <button class="hub-card available valmora-card" id="openValmora" type="button" style="--line:#4db7ff">
-        <span><span class="hub-name">DUAL</span><span class="hub-sub">BALMORA · SERIE</span></span>
+        <span><span class="hub-name">DUAL</span><span class="hub-sub">VALMORA · SERIE</span></span>
         <span class="hub-action">VER SERIE ›</span>
       </button>
       <button class="hub-card available" id="openAethrion" type="button" style="--line:#7dff83">
@@ -4748,7 +4786,7 @@ setTimeout(function(){bind();patchNode()},600);
       return [MUSIC.lustonia.explore, .45];
     }
 
-    // VALMORA / BALMORA / DUAL videos
+    // VALMORA / VALMORA / DUAL videos
     if(id.includes("valmora") || id.includes("balmora") || id.includes("tronox") || id.includes("cretox")){
       if(id.includes("tronox") || id.includes("cretox") || id.includes("villain")) return [MUSIC.valmora.villain, .50];
       if(id.includes("final") || id.includes("somos")) return [MUSIC.valmora.finale, .50];
@@ -4858,6 +4896,49 @@ setTimeout(function(){bind();patchNode()},600);
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();
+})();
+</script>
+
+
+<script id="twins-button-script">
+(function(){
+  function bind(){
+    const btn=document.getElementById('openTwins');
+    if(!btn || btn.dataset.ready) return;
+    btn.dataset.ready='1';
+
+    btn.addEventListener('click',function(e){
+      e.preventDefault();
+
+      const toast=document.getElementById('hubToast');
+
+      if(toast){
+        const b=toast.querySelector('b');
+        const s=toast.querySelector('span');
+
+        if(b) b.textContent='PRÓXIMAMENTE';
+        if(s) s.textContent='DUAL · LA CRUZADA DE LOS GEMELOS';
+
+        toast.classList.add('show');
+
+        clearTimeout(window.__twinsToast);
+
+        window.__twinsToast=setTimeout(()=>{
+          toast.classList.remove('show');
+        },2200);
+      } else {
+        alert('DUAL · LA CRUZADA DE LOS GEMELOS — PRÓXIMAMENTE');
+      }
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',bind);
+  } else {
+    bind();
+  }
+
+  setTimeout(bind,500);
 })();
 </script>
 
