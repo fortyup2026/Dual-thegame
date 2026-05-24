@@ -5007,6 +5007,8 @@ setTimeout(function(){bind();patchNode()},600);
 <script id="definitive-twins-script">
 (function(){
 
+(function(){
+
 // ===================== GEMELOS STORY DATA =====================
 var GC = {
   rafa: '#8de87a',
@@ -5423,17 +5425,6 @@ rama_eco_awaken:{
 },
 
 rama_street1:{
-  img:'city_south', title:'RAMA', sub:'SUR DE LA CIUDAD', big:'CALLES NARANJA', s:'Criaturas del portal del sur',
-  spk:'NARRADOR', music:'story',
-  txt:'El sur tiene dos portales activos, no uno.\n\nCreaturas menores salen de ambos en intervalos. Un grupo de custodios jóvenes intenta pelear pero no saben usar sus Ecos.\n\nRama tiene que elegir qué priorizar.',
-  choices: function(){ return [
-    {t:'Cerrar un portal con explosión total', d:'Agota el Eco pero elimina la mitad del problema.', color:GC.rama, delta:{eco:16, hp:-8, ramaDestroyed:4, corr:1}, next:'rama_monster1_intro'},
-    {t:'Enseñar a los custodios jóvenes', d:'Si aprenden a usar su Eco, multiplicás la defensa.', color:GC.gold, delta:{eco:6, trust:2, ramaDestroyed:2}, next:'rama_monster1_intro'},
-    {t:'Cubrir la retirada y avanzar', d:'No quedarse a pelear en el sur. El centro es el objetivo.', color:GC.cyan, delta:{eco:8, hp:-4}, next:'rama_monster1_intro'}
-  ];}
-},
-
-rama_street1:{
   img:'streets', title:'RAMA', sub:'SUR DE LA CIUDAD', big:'MILITARES CORRUPTOS', s:'El sur también cayó',
   spk:'NARRADOR', music:'story',
   txt:'Los militares del sur cortan la avenida principal.\n\nNo gritan órdenes. No piden documentos. Solo bloquean, con ojos apagados y movimientos de máquina.\n\nRama siente el calor naranja en las palmas. Podría abrirse paso por la fuerza. Pero ¿a qué costo?',
@@ -5452,6 +5443,9 @@ rama_military_result:{
   },
   next:'rama_monster1_intro'
 },
+
+rama_monster1_intro:{
+  img:'mir_appear', title:'MIREX', sub:'PRIMER VILLANO', big:'MIREX', s:'La mente es el campo de batalla',
   spk:'NARRADOR', music:'battle',
   txt:'La voz llega antes que el cuerpo.\n\n"Qué Eco tan ruidoso. Perfecto para confundirte."\n\nMirex. El de control mental. En el sur de la ciudad, buscando custodios que capturar.\n\nRama siente que sus propios recuerdos empiezan a moverse solos.',
   next:'rama_monster1_fight'
