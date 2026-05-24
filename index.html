@@ -421,7 +421,8 @@ body.aethrion-mode .btn-cont{border-color:#d7a84a;color:#fff2c2;background:rgba(
   box-shadow:0 0 20px rgba(0,229,255,.12)!important;
 }
 .story-back-hub{display:none}
-body.aethrion-mode #storyBackHub{display:block!important}
+#game .story-back-hub{display:flex!important}
+body.aethrion-mode #storyBackHub{display:flex!important}
 .story-back-hub:active,.back-hub-btn:active,.universe-back:active{transform:scale(.97)!important}
 
 /* ZERATH futuro: teaser limpio, sin gameplay */
@@ -547,37 +548,66 @@ body.aethrion-mode #storyBackHub{display:block!important}
   border-color:rgba(215,193,138,.55)!important;
 }
 #hub .twins-card .hub-action{
-  font-size:.52rem!important;
-  white-space:normal!important;
-  word-break:break-word!important;
+  font-size:.42rem!important;
+  white-space:nowrap!important;
+  word-break:normal!important;
   text-align:center!important;
-  line-height:1.2!important;
-  padding:8px 5px!important;
+  line-height:1.15!important;
+  padding:8px 4px!important;
   min-height:46px!important;
   display:flex!important;
   align-items:center!important;
   justify-content:center!important;
+  letter-spacing:.06em!important;
+  overflow:hidden!important;
 }
 
-/* Flecha volver: pequeña, discreta, no tapa nada */
-.global-story-back,
+/* Flecha volver: integrada dentro del HUD, no tapa nada */
 .story-back-hub,
-#storyBackHub,
-.back-hub-btn,
-.universe-back{
-  position:fixed!important;
-  top:calc(8px + env(safe-area-inset-top))!important;
+#storyBackHub{
+  position:static!important;
+  top:auto!important;
   bottom:auto!important;
-  left:10px!important;
+  left:auto!important;
+  flex-shrink:0!important;
   width:auto!important;
   min-width:auto!important;
-  max-width:120px!important;
-  height:32px!important;
+  max-width:none!important;
+  height:34px!important;
   padding:0 10px!important;
   border-radius:8px!important;
-  background:rgba(0,0,0,.48)!important;
+  background:rgba(255,255,255,.06)!important;
+  backdrop-filter:blur(6px)!important;
+  z-index:auto!important;
+  font-size:8px!important;
+  letter-spacing:.12em!important;
+  box-shadow:none!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  color:rgba(180,220,255,.75)!important;
+  font-family:var(--ff4)!important;
+  white-space:nowrap!important;
+  line-height:34px!important;
+  display:flex!important;
+  align-items:center!important;
+}
+
+/* Los otros botones volver (cover, zerath, etc.) van posicionados pero chicos */
+.global-story-back,
+.back-hub-btn,
+.universe-back{
+  position:absolute!important;
+  top:calc(10px + env(safe-area-inset-top))!important;
+  bottom:auto!important;
+  left:12px!important;
+  width:auto!important;
+  min-width:auto!important;
+  max-width:130px!important;
+  height:30px!important;
+  padding:0 10px!important;
+  border-radius:8px!important;
+  background:rgba(0,0,0,.55)!important;
   backdrop-filter:blur(8px)!important;
-  z-index:999999!important;
+  z-index:999!important;
   font-size:8.5px!important;
   letter-spacing:.10em!important;
   box-shadow:none!important;
@@ -587,7 +617,7 @@ body.aethrion-mode #storyBackHub{display:block!important}
   white-space:nowrap!important;
   overflow:hidden!important;
   text-overflow:ellipsis!important;
-  line-height:32px!important;
+  line-height:30px!important;
   display:flex!important;
   align-items:center!important;
 }
@@ -596,6 +626,18 @@ body.aethrion-mode #storyBackHub{display:block!important}
 #authOverlay,#userBadge{
   display:none!important;
   visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+/* El botón de cover no debe flotar sobre el hub */
+#hub.active ~ * #backToHub,
+#hub.screen.active #backToHub{
+  display:none!important;
+}
+/* backToHub solo visible cuando cover está activo */
+#cover:not(.active) #backToHub,
+#cover:not(.active) .back-hub-btn{
+  display:none!important;
   pointer-events:none!important;
 }
 </style>
@@ -704,7 +746,7 @@ body.aethrion-mode #storyBackHub{display:block!important}
   </div>
 </section>
 <section id="intro" class="screen"><div class="intro-card"><div class="intro-title">DUAL</div><div class="mini">LUSTONIA</div><div class="intro-text">Hace semanas, un meteorito destruyó <em>Valmora</em>. No era roca: era una prisión multiversal de <strong>Aethrion</strong> que se rompió al impactar.<br><br><em>Tronox</em> entró en el cuerpo de un ex convicto llamado <strong>Nebius</strong>. Desde entonces corrompió militares, destruyó la ciudad y mandó una señal al universo.<br><br>En Lustonia cayó otro meteorito. <em>Lurnox</em> y sus guardianes llegaron. Y el Eco eligió a tres jóvenes: <strong>Lin, Trini y Zack</strong>.</div><button class="btn-main" id="introBtn"><span>▶ COMENZAR HISTORIA</span></button></div></section>
-<section id="game" class="screen"><button id="storyBackHub" class="story-back-hub" type="button">← UNIVERSOS</button><div class="scene" id="scene"></div><div class="hud"><div class="chapter"><h1 id="hudTitle">DUAL</h1><p id="hudSub">LUSTONIA</p></div><div class="bars"><div class="stat"><label><span>VIDA</span><span id="hpTxt">100</span></label><div class="bar hpbar"><i id="hpBar" style="width:100%"></i></div></div><div class="stat"><label><span>ECO</span><span id="ecoTxt">0</span></label><div class="bar ecobar"><i id="ecoBar" style="width:0%"></i></div></div></div></div><div class="game-scroll" id="gameScroll"><div class="content"><div class="scene-title" id="sceneTitle"></div><div class="panel"><div class="speaker"><div class="sp-line" id="spLine"></div><div class="sp-name" id="spName">NARRADOR</div></div><div class="text" id="text"></div></div><div class="choices" id="choices"></div><div class="cont" id="cont"><button class="btn-cont" id="contBtn">CONTINUAR</button></div></div></div></section>
+<section id="game" class="screen"><div class="scene" id="scene"></div><div class="hud"><button id="storyBackHub" class="story-back-hub" type="button">← HUB</button><div class="chapter"><h1 id="hudTitle">DUAL</h1><p id="hudSub">LUSTONIA</p></div><div class="bars"><div class="stat"><label><span>VIDA</span><span id="hpTxt">100</span></label><div class="bar hpbar"><i id="hpBar" style="width:100%"></i></div></div><div class="stat"><label><span>ECO</span><span id="ecoTxt">0</span></label><div class="bar ecobar"><i id="ecoBar" style="width:0%"></i></div></div></div></div><div class="game-scroll" id="gameScroll"><div class="content"><div class="scene-title" id="sceneTitle"></div><div class="panel"><div class="speaker"><div class="sp-line" id="spLine"></div><div class="sp-name" id="spName">NARRADOR</div></div><div class="text" id="text"></div></div><div class="choices" id="choices"></div><div class="cont" id="cont"><button class="btn-cont" id="contBtn">CONTINUAR</button></div></div></div></section>
 <section id="result" class="screen"><div class="res-bg" id="resBg"></div><div class="res-card" id="resCard"><div class="res-small" id="resSmall">RESULTADO</div><div class="res-title" id="resTitle"></div><div class="res-text" id="resText"></div><button class="btn-main" id="resBtn" style="margin-top:18px"><span>▶ CONTINUAR</span></button></div></section>
 <section id="ending" class="screen"><div class="res-bg" id="endBg"></div><div class="res-card" id="endCard"><div class="res-small">FINAL DE LUSTONIA</div><div class="res-title" id="endTitle"></div><div class="res-text" id="endText"></div><button class="btn-main" id="againBtn" style="margin-top:18px"><span>↻ VOLVER A JUGAR</span></button></div></section>
 
